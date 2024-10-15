@@ -17,8 +17,15 @@ class BookingScreen extends StatelessWidget {
 
   final con = Get.put(MainController());
 
-  final status = ['Online', 'Offline'];
+  final micro = ['A', 'C', 'J', 'AP'];
+  final status = ['Leasing', 'Cash'];
   final marital = ['Single', 'Married'];
+  final gender = ['Male', 'Female'];
+  final salesman = ['Thol', 'Sora','Piseth'];
+  final brand = ['Honda', 'Susaki','Yamaha'];
+  final model = ['Dream','Best', 'Scooppy'];
+  final color = ['Red', 'Black', 'Blue'];
+  final condition = ['New', 'Used'];
 
   @override
   Widget build(BuildContext context) {
@@ -45,65 +52,84 @@ class BookingScreen extends StatelessWidget {
             RowTextField(
               spacer: spacer,
               widget1: AppTextField(txt: 'Date', con: con.date.value),
-              widget2: AppTextField(txt: 'Location', con: con.location.value),
-              widget3: AppDropdown(
-                txt: 'Status',
+              widget2: AppDropdown(
+                txt: 'Method',
                 value: con.bookingStatus,
                 list: status,
                 onChanged: (v) {
                   if (v != null) con.bookingStatus = v;
                 },
               ),
+              widget3: AppDropdown(
+                txt: 'Micro',
+                list: micro,
+                onChanged: (v) {
+                  if (v != null) con.microStatus = v;
+                },
+              ),
+            ),
+            RowTextField(
+              spacer: spacer,
+              widget1: AppDropdown(txt: 'Salesman', list: salesman, onChanged: (v){
+                if (v != null) con.salesmanStatus = v;
+              },),
             ),
             TitleUnderline(spacer: spacer, txt: 'Customer Information'),
             RowTextField(
               spacer: spacer,
               widget1: AppTextField(txt: 'ID Card', con: con.name.value),
               widget2: AppTextField(txt: 'Name', con: con.name.value),
-              widget3: AppTextField(txt: 'Gender', con: con.gender.value),
-            ),
-            RowTextField(
-              spacer: spacer,
-              widget1: AppDropdown(
-                txt: 'Marital',
-                value: con.maritalStatus,
-                list: marital,
+              widget3: AppDropdown(
+                txt: 'Gender',
+                value: con.genderStatus,
+                list: gender,
                 onChanged: (v) {
-                  if (v != null) con.maritalStatus = v;
+                  if (v != null) con.genderStatus = v;
                 },
               ),
-              widget2: AppTextField(txt: 'Phone', con: con.phone2.value),
-              widget3: AppTextField(txt: 'Address', con: con.address.value),
             ),
             RowTextField(
               spacer: spacer,
-              widget1: AppTextField(txt: 'Type', con: con.cusType.value),
-              widget2: AppTextField(txt: 'Re Code', con: con.code.value),
+              widget1: AppTextField(txt: 'Age', con: con.age.value),
+              widget2: AppTextField(txt: 'Tel', con: con.phone1.value),
+              widget3: AppTextField(txt: 'Address', con: con.address.value),
             ),
             TitleUnderline(spacer: spacer, txt: 'Product Information'),
             RowTextField(
               spacer: spacer,
-              widget1: AppTextField(txt: 'Type', con: con.proType.value),
-              widget2: AppTextField(txt: 'Brand', con: con.brand.value),
-              widget3: AppTextField(txt: 'Model', con: con.model.value),
+              widget1: AppDropdown(txt: 'Brand', list: brand, onChanged: (v){
+                if (v != null) con.brand = v;
+              },),
+              widget2: AppDropdown(txt: 'Model', list: model, onChanged: (v){
+                if (v != null) con.model = v;
+              },),
+              widget3: AppDropdown(txt: 'Color', list: color, onChanged: (v){
+                if (v != null) con.color = v;
+              },),
             ),
             RowTextField(
               spacer: spacer,
-              widget1: AppTextField(txt: 'Year', con: con.year.value),
-              widget2: AppTextField(txt: 'Condition', con: con.condi.value),
-              widget3: AppTextField(txt: 'Description', con: con.des.value),
+              widget1: AppTextField(txt: 'Year', con: con.year.value,readOnly: true,),
+              widget2: AppDropdown(txt: 'Condition', list: condition, onChanged: (v){
+                if (v != null) con.condition = v;
+              },),
             ),
             TitleUnderline(spacer: spacer, txt: 'Financial Information'),
             RowTextField(
               spacer: spacer,
               widget1: AppTextField(txt: 'Sell Price', con: con.sell.value),
               widget2: AppTextField(txt: 'Discount', con: con.dis.value),
-              widget3: AppTextField(txt: 'Coupons', con: con.cou.value),
+              widget3: AppTextField(txt: 'Deposit', con: con.depo.value),
             ),
             RowTextField(
               spacer: spacer,
-              widget1: AppTextField(txt: 'Deposit', con: con.depo.value),
-              widget2: AppTextField(txt: 'Remain', con: con.remain.value),
+
+              widget1: AppTextField(txt: 'Remain', con: con.remain.value),
+            ),
+            TitleUnderline(spacer: spacer, txt: 'Introduced Information'),
+            RowTextField(spacer: spacer,
+              widget1: AppTextField(txt: 'Name', con: con.nameIntro.value),
+              widget2: AppTextField(txt: 'Tel', con: con.phoneIntro.value),
             ),
             spacer,
             spacer,

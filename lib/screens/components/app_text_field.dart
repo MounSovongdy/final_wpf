@@ -38,9 +38,10 @@ class AppTextField extends StatelessWidget {
         ),
         Expanded(
           flex: flex,
-          child: SizedBox(
+          child: Container(
             width: width.px,
             height: height.px,
+            color: readOnly ? secondGreyColor : noneColor,
             child: TextField(
               controller: con,
               obscureText: obscureText,
