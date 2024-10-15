@@ -22,6 +22,7 @@ dependencies:
   firebase_auth_web: any
   firebase_core: any
   firebase_core_web: any
+  universal_html: any
 
 dev_dependencies:
   flutter_test:

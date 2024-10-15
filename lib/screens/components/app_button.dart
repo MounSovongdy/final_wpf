@@ -23,11 +23,13 @@ class AppButton extends StatelessWidget {
       height: 40.px,
       width: width.px,
       decoration: BoxDecoration(
-        color: color,
         borderRadius: BorderRadius.circular(10),
       ),
-      child: InkWell(
-        onTap: tap,
+      child: ElevatedButton(
+        onPressed: tap,
+        style: ButtonStyle(
+          backgroundColor: WidgetStatePropertyAll(color),
+        ),
         child: Center(
           child: AppText.title(context, txt: txt, color: whiteColor),
         ),

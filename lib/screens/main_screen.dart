@@ -74,7 +74,7 @@ class MainScreen extends StatelessWidget {
         case 5:
           return AddStockScreen();
         case 6:
-          return InvoiceScreen();
+          return const InvoiceScreen();
         default:
           return DashboardScreen();
       }

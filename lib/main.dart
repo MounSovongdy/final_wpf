@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:motor/controllers/main_controller.dart';
 import 'package:motor/firebase_options.dart';
-import 'package:motor/screens/main_screen.dart';
+import 'package:motor/screens/login_screen.dart';
 
 Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-  
   runApp(MyApp());
 }
 
@@ -23,7 +23,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(fontFamily: 'Inter'),
       darkTheme: ThemeData.dark(),
-      home: MainScreen(),
+      home: LoginScreen(),
     );
   }
 }
