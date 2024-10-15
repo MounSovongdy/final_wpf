@@ -10,9 +10,11 @@ import 'package:responsive_sizer/responsive_sizer.dart';
 class DrawerListTile extends StatelessWidget {
   final String title, svgSrc;
   final VoidCallback tap;
+  final double height;
 
   DrawerListTile({
     super.key,
+    this.height =  16,
     required this.title,
     required this.svgSrc,
     required this.tap,
@@ -44,7 +46,7 @@ class DrawerListTile extends StatelessWidget {
               padding: EdgeInsets.only(right: 23.px),
               child: SvgPicture.asset(
                 svgSrc,
-                height: Responsive.isDesktop(context) ? 16.px : 16.px - 2,
+                height: Responsive.isDesktop(context) ? height.px : height.px - 2,
                 color: textColor.value, // ignore: deprecated_member_use
               ),
             ),

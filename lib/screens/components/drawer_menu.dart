@@ -114,6 +114,14 @@ class DrawerMenu extends StatelessWidget {
                     ),
                   ],
                 ),
+                DrawerListTile(
+                  tap: () {
+                    if (Responsive.isMobile(context)) con.controlDrawer();
+                    con.index.value = 6;
+                  },
+                  title: 'Print Invoice',
+                  svgSrc: 'assets/icons/Invoice.svg',
+                ),
               ],
             ),
           ),

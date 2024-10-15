@@ -22,8 +22,8 @@ class BookingScreen extends StatelessWidget {
   final marital = ['Single', 'Married'];
   final gender = ['Male', 'Female'];
   final salesman = ['Thol', 'Sora','Piseth'];
-  final brand = ['Honda', 'Susaki','Yamaha'];
-  final model = ['Dream','Best', 'Scooppy'];
+  final brand = ['Honda', 'Susuki','Yamaha'];
+  final model = ['Dream','Best', 'Sccoppy'];
   final color = ['Red', 'Black', 'Blue'];
   final condition = ['New', 'Used'];
 
@@ -64,14 +64,14 @@ class BookingScreen extends StatelessWidget {
                 txt: 'Micro',
                 list: micro,
                 onChanged: (v) {
-                  if (v != null) con.microStatus = v;
+                  if (v != null) con.micro = v;
                 },
               ),
             ),
             RowTextField(
               spacer: spacer,
               widget1: AppDropdown(txt: 'Salesman', list: salesman, onChanged: (v){
-                if (v != null) con.salesmanStatus = v;
+                if (v != null) con.salesman = v;
               },),
             ),
             TitleUnderline(spacer: spacer, txt: 'Customer Information'),
@@ -81,17 +81,17 @@ class BookingScreen extends StatelessWidget {
               widget2: AppTextField(txt: 'Name', con: con.name.value),
               widget3: AppDropdown(
                 txt: 'Gender',
-                value: con.genderStatus,
+                value: con.gender,
                 list: gender,
                 onChanged: (v) {
-                  if (v != null) con.genderStatus = v;
+                  if (v != null) con.gender = v;
                 },
               ),
             ),
             RowTextField(
               spacer: spacer,
               widget1: AppTextField(txt: 'Age', con: con.age.value),
-              widget2: AppTextField(txt: 'Tel', con: con.phone1.value),
+              widget2: AppTextField(txt: 'Tel', con: con.phoneCus.value),
               widget3: AppTextField(txt: 'Address', con: con.address.value),
             ),
             TitleUnderline(spacer: spacer, txt: 'Product Information'),
@@ -118,13 +118,12 @@ class BookingScreen extends StatelessWidget {
             RowTextField(
               spacer: spacer,
               widget1: AppTextField(txt: 'Sell Price', con: con.sell.value),
-              widget2: AppTextField(txt: 'Discount', con: con.dis.value),
+              widget2: AppTextField(txt: 'Discount', con: con.discount.value),
               widget3: AppTextField(txt: 'Deposit', con: con.depo.value),
             ),
             RowTextField(
               spacer: spacer,
-
-              widget1: AppTextField(txt: 'Remain', con: con.remain.value),
+              widget1: AppTextField(txt: 'Remain', con: con.remain.value,readOnly: true,),
             ),
             TitleUnderline(spacer: spacer, txt: 'Introduced Information'),
             RowTextField(spacer: spacer,

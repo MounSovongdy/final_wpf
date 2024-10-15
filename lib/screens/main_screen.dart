@@ -6,6 +6,7 @@ import 'package:motor/controllers/main_controller.dart';
 import 'package:motor/screens/add_stock_screen.dart';
 import 'package:motor/screens/booking_screen.dart';
 import 'package:motor/screens/dashboard_screen.dart';
+import 'package:motor/screens/invoice_screen.dart';
 import 'package:motor/screens/receivable_screen.dart';
 import 'package:motor/screens/sale_record_screen.dart';
 import 'package:motor/screens/total_stock_screen.dart';
@@ -72,6 +73,8 @@ class MainScreen extends StatelessWidget {
           return TotalStockScreen();
         case 5:
           return AddStockScreen();
+        case 6:
+          return InvoiceScreen();
         default:
           return DashboardScreen();
       }
