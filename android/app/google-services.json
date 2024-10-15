@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "597512006190",
+    "project_id": "motorproject-278f0",
+    "storage_bucket": "motorproject-278f0.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:597512006190:android:4d80457b6bc63bc7704dbf",
+        "android_client_info": {
+          "package_name": "com.example.motor"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA00oKQKhAyF2uPJkLz44hIzwKj_8dvKc0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
