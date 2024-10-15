@@ -5,10 +5,13 @@ import 'package:motor/constants/responsive.dart';
 import 'package:motor/controllers/main_controller.dart';
 import 'package:motor/screens/add_stock_screen.dart';
 import 'package:motor/screens/booking_screen.dart';
+import 'package:motor/screens/create_product_screen.dart';
 import 'package:motor/screens/dashboard_screen.dart';
+import 'package:motor/screens/financial_record_screen.dart';
 import 'package:motor/screens/invoice_screen.dart';
 import 'package:motor/screens/receivable_screen.dart';
 import 'package:motor/screens/sale_record_screen.dart';
+import 'package:motor/screens/total_expense_screen.dart';
 import 'package:motor/screens/total_stock_screen.dart';
 import 'package:motor/screens/widgets/custom_app_bar.dart';
 import 'package:motor/screens/components/drawer_menu.dart';
@@ -74,6 +77,12 @@ class MainScreen extends StatelessWidget {
         case 5:
           return AddStockScreen();
         case 6:
+          return const CreateProductScreen();
+        case 7:
+          return const FinancialRecordScreen();
+        case 8:
+          return const TotalExpenseScreen();
+        case 9:
           return const InvoiceScreen();
         default:
           return DashboardScreen();
