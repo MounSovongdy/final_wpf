@@ -58,16 +58,17 @@ class BookingScreen extends StatelessWidget {
             TitleUnderline(spacer: spacer, txt: 'Customer Information'),
             RowTextField(
               spacer: spacer,
-              widget1: AppTextField(txt: 'Name', con: con.name.value),
-              widget2: AppTextField(txt: 'Gender', con: con.gender.value),
-              widget3: AppDropdown(
-                txt: 'Marital',
-                value: con.maritalStatus,
-                list: marital,
-                onChanged: (v) {
-                  if (v != null) con.maritalStatus = v;
-                },
-              ),
+              widget1: AppTextField(txt: 'ID Card', con: con.name.value),
+              widget2: AppTextField(txt: 'Name', con: con.name.value),
+              widget3: AppTextField(txt: 'Gender', con: con.gender.value),
+              // widget3: AppDropdown(
+              //   txt: 'Marital',
+              //   value: con.maritalStatus,
+              //   list: marital,
+              //   onChanged: (v) {
+              //     if (v != null) con.maritalStatus = v;
+              //   },
+              // ),
             ),
             RowTextField(
               spacer: spacer,
