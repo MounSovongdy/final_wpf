@@ -27,7 +27,7 @@ Widget spacer(BuildContext context) {
 
 void startInactivityTimer() {
   inactivityTimer?.cancel();
-  inactivityTimer = Timer(const Duration(seconds: 10), reload);
+  inactivityTimer = Timer(const Duration(minutes: 60), reload);
 }
 
 void reload() {

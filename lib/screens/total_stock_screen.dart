@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:motor/constants/constants.dart';
+import 'package:motor/constants/firebase.dart';
 import 'package:motor/constants/responsive.dart';
 import 'package:motor/controllers/main_controller.dart';
+import 'package:motor/screens/components/app_data_table.dart';
 import 'package:motor/screens/widgets/app_text.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
@@ -10,6 +12,13 @@ class TotalStockScreen extends StatelessWidget {
   TotalStockScreen({super.key});
 
   final con = Get.put(MainController());
+
+  final data = [
+    {'no': '1', 'model': 'Dream', 'color': 'White'},
+    {'no': '2', 'model': 'Beat', 'color': 'Yello'},
+    {'no': '3', 'model': 'Scoppy', 'color': 'Black'},
+    {'no': '4', 'model': 'Honda', 'color': 'Red'},
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -32,6 +41,15 @@ class TotalStockScreen extends StatelessWidget {
           children: [
             AppText.header(context, txt: 'Total Stock'),
             spacer,
+            Obx(
+              () => adminData.isNotEmpty
+                  ? AppDataTable(
+                      resource: data,
+                      headerList: const ['No ', 'Model', 'Color'],
+                      dataList: const ['no', 'model', 'color'],
+                    )
+                  : Container(),
+            )
           ],
         ),
       ),

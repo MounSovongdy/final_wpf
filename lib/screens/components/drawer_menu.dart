@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:motor/constants/constants.dart';
+import 'package:motor/constants/firebase.dart';
 import 'package:motor/constants/responsive.dart';
 import 'package:motor/controllers/main_controller.dart';
 import 'package:motor/screens/components/drawer_expansion_tile.dart';
@@ -69,6 +70,7 @@ class DrawerMenu extends StatelessWidget {
                       child: DrawerListTile(
                         tap: () {
                           if (Responsive.isMobile(context)) con.controlDrawer();
+                          loadAdminData();
                           con.index.value = 4;
                         },
                         title: 'Total Stock',
