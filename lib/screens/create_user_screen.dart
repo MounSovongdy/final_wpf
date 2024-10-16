@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:motor/constants/constants.dart';
-import 'package:motor/controllers/createUser_controller.dart';
+import 'package:motor/controllers/create_user_controller.dart';
 import 'package:motor/screens/components/app_dropdown.dart';
 import 'package:motor/screens/components/app_text_field.dart';
 import 'package:motor/screens/components/row_text_field.dart';
@@ -14,7 +14,7 @@ class CreateUserScreen extends StatelessWidget {
 
   final con = Get.put(CreateUserController());
 
-  final role = ['Super Admin','Admin','Sale',];
+  final role = ['Super Admin', 'Admin', 'Sale'];
 
   @override
   Widget build(BuildContext context) {
@@ -32,20 +32,20 @@ class CreateUserScreen extends StatelessWidget {
           children: [
             AppText.header(context, txt: 'Create User'),
             spacer(context),
-            //TitleUnderline(spacer: spacer, txt: 'User Information'),
-            // RowTextField(
-            //   spacer: spacer(context),
-            //   widget1: AppTextField(txt: 'Name', con: con.fullName.value),
-            //   widget2: AppTextField(txt: 'Tel', con: con.tel.value),
-            //   widget3: AppDropdown(
-            //   txt: 'Role',
-            //   value: con.role,
-            //   list: role,
-            //   onChanged: (v) {
-            //     if (v != null) con.role = v;
-            //   },
-            // ),
-            // ),
+            TitleUnderline(spacer: spacer(context), txt: 'User Information'),
+            RowTextField(
+              spacer: spacer(context),
+              widget1: AppTextField(txt: 'Name', con: con.fullName.value),
+              widget2: AppTextField(txt: 'Tel', con: con.tel.value),
+              widget3: AppDropdown(
+                txt: 'Role',
+                value: con.role,
+                list: role,
+                onChanged: (v) {
+                  if (v != null) con.role = v;
+                },
+              ),
+            ),
           ],
         ),
       ),

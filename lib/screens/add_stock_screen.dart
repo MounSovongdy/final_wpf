@@ -18,11 +18,6 @@ class AddStockScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var spacer = SizedBox(
-      height: Responsive.isDesktop(context) ? defWebPad : defMobPad,
-      width: Responsive.isDesktop(context) ? defWebPad : defMobPad,
-    );
-
     return SingleChildScrollView(
       child: Container(
         margin: EdgeInsets.all(defWebPad.px),
@@ -36,43 +31,44 @@ class AddStockScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             AppText.header(context, txt: 'Add Stock'),
-            spacer,
-            TitleUnderline(spacer: spacer, txt: 'Product Information'),
+            spacer(context),
+            TitleUnderline(spacer: spacer(context), txt: 'Product Information'),
             RowTextField(
-              spacer: spacer,
+              spacer: spacer(context),
               widget1: AppTextField(txt: 'Type', con: con.type.value),
               widget2: AppTextField(txt: 'Brand', con: con.proBrand.value),
               widget3: AppTextField(txt: 'Model', con: con.proModel.value),
             ),
             RowTextField(
-              spacer: spacer,
+              spacer: spacer(context),
               widget1: AppTextField(txt: 'Year', con: con.proYear.value),
               widget2: AppTextField(txt: 'Color', con: con.proColor.value),
               widget3: AppTextField(txt: 'Condition', con: con.proCondi.value),
             ),
             RowTextField(
-              spacer: spacer,
+              spacer: spacer(context),
               widget1: AppTextField(txt: 'QTY', con: con.qty.value),
               widget2: AppTextField(txt: 'Arrive Date', con: con.arrDate.value),
               widget3: AppTextField(txt: 'Description', con: con.descr.value),
             ),
-            TitleUnderline(spacer: spacer, txt: 'Financial Information'),
+            TitleUnderline(
+                spacer: spacer(context), txt: 'Financial Information'),
             RowTextField(
-              spacer: spacer,
+              spacer: spacer(context),
               widget1: AppTextField(txt: 'Cost', con: con.finanCost.value),
               widget2: AppTextField(txt: 'Sell', con: con.finanSell.value),
             ),
-            TitleUnderline(spacer: spacer, txt: 'Product Information'),
+            TitleUnderline(spacer: spacer(context), txt: 'Product Information'),
             RowTextField(
-              spacer: spacer,
+              spacer: spacer(context),
               widget1: AppTextField(txt: 'Status', con: con.proSts.value),
               widget2: AppTextField(txt: 'Description', con: con.proDes.value),
             ),
-            spacer,
-            spacer,
-            spacer,
+            spacer(context),
+            spacer(context),
+            spacer(context),
             const UnderLine(color: secondGreyColor),
-            spacer,
+            spacer(context),
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
@@ -82,8 +78,8 @@ class AddStockScreen extends StatelessWidget {
                   color: secondGreyColor,
                   tap: () {},
                 ),
-                spacer,
-                spacer,
+                spacer(context),
+                spacer(context),
                 AppButton(
                   txt: 'Save',
                   width: Responsive.isDesktop(context) ? 150.px : 100.px,

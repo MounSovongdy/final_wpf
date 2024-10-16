@@ -19,7 +19,7 @@ var defMobPad = 8.0;
 
 Timer? inactivityTimer;
 
-Widget spacer(BuildContext context) {
+SizedBox spacer(BuildContext context) {
   return SizedBox(
     height: Responsive.isDesktop(context) ? defWebPad : defMobPad,
     width: Responsive.isDesktop(context) ? defWebPad : defMobPad,

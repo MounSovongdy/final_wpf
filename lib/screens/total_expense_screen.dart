@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:motor/constants/constants.dart';
-import 'package:motor/constants/responsive.dart';
 import 'package:motor/screens/widgets/app_text.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
@@ -9,10 +8,6 @@ class TotalExpenseScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var spacer = SizedBox(
-      height: Responsive.isDesktop(context) ? defWebPad : defMobPad,
-      width: Responsive.isDesktop(context) ? defWebPad : defMobPad,
-    );
     return SingleChildScrollView(
       child: Container(
           margin: EdgeInsets.all(defWebPad.px),
@@ -26,7 +21,7 @@ class TotalExpenseScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               AppText.header(context, txt: 'Total Expenses'),
-              spacer,
+              spacer(context),
             ],
           ),
       ),

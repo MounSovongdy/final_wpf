@@ -22,7 +22,6 @@ class MyApp extends StatelessWidget {
       title: 'Motor Shop',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(fontFamily: 'Inter'),
-      darkTheme: ThemeData.dark(),
       home: LoginScreen(),
     );
   }

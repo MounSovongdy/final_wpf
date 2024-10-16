@@ -18,11 +18,6 @@ class SaleRecordScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var spacer = SizedBox(
-      height: Responsive.isDesktop(context) ? defWebPad : defMobPad,
-      width: Responsive.isDesktop(context) ? defWebPad : defMobPad,
-    );
-
     return SingleChildScrollView(
       child: Container(
         margin: EdgeInsets.all(defWebPad.px),
@@ -36,70 +31,69 @@ class SaleRecordScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             AppText.header(context, txt: 'Sale Record'),
-            spacer,
-            TitleUnderline(spacer: spacer, txt: 'Customer Information'),
+            spacer(context),
+            TitleUnderline(spacer: spacer(context), txt: 'Customer Information'),
             RowTextField(
-              spacer: spacer,
+              spacer: spacer(context),
               widget1: AppTextField(txt: 'ID Card', con: con.name.value),
               widget2: AppTextField(txt: 'Name', con: con.name.value,readOnly: true,),
               widget3: AppTextField(txt: 'Gender', con: con.gender.value,readOnly: true,),
             ),
             RowTextField(
-              spacer: spacer,
+              spacer: spacer(context),
               widget1: AppTextField(txt: 'Age', con: con.age.value,readOnly: true,),
               widget2: AppTextField(txt: 'Tel', con: con.phoneCus.value,readOnly: true,),
               widget3: AppTextField(txt: 'Address', con: con.address.value,readOnly: true,),
             ),
-            TitleUnderline(spacer: spacer, txt: 'Booking Information'),
+            TitleUnderline(spacer: spacer(context), txt: 'Booking Information'),
             RowTextField(
-              spacer: spacer,
+              spacer: spacer(context),
               widget1: AppTextField(txt: 'Date', con: con.dateBooking.value,readOnly: true,),
               widget2: AppTextField(txt: 'Method', con: con.method.value,readOnly: true,),
               widget3: AppTextField(txt: 'Micro', con: con.micro.value,readOnly: true,),
             ),
             RowTextField(
-              spacer: spacer,
+              spacer: spacer(context),
               widget1: AppTextField(txt: 'Salesman', con: con.salesman.value,readOnly: true,),
             ),
-            TitleUnderline(spacer: spacer, txt: 'Product Information'),
+            TitleUnderline(spacer: spacer(context), txt: 'Product Information'),
             RowTextField(
-              spacer: spacer,
+              spacer: spacer(context),
               widget1: AppTextField(txt: 'Brand', con: con.brand.value,readOnly: true,),
               widget2: AppTextField(txt: 'Model', con: con.model.value,readOnly: true,),
               widget3: AppTextField(txt: 'Color', con: con.color.value,readOnly: true,),
             ),
             RowTextField(
-              spacer: spacer,
+              spacer: spacer(context),
               widget1: AppTextField(txt: 'Year', con: con.year.value,readOnly: true,),
               widget2: AppTextField(txt: 'Condition', con: con.condition.value,readOnly: true,),
               widget3: AppTextField(txt: 'Engine No', con: con.engine.value),
             ),
             RowTextField(
-              spacer: spacer,
+              spacer: spacer(context),
               widget1: AppTextField(txt: 'Frame No', con: con.frame.value),
               widget2: AppTextField(txt: 'Plate No', con: con.plateNo.value),
             ),
-            TitleUnderline(spacer: spacer, txt: 'Financial Information'),
+            TitleUnderline(spacer: spacer(context), txt: 'Financial Information'),
             RowTextField(
-              spacer: spacer,
+              spacer: spacer(context),
               widget1: AppTextField(txt: 'Sell Price', con: con.sell.value,readOnly: true,),
               widget2: AppTextField(txt: 'Discount', con: con.discount.value,readOnly: true,),
               widget3: AppTextField(txt: 'Deposit', con: con.deposit.value,readOnly: true,),
             ),
             RowTextField(
-              spacer: spacer,
+              spacer: spacer(context),
               widget1: AppTextField(txt: 'Remain', con: con.remain.value,readOnly: true,),
             ),
-            TitleUnderline(spacer: spacer, txt: 'Introduced Information'),
-            RowTextField(spacer: spacer,
+            TitleUnderline(spacer: spacer(context), txt: 'Introduced Information'),
+            RowTextField(spacer: spacer(context),
               widget1: AppTextField(txt: 'Name', con: con.nameIntro.value,readOnly: true,),
               widget2: AppTextField(txt: 'Tel', con: con.phoneIntro.value,readOnly: true,),
             ),
-            spacer,
-            spacer,
-            spacer,
+            spacer(context),
+            spacer(context),
             const UnderLine(color: secondGreyColor),
-            spacer,
+            spacer(context),
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
@@ -109,8 +103,8 @@ class SaleRecordScreen extends StatelessWidget {
                   color: secondGreyColor,
                   tap: () {},
                 ),
-                spacer,
-                spacer,
+                spacer(context),
+                spacer(context),
                 AppButton(
                   txt: 'Save',
                   width: Responsive.isDesktop(context) ? 150.px : 100.px,

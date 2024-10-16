@@ -29,11 +29,6 @@ class BookingScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var spacer = SizedBox(
-      height: Responsive.isDesktop(context) ? defWebPad : defMobPad,
-      width: Responsive.isDesktop(context) ? defWebPad : defMobPad,
-    );
-
     return SingleChildScrollView(
       child: Container(
         margin: EdgeInsets.all(defWebPad.px),
@@ -47,10 +42,10 @@ class BookingScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             AppText.header(context, txt: 'New Booking'),
-            spacer,
-            TitleUnderline(spacer: spacer, txt: 'Booking Information'),
+            spacer(context),
+            TitleUnderline(spacer: spacer(context), txt: 'Booking Information'),
             RowTextField(
-              spacer: spacer,
+              spacer: spacer(context),
               widget1: AppTextField(txt: 'Date', con: con.date.value),
               widget2: AppDropdown(
                 txt: 'Method',
@@ -69,14 +64,14 @@ class BookingScreen extends StatelessWidget {
               ),
             ),
             RowTextField(
-              spacer: spacer,
+              spacer: spacer(context),
               widget1: AppDropdown(txt: 'Salesman', list: salesman, onChanged: (v){
                 if (v != null) con.salesman = v;
               },),
             ),
-            TitleUnderline(spacer: spacer, txt: 'Customer Information'),
+            TitleUnderline(spacer: spacer(context), txt: 'Customer Information'),
             RowTextField(
-              spacer: spacer,
+              spacer: spacer(context),
               widget1: AppTextField(txt: 'ID Card', con: con.name.value),
               widget2: AppTextField(txt: 'Name', con: con.name.value),
               widget3: AppDropdown(
@@ -89,14 +84,14 @@ class BookingScreen extends StatelessWidget {
               ),
             ),
             RowTextField(
-              spacer: spacer,
+              spacer: spacer(context),
               widget1: AppTextField(txt: 'Age', con: con.age.value),
               widget2: AppTextField(txt: 'Tel', con: con.phoneCus.value),
               widget3: AppTextField(txt: 'Address', con: con.address.value),
             ),
-            TitleUnderline(spacer: spacer, txt: 'Product Information'),
+            TitleUnderline(spacer: spacer(context), txt: 'Product Information'),
             RowTextField(
-              spacer: spacer,
+              spacer: spacer(context),
               widget1: AppDropdown(txt: 'Brand', list: brand, onChanged: (v){
                 if (v != null) con.brand = v;
               },),
@@ -108,30 +103,30 @@ class BookingScreen extends StatelessWidget {
               },),
             ),
             RowTextField(
-              spacer: spacer,
+              spacer: spacer(context),
               widget1: AppTextField(txt: 'Year', con: con.year.value,readOnly: true,),
               widget2: AppDropdown(txt: 'Condition', list: condition, onChanged: (v){
                 if (v != null) con.condition = v;
               },),
             ),
-            TitleUnderline(spacer: spacer, txt: 'Financial Information'),
+            TitleUnderline(spacer: spacer(context), txt: 'Financial Information'),
             RowTextField(
-              spacer: spacer,
+              spacer: spacer(context),
               widget1: AppTextField(txt: 'Sell Price', con: con.sell.value),
               widget2: AppTextField(txt: 'Discount', con: con.discount.value),
               widget3: AppTextField(txt: 'Deposit', con: con.depo.value),
             ),
             RowTextField(
-              spacer: spacer,
+              spacer: spacer(context),
               widget1: AppTextField(txt: 'Remain', con: con.remain.value,readOnly: true,),
             ),
-            TitleUnderline(spacer: spacer, txt: 'Introduced Information'),
-            RowTextField(spacer: spacer,
+            TitleUnderline(spacer: spacer(context), txt: 'Introduced Information'),
+            RowTextField(spacer: spacer(context),
               widget1: AppTextField(txt: 'Name', con: con.nameIntro.value),
               widget2: AppTextField(txt: 'Tel', con: con.phoneIntro.value),
             ),
-            spacer,
-            spacer,
+            spacer(context),
+            spacer(context),
             Responsive.isDesktop(context)
                 ? Container(
                     margin: EdgeInsets.only(left: 5.px, right: defWebPad.px),
@@ -142,14 +137,14 @@ class BookingScreen extends StatelessWidget {
                     ),
                   )
                 : RowTextField(
-                    spacer: spacer,
+                    spacer: spacer(context),
                     widget1: AppTextField(txt: 'Remark', con: con.remark.value),
                   ),
-            spacer,
-            spacer,
-            spacer,
+            spacer(context),
+            spacer(context),
+            spacer(context),
             const UnderLine(color: secondGreyColor),
-            spacer,
+            spacer(context),
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
@@ -159,8 +154,8 @@ class BookingScreen extends StatelessWidget {
                   color: secondGreyColor,
                   tap: () {},
                 ),
-                spacer,
-                spacer,
+                spacer(context),
+                spacer(context),
                 AppButton(
                   txt: 'Save',
                   width: Responsive.isDesktop(context) ? 150.px : 100.px,
