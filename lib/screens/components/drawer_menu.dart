@@ -61,6 +61,14 @@ class DrawerMenu extends StatelessWidget {
                   title: 'Receivable',
                   svgSrc: 'assets/icons/Receivable.svg',
                 ),
+                DrawerListTile(
+                  tap: () {
+                    if (Responsive.isMobile(context)) con.controlDrawer();
+                    con.index.value = 9;
+                  },
+                  title: 'Print Invoice',
+                  svgSrc: 'assets/icons/Invoice.svg',
+                ),
                 DrawerExpansionTile(
                   title: 'Stock',
                   svgSrc: 'assets/icons/Stock.svg',
@@ -89,6 +97,17 @@ class DrawerMenu extends StatelessWidget {
                         svgSrc: 'assets/icons/AddStock.svg',
                       ),
                     ),
+                    Container(
+                      padding: EdgeInsets.only(left: 36.px),
+                      child: DrawerListTile(
+                        tap: () {
+                          if (Responsive.isMobile(context)) con.controlDrawer();
+                          con.index.value = 6;
+                        },
+                        title: 'Create Product',
+                        svgSrc: 'assets/icons/CreateProduct.svg',
+                      ),
+                    ),
                   ],
                 ),
                 DrawerExpansionTile(
@@ -100,6 +119,7 @@ class DrawerMenu extends StatelessWidget {
                       child: DrawerListTile(
                         tap: () {
                           if (Responsive.isMobile(context)) con.controlDrawer();
+                          con.index.value = 7;
                         },
                         title: 'Financial Report',
                         svgSrc: 'assets/icons/FinancialReport.svg',
@@ -110,6 +130,7 @@ class DrawerMenu extends StatelessWidget {
                       child: DrawerListTile(
                         tap: () {
                           if (Responsive.isMobile(context)) con.controlDrawer();
+                          con.index.value = 8;
                         },
                         title: 'Total Expenses',
                         svgSrc: 'assets/icons/TotalExpenses.svg',
@@ -117,13 +138,44 @@ class DrawerMenu extends StatelessWidget {
                     ),
                   ],
                 ),
-                DrawerListTile(
-                  tap: () {
-                    if (Responsive.isMobile(context)) con.controlDrawer();
-                    con.index.value = 6;
-                  },
-                  title: 'Print Invoice',
-                  svgSrc: 'assets/icons/Invoice.svg',
+                DrawerExpansionTile(
+                  title: 'Management',
+                  svgSrc: 'assets/icons/Management.svg',
+                  children: [
+                    Container(
+                      padding: EdgeInsets.only(left: 36.px),
+                      child: DrawerListTile(
+                        tap: () {
+                          if (Responsive.isMobile(context)) con.controlDrawer();
+                          con.index.value = 10;
+                        },
+                        title: 'Create User',
+                        svgSrc: 'assets/icons/CreateUser.svg',
+                      ),
+                    ),
+                    Container(
+                      padding: EdgeInsets.only(left: 36.px),
+                      child: DrawerListTile(
+                        tap: () {
+                          if (Responsive.isMobile(context)) con.controlDrawer();
+                          con.index.value = 11;
+                        },
+                        title: 'Create Salesman',
+                        svgSrc: 'assets/icons/CreateSalesman.svg',
+                      ),
+                    ),
+                    Container(
+                      padding: EdgeInsets.only(left: 36.px),
+                      child: DrawerListTile(
+                        tap: () {
+                          if (Responsive.isMobile(context)) con.controlDrawer();
+                          con.index.value = 12;
+                        },
+                        title: 'Create Micro',
+                        svgSrc: 'assets/icons/CreateMicro.svg',
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),

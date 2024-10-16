@@ -1,18 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:motor/constants/constants.dart';
 import 'package:motor/constants/firebase.dart';
 import 'package:motor/constants/responsive.dart';
-import 'package:motor/controllers/main_controller.dart';
 import 'package:motor/screens/components/app_data_table.dart';
 import 'package:motor/screens/widgets/app_text.dart';
 import 'package:motor/screens/widgets/data_table_widget.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 class TotalStockScreen extends StatelessWidget {
-  TotalStockScreen({super.key});
-
-  final con = Get.put(MainController());
+  const TotalStockScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
