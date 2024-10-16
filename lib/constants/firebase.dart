@@ -1,25 +1,28 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:motor/models/user_model.dart';
 
 final _firebase = FirebaseFirestore.instance;
 
-final adminCol = _firebase.collection('admin');
+final userCol = _firebase.collection('user');
 
 var currVersion = '1.0.0'.obs;
-var adminData = [].obs;
+var user = [].obs;
 
-void loadAdminData() async {
-  try {
-    adminData.clear();
-    await adminCol.get().then((e) {
-      if (e.docs.isNotEmpty) {
-        adminData.value = e.docs;
-      } else {
-        adminData.value = [];
-      }
-    });
-  } catch (ex) {
-    debugPrint('Error problem loadAdminData: $ex');
-  }
+Future<List<UserModel>> getUser() async {
+  var res = await userCol.get();
+
+  return res.docs.map((doc) => UserModel.fromMap(doc.data())).toList();
+}
+
+Future<void> addUser(UserModel user) async {
+  await userCol.add(user.toMap());
+}
+
+Future<void> updateUser(UserModel user) async {
+  await userCol.doc(user.id).update(user.toMap());
+}
+
+Future<void> deleteUser(String id) async {
+  await userCol.doc(id).delete();
 }

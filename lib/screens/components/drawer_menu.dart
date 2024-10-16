@@ -68,9 +68,10 @@ class DrawerMenu extends StatelessWidget {
                     Container(
                       padding: EdgeInsets.only(left: 36.px),
                       child: DrawerListTile(
-                        tap: () {
+                        tap: () async {
                           if (Responsive.isMobile(context)) con.controlDrawer();
-                          loadAdminData();
+                          user.value = await getUser();
+
                           con.index.value = 4;
                         },
                         title: 'Total Stock',

@@ -1,55 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:motor/constants/constants.dart';
-import 'package:motor/screens/widgets/app_text.dart';
+import 'package:responsive_sizer/responsive_sizer.dart';
 
 class AppDataTable extends StatelessWidget {
-  final List resource;
-  final List headerList;
-  final List dataList;
+  final List<DataColumn> column;
+  final List<DataRow> row;
 
   const AppDataTable({
     super.key,
-    required this.resource,
-    required this.headerList,
-    required this.dataList,
+    required this.column,
+    required this.row,
   });
 
   @override
   Widget build(BuildContext context) {
     return DataTable(
       border: TableBorder.all(),
-      dataRowMinHeight: 10,
-      dataRowMaxHeight: 35,
-      headingRowHeight: 35,
+      dataRowMinHeight: 10.px,
+      dataRowMaxHeight: 35.px,
+      headingRowHeight: 35.px,
       headingRowColor: const WidgetStatePropertyAll(bgColor),
-      columns: List.generate(headerList.length, (index) {
-        return dataColumnWidget(context, headerList[index]);
-      }),
-      rows: List.generate(resource.length, (index) {
-        var data = resource[index];
-        return DataRow(
-          cells: List.generate(data.length, (index) {
-            return dataRowWidget(context, data[dataList[index]]);
-          }),
-        );
-      }),
-    );
-  }
-
-  DataColumn dataColumnWidget(BuildContext context, String label) {
-    return DataColumn(
-      label: AppText.title(
-        context,
-        txt: label,
-        fontWeight: FontWeight.bold,
-        color: whiteColor,
-      ),
-    );
-  }
-
-  DataCell dataRowWidget(BuildContext context, String txt) {
-    return DataCell(
-      AppText.title(context, txt: txt),
+      columns: column,
+      rows: row,
     );
   }
 }
