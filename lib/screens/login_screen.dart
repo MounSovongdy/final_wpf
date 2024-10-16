@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:motor/constants/constants.dart';
-import 'package:motor/controllers/login_controll.dart';
+import 'package:motor/controllers/login_controller.dart';
 import 'package:motor/screens/components/app_button.dart';
 import 'package:motor/screens/components/app_text_field.dart';
 import 'package:motor/screens/widgets/app_text.dart';
@@ -10,7 +10,7 @@ import 'package:responsive_sizer/responsive_sizer.dart';
 class LoginScreen extends StatelessWidget {
   LoginScreen({super.key});
 
-  final con = Get.put(LoginControll());
+  final con = Get.put(LoginController());
 
   @override
   Widget build(BuildContext context) {

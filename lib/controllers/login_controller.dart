@@ -6,7 +6,7 @@ import 'package:motor/screens/main_screen.dart';
 import 'package:motor/screens/widgets/app_text.dart';
 import 'package:motor/screens/widgets/loading_widget.dart';
 
-class LoginControll extends GetxController {
+class LoginController extends GetxController {
   var email = TextEditingController().obs;
   var pass = TextEditingController().obs;
 

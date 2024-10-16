@@ -6,7 +6,10 @@ import 'package:motor/constants/responsive.dart';
 import 'package:motor/controllers/main_controller.dart';
 import 'package:motor/screens/add_stock_screen.dart';
 import 'package:motor/screens/booking_screen.dart';
+import 'package:motor/screens/create_micro_screen.dart';
 import 'package:motor/screens/create_product_screen.dart';
+import 'package:motor/screens/create_salesman_screen.dart';
+import 'package:motor/screens/create_user_screen.dart';
 import 'package:motor/screens/dashboard_screen.dart';
 import 'package:motor/screens/financial_record_screen.dart';
 import 'package:motor/screens/invoice_screen.dart';
@@ -85,6 +88,12 @@ class MainScreen extends StatelessWidget {
           return const TotalExpenseScreen();
         case 9:
           return const InvoiceScreen();
+        case 10:
+          return CreateUserScreen();
+        case 11:
+          return const CreateSalesmanScreen();
+        case 12:
+          return const CreateMicroScreen();
         default:
           return DashboardScreen();
       }

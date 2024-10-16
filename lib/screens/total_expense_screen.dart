@@ -28,7 +28,7 @@ class TotalExpenseScreen extends StatelessWidget {
               AppText.header(context, txt: 'Total Expenses'),
               spacer,
             ],
-          )
+          ),
       ),
     );
   }
