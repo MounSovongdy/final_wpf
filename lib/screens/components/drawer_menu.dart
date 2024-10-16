@@ -4,6 +4,7 @@ import 'package:motor/constants/constants.dart';
 import 'package:motor/constants/firebase.dart';
 import 'package:motor/constants/responsive.dart';
 import 'package:motor/controllers/main_controller.dart';
+import 'package:motor/controllers/total_stock_controller.dart';
 import 'package:motor/screens/components/drawer_expansion_tile.dart';
 import 'package:motor/screens/components/drawer_list_tile.dart';
 import 'package:motor/screens/components/under_line.dart';
@@ -14,6 +15,7 @@ class DrawerMenu extends StatelessWidget {
   DrawerMenu({super.key});
 
   final con = Get.put(MainController());
+  final conTS = Get.put(TotalStockController());
 
   @override
   Widget build(BuildContext context) {
@@ -32,6 +34,8 @@ class DrawerMenu extends StatelessWidget {
                 DrawerListTile(
                   tap: () {
                     if (Responsive.isMobile(context)) con.controlDrawer();
+                    startInactivityTimer();
+
                     con.index.value = 0;
                   },
                   title: 'Dashboard',
@@ -40,6 +44,8 @@ class DrawerMenu extends StatelessWidget {
                 DrawerListTile(
                   tap: () {
                     if (Responsive.isMobile(context)) con.controlDrawer();
+                    startInactivityTimer();
+
                     con.index.value = 1;
                   },
                   title: 'Booking',
@@ -48,6 +54,8 @@ class DrawerMenu extends StatelessWidget {
                 DrawerListTile(
                   tap: () {
                     if (Responsive.isMobile(context)) con.controlDrawer();
+                    startInactivityTimer();
+
                     con.index.value = 2;
                   },
                   title: 'Sale Record',
@@ -56,6 +64,8 @@ class DrawerMenu extends StatelessWidget {
                 DrawerListTile(
                   tap: () {
                     if (Responsive.isMobile(context)) con.controlDrawer();
+                    startInactivityTimer();
+                    
                     con.index.value = 3;
                   },
                   title: 'Receivable',
@@ -64,6 +74,8 @@ class DrawerMenu extends StatelessWidget {
                 DrawerListTile(
                   tap: () {
                     if (Responsive.isMobile(context)) con.controlDrawer();
+                    startInactivityTimer();
+                    
                     con.index.value = 9;
                   },
                   title: 'Print Invoice',
@@ -78,8 +90,10 @@ class DrawerMenu extends StatelessWidget {
                       child: DrawerListTile(
                         tap: () async {
                           if (Responsive.isMobile(context)) con.controlDrawer();
-                          user.value = await getUser();
+                          startInactivityTimer();
 
+                          conTS.filteredUsers.value = user;
+                          conTS.search.value.addListener(conTS.filterUserData);
                           con.index.value = 4;
                         },
                         title: 'Total Stock',
@@ -91,6 +105,8 @@ class DrawerMenu extends StatelessWidget {
                       child: DrawerListTile(
                         tap: () {
                           if (Responsive.isMobile(context)) con.controlDrawer();
+                          startInactivityTimer();
+                    
                           con.index.value = 5;
                         },
                         title: 'Add Stock',
@@ -102,6 +118,8 @@ class DrawerMenu extends StatelessWidget {
                       child: DrawerListTile(
                         tap: () {
                           if (Responsive.isMobile(context)) con.controlDrawer();
+                          startInactivityTimer();
+                    
                           con.index.value = 6;
                         },
                         title: 'Create Product',
@@ -119,6 +137,8 @@ class DrawerMenu extends StatelessWidget {
                       child: DrawerListTile(
                         tap: () {
                           if (Responsive.isMobile(context)) con.controlDrawer();
+                          startInactivityTimer();
+                    
                           con.index.value = 7;
                         },
                         title: 'Financial Report',
@@ -130,6 +150,8 @@ class DrawerMenu extends StatelessWidget {
                       child: DrawerListTile(
                         tap: () {
                           if (Responsive.isMobile(context)) con.controlDrawer();
+                          startInactivityTimer();
+                    
                           con.index.value = 8;
                         },
                         title: 'Total Expenses',
@@ -147,6 +169,8 @@ class DrawerMenu extends StatelessWidget {
                       child: DrawerListTile(
                         tap: () {
                           if (Responsive.isMobile(context)) con.controlDrawer();
+                          startInactivityTimer();
+                    
                           con.index.value = 10;
                         },
                         title: 'Create User',
@@ -158,6 +182,8 @@ class DrawerMenu extends StatelessWidget {
                       child: DrawerListTile(
                         tap: () {
                           if (Responsive.isMobile(context)) con.controlDrawer();
+                          startInactivityTimer();
+                    
                           con.index.value = 11;
                         },
                         title: 'Create Salesman',
@@ -169,6 +195,8 @@ class DrawerMenu extends StatelessWidget {
                       child: DrawerListTile(
                         tap: () {
                           if (Responsive.isMobile(context)) con.controlDrawer();
+                          startInactivityTimer();
+                    
                           con.index.value = 12;
                         },
                         title: 'Create Micro',
@@ -184,7 +212,7 @@ class DrawerMenu extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               DrawerListTile(
-                tap: () {},
+                tap: () => reload(),
                 title: 'Log Out',
                 svgSrc: 'assets/icons/Logout.svg',
               ),

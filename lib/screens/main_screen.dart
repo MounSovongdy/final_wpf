@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:motor/constants/constants.dart';
+import 'package:motor/constants/firebase.dart';
 import 'package:motor/constants/responsive.dart';
 import 'package:motor/controllers/main_controller.dart';
 import 'package:motor/screens/add_stock_screen.dart';
@@ -28,7 +29,7 @@ class MainScreen extends StatelessWidget {
     var appBar = CustomAppBar.defAppBar(
       context,
       tap: con.controlMenu,
-      txt: 'Admin Level',
+      txt: user[0].name,
     );
 
     var drawer = Drawer(child: DrawerMenu());
@@ -73,7 +74,7 @@ class MainScreen extends StatelessWidget {
         case 3:
           return ReceivableScreen();
         case 4:
-          return const TotalStockScreen();
+          return TotalStockScreen();
         case 5:
           return AddStockScreen();
         case 6:

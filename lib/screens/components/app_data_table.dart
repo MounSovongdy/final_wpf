@@ -15,10 +15,10 @@ class AppDataTable extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DataTable(
-      border: TableBorder.all(),
       dataRowMinHeight: 10.px,
       dataRowMaxHeight: 35.px,
       headingRowHeight: 35.px,
+      border: TableBorder.all(),
       headingRowColor: const WidgetStatePropertyAll(bgColor),
       columns: column,
       rows: row,

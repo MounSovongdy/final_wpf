@@ -4,7 +4,6 @@ import 'package:motor/constants/constants.dart';
 import 'package:motor/controllers/login_controll.dart';
 import 'package:motor/screens/components/app_button.dart';
 import 'package:motor/screens/components/app_text_field.dart';
-import 'package:motor/screens/main_screen.dart';
 import 'package:motor/screens/widgets/app_text.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
@@ -33,7 +32,7 @@ class LoginScreen extends StatelessWidget {
               AppText.largeHeader(context, txt: "Motor Shop System"),
               spacer(context),
               spacer(context),
-              AppTextField(flex: 4, txt: 'User', con: con.email.value),
+              AppTextField(flex: 4, txt: 'User Login', con: con.email.value),
               spacer(context),
               Obx(
                 () => AppTextField(
@@ -56,10 +55,7 @@ class LoginScreen extends StatelessWidget {
                 alignment: Alignment.centerRight,
                 child: AppButton(
                   txt: 'Login',
-                  tap: () {
-                    startInactivityTimer();
-                    Get.offAll(() => MainScreen());
-                  },
+                  tap: () => con.login(context),
                 ),
               ),
             ],

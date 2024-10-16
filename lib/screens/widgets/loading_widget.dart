@@ -50,7 +50,7 @@ class LoadingWidget {
       barrierDismissible: false,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: AppText.header(context, txt: title),
+          title: AppText.header(context, txt: title, color: color),
           content: AppText.title(context, txt: content),
           actions: [
             TextButton(

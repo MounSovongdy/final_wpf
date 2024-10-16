@@ -9,20 +9,19 @@ final userCol = _firebase.collection('user');
 var currVersion = '1.0.0'.obs;
 var user = [].obs;
 
-Future<List<UserModel>> getUser() async {
-  var res = await userCol.get();
+Future<List<UserModel>> getUser(String user) async {
+  var res = await userCol.where('user', isEqualTo: user).get();
 
   return res.docs.map((doc) => UserModel.fromMap(doc.data())).toList();
 }
 
-Future<void> addUser(UserModel user) async {
-  await userCol.add(user.toMap());
-}
+Future<void> updateUser(String user, String password) async {
+  var docId = '';
+  var result = await userCol.where('user', isEqualTo: user).get();
 
-Future<void> updateUser(UserModel user) async {
-  await userCol.doc(user.id).update(user.toMap());
-}
+  for (var doc in result.docs) {
+    docId = doc.id;
+  }
 
-Future<void> deleteUser(String id) async {
-  await userCol.doc(id).delete();
+  await userCol.doc(docId).update({'password': password});
 }

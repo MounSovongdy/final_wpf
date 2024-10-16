@@ -11,6 +11,7 @@ const secondGreyColor = Color.fromRGBO(217, 217, 217, 1);
 const whiteColor = Color.fromRGBO(255, 255, 255, 1);
 const blackColor = Color.fromRGBO(0, 0, 0, 1);
 const redColor = Colors.red;
+const greenColor = Colors.green;
 
 var defRadius = 10.0;
 var defWebPad = 16.0;
@@ -27,7 +28,7 @@ Widget spacer(BuildContext context) {
 
 void startInactivityTimer() {
   inactivityTimer?.cancel();
-  inactivityTimer = Timer(const Duration(minutes: 60), reload);
+  inactivityTimer = Timer(const Duration(minutes: 30), reload);
 }
 
 void reload() {
