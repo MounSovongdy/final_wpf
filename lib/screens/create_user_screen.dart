@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:motor/constants/constants.dart';
+import 'package:motor/constants/responsive.dart';
 import 'package:motor/controllers/create_user_controller.dart';
+import 'package:motor/screens/components/app_button.dart';
 import 'package:motor/screens/components/app_dropdown.dart';
 import 'package:motor/screens/components/app_text_field.dart';
 import 'package:motor/screens/components/row_text_field.dart';
 import 'package:motor/screens/components/title_underline.dart';
+import 'package:motor/screens/components/under_line.dart';
 import 'package:motor/screens/widgets/app_text.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
@@ -45,6 +48,35 @@ class CreateUserScreen extends StatelessWidget {
                   if (v != null) con.role = v;
                 },
               ),
+            ),
+            RowTextField(
+              spacer: spacer(context),
+              widget1: AppTextField(txt: 'User Name', con: con.user.value),
+              widget2: AppTextField(txt: 'Password', con: con.password.value),
+              widget3: AppTextField(txt: 'Confirm Password', con: con.conPassword.value),
+            ),
+            spacer(context),
+            spacer(context),
+            spacer(context),
+            const UnderLine(color: secondGreyColor),
+            spacer(context),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                AppButton(
+                  txt: 'Cancel',
+                  width: Responsive.isDesktop(context) ? 150.px : 100.px,
+                  color: secondGreyColor,
+                  tap: () {},
+                ),
+                spacer(context),
+                spacer(context),
+                AppButton(
+                  txt: 'Save',
+                  width: Responsive.isDesktop(context) ? 150.px : 100.px,
+                  tap: () {},
+                ),
+              ],
             ),
           ],
         ),
