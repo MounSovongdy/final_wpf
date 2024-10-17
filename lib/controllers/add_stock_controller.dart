@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class AddStockController extends GetxController {
+  List<String> listModel = [];
+
   String? model;
   String? condition;
   var brand = TextEditingController().obs;

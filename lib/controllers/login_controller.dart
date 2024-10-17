@@ -16,7 +16,7 @@ class LoginController extends GetxController {
 
   void login(BuildContext context) async {
     if (email.value.text != '' && pass.value.text != '') {
-      user.value = await getUser(email.value.text);
+     await getByUser(email.value.text);
 
       if (user.isNotEmpty) {
         if (pass.value.text == user[0].password) {
@@ -128,7 +128,7 @@ class LoginController extends GetxController {
                     Navigator.of(context).pop();
                     startInactivityTimer();
                     pass.value.clear();
-                    await updateUser(email.value.text, conPass.text);
+                    await updateUserPassword(email.value.text, conPass.text);
                     Get.offAll(() => MainScreen());
                   } else {
                     LoadingWidget.showTextDialog(

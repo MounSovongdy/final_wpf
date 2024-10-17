@@ -20,53 +20,60 @@ class CreateProductScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Container(
-          margin: EdgeInsets.all(defWebPad.px),
-          padding: EdgeInsets.all(defWebPad.px),
-          width: MediaQuery.of(context).size.width,
-          decoration: BoxDecoration(
-            color: whiteColor,
-            borderRadius: BorderRadius.circular(defRadius.px),
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              AppText.header(context, txt: 'Create Product'),
-              spacer(context),
-              TitleUnderline(
-                spacer: spacer(context),
-                txt: 'Product Information',
-              ),
-              RowTextField(
-                spacer: spacer(context),
-                widget1: AppTextField(txt: 'Model', con: con.proModel.value),
-                widget2: AppTextField(txt: 'Brand', con: con.proBrand.value),
-                widget3: AppTextField(txt: 'Year', con: con.proYear.value),
-              ),
-              spacer(context),
-              spacer(context),
-              spacer(context),
-              const UnderLine(color: secondGreyColor),
-              spacer(context),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  AppButton(
-                    txt: 'Cancel',
-                    width: Responsive.isDesktop(context) ? 150.px : 100.px,
-                    color: secondGreyColor,
-                    tap: () {},
-                  ),
-                  spacer(context),
-                  spacer(context),
-                  AppButton(
-                    txt: 'Save',
-                    width: Responsive.isDesktop(context) ? 150.px : 100.px,
-                    tap: () {},
-                  ),
-                ],
-              ),
-            ],
-          )),
+        margin: EdgeInsets.all(defWebPad.px),
+        padding: EdgeInsets.all(defWebPad.px),
+        width: MediaQuery.of(context).size.width,
+        decoration: BoxDecoration(
+          color: whiteColor,
+          borderRadius: BorderRadius.circular(defRadius.px),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            AppText.header(context, txt: 'Create Product'),
+            spacer(context),
+            TitleUnderline(
+              spacer: spacer(context),
+              txt: 'Product Information',
+            ),
+            RowTextField(
+              spacer: spacer(context),
+              widget1: AppTextField(txt: 'Model', con: con.proModel.value),
+              widget2: AppTextField(txt: 'Brand', con: con.proBrand.value),
+              widget3: AppTextField(txt: 'Year', con: con.proYear.value),
+            ),
+            spacer(context),
+            spacer(context),
+            spacer(context),
+            const UnderLine(color: secondGreyColor),
+            spacer(context),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                AppButton(
+                  txt: 'Cancel',
+                  width: Responsive.isDesktop(context) ? 150.px : 100.px,
+                  color: secondGreyColor,
+                  tap: () {
+                    startInactivityTimer();
+                    con.clearText();
+                  },
+                ),
+                spacer(context),
+                spacer(context),
+                AppButton(
+                  txt: 'Save',
+                  width: Responsive.isDesktop(context) ? 150.px : 100.px,
+                  tap: () {
+                    startInactivityTimer();
+                    con.createProduct(context);
+                  },
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

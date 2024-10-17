@@ -17,7 +17,7 @@ class CreateUserScreen extends StatelessWidget {
 
   final con = Get.put(CreateUserController());
 
-  final role = ['Super Admin', 'Admin', 'Sale'];
+  final role = ['Super Admin', 'Admin', 'User'];
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +38,7 @@ class CreateUserScreen extends StatelessWidget {
             TitleUnderline(spacer: spacer(context), txt: 'User Information'),
             RowTextField(
               spacer: spacer(context),
-              widget1: AppTextField(txt: 'Full Name', con: con.fullName.value),
+              widget1: AppTextField(txt: 'Full Name', con: con.name.value),
               widget2: AppDropdown(
                 txt: 'Role Level',
                 value: con.role,
@@ -49,7 +49,7 @@ class CreateUserScreen extends StatelessWidget {
               ),
               widget3: AppTextField(
                 txt: 'User Login',
-                con: con.user.value,
+                con: con.userLogin.value,
               ),
             ),
             spacer(context),
@@ -64,14 +64,20 @@ class CreateUserScreen extends StatelessWidget {
                   txt: 'Cancel',
                   width: Responsive.isDesktop(context) ? 150.px : 100.px,
                   color: secondGreyColor,
-                  tap: () {},
+                  tap: () {
+                    startInactivityTimer();
+                    con.clearText();
+                  },
                 ),
                 spacer(context),
                 spacer(context),
                 AppButton(
                   txt: 'Save',
                   width: Responsive.isDesktop(context) ? 150.px : 100.px,
-                  tap: () {},
+                  tap: () {
+                    startInactivityTimer();
+                    con.createUser(context);
+                  },
                 ),
               ],
             ),

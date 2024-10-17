@@ -17,7 +17,6 @@ class AddStockScreen extends StatelessWidget {
 
   final con = Get.put(AddStockController());
 
-  final model = ['Dream 024', 'Beat 024', 'Lets 020'];
   final condition = ['New', 'Used'];
 
   @override
@@ -42,7 +41,7 @@ class AddStockScreen extends StatelessWidget {
               widget1: AppDropdown(
                 txt: 'Model',
                 value: con.model,
-                list: model,
+                list: con.listModel,
                 onChanged: (v) {
                   if (v != null) con.model = v;
                 },

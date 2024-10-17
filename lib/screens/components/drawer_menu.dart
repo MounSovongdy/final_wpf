@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:motor/constants/constants.dart';
 import 'package:motor/constants/firebase.dart';
 import 'package:motor/constants/responsive.dart';
+import 'package:motor/controllers/add_stock_controller.dart';
 import 'package:motor/controllers/main_controller.dart';
 import 'package:motor/controllers/total_stock_controller.dart';
 import 'package:motor/screens/components/drawer_expansion_tile.dart';
@@ -17,6 +18,7 @@ class DrawerMenu extends StatelessWidget {
 
   final con = Get.put(MainController());
   final conTS = Get.put(TotalStockController());
+  final conAS = Get.put(AddStockController());
 
   @override
   Widget build(BuildContext context) {
@@ -104,10 +106,13 @@ class DrawerMenu extends StatelessWidget {
                     Container(
                       padding: EdgeInsets.only(left: 36.px),
                       child: DrawerListTile(
-                        tap: () {
+                        tap: () async {
                           if (Responsive.isMobile(context)) con.controlDrawer();
                           startInactivityTimer();
-
+                          await getAllProduct();
+                          for (var pro in product) {
+                            conAS.listModel.add(pro.model);
+                          }
                           con.index.value = 5;
                         },
                         title: 'Add Stock',

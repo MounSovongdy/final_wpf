@@ -17,6 +17,7 @@ class CreateSalesmanScreen extends StatelessWidget {
 
   final con = Get.put(CreateSalesmanController());
   final gender = ['Male', 'Female'];
+  final position = ['Sale'];
 
   @override
   Widget build(BuildContext context) {
@@ -35,10 +36,15 @@ class CreateSalesmanScreen extends StatelessWidget {
             AppText.header(context, txt: 'Create Salesman'),
             spacer(context),
             TitleUnderline(
-                spacer: spacer(context), txt: 'Salesman Information'),
+              spacer: spacer(context),
+              txt: 'General Information',
+            ),
             RowTextField(
               spacer: spacer(context),
-              widget1: AppTextField(txt: 'Name', con: con.fullName.value),
+              widget1: AppTextField(
+                txt: 'Full Name',
+                con: con.fullName.value,
+              ),
               widget2: AppDropdown(
                 txt: 'Gender',
                 value: con.gender,
@@ -51,7 +57,14 @@ class CreateSalesmanScreen extends StatelessWidget {
             ),
             RowTextField(
               spacer: spacer(context),
-              widget1: AppTextField(txt: 'Position', con: con.position.value),
+              widget1: AppDropdown(
+                txt: 'Position',
+                value: con.position,
+                list: position,
+                onChanged: (v) {
+                  if (v != null) con.position = v;
+                },
+              ),
               widget2: AppTextField(txt: 'Salary', con: con.salary.value),
               widget3: AppTextField(txt: 'Bonus', con: con.bonus.value),
             ),
@@ -71,14 +84,20 @@ class CreateSalesmanScreen extends StatelessWidget {
                   txt: 'Cancel',
                   width: Responsive.isDesktop(context) ? 150.px : 100.px,
                   color: secondGreyColor,
-                  tap: () {},
+                  tap: () {
+                    startInactivityTimer();
+                    con.clearText();
+                  },
                 ),
                 spacer(context),
                 spacer(context),
                 AppButton(
                   txt: 'Save',
                   width: Responsive.isDesktop(context) ? 150.px : 100.px,
-                  tap: () {},
+                  tap: () {
+                    startInactivityTimer();
+                    con.createSaleman(context);
+                  },
                 ),
               ],
             ),
