@@ -23,6 +23,7 @@ dependencies:
   firebase_core: any
   firebase_core_web: any
   universal_html: any
+  restart_app: any
 
 dev_dependencies:
   flutter_test:

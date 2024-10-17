@@ -10,6 +10,7 @@ import 'package:motor/screens/components/drawer_list_tile.dart';
 import 'package:motor/screens/components/under_line.dart';
 import 'package:motor/screens/widgets/app_text.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
+import 'package:restart_app/restart_app.dart';
 
 class DrawerMenu extends StatelessWidget {
   DrawerMenu({super.key});
@@ -65,7 +66,7 @@ class DrawerMenu extends StatelessWidget {
                   tap: () {
                     if (Responsive.isMobile(context)) con.controlDrawer();
                     startInactivityTimer();
-                    
+
                     con.index.value = 3;
                   },
                   title: 'Receivable',
@@ -75,7 +76,7 @@ class DrawerMenu extends StatelessWidget {
                   tap: () {
                     if (Responsive.isMobile(context)) con.controlDrawer();
                     startInactivityTimer();
-                    
+
                     con.index.value = 9;
                   },
                   title: 'Print Invoice',
@@ -106,7 +107,7 @@ class DrawerMenu extends StatelessWidget {
                         tap: () {
                           if (Responsive.isMobile(context)) con.controlDrawer();
                           startInactivityTimer();
-                    
+
                           con.index.value = 5;
                         },
                         title: 'Add Stock',
@@ -119,7 +120,7 @@ class DrawerMenu extends StatelessWidget {
                         tap: () {
                           if (Responsive.isMobile(context)) con.controlDrawer();
                           startInactivityTimer();
-                    
+
                           con.index.value = 6;
                         },
                         title: 'Create Product',
@@ -138,7 +139,7 @@ class DrawerMenu extends StatelessWidget {
                         tap: () {
                           if (Responsive.isMobile(context)) con.controlDrawer();
                           startInactivityTimer();
-                    
+
                           con.index.value = 7;
                         },
                         title: 'Financial Report',
@@ -151,7 +152,7 @@ class DrawerMenu extends StatelessWidget {
                         tap: () {
                           if (Responsive.isMobile(context)) con.controlDrawer();
                           startInactivityTimer();
-                    
+
                           con.index.value = 8;
                         },
                         title: 'Total Expenses',
@@ -170,7 +171,7 @@ class DrawerMenu extends StatelessWidget {
                         tap: () {
                           if (Responsive.isMobile(context)) con.controlDrawer();
                           startInactivityTimer();
-                    
+
                           con.index.value = 10;
                         },
                         title: 'Create User',
@@ -183,7 +184,7 @@ class DrawerMenu extends StatelessWidget {
                         tap: () {
                           if (Responsive.isMobile(context)) con.controlDrawer();
                           startInactivityTimer();
-                    
+
                           con.index.value = 11;
                         },
                         title: 'Create Salesman',
@@ -196,7 +197,7 @@ class DrawerMenu extends StatelessWidget {
                         tap: () {
                           if (Responsive.isMobile(context)) con.controlDrawer();
                           startInactivityTimer();
-                    
+
                           con.index.value = 12;
                         },
                         title: 'Create Micro',
@@ -212,7 +213,16 @@ class DrawerMenu extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               DrawerListTile(
-                tap: () => reload(),
+                tap: () {
+                  if (!GetPlatform.isWeb) {
+                    Restart.restartApp(
+                      notificationTitle: 'Restarting App',
+                      notificationBody: 'Tap here to open the app again.',
+                    );
+                  } else {
+                    reload();
+                  }
+                },
                 title: 'Log Out',
                 svgSrc: 'assets/icons/Logout.svg',
               ),

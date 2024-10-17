@@ -33,20 +33,6 @@ class MainController extends GetxController {
   var remain = TextEditingController().obs;
   var remark = TextEditingController().obs;
 
-  var type = TextEditingController().obs;
-  var proBrand = TextEditingController().obs;
-  var proModel = TextEditingController().obs;
-  var proYear = TextEditingController().obs;
-  var proColor = TextEditingController().obs;
-  var proCondi = TextEditingController().obs;
-  var qty = TextEditingController().obs;
-  var arrDate = TextEditingController().obs;
-  var descr = TextEditingController().obs;
-  var finanCost = TextEditingController().obs;
-  var finanSell = TextEditingController().obs;
-  var proSts = TextEditingController().obs;
-  var proDes = TextEditingController().obs;
-
   void controlDrawer() {
     if (!_scaffoldKey.currentState!.isDrawerOpen) {
       _scaffoldKey.currentState!.openDrawer();

@@ -34,7 +34,8 @@ class CreateSalesmanScreen extends StatelessWidget {
           children: [
             AppText.header(context, txt: 'Create Salesman'),
             spacer(context),
-            TitleUnderline(spacer: spacer(context), txt: 'Salesman Information'),
+            TitleUnderline(
+                spacer: spacer(context), txt: 'Salesman Information'),
             RowTextField(
               spacer: spacer(context),
               widget1: AppTextField(txt: 'Name', con: con.fullName.value),
@@ -52,7 +53,11 @@ class CreateSalesmanScreen extends StatelessWidget {
               spacer: spacer(context),
               widget1: AppTextField(txt: 'Position', con: con.position.value),
               widget2: AppTextField(txt: 'Salary', con: con.salary.value),
-              widget3: AppTextField(txt: 'Join Date', con: con.joinDate.value),
+              widget3: AppTextField(txt: 'Bonus', con: con.bonus.value),
+            ),
+            RowTextField(
+              spacer: spacer(context),
+              widget1: AppTextField(txt: 'Join Date', con: con.joinDate.value),
             ),
             spacer(context),
             spacer(context),

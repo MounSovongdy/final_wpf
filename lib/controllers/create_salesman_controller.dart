@@ -7,5 +7,6 @@ class CreateSalesmanController extends GetxController{
   var tel = TextEditingController().obs;
   var position = TextEditingController().obs;
   var salary = TextEditingController().obs;
+  var bonus = TextEditingController().obs;
   var joinDate = TextEditingController().obs;
 }

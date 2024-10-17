@@ -32,7 +32,7 @@ class MainScreen extends StatelessWidget {
     var appBar = CustomAppBar.defAppBar(
       context,
       tap: con.controlMenu,
-      txt: user[0].name,
+      txt: "user[0].name",
     );
 
     var drawer = Drawer(child: DrawerMenu());
@@ -81,7 +81,7 @@ class MainScreen extends StatelessWidget {
         case 5:
           return AddStockScreen();
         case 6:
-          return const CreateProductScreen();
+          return CreateProductScreen();
         case 7:
           return const FinancialRecordScreen();
         case 8:

@@ -38,22 +38,19 @@ class CreateUserScreen extends StatelessWidget {
             TitleUnderline(spacer: spacer(context), txt: 'User Information'),
             RowTextField(
               spacer: spacer(context),
-              widget1: AppTextField(txt: 'Name', con: con.fullName.value),
-              widget2: AppTextField(txt: 'Tel', con: con.tel.value),
-              widget3: AppDropdown(
-                txt: 'Role',
+              widget1: AppTextField(txt: 'Full Name', con: con.fullName.value),
+              widget2: AppDropdown(
+                txt: 'Role Level',
                 value: con.role,
                 list: role,
                 onChanged: (v) {
                   if (v != null) con.role = v;
                 },
               ),
-            ),
-            RowTextField(
-              spacer: spacer(context),
-              widget1: AppTextField(txt: 'User Name', con: con.user.value),
-              widget2: AppTextField(txt: 'Password', con: con.password.value),
-              widget3: AppTextField(txt: 'Confirm Password', con: con.conPassword.value),
+              widget3: AppTextField(
+                txt: 'User Login',
+                con: con.user.value,
+              ),
             ),
             spacer(context),
             spacer(context),

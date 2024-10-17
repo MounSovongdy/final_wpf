@@ -41,7 +41,7 @@ class AppTextField extends StatelessWidget {
           child: Container(
             width: width.px,
             height: height.px,
-            color: readOnly ? secondGreyColor : noneColor,
+            color: readOnly ? secondGreyColor.withOpacity(0.5) : noneColor,
             child: TextField(
               controller: con,
               obscureText: obscureText,

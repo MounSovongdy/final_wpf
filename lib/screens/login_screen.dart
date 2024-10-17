@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:motor/constants/constants.dart';
+import 'package:motor/constants/responsive.dart';
 import 'package:motor/controllers/login_controller.dart';
 import 'package:motor/screens/components/app_button.dart';
 import 'package:motor/screens/components/app_text_field.dart';
@@ -14,13 +15,15 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var flex = !Responsive.isMobile(context) ? 4 : 2;
+
     return Scaffold(
       body: Align(
         alignment: Alignment.center,
         child: Container(
           width: 650.px,
           height: 450.px,
-          padding: EdgeInsets.symmetric(horizontal: defWebPad.px * 4),
+          padding: EdgeInsets.symmetric(horizontal: defWebPad.px * flex),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
             border: Border.all(color: secondGreyColor),
@@ -32,11 +35,11 @@ class LoginScreen extends StatelessWidget {
               AppText.largeHeader(context, txt: "Motor Shop System"),
               spacer(context),
               spacer(context),
-              AppTextField(flex: 4, txt: 'User Login', con: con.email.value),
+              AppTextField(flex: flex, txt: 'User Login', con: con.email.value),
               spacer(context),
               Obx(
                 () => AppTextField(
-                  flex: 4,
+                  flex: flex,
                   txt: 'Password',
                   con: con.pass.value,
                   obscureText: con.visible.value,
