@@ -87,7 +87,7 @@ class MainScreen extends StatelessWidget {
         case 8:
           return const TotalExpenseScreen();
         case 9:
-          return const InvoiceScreen();
+          return InvoiceScreen();
         case 10:
           return CreateUserScreen();
         case 11:
