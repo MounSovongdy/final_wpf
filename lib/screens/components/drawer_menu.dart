@@ -109,6 +109,7 @@ class DrawerMenu extends StatelessWidget {
                         tap: () async {
                           if (Responsive.isMobile(context)) con.controlDrawer();
                           startInactivityTimer();
+                          conAS.listModel.clear();
                           await getAllProduct();
                           for (var pro in product) {
                             conAS.listModel.add(pro.model);

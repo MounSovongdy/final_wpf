@@ -4,13 +4,11 @@ class ProductModel {
   final String id;
   final String model;
   final String brand;
-  final String year;
 
   ProductModel({
     this.id = 'id',
     this.model = 'model',
     this.brand = 'brand',
-    this.year = 'year',
   });
 
   ProductModel copyWith({
@@ -23,7 +21,6 @@ class ProductModel {
       id: id ?? this.id,
       model: model ?? this.model,
       brand: brand ?? this.brand,
-      year: year ?? this.year,
     );
   }
 
@@ -32,7 +29,6 @@ class ProductModel {
       'id': id,
       'model': model,
       'brand': brand,
-      'year': year,
     };
   }
 
@@ -41,35 +37,28 @@ class ProductModel {
       id: map['id'] as String,
       model: map['model'] as String,
       brand: map['brand'] as String,
-      year: map['year'] as String,
     );
   }
 
   String toJson() => json.encode(toMap());
 
-  factory ProductModel.fromJson(String source) => ProductModel.fromMap(json.decode(source) as Map<String, dynamic>);
+  factory ProductModel.fromJson(String source) =>
+      ProductModel.fromMap(json.decode(source) as Map<String, dynamic>);
 
   @override
   String toString() {
-    return 'ProductModel(id: $id, model: $model, brand: $brand, year: $year)';
+    return 'ProductModel(id: $id, model: $model, brand: $brand)';
   }
 
   @override
   bool operator ==(covariant ProductModel other) {
     if (identical(this, other)) return true;
-  
-    return 
-      other.id == id &&
-      other.model == model &&
-      other.brand == brand &&
-      other.year == year;
+
+    return other.id == id && other.model == model && other.brand == brand;
   }
 
   @override
   int get hashCode {
-    return id.hashCode ^
-      model.hashCode ^
-      brand.hashCode ^
-      year.hashCode;
+    return id.hashCode ^ model.hashCode ^ brand.hashCode;
   }
 }

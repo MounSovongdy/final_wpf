@@ -1,37 +1,26 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:motor/constants/constants.dart';
 import 'package:motor/constants/responsive.dart';
 import 'package:motor/screens/widgets/app_text.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
-class AppTextField extends StatelessWidget {
+class AppDateTextField extends StatelessWidget {
   final String txt;
   final TextEditingController con;
   final bool readOnly, obscureText, showSuffixIcon;
-  final Widget? suffix;
   final double width, height;
   final int flex;
-  final bool isNumber;
-  final int digit;
-  final TextInputType txtInput;
-  final Function(String)? onChanged;
 
-  const AppTextField({
+  const AppDateTextField({
     super.key,
     required this.txt,
     required this.con,
     this.readOnly = false,
     this.obscureText = false,
     this.showSuffixIcon = false,
-    this.suffix,
     this.width = 150,
     this.height = 40,
     this.flex = 2,
-    this.isNumber = false,
-    this.digit = 4,
-    this.txtInput = TextInputType.text,
-    this.onChanged,
   });
 
   @override
@@ -54,15 +43,18 @@ class AppTextField extends StatelessWidget {
             child: TextField(
               controller: con,
               obscureText: obscureText,
-              onChanged: onChanged,
               readOnly: readOnly,
-              keyboardType: isNumber ? TextInputType.number : txtInput,
-              inputFormatters: isNumber
-                  ? [
-                      FilteringTextInputFormatter.digitsOnly,
-                      LengthLimitingTextInputFormatter(digit),
-                    ]
-                  : [],
+              onTap: () async {
+                DateTime? picked = await showDatePicker(
+                  context: context,
+                  initialDate: DateTime.now(),
+                  firstDate: DateTime(2023),
+                  lastDate: DateTime(2033),
+                );
+                if (picked != null) {
+                  con.text = "${picked.toLocal()}".split(' ')[0];
+                }
+              },
               style: TextStyle(
                 color: blackColor,
                 fontSize: Responsive.isDesktop(context) ? 16.px : 16.px - 2,
@@ -72,7 +64,7 @@ class AppTextField extends StatelessWidget {
               decoration: InputDecoration(
                 border: const OutlineInputBorder(),
                 contentPadding: EdgeInsets.symmetric(horizontal: defWebPad.px),
-                suffixIcon: showSuffixIcon ? suffix : null,
+                suffixIcon: const Icon(Icons.today),
               ),
             ),
           ),

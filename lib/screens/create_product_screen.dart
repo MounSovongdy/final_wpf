@@ -40,7 +40,6 @@ class CreateProductScreen extends StatelessWidget {
               spacer: spacer(context),
               widget1: AppTextField(txt: 'Model', con: con.proModel.value),
               widget2: AppTextField(txt: 'Brand', con: con.proBrand.value),
-              widget3: AppTextField(txt: 'Year', con: con.proYear.value),
             ),
             spacer(context),
             spacer(context),

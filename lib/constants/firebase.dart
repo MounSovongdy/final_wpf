@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:motor/models/add_stock_model.dart';
 import 'package:motor/models/micro_model.dart';
 import 'package:motor/models/product_model.dart';
 import 'package:motor/models/sale_man_model.dart';
@@ -12,12 +13,14 @@ final userCol = _firebase.collection('user');
 final saleManCol = _firebase.collection('sale_man');
 final microCol = _firebase.collection('micro');
 final productCol = _firebase.collection('product');
+final addStockCol = _firebase.collection('add_stock');
 
 var currVersion = '1.0.0'.obs;
 var user = [].obs;
 var saleMan = [].obs;
 var micro = [].obs;
 var product = [].obs;
+var addStock = [].obs;
 
 Future<void> getByUser(String userlogin) async {
   var res = await userCol.where('user', isEqualTo: userlogin).get();
@@ -93,4 +96,18 @@ Future<void> updateUserPassword(String user, String password) async {
   }
 
   await userCol.doc(docId).update({'password': password});
+}
+
+Future<void> getLastAddStock() async {
+  var res = await addStockCol.orderBy('id', descending: true).limit(1).get();
+  addStock.value =
+      res.docs.map((doc) => AddStockModel.fromMap(doc.data())).toList();
+}
+
+Future<void> insertAddStock(AddStockModel add) async {
+  try {
+    await addStockCol.doc(add.id).set(add.toMap());
+  } catch (e) {
+    debugPrint('Failed to add stock: $e');
+  }
 }

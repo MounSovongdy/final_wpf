@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:motor/constants/constants.dart';
+import 'package:motor/constants/firebase.dart';
 import 'package:motor/constants/responsive.dart';
 import 'package:motor/controllers/add_stock_controller.dart';
 import 'package:motor/screens/components/app_button.dart';
+import 'package:motor/screens/components/app_date_text_field.dart';
 import 'package:motor/screens/components/app_dropdown.dart';
 import 'package:motor/screens/components/app_text_field.dart';
 import 'package:motor/screens/components/row_text_field.dart';
@@ -43,7 +45,14 @@ class AddStockScreen extends StatelessWidget {
                 value: con.model,
                 list: con.listModel,
                 onChanged: (v) {
-                  if (v != null) con.model = v;
+                  if (v != null) {
+                    con.model = v;
+                    for (var data in product) {
+                      if (con.model == data.model) {
+                        con.brand.value.text = data.brand;
+                      }
+                    }
+                  }
                 },
               ),
               widget2: AppTextField(
@@ -54,7 +63,8 @@ class AddStockScreen extends StatelessWidget {
               widget3: AppTextField(
                 txt: 'Year',
                 con: con.proYear.value,
-                readOnly: true,
+                isNumber: true,
+                digit: 4,
               ),
             ),
             RowTextField(
@@ -97,9 +107,36 @@ class AddStockScreen extends StatelessWidget {
             ),
             RowTextField(
               spacer: spacer(context),
-              widget1: AppTextField(txt: 'Date In', con: con.date.value),
-              widget2: AppTextField(txt: 'Qty', con: con.qty.value),
-              widget3: AppTextField(txt: 'Price', con: con.price.value),
+              widget1: AppDateTextField(txt: 'Date In', con: con.date.value),
+              widget2: AppTextField(
+                txt: 'Qty',
+                con: con.qty.value,
+                isNumber: true,
+                onChanged: (v) {
+                  if (con.price.value.text != '' && con.qty.value.text != '') {
+                    var num = int.parse(con.qty.value.text) *
+                        int.parse(con.price.value.text);
+                    con.totalPrice.value.text = '$num';
+                  } else {
+                    con.totalPrice.value.clear();
+                  }
+                },
+              ),
+              widget3: AppTextField(
+                txt: 'Price',
+                con: con.price.value,
+                isNumber: true,
+                digit: 5,
+                onChanged: (v) {
+                  if (con.qty.value.text != '' && con.price.value.text != '') {
+                    var num = int.parse(con.qty.value.text) *
+                        int.parse(con.price.value.text);
+                    con.totalPrice.value.text = '$num';
+                  } else {
+                    con.totalPrice.value.clear();
+                  }
+                },
+              ),
             ),
             RowTextField(
               spacer: spacer(context),
@@ -121,14 +158,20 @@ class AddStockScreen extends StatelessWidget {
                   txt: 'Cancel',
                   width: Responsive.isDesktop(context) ? 150.px : 100.px,
                   color: secondGreyColor,
-                  tap: () {},
+                  tap: () {
+                    startInactivityTimer();
+                    con.clearText();
+                  },
                 ),
                 spacer(context),
                 spacer(context),
                 AppButton(
                   txt: 'Save',
                   width: Responsive.isDesktop(context) ? 150.px : 100.px,
-                  tap: () {},
+                  tap: () {
+                    startInactivityTimer();
+                    con.createAddStock(context);
+                  },
                 ),
               ],
             ),

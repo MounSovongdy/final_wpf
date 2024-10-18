@@ -11,14 +11,12 @@ class AppDropdown extends StatelessWidget {
   final List<String> list;
   final String? value;
   final Function(String?)? onChanged;
-  final VoidCallback? onTap;
 
   const AppDropdown({
     super.key,
     required this.txt,
     required this.list,
     required this.onChanged,
-    this.onTap,
     this.readOnly = true,
     this.showSuffixIcon = false,
     this.suffix,
@@ -52,7 +50,6 @@ class AppDropdown extends StatelessWidget {
                 );
               }).toList(),
               onChanged: onChanged,
-              onTap: onTap,
               decoration: InputDecoration(
                 border: const OutlineInputBorder(),
                 contentPadding: EdgeInsets.symmetric(horizontal: defWebPad.px),
