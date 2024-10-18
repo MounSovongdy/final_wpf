@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:motor/constants/constants.dart';
 import 'package:motor/constants/responsive.dart';
-import 'package:motor/controllers/cash_controller.dart';
+import 'package:motor/controllers/newBooking_controller.dart';
 import 'package:motor/screens/components/app_button.dart';
 import 'package:motor/screens/components/app_dropdown.dart';
 import 'package:motor/screens/components/app_text_field.dart';
@@ -12,15 +12,18 @@ import 'package:motor/screens/components/under_line.dart';
 import 'package:motor/screens/widgets/app_text.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
-class CashScreen extends StatelessWidget {
-  CashScreen({super.key});
+class NewBookingScreen extends StatelessWidget {
+  NewBookingScreen({super.key});
 
-  final con = Get.put(CashController());
+  final con = Get.put(MainController());
 
+  final micro = ['A', 'C', 'J', 'AP'];
+  final status = ['Leasing', 'Cash'];
+  final marital = ['Single', 'Married'];
   final gender = ['Male', 'Female'];
   final salesman = ['Thol', 'Sora','Piseth'];
-  final brand = ['Honda', 'Suzuki','Yamaha'];
-  final model = ['Dream','Best','Scoopy'];
+  final brand = ['Honda', 'Susuki','Yamaha'];
+  final model = ['Dream','Best', 'Sccoppy'];
   final color = ['Red', 'Black', 'Blue'];
   final condition = ['New', 'Used'];
 
@@ -38,18 +41,35 @@ class CashScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            AppText.header(context, txt: 'Cash'),
+            AppText.header(context, txt: 'New Booking'),
             spacer(context),
-            TitleUnderline(spacer: spacer(context), txt: 'Sell Information'),
+            TitleUnderline(spacer: spacer(context), txt: 'Booking Information'),
             RowTextField(
               spacer: spacer(context),
-              widget1: AppTextField(txt: 'Date', con: con.dateBooking.value),
-              widget2: AppDropdown(txt: 'Salesman', list: salesman, onChanged: (v){
+              widget1: AppTextField(txt: 'Date', con: con.date.value),
+              widget2: AppDropdown(
+                txt: 'Method',
+                value: con.bookingStatus,
+                list: status,
+                onChanged: (v) {
+                  if (v != null) con.bookingStatus = v;
+                },
+              ),
+              widget3: AppDropdown(
+                txt: 'Micro',
+                list: micro,
+                onChanged: (v) {
+                  if (v != null) con.micro = v;
+                },
+              ),
+            ),
+            RowTextField(
+              spacer: spacer(context),
+              widget1: AppDropdown(txt: 'Salesman', list: salesman, onChanged: (v){
                 if (v != null) con.salesman = v;
               },),
             ),
-            TitleUnderline(
-                spacer: spacer(context), txt: 'Customer Information'),
+            TitleUnderline(spacer: spacer(context), txt: 'Customer Information'),
             RowTextField(
               spacer: spacer(context),
               widget1: AppTextField(txt: 'ID Card', con: con.name.value),
@@ -72,64 +92,55 @@ class CashScreen extends StatelessWidget {
             TitleUnderline(spacer: spacer(context), txt: 'Product Information'),
             RowTextField(
               spacer: spacer(context),
-              widget1: AppDropdown(
-                txt: 'Brand',
-                list: brand,
-                onChanged: (v) {
-                  if (v != null) con.brand = v;
-                },
-              ),
-              widget2: AppDropdown(
-                txt: 'Model',
-                list: model,
-                onChanged: (v) {
-                  if (v != null) con.model = v;
-                },
-              ),
-              widget3: AppDropdown(
-                txt: 'Color',
-                list: color,
-                onChanged: (v) {
-                  if (v != null) con.color = v;
-                },
-              ),
+              widget1: AppDropdown(txt: 'Brand', list: brand, onChanged: (v){
+                if (v != null) con.brand = v;
+              },),
+              widget2: AppDropdown(txt: 'Model', list: model, onChanged: (v){
+                if (v != null) con.model = v;
+              },),
+              widget3: AppDropdown(txt: 'Color', list: color, onChanged: (v){
+                if (v != null) con.color = v;
+              },),
             ),
             RowTextField(
               spacer: spacer(context),
-              widget1: AppTextField(txt: 'Year', con: con.year.value),
-              widget2: AppDropdown(
-                txt: 'Condition',
-                list: condition,
-                onChanged: (v) {
-                  if (v != null) con.condition = v;
-                },
-              ),
-              widget3: AppTextField(txt: 'Engine No', con: con.engine.value),
+              widget1: AppTextField(txt: 'Year', con: con.year.value,readOnly: true,),
+              widget2: AppDropdown(txt: 'Condition', list: condition, onChanged: (v){
+                if (v != null) con.condition = v;
+              },),
             ),
-            RowTextField(
-              spacer: spacer(context),
-              widget1: AppTextField(txt: 'Frame No', con: con.frame.value),
-              widget2: AppTextField(txt: 'Plate No', con: con.plateNo.value),
-            ),
-            TitleUnderline(
-                spacer: spacer(context), txt: 'Financial Information'),
+            TitleUnderline(spacer: spacer(context), txt: 'Financial Information'),
             RowTextField(
               spacer: spacer(context),
               widget1: AppTextField(txt: 'Sell Price', con: con.sell.value),
               widget2: AppTextField(txt: 'Discount', con: con.discount.value),
-              widget3: AppTextField(
-                txt: 'Total Price',
-                con: con.totalPrice.value,
-                readOnly: true,
-              ),
+              widget3: AppTextField(txt: 'Deposit', con: con.depo.value),
             ),
-            TitleUnderline(
-                spacer: spacer(context), txt: 'Introduced Information'),
             RowTextField(
               spacer: spacer(context),
+              widget1: AppTextField(txt: 'Remain', con: con.remain.value,readOnly: true,),
+            ),
+            TitleUnderline(spacer: spacer(context), txt: 'Introduced Information'),
+            RowTextField(spacer: spacer(context),
               widget1: AppTextField(txt: 'Name', con: con.nameIntro.value),
               widget2: AppTextField(txt: 'Tel', con: con.phoneIntro.value),
             ),
+            spacer(context),
+            spacer(context),
+            Responsive.isDesktop(context)
+                ? Container(
+                    margin: EdgeInsets.only(left: 5.px, right: defWebPad.px),
+                    child: AppTextField(
+                      txt: 'Remark',
+                      con: con.remark.value,
+                      flex: 10,
+                    ),
+                  )
+                : RowTextField(
+                    spacer: spacer(context),
+                    widget1: AppTextField(txt: 'Remark', con: con.remark.value),
+                  ),
+            spacer(context),
             spacer(context),
             spacer(context),
             const UnderLine(color: secondGreyColor),

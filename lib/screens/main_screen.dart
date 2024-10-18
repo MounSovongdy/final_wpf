@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:motor/constants/constants.dart';
 import 'package:motor/constants/responsive.dart';
-import 'package:motor/controllers/main_controller.dart';
+import 'package:motor/controllers/newBooking_controller.dart';
 import 'package:motor/screens/Sale_report_screen.dart';
 import 'package:motor/screens/add_stock_screen.dart';
 import 'package:motor/screens/booking_screen.dart';
+import 'package:motor/screens/newBooking_screen.dart';
 import 'package:motor/screens/cash_screen.dart';
 import 'package:motor/screens/create_micro_screen.dart';
 import 'package:motor/screens/create_product_screen.dart';
@@ -108,6 +109,8 @@ class MainScreen extends StatelessWidget {
           return CashScreen();
         case 17:
           return SaleReportScreen();
+        case 18:
+          return NewBookingScreen();
         default:
           return DashboardScreen();
       }
