@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:motor/constants/constants.dart';
 import 'package:motor/constants/responsive.dart';
 import 'package:motor/controllers/main_controller.dart';
-import 'package:motor/controllers/total_stock_controller.dart';
+import 'package:motor/controllers/user_controller.dart';
 import 'package:motor/screens/components/app_button.dart';
 import 'package:motor/screens/components/app_data_table.dart';
 import 'package:motor/screens/components/under_line.dart';
@@ -11,10 +11,10 @@ import 'package:motor/screens/widgets/app_text.dart';
 import 'package:motor/screens/widgets/data_table_widget.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
-class TotalStockScreen extends StatelessWidget {
-  TotalStockScreen({super.key});
+class UserScreen extends StatelessWidget {
+  UserScreen({super.key});
 
-  final con = Get.put(TotalStockController());
+  final con = Get.put(UserController());
   final con1 = Get.put(MainController());
   final scroll = ScrollController();
 
@@ -32,7 +32,7 @@ class TotalStockScreen extends StatelessWidget {
         shrinkWrap: true,
         physics: const BouncingScrollPhysics(),
         children: [
-          AppText.header(context, txt: 'Total Stock'),
+          AppText.header(context, txt: 'User List'),
           spacer(context),
           TextField(
             controller: con.search.value,
@@ -54,16 +54,11 @@ class TotalStockScreen extends StatelessWidget {
                 () => AppDataTable(
                   column: [
                     DataTableWidget.dataColumn(context, 'No'),
-                    DataTableWidget.dataColumn(context, 'Date In'),
-                    DataTableWidget.dataColumn(context, 'Model'),
-                    DataTableWidget.dataColumn(context, 'Brand'),
-                    DataTableWidget.dataColumn(context, 'Year'),
-                    DataTableWidget.dataColumn(context, 'Condition'),
-                    DataTableWidget.dataColumn(context, 'QTY Begin'),
-                    DataTableWidget.dataColumn(context, 'QTY Today'),
-                    DataTableWidget.dataColumn(context, 'Total Stock'),
-                    DataTableWidget.dataColumn(context, 'Price in QTY Begin'),
-                    DataTableWidget.dataColumn(context, 'Price in QTY Today'),
+                    DataTableWidget.dataColumn(context, 'Full Name'),
+                    DataTableWidget.dataColumn(context, 'Role level'),
+                    DataTableWidget.dataColumn(context, 'User Login'),
+                    DataTableWidget.dataColumn(context, 'Date Create'),
+                    DataTableWidget.dataColumn(context, 'Status'),
                     DataTableWidget.dataColumn(context, 'Action'),
                   ],
                   row: List.generate(
@@ -100,17 +95,11 @@ class TotalStockScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               AppButton(
-                txt: 'Print Report',
+                txt: 'Create User',
                 width: Responsive.isDesktop(context) ? 150.px : 100.px,
-                color: secondGreyColor,
-                tap: () {},
-              ),
-              spacer(context),
-              spacer(context),
-              AppButton(
-                txt: 'Add Stock',
-                width: Responsive.isDesktop(context) ? 150.px : 100.px,
-                tap: () {con1.index.value = 5;},
+                tap: () {
+                  con1.index.value = 12;
+                },
               ),
             ],
           ),

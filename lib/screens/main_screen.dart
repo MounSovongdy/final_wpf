@@ -3,8 +3,10 @@ import 'package:get/get.dart';
 import 'package:motor/constants/constants.dart';
 import 'package:motor/constants/responsive.dart';
 import 'package:motor/controllers/main_controller.dart';
+import 'package:motor/screens/Sale_report_screen.dart';
 import 'package:motor/screens/add_stock_screen.dart';
 import 'package:motor/screens/booking_screen.dart';
+import 'package:motor/screens/cash_screen.dart';
 import 'package:motor/screens/create_micro_screen.dart';
 import 'package:motor/screens/create_product_screen.dart';
 import 'package:motor/screens/create_salesman_screen.dart';
@@ -12,10 +14,13 @@ import 'package:motor/screens/create_user_screen.dart';
 import 'package:motor/screens/dashboard_screen.dart';
 import 'package:motor/screens/financial_record_screen.dart';
 import 'package:motor/screens/invoice_screen.dart';
+import 'package:motor/screens/micro_screen.dart';
 import 'package:motor/screens/receivable_screen.dart';
-import 'package:motor/screens/sale_record_screen.dart';
+import 'package:motor/screens/leasing_screen.dart';
+import 'package:motor/screens/salesman_screen.dart';
 import 'package:motor/screens/total_expense_screen.dart';
 import 'package:motor/screens/total_stock_screen.dart';
+import 'package:motor/screens/user_screen.dart';
 import 'package:motor/screens/widgets/custom_app_bar.dart';
 import 'package:motor/screens/components/drawer_menu.dart';
 
@@ -93,6 +98,16 @@ class MainScreen extends StatelessWidget {
           return CreateSalesmanScreen();
         case 12:
           return CreateMicroScreen();
+        case 13:
+          return UserScreen();
+        case 14:
+          return SalesmanScreen();
+        case 15:
+          return MicroScreen();
+        case 16:
+          return CashScreen();
+        case 17:
+          return SaleReportScreen();
         default:
           return DashboardScreen();
       }

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:motor/constants/constants.dart';
 import 'package:motor/constants/responsive.dart';
-import 'package:motor/controllers/sale_controller.dart';
+import 'package:motor/controllers/leasing_controller.dart';
 import 'package:motor/screens/components/app_button.dart';
 import 'package:motor/screens/components/app_text_field.dart';
 import 'package:motor/screens/components/row_text_field.dart';
@@ -14,7 +14,7 @@ import 'package:responsive_sizer/responsive_sizer.dart';
 class SaleRecordScreen extends StatelessWidget {
   SaleRecordScreen({super.key});
 
-  final con = Get.put(SaleController());
+  final con = Get.put(LeasingController());
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +30,7 @@ class SaleRecordScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            AppText.header(context, txt: 'Sale Record'),
+            AppText.header(context, txt: 'Leasing'),
             spacer(context),
             TitleUnderline(spacer: spacer(context), txt: 'Customer Information'),
             RowTextField(

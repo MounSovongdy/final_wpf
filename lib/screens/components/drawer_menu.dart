@@ -54,15 +54,50 @@ class DrawerMenu extends StatelessWidget {
                   title: 'Booking',
                   svgSrc: 'assets/icons/Booking.svg',
                 ),
-                DrawerListTile(
-                  tap: () {
-                    if (Responsive.isMobile(context)) con.controlDrawer();
-                    startInactivityTimer();
-
-                    con.index.value = 2;
-                  },
+                DrawerExpansionTile(
                   title: 'Sale Record',
-                  svgSrc: 'assets/icons/SaleRecord.svg',
+                  svgSrc: 'assets/icons/Financial.svg',
+                  children: [
+                    Container(
+                      padding: EdgeInsets.only(left: 36.px),
+                      child: DrawerListTile(
+                        tap: () {
+                          if (Responsive.isMobile(context)) con.controlDrawer();
+                          startInactivityTimer();
+
+                          con.index.value = 2;
+                        },
+                        title: 'Leasing',
+                        svgSrc: 'assets/icons/SaleRecord.svg',
+                      ),
+                    ),
+                    Container(
+                      padding: EdgeInsets.only(left: 36.px),
+                      child: DrawerListTile(
+                        tap: () {
+                          if (Responsive.isMobile(context)) con.controlDrawer();
+                          startInactivityTimer();
+
+                          con.index.value = 16;
+                        },
+                        title: 'Cash',
+                        svgSrc: 'assets/icons/TotalExpenses.svg',
+                      ),
+                    ),
+                    Container(
+                      padding: EdgeInsets.only(left: 36.px),
+                      child: DrawerListTile(
+                        tap: () {
+                          if (Responsive.isMobile(context)) con.controlDrawer();
+                          startInactivityTimer();
+
+                          con.index.value = 17;
+                        },
+                        title: 'Report',
+                        svgSrc: 'assets/icons/Report.svg',
+                      ),
+                    ),
+                  ],
                 ),
                 DrawerListTile(
                   tap: () {
@@ -178,9 +213,9 @@ class DrawerMenu extends StatelessWidget {
                           if (Responsive.isMobile(context)) con.controlDrawer();
                           startInactivityTimer();
 
-                          con.index.value = 10;
+                          con.index.value = 13;
                         },
-                        title: 'Create User',
+                        title: 'User',
                         svgSrc: 'assets/icons/CreateUser.svg',
                       ),
                     ),
@@ -191,9 +226,9 @@ class DrawerMenu extends StatelessWidget {
                           if (Responsive.isMobile(context)) con.controlDrawer();
                           startInactivityTimer();
 
-                          con.index.value = 11;
+                          con.index.value = 14;
                         },
-                        title: 'Create Salesman',
+                        title: 'Salesman',
                         svgSrc: 'assets/icons/CreateSalesman.svg',
                       ),
                     ),
@@ -204,9 +239,9 @@ class DrawerMenu extends StatelessWidget {
                           if (Responsive.isMobile(context)) con.controlDrawer();
                           startInactivityTimer();
 
-                          con.index.value = 12;
+                          con.index.value = 15;
                         },
-                        title: 'Create Micro',
+                        title: 'Micro',
                         svgSrc: 'assets/icons/CreateMicro.svg',
                       ),
                     ),

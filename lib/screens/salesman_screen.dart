@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:motor/constants/constants.dart';
 import 'package:motor/constants/responsive.dart';
 import 'package:motor/controllers/main_controller.dart';
-import 'package:motor/controllers/total_stock_controller.dart';
+import 'package:motor/controllers/salesman_controller.dart';
 import 'package:motor/screens/components/app_button.dart';
 import 'package:motor/screens/components/app_data_table.dart';
 import 'package:motor/screens/components/under_line.dart';
@@ -11,10 +11,10 @@ import 'package:motor/screens/widgets/app_text.dart';
 import 'package:motor/screens/widgets/data_table_widget.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
-class TotalStockScreen extends StatelessWidget {
-  TotalStockScreen({super.key});
+class SalesmanScreen extends StatelessWidget {
+  SalesmanScreen({super.key});
 
-  final con = Get.put(TotalStockController());
+  final con = Get.put(SalesmanController());
   final con1 = Get.put(MainController());
   final scroll = ScrollController();
 
@@ -32,7 +32,7 @@ class TotalStockScreen extends StatelessWidget {
         shrinkWrap: true,
         physics: const BouncingScrollPhysics(),
         children: [
-          AppText.header(context, txt: 'Total Stock'),
+          AppText.header(context, txt: 'Salesman List'),
           spacer(context),
           TextField(
             controller: con.search.value,
@@ -51,24 +51,21 @@ class TotalStockScreen extends StatelessWidget {
               controller: scroll,
               scrollDirection: Axis.horizontal,
               child: Obx(
-                () => AppDataTable(
+                    () => AppDataTable(
                   column: [
                     DataTableWidget.dataColumn(context, 'No'),
-                    DataTableWidget.dataColumn(context, 'Date In'),
-                    DataTableWidget.dataColumn(context, 'Model'),
-                    DataTableWidget.dataColumn(context, 'Brand'),
-                    DataTableWidget.dataColumn(context, 'Year'),
-                    DataTableWidget.dataColumn(context, 'Condition'),
-                    DataTableWidget.dataColumn(context, 'QTY Begin'),
-                    DataTableWidget.dataColumn(context, 'QTY Today'),
-                    DataTableWidget.dataColumn(context, 'Total Stock'),
-                    DataTableWidget.dataColumn(context, 'Price in QTY Begin'),
-                    DataTableWidget.dataColumn(context, 'Price in QTY Today'),
+                    DataTableWidget.dataColumn(context, 'Full Name'),
+                    DataTableWidget.dataColumn(context, 'Gender'),
+                    DataTableWidget.dataColumn(context, 'Tel'),
+                    DataTableWidget.dataColumn(context, 'Position'),
+                    DataTableWidget.dataColumn(context, 'salary'),
+                    DataTableWidget.dataColumn(context, 'Bonus'),
+                    DataTableWidget.dataColumn(context, 'Join Date'),
                     DataTableWidget.dataColumn(context, 'Action'),
                   ],
                   row: List.generate(
                     con.filteredUsers.length,
-                    (index) => DataRow(cells: [
+                        (index) => DataRow(cells: [
                       DataTableWidget.dataRowTxt(
                         context,
                         con.filteredUsers[index].id,
@@ -86,7 +83,7 @@ class TotalStockScreen extends StatelessWidget {
                         edit: () => debugPrint('Edit $index'),
                         delete: () => debugPrint('Delete $index'),
                       ),
-                    ]),
+                    ],),
                   ),
                 ),
               ),
@@ -100,17 +97,11 @@ class TotalStockScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               AppButton(
-                txt: 'Print Report',
+                txt: 'Create Salesman',
                 width: Responsive.isDesktop(context) ? 150.px : 100.px,
-                color: secondGreyColor,
-                tap: () {},
-              ),
-              spacer(context),
-              spacer(context),
-              AppButton(
-                txt: 'Add Stock',
-                width: Responsive.isDesktop(context) ? 150.px : 100.px,
-                tap: () {con1.index.value = 5;},
+                tap: () {
+                  con1.index.value = 11;
+                },
               ),
             ],
           ),
