@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:motor/constants/constants.dart';
+import 'package:motor/constants/firebase.dart';
 import 'package:motor/constants/responsive.dart';
 import 'package:motor/controllers/create_salesman_controller.dart';
 import 'package:motor/controllers/main_controller.dart';
+import 'package:motor/controllers/salesman_controller.dart';
 import 'package:motor/screens/components/app_button.dart';
+import 'package:motor/screens/components/app_date_text_field.dart';
 import 'package:motor/screens/components/app_dropdown.dart';
 import 'package:motor/screens/components/app_text_field.dart';
 import 'package:motor/screens/components/row_text_field.dart';
@@ -18,9 +21,10 @@ class CreateSalesmanScreen extends StatelessWidget {
 
   final con = Get.put(CreateSalesmanController());
   final conMain = Get.put(MainController());
+  final conSM = Get.put(SalesmanController());
+
   final gender = ['Male', 'Female'];
   final position = ['Sale'];
-
 
   @override
   Widget build(BuildContext context) {
@@ -68,12 +72,25 @@ class CreateSalesmanScreen extends StatelessWidget {
                   if (v != null) con.position = v;
                 },
               ),
-              widget2: AppTextField(txt: 'Salary', con: con.salary.value),
-              widget3: AppTextField(txt: 'Bonus', con: con.bonus.value),
+              widget2: AppTextField(
+                txt: 'Salary',
+                con: con.salary.value,
+                isNumber: true,
+                digit: 5,
+              ),
+              widget3: AppTextField(
+                txt: 'Bonus',
+                con: con.bonus.value,
+                isNumber: true,
+                digit: 5,
+              ),
             ),
             RowTextField(
               spacer: spacer(context),
-              widget1: AppTextField(txt: 'Join Date', con: con.joinDate.value),
+              widget1: AppDateTextField(
+                txt: 'Join Date',
+                con: con.joinDate.value,
+              ),
             ),
             spacer(context),
             spacer(context),
@@ -87,9 +104,13 @@ class CreateSalesmanScreen extends StatelessWidget {
                   txt: 'Back',
                   width: Responsive.isDesktop(context) ? 150.px : 100.px,
                   color: secondGreyColor,
-                  tap: () {
+                  tap: () async {
                     startInactivityTimer();
                     con.clearText();
+                    await getAllSaleMan();
+                    conSM.filteredSale.value = saleMan;
+                    conSM.search.value.addListener(conSM.filterSaleData);
+
                     conMain.index.value = conMain.index.value - 1;
                   },
                 ),

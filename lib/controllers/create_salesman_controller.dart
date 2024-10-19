@@ -19,7 +19,6 @@ class CreateSalesmanController extends GetxController {
     if (fullName.value.text != '' &&
         salary.value.text != '' &&
         bonus.value.text != '' &&
-        joinDate.value.text != '' &&
         gender != null &&
         position != null) {
       await getLastSaleMan();

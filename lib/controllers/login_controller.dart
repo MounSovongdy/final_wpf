@@ -16,10 +16,10 @@ class LoginController extends GetxController {
 
   void login(BuildContext context) async {
     if (email.value.text != '' && pass.value.text != '') {
-     await getByUser(email.value.text);
+      await getByUser(email.value.text);
 
-      if (user.isNotEmpty) {
-        if (pass.value.text == user[0].password) {
+      if (byUser.isNotEmpty) {
+        if (pass.value.text == byUser[0].password) {
           if (pass.value.text == '123456') {
             changePassword(Get.context!);
           } else {

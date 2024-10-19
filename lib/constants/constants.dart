@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:motor/constants/responsive.dart';
 import 'package:universal_html/html.dart' as html;
 
@@ -16,6 +17,9 @@ const greenColor = Colors.green;
 var defRadius = 10.0;
 var defWebPad = 16.0;
 var defMobPad = 8.0;
+
+var dateFormat = DateFormat('yyyy-MM-dd');
+var timeFormat = DateFormat.Hm();
 
 Timer? inactivityTimer;
 

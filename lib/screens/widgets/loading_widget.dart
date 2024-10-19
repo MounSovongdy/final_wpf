@@ -42,6 +42,7 @@ class LoadingWidget {
     required title,
     required content,
     Color color = redColor,
+    Color btnColor = blackColor,
     String txtBack = 'Confirm',
     Widget? widget,
   }) {
@@ -55,7 +56,7 @@ class LoadingWidget {
           actions: [
             TextButton(
               onPressed: () => Navigator.of(context).pop(),
-              child: AppText.title(context, txt: txtBack),
+              child: AppText.title(context, txt: txtBack, color: btnColor),
             ),
             widget ?? Container(),
           ],

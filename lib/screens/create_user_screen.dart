@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:motor/constants/constants.dart';
+import 'package:motor/constants/firebase.dart';
 import 'package:motor/constants/responsive.dart';
 import 'package:motor/controllers/create_user_controller.dart';
 import 'package:motor/controllers/main_controller.dart';
+import 'package:motor/controllers/user_controller.dart';
 import 'package:motor/screens/components/app_button.dart';
 import 'package:motor/screens/components/app_dropdown.dart';
 import 'package:motor/screens/components/app_text_field.dart';
@@ -17,6 +19,7 @@ class CreateUserScreen extends StatelessWidget {
   CreateUserScreen({super.key});
 
   final con = Get.put(CreateUserController());
+  final conU = Get.put(UserController());
   final conMain = Get.put(MainController());
 
   final role = ['Super Admin', 'Admin', 'User'];
@@ -66,9 +69,13 @@ class CreateUserScreen extends StatelessWidget {
                   txt: 'Back',
                   width: Responsive.isDesktop(context) ? 150.px : 100.px,
                   color: secondGreyColor,
-                  tap: () {
+                  tap: () async {
                     startInactivityTimer();
                     con.clearText();
+                    await getAllUser();
+                    conU.filteredUsers.value = user;
+                    conU.search.value.addListener(conU.filterUserData);
+
                     conMain.index.value = conMain.index.value - 1;
                   },
                 ),

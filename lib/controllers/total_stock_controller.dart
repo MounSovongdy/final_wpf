@@ -9,7 +9,7 @@ class TotalStockController extends GetxController {
   void filterUserData() {
     String query = search.value.text.toLowerCase();
 
-    filteredUsers.value = user.where((data) {
+    filteredUsers.value = byUser.where((data) {
       return data.id.toString().contains(query) ||
           data.name.toLowerCase().contains(query) ||
           data.role.toLowerCase().contains(query);

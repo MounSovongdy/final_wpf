@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:motor/constants/constants.dart';
+import 'package:motor/constants/firebase.dart';
 import 'package:motor/constants/responsive.dart';
 import 'package:motor/controllers/main_controller.dart';
 import 'package:motor/controllers/user_controller.dart';
@@ -9,6 +10,7 @@ import 'package:motor/screens/components/app_data_table.dart';
 import 'package:motor/screens/components/under_line.dart';
 import 'package:motor/screens/widgets/app_text.dart';
 import 'package:motor/screens/widgets/data_table_widget.dart';
+import 'package:motor/screens/widgets/loading_widget.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 class UserScreen extends StatelessWidget {
@@ -53,35 +55,63 @@ class UserScreen extends StatelessWidget {
               child: Obx(
                 () => AppDataTable(
                   column: [
-                    DataTableWidget.dataColumn(context, 'No'),
+                    DataTableWidget.dataColumn(context, 'ID'),
                     DataTableWidget.dataColumn(context, 'Full Name'),
                     DataTableWidget.dataColumn(context, 'Role level'),
                     DataTableWidget.dataColumn(context, 'User Login'),
                     DataTableWidget.dataColumn(context, 'Date Create'),
-                    DataTableWidget.dataColumn(context, 'Status'),
                     DataTableWidget.dataColumn(context, 'Action'),
                   ],
                   row: List.generate(
                     con.filteredUsers.length,
-                    (index) => DataRow(cells: [
-                      DataTableWidget.dataRowTxt(
-                        context,
-                        con.filteredUsers[index].id,
-                      ),
-                      DataTableWidget.dataRowTxt(
-                        context,
-                        con.filteredUsers[index].name,
-                      ),
-                      DataTableWidget.dataRowTxt(
-                        context,
-                        con.filteredUsers[index].role,
-                      ),
-                      DataTableWidget.dataRowBtn(
-                        context,
-                        edit: () => debugPrint('Edit $index'),
-                        delete: () => debugPrint('Delete $index'),
-                      ),
-                    ]),
+                    (index) => DataRow(
+                      cells: [
+                        DataTableWidget.dataRowTxt(
+                          context,
+                          con.filteredUsers[index].id,
+                        ),
+                        DataTableWidget.dataRowTxt(
+                          context,
+                          con.filteredUsers[index].name,
+                        ),
+                        DataTableWidget.dataRowTxt(
+                          context,
+                          con.filteredUsers[index].role,
+                        ),
+                        DataTableWidget.dataRowTxt(
+                          context,
+                          con.filteredUsers[index].user,
+                        ),
+                        DataTableWidget.dataRowTxt(
+                          context,
+                          con.filteredUsers[index].dateCreate,
+                        ),
+                        DataTableWidget.dataRowBtn(
+                          context,
+                          edit: () => debugPrint('Edit $index'),
+                          delete: () {
+                            startInactivityTimer();
+                            LoadingWidget.showTextDialog(
+                              context,
+                              title: 'Warning',
+                              content: 'Are you sure to delete?',
+                              color: redColor,
+                              txtBack: 'Cancel',
+                              btnColor: secondGreyColor,
+                              widget: TextButton(
+                                onPressed: () async {
+                                  deleteUser(con.filteredUsers[index].id);
+                                  await getAllUser();
+                                  con.filteredUsers.value = user;
+                                  Get.back();
+                                },
+                                child: AppText.title(context, txt: 'Confirm'),
+                              ),
+                            );
+                          },
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),

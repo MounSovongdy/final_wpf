@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:motor/constants/constants.dart';
+import 'package:motor/constants/firebase.dart';
 import 'package:motor/constants/responsive.dart';
 import 'package:motor/controllers/create_micro_controller.dart';
 import 'package:motor/controllers/main_controller.dart';
+import 'package:motor/controllers/micro_controller.dart';
 import 'package:motor/screens/components/app_button.dart';
 import 'package:motor/screens/components/app_text_field.dart';
 import 'package:motor/screens/components/row_text_field.dart';
@@ -16,6 +18,7 @@ class CreateMicroScreen extends StatelessWidget {
   CreateMicroScreen({super.key});
 
   final con = Get.put(CreateMicroController());
+  final conMi = Get.put(MicroController());
   final conMain = Get.put(MainController());
 
   @override
@@ -58,6 +61,8 @@ class CreateMicroScreen extends StatelessWidget {
               widget1: AppTextField(
                 txt: 'T Bonus',
                 con: con.tBonus.value,
+                isNumber: true,
+                digit: 5,
               ),
             ),
             TitleUnderline(
@@ -98,9 +103,13 @@ class CreateMicroScreen extends StatelessWidget {
                   txt: 'Back',
                   width: Responsive.isDesktop(context) ? 150.px : 100.px,
                   color: secondGreyColor,
-                  tap: () {
+                  tap: () async {
                     startInactivityTimer();
                     con.clearText();
+                    await getAllMicro();
+                    conMi.filteredMicro.value = micro;
+                    conMi.search.value.addListener(conMi.filterMicroData);
+
                     conMain.index.value = conMain.index.value - 1;
                   },
                 ),

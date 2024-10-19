@@ -5,7 +5,10 @@ import 'package:motor/constants/firebase.dart';
 import 'package:motor/constants/responsive.dart';
 import 'package:motor/controllers/add_stock_controller.dart';
 import 'package:motor/controllers/main_controller.dart';
+import 'package:motor/controllers/micro_controller.dart';
+import 'package:motor/controllers/salesman_controller.dart';
 import 'package:motor/controllers/total_stock_controller.dart';
+import 'package:motor/controllers/user_controller.dart';
 import 'package:motor/screens/components/drawer_expansion_tile.dart';
 import 'package:motor/screens/components/drawer_list_tile.dart';
 import 'package:motor/screens/components/under_line.dart';
@@ -19,6 +22,9 @@ class DrawerMenu extends StatelessWidget {
   final con = Get.put(MainController());
   final conTS = Get.put(TotalStockController());
   final conAS = Get.put(AddStockController());
+  final conU = Get.put(UserController());
+  final conMi = Get.put(MicroController());
+  final conSM = Get.put(SalesmanController());
 
   @override
   Widget build(BuildContext context) {
@@ -130,7 +136,7 @@ class DrawerMenu extends StatelessWidget {
                           if (Responsive.isMobile(context)) con.controlDrawer();
                           startInactivityTimer();
 
-                          conTS.filteredUsers.value = user;
+                          conTS.filteredUsers.value = byUser;
                           conTS.search.value.addListener(conTS.filterUserData);
                           con.index.value = 9;
                         },
@@ -192,10 +198,12 @@ class DrawerMenu extends StatelessWidget {
                     Container(
                       padding: EdgeInsets.only(left: 36.px),
                       child: DrawerListTile(
-                        tap: () {
+                        tap: () async {
                           if (Responsive.isMobile(context)) con.controlDrawer();
                           startInactivityTimer();
-
+                          await getAllUser();
+                          conU.filteredUsers.value = user;
+                          conU.search.value.addListener(conU.filterUserData);
                           con.index.value = 15;
                         },
                         title: 'User',
@@ -205,9 +213,12 @@ class DrawerMenu extends StatelessWidget {
                     Container(
                       padding: EdgeInsets.only(left: 36.px),
                       child: DrawerListTile(
-                        tap: () {
+                        tap: () async {
                           if (Responsive.isMobile(context)) con.controlDrawer();
                           startInactivityTimer();
+                          await getAllSaleMan();
+                          conSM.filteredSale.value = saleMan;
+                          conSM.search.value.addListener(conSM.filterSaleData);
 
                           con.index.value = 17;
                         },
@@ -218,9 +229,12 @@ class DrawerMenu extends StatelessWidget {
                     Container(
                       padding: EdgeInsets.only(left: 36.px),
                       child: DrawerListTile(
-                        tap: () {
+                        tap: () async {
                           if (Responsive.isMobile(context)) con.controlDrawer();
                           startInactivityTimer();
+                          await getAllMicro();
+                          conMi.filteredMicro.value = micro;
+                          conMi.search.value.addListener(conMi.filterMicroData);
 
                           con.index.value = 19;
                         },

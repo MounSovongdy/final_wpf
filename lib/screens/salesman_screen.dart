@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:motor/constants/constants.dart';
+import 'package:motor/constants/firebase.dart';
 import 'package:motor/constants/responsive.dart';
 import 'package:motor/controllers/main_controller.dart';
 import 'package:motor/controllers/salesman_controller.dart';
@@ -9,6 +10,7 @@ import 'package:motor/screens/components/app_data_table.dart';
 import 'package:motor/screens/components/under_line.dart';
 import 'package:motor/screens/widgets/app_text.dart';
 import 'package:motor/screens/widgets/data_table_widget.dart';
+import 'package:motor/screens/widgets/loading_widget.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 class SalesmanScreen extends StatelessWidget {
@@ -51,41 +53,93 @@ class SalesmanScreen extends StatelessWidget {
               controller: scroll,
               scrollDirection: Axis.horizontal,
               child: Obx(
-                    () => AppDataTable(
-                  column: [
-                    DataTableWidget.dataColumn(context, 'No'),
-                    DataTableWidget.dataColumn(context, 'Full Name'),
-                    DataTableWidget.dataColumn(context, 'Gender'),
-                    DataTableWidget.dataColumn(context, 'Tel'),
-                    DataTableWidget.dataColumn(context, 'Position'),
-                    DataTableWidget.dataColumn(context, 'salary'),
-                    DataTableWidget.dataColumn(context, 'Bonus'),
-                    DataTableWidget.dataColumn(context, 'Join Date'),
-                    DataTableWidget.dataColumn(context, 'Action'),
-                  ],
-                  row: List.generate(
-                    con.filteredUsers.length,
-                        (index) => DataRow(cells: [
-                      DataTableWidget.dataRowTxt(
-                        context,
-                        con.filteredUsers[index].id,
+                () => con.filteredSale.isNotEmpty
+                    ? AppDataTable(
+                        column: [
+                          DataTableWidget.dataColumn(context, 'ID'),
+                          DataTableWidget.dataColumn(
+                            context,
+                            'Full Name                 ',
+                          ),
+                          DataTableWidget.dataColumn(context, 'Gender   '),
+                          DataTableWidget.dataColumn(context, 'Tel'),
+                          DataTableWidget.dataColumn(context, 'Position'),
+                          DataTableWidget.dataColumn(context, 'Salary'),
+                          DataTableWidget.dataColumn(context, 'Bonus'),
+                          DataTableWidget.dataColumn(context, 'Join Date   '),
+                          DataTableWidget.dataColumn(context, 'Action    '),
+                        ],
+                        row: List.generate(
+                          con.filteredSale.length,
+                          (index) => DataRow(
+                            cells: [
+                              DataTableWidget.dataRowTxt(
+                                context,
+                                con.filteredSale[index].id,
+                              ),
+                              DataTableWidget.dataRowTxt(
+                                context,
+                                con.filteredSale[index].name,
+                              ),
+                              DataTableWidget.dataRowTxt(
+                                context,
+                                con.filteredSale[index].gender,
+                              ),
+                              DataTableWidget.dataRowTxt(
+                                context,
+                                con.filteredSale[index].tel,
+                              ),
+                              DataTableWidget.dataRowTxt(
+                                context,
+                                con.filteredSale[index].position,
+                              ),
+                              DataTableWidget.dataRowTxt(
+                                context,
+                                con.filteredSale[index].salary,
+                              ),
+                              DataTableWidget.dataRowTxt(
+                                context,
+                                con.filteredSale[index].bonus,
+                              ),
+                              DataTableWidget.dataRowTxt(
+                                context,
+                                con.filteredSale[index].date,
+                              ),
+                              DataTableWidget.dataRowBtn(
+                                context,
+                                edit: () => debugPrint('Edit $index'),
+                                delete: () {
+                                  startInactivityTimer();
+                                  LoadingWidget.showTextDialog(
+                                    context,
+                                    title: 'Warning',
+                                    content: 'Are you sure to delete?',
+                                    color: redColor,
+                                    txtBack: 'Cancel',
+                                    btnColor: secondGreyColor,
+                                    widget: TextButton(
+                                      onPressed: () async {
+                                        deleteSaleMan(
+                                            con.filteredSale[index].id);
+                                        await getAllSaleMan();
+                                        con.filteredSale.value = saleMan;
+                                        Get.back();
+                                      },
+                                      child: AppText.title(context,
+                                          txt: 'Confirm'),
+                                    ),
+                                  );
+                                },
+                              ),
+                            ],
+                          ),
+                        ),
+                      )
+                    : Container(
+                        width: 100.px,
+                        alignment: Alignment.center,
+                        child: AppText.title(context, txt: "No Date"),
                       ),
-                      DataTableWidget.dataRowTxt(
-                        context,
-                        con.filteredUsers[index].name,
-                      ),
-                      DataTableWidget.dataRowTxt(
-                        context,
-                        con.filteredUsers[index].role,
-                      ),
-                      DataTableWidget.dataRowBtn(
-                        context,
-                        edit: () => debugPrint('Edit $index'),
-                        delete: () => debugPrint('Delete $index'),
-                      ),
-                    ],),
-                  ),
-                ),
               ),
             ),
           ),

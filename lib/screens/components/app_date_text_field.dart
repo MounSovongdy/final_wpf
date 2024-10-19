@@ -64,7 +64,10 @@ class AppDateTextField extends StatelessWidget {
               decoration: InputDecoration(
                 border: const OutlineInputBorder(),
                 contentPadding: EdgeInsets.symmetric(horizontal: defWebPad.px),
-                suffixIcon: const Icon(Icons.today),
+                suffixIcon: Padding(
+                  padding: EdgeInsets.only(right: defWebPad.px),
+                  child: const Icon(Icons.today),
+                ),
               ),
             ),
           ),

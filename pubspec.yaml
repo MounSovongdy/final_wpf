@@ -26,6 +26,7 @@ dependencies:
   restart_app: any
   pdf: any
   printing: any
+  intl: any
 
 dev_dependencies:
   flutter_test:

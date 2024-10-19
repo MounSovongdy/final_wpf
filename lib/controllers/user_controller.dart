@@ -12,7 +12,8 @@ class UserController extends GetxController {
     filteredUsers.value = user.where((data) {
       return data.id.toString().contains(query) ||
           data.name.toLowerCase().contains(query) ||
-          data.role.toLowerCase().contains(query);
+          data.role.toLowerCase().contains(query) ||
+          data.user.toLowerCase().contains(query);
     }).toList();
   }
 }

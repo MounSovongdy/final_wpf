@@ -18,6 +18,7 @@ final addStockCol = _firebase.collection('add_stock');
 final totalStockCol = _firebase.collection('total_stock');
 
 var currVersion = '1.0.0'.obs;
+var byUser = [].obs;
 var user = [].obs;
 var saleMan = [].obs;
 var micro = [].obs;
@@ -28,6 +29,11 @@ var totalStock = [].obs;
 
 Future<void> getByUser(String userlogin) async {
   var res = await userCol.where('user', isEqualTo: userlogin).get();
+  byUser.value = res.docs.map((doc) => UserModel.fromMap(doc.data())).toList();
+}
+
+Future<void> getAllUser() async {
+  var res = await userCol.orderBy('id', descending: true).get();
   user.value = res.docs.map((doc) => UserModel.fromMap(doc.data())).toList();
 }
 
@@ -44,6 +50,27 @@ Future<void> insertUser(UserModel user) async {
   }
 }
 
+Future<void> deleteUser(String id) async {
+  try {
+    var docId = '';
+    var result = await userCol.where('id', isEqualTo: id).get();
+
+    for (var doc in result.docs) {
+      docId = doc.id;
+    }
+
+    await userCol.doc(docId).delete();
+  } catch (e) {
+    debugPrint('Failed to deleteUser: $e');
+  }
+}
+
+Future<void> getAllSaleMan() async {
+  var res = await saleManCol.orderBy('id', descending: true).get();
+  saleMan.value =
+      res.docs.map((doc) => SaleManModel.fromMap(doc.data())).toList();
+}
+
 Future<void> getLastSaleMan() async {
   var res = await saleManCol.orderBy('id', descending: true).limit(1).get();
   saleMan.value =
@@ -58,6 +85,27 @@ Future<void> insertSaleMan(SaleManModel sale) async {
   }
 }
 
+Future<void> deleteSaleMan(String id) async {
+  try {
+    var docId = '';
+    var result = await saleManCol.where('id', isEqualTo: id).get();
+
+    for (var doc in result.docs) {
+      docId = doc.id;
+    }
+
+    await saleManCol.doc(docId).delete();
+  } catch (e) {
+    debugPrint('Failed to deleteSaleMan: $e');
+  }
+}
+
+Future<void> getAllMicro() async {
+  var res = await microCol.orderBy('id', descending: true).get();
+  micro.value =
+      res.docs.map((doc) => MicroModel.fromMap(doc.data())).toList();
+}
+
 Future<void> getLastMicro() async {
   var res = await microCol.orderBy('id', descending: true).limit(1).get();
   micro.value = res.docs.map((doc) => MicroModel.fromMap(doc.data())).toList();
@@ -68,6 +116,21 @@ Future<void> insertMicro(MicroModel micro) async {
     await microCol.doc(micro.id).set(micro.toMap());
   } catch (e) {
     debugPrint('Failed to add micro: $e');
+  }
+}
+
+Future<void> deleteMicro(String id) async {
+  try {
+    var docId = '';
+    var result = await microCol.where('id', isEqualTo: id).get();
+
+    for (var doc in result.docs) {
+      docId = doc.id;
+    }
+
+    await microCol.doc(docId).delete();
+  } catch (e) {
+    debugPrint('Failed to deleteMicro: $e');
   }
 }
 
