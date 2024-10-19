@@ -27,6 +27,7 @@ dependencies:
   pdf: any
   printing: any
   intl: any
+  fl_chart: any
 
 dev_dependencies:
   flutter_test:

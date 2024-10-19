@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:motor/constants/constants.dart';
 import 'package:motor/controllers/main_controller.dart';
+import 'package:motor/screens/components/DashboardChart.dart';
 import 'package:motor/screens/components/dashboard_card.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
@@ -19,6 +20,8 @@ class DashboardScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             DashboardCard(),
+            spacer(context),
+            DashboardChart(),
           ],
         ),
       ),
