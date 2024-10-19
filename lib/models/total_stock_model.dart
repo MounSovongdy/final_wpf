@@ -6,14 +6,15 @@ class TotalStockModel {
   final String brand;
   final String year;
   final String condition;
-  final String dateIn;
+  final String oldDateIn;
+  final String newDateIn;
   final String oldQty;
   final String newQty;
   final String totalQty;
   final String oldPrice;
   final String newPrice;
-  final String oldTotalQty;
-  final String newTotalQty;
+  final String oldTotalPrice;
+  final String newTotalPrice;
 
   TotalStockModel({
     this.id = 'id',
@@ -21,14 +22,15 @@ class TotalStockModel {
     this.brand = 'brand',
     this.year = 'year',
     this.condition = 'condition',
-    this.dateIn = 'date_in',
+    this.oldDateIn = 'old_date_in',
+    this.newDateIn = 'new_date_in',
     this.oldQty = 'old_qty',
     this.newQty = 'new_qty',
     this.totalQty = 'total_qty',
     this.oldPrice = 'old_price',
     this.newPrice = 'new_price',
-    this.oldTotalQty = 'old_total_qty',
-    this.newTotalQty = 'new_total_qty',
+    this.oldTotalPrice = 'old_total_price',
+    this.newTotalPrice = 'new_total_price',
   });
 
   TotalStockModel copyWith({
@@ -37,14 +39,15 @@ class TotalStockModel {
     String? brand,
     String? year,
     String? condition,
-    String? dateIn,
+    String? oldDateIn,
+    String? newDateIn,
     String? oldQty,
     String? newQty,
     String? totalQty,
     String? oldPrice,
     String? newPrice,
-    String? oldTotalQty,
-    String? newTotalQty,
+    String? oldTotalPrice,
+    String? newTotalPrice,
   }) {
     return TotalStockModel(
       id: id ?? this.id,
@@ -52,14 +55,15 @@ class TotalStockModel {
       brand: brand ?? this.brand,
       year: year ?? this.year,
       condition: condition ?? this.condition,
-      dateIn: dateIn ?? this.dateIn,
+      oldDateIn: oldDateIn ?? this.oldDateIn,
+      newDateIn: newDateIn ?? this.newDateIn,
       oldQty: oldQty ?? this.oldQty,
       newQty: newQty ?? this.newQty,
       totalQty: totalQty ?? this.totalQty,
       oldPrice: oldPrice ?? this.oldPrice,
       newPrice: newPrice ?? this.newPrice,
-      oldTotalQty: oldTotalQty ?? this.oldTotalQty,
-      newTotalQty: newTotalQty ?? this.newTotalQty,
+      oldTotalPrice: oldTotalPrice ?? this.oldTotalPrice,
+      newTotalPrice: newTotalPrice ?? this.newTotalPrice,
     );
   }
 
@@ -70,14 +74,15 @@ class TotalStockModel {
       'brand': brand,
       'year': year,
       'condition': condition,
-      'date_in': dateIn,
+      'old_date_in': oldDateIn,
+      'new_date_in': newDateIn,
       'old_qty': oldQty,
       'new_qty': newQty,
       'total_qty': totalQty,
       'old_price': oldPrice,
       'new_price': newPrice,
-      'old_total_qty': oldTotalQty,
-      'new_total_qty': newTotalQty,
+      'old_total_price': oldTotalPrice,
+      'new_total_price': newTotalPrice,
     };
   }
 
@@ -88,14 +93,15 @@ class TotalStockModel {
       brand: map['brand'] as String,
       year: map['year'] as String,
       condition: map['condition'] as String,
-      dateIn: map['date_in'] as String,
+      oldDateIn: map['old_date_in'] as String,
+      newDateIn: map['new_date_in'] as String,
       oldQty: map['old_qty'] as String,
       newQty: map['new_qty'] as String,
       totalQty: map['total_qty'] as String,
       oldPrice: map['old_price'] as String,
       newPrice: map['new_price'] as String,
-      oldTotalQty: map['old_total_qty'] as String,
-      newTotalQty: map['new_total_qty'] as String,
+      oldTotalPrice: map['old_total_price'] as String,
+      newTotalPrice: map['new_total_price'] as String,
     );
   }
 
@@ -106,7 +112,7 @@ class TotalStockModel {
 
   @override
   String toString() {
-    return 'TotalStockModel(id: $id, model: $model, brand: $brand, year: $year, condition: $condition, date_in: $dateIn, old_qty: $oldQty, new_qty: $newQty, total_qty: $totalQty, old_price: $oldPrice, new_price: $newPrice, old_total_qty: $oldTotalQty, new_total_qty: $newTotalQty)';
+    return 'TotalStockModel(id: $id, model: $model, brand: $brand, year: $year, condition: $condition, old_date_in: $oldDateIn, new_date_in: $newDateIn, old_qty: $oldQty, new_qty: $newQty, total_qty: $totalQty, old_price: $oldPrice, new_price: $newPrice, old_total_price: $oldTotalPrice, new_total_price: $newTotalPrice)';
   }
 
   @override
@@ -118,14 +124,15 @@ class TotalStockModel {
         other.brand == brand &&
         other.year == year &&
         other.condition == condition &&
-        other.dateIn == dateIn &&
+        other.oldDateIn == oldDateIn &&
+        other.newDateIn == newDateIn &&
         other.oldQty == oldQty &&
         other.newQty == newQty &&
         other.totalQty == totalQty &&
         other.oldPrice == oldPrice &&
         other.newPrice == newPrice &&
-        other.oldTotalQty == oldTotalQty &&
-        other.newTotalQty == newTotalQty;
+        other.oldTotalPrice == oldTotalPrice &&
+        other.newTotalPrice == newTotalPrice;
   }
 
   @override
@@ -135,13 +142,14 @@ class TotalStockModel {
         brand.hashCode ^
         year.hashCode ^
         condition.hashCode ^
-        dateIn.hashCode ^
+        oldDateIn.hashCode ^
+        newDateIn.hashCode ^
         oldQty.hashCode ^
         newQty.hashCode ^
         totalQty.hashCode ^
         oldPrice.hashCode ^
         newPrice.hashCode ^
-        oldTotalQty.hashCode ^
-        newTotalQty.hashCode;
+        oldTotalPrice.hashCode ^
+        newTotalPrice.hashCode;
   }
 }

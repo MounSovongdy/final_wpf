@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:motor/constants/constants.dart';
 import 'package:motor/constants/firebase.dart';
 import 'package:motor/models/add_stock_model.dart';
+import 'package:motor/models/total_stock_model.dart';
 import 'package:motor/screens/widgets/loading_widget.dart';
 
 class AddStockController extends GetxController {
@@ -12,6 +13,7 @@ class AddStockController extends GetxController {
   String? condition;
   var brand = TextEditingController().obs;
   var proYear = TextEditingController().obs;
+  var qTotal = TextEditingController().obs;
   var qBegin = TextEditingController().obs;
   var priceQBegin = TextEditingController().obs;
   var totalPriceQBegin = TextEditingController().obs;
@@ -34,11 +36,15 @@ class AddStockController extends GetxController {
         price.value.text != '' &&
         totalPrice.value.text != '') {
       await getLastAddStock();
-      var newId = 1;
-      if (addStock.isNotEmpty) newId = int.parse(addStock[0].id) + 1;
+      await getLastTotalStock();
+
+      var newAddId = 1;
+      var newTotalId = 1;
+      if (addStock.isNotEmpty) newAddId = int.parse(addStock[0].id) + 1;
+      if (totalStock.isNotEmpty) newTotalId = int.parse(totalStock[0].id) + 1;
 
       AddStockModel newAddStock = AddStockModel(
-        id: '$newId',
+        id: '$newAddId',
         model: model ?? '',
         brand: brand.value.text,
         year: proYear.value.text,
@@ -53,6 +59,44 @@ class AddStockController extends GetxController {
         totalPrice: totalPrice.value.text,
       );
       await insertAddStock(newAddStock);
+
+      if (stockByModel.isEmpty) {
+        TotalStockModel newTotalStock = TotalStockModel(
+          id: '$newTotalId',
+          model: model ?? '',
+          brand: brand.value.text,
+          year: proYear.value.text,
+          condition: condition ?? '',
+          oldDateIn: dateIn.value.text,
+          oldQty: qBegin.value.text,
+          oldPrice: priceQBegin.value.text,
+          oldTotalPrice: totalPriceQBegin.value.text,
+          newDateIn: date.value.text,
+          newQty: '$newQty',
+          newPrice: price.value.text,
+          newTotalPrice: totalPrice.value.text,
+          totalQty: '$newQty',
+        );
+        await insertTotalStock(newTotalStock);
+      } else {
+        var tQty = int.parse(stockByModel[0].totalQty) + newQty;
+        await updateTotalStock(
+          model: model ?? '',
+          brand: brand.value.text,
+          year: proYear.value.text,
+          condition: condition ?? '',
+          oldPrice: priceQBegin.value.text,
+          oldQty: qBegin.value.text,
+          oldTotalPrice: totalPriceQBegin.value.text,
+          newPrice: price.value.text,
+          newQty: '$newQty',
+          newtotalPrice: totalPrice.value.text,
+          totalQty: '$tQty',
+          oldDateIn: dateIn.value.text,
+          newDateIn: date.value.text,
+        );
+      }
+
       clearText();
       LoadingWidget.showTextDialog(
         Get.context!,
@@ -81,5 +125,27 @@ class AddStockController extends GetxController {
     qty.value.clear();
     price.value.clear();
     totalPrice.value.clear();
+  }
+
+  void getDataByModel() async {
+    await getStockByModel(
+      model: model ?? '',
+      brand: brand.value.text,
+      year: proYear.value.text,
+      condition: condition ?? '',
+    );
+
+    if (stockByModel.isNotEmpty) {
+      dateIn.value.text = stockByModel[0].newDateIn;
+      qTotal.value.text = stockByModel[0].totalQty;
+      qBegin.value.text = stockByModel[0].newQty;
+      priceQBegin.value.text = stockByModel[0].newPrice;
+      totalPriceQBegin.value.text = stockByModel[0].newTotalPrice;
+    } else {
+      dateIn.value.text = '';
+      qBegin.value.text = '';
+      priceQBegin.value.text = '';
+      totalPriceQBegin.value.text = '';
+    }
   }
 }

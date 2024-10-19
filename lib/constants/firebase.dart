@@ -5,6 +5,7 @@ import 'package:motor/models/add_stock_model.dart';
 import 'package:motor/models/micro_model.dart';
 import 'package:motor/models/product_model.dart';
 import 'package:motor/models/sale_man_model.dart';
+import 'package:motor/models/total_stock_model.dart';
 import 'package:motor/models/user_model.dart';
 
 final _firebase = FirebaseFirestore.instance;
@@ -14,6 +15,7 @@ final saleManCol = _firebase.collection('sale_man');
 final microCol = _firebase.collection('micro');
 final productCol = _firebase.collection('product');
 final addStockCol = _firebase.collection('add_stock');
+final totalStockCol = _firebase.collection('total_stock');
 
 var currVersion = '1.0.0'.obs;
 var user = [].obs;
@@ -21,6 +23,8 @@ var saleMan = [].obs;
 var micro = [].obs;
 var product = [].obs;
 var addStock = [].obs;
+var stockByModel = [].obs;
+var totalStock = [].obs;
 
 Future<void> getByUser(String userlogin) async {
   var res = await userCol.where('user', isEqualTo: userlogin).get();
@@ -88,14 +92,18 @@ Future<void> insertProduct(ProductModel pro) async {
 }
 
 Future<void> updateUserPassword(String user, String password) async {
-  var docId = '';
-  var result = await userCol.where('user', isEqualTo: user).get();
+  try {
+    var docId = '';
+    var result = await userCol.where('user', isEqualTo: user).get();
 
-  for (var doc in result.docs) {
-    docId = doc.id;
+    for (var doc in result.docs) {
+      docId = doc.id;
+    }
+
+    await userCol.doc(docId).update({'password': password});
+  } catch (e) {
+    debugPrint('Failed to update user password: $e');
   }
-
-  await userCol.doc(docId).update({'password': password});
 }
 
 Future<void> getLastAddStock() async {
@@ -109,5 +117,79 @@ Future<void> insertAddStock(AddStockModel add) async {
     await addStockCol.doc(add.id).set(add.toMap());
   } catch (e) {
     debugPrint('Failed to add stock: $e');
+  }
+}
+
+Future<void> getLastTotalStock() async {
+  var res = await totalStockCol.orderBy('id', descending: true).limit(1).get();
+  totalStock.value =
+      res.docs.map((doc) => TotalStockModel.fromMap(doc.data())).toList();
+}
+
+Future<void> getStockByModel({
+  required String model,
+  required String brand,
+  required String year,
+  required String condition,
+}) async {
+  var res = await totalStockCol
+      .where('model', isEqualTo: model)
+      .where('brand', isEqualTo: brand)
+      .where('year', isEqualTo: year)
+      .where('condition', isEqualTo: condition)
+      .get();
+  stockByModel.value =
+      res.docs.map((doc) => TotalStockModel.fromMap(doc.data())).toList();
+}
+
+Future<void> insertTotalStock(TotalStockModel total) async {
+  try {
+    await totalStockCol.doc(total.id).set(total.toMap());
+  } catch (e) {
+    debugPrint('Failed to add total stock: $e');
+  }
+}
+
+Future<void> updateTotalStock({
+  required String model,
+  required String brand,
+  required String year,
+  required String condition,
+  required String oldDateIn,
+  required String oldPrice,
+  required String oldQty,
+  required String oldTotalPrice,
+  required String newDateIn,
+  required String newPrice,
+  required String newQty,
+  required String newtotalPrice,
+  required String totalQty,
+}) async {
+  try {
+    var docId = '';
+    var result = await totalStockCol
+        .where('model', isEqualTo: model)
+        .where('brand', isEqualTo: brand)
+        .where('year', isEqualTo: year)
+        .where('condition', isEqualTo: condition)
+        .get();
+
+    for (var doc in result.docs) {
+      docId = doc.id;
+    }
+
+    await totalStockCol.doc(docId).update({
+      'old_price': oldPrice,
+      'old_qty': oldQty,
+      'old_total_price': oldTotalPrice,
+      'new_price': newPrice,
+      'new_qty': newQty,
+      'new_total_price': newtotalPrice,
+      'total_qty': totalQty,
+      'old_date_in': oldDateIn,
+      'new_date_in': newDateIn,
+    });
+  } catch (e) {
+    debugPrint('Failed to update user password: $e');
   }
 }

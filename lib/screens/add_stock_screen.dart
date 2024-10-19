@@ -19,10 +19,11 @@ class AddStockScreen extends StatelessWidget {
 
   final con = Get.put(AddStockController());
 
-  final condition = ['New', 'Used'];
-
   @override
   Widget build(BuildContext context) {
+    final condition = ['New', 'Used'];
+    var isModel = false.obs;
+
     return SingleChildScrollView(
       child: Container(
         margin: EdgeInsets.all(defWebPad.px),
@@ -44,12 +45,14 @@ class AddStockScreen extends StatelessWidget {
                 txt: 'Model',
                 value: con.model,
                 list: con.listModel,
-                onChanged: (v) {
+                onChanged: (v) async {
                   if (v != null) {
                     con.model = v;
+                    isModel.value = true;
                     for (var data in product) {
                       if (con.model == data.model) {
                         con.brand.value.text = data.brand;
+                        con.getDataByModel();
                       }
                     }
                   }
@@ -65,17 +68,23 @@ class AddStockScreen extends StatelessWidget {
                 con: con.proYear.value,
                 isNumber: true,
                 digit: 4,
+                onChanged: (v) => con.getDataByModel(),
               ),
             ),
             RowTextField(
               spacer: spacer(context),
-              widget1: AppDropdown(
-                txt: 'Condition',
-                value: con.condition,
-                list: condition,
-                onChanged: (v) {
-                  if (v != null) con.condition = v;
-                },
+              widget1: Obx(
+                () => AppDropdown(
+                  txt: 'Condition',
+                  value: con.condition,
+                  list: isModel.value ? condition : [],
+                  onChanged: (v) async {
+                    if (v != null) {
+                      con.condition = v;
+                      con.getDataByModel();
+                    }
+                  },
+                ),
               ),
               widget2: AppTextField(
                 txt: 'Date In',
