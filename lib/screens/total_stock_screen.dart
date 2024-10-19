@@ -4,7 +4,7 @@ import 'package:motor/constants/constants.dart';
 import 'package:motor/constants/firebase.dart';
 import 'package:motor/constants/responsive.dart';
 import 'package:motor/controllers/add_stock_controller.dart';
-import 'package:motor/controllers/new_booking_controller.dart';
+import 'package:motor/controllers/main_controller.dart';
 import 'package:motor/controllers/total_stock_controller.dart';
 import 'package:motor/screens/components/app_button.dart';
 import 'package:motor/screens/components/app_data_table.dart';
@@ -120,7 +120,7 @@ class TotalStockScreen extends StatelessWidget {
                   for (var pro in product) {
                     con2.listModel.add(pro.model);
                   }
-                  con1.index.value = 5;
+                  con1.index.value = 10;
                 },
               ),
             ],

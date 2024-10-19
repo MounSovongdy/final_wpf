@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:motor/constants/constants.dart';
 import 'package:motor/constants/responsive.dart';
 import 'package:motor/controllers/main_controller.dart';
-import 'package:motor/controllers/user_controller.dart';
+import 'package:motor/controllers/product_controller.dart';
 import 'package:motor/screens/components/app_button.dart';
 import 'package:motor/screens/components/app_data_table.dart';
 import 'package:motor/screens/components/under_line.dart';
@@ -11,11 +11,11 @@ import 'package:motor/screens/widgets/app_text.dart';
 import 'package:motor/screens/widgets/data_table_widget.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
-class UserScreen extends StatelessWidget {
-  UserScreen({super.key});
+class ProductScreen extends StatelessWidget {
+  ProductScreen({super.key});
 
-  final con = Get.put(UserController());
-  final con1 = Get.put(MainController());
+  final con = Get.put(ProductController());
+  final conMain = Get.put(MainController());
   final scroll = ScrollController();
 
   @override
@@ -32,7 +32,7 @@ class UserScreen extends StatelessWidget {
         shrinkWrap: true,
         physics: const BouncingScrollPhysics(),
         children: [
-          AppText.header(context, txt: 'User List'),
+          AppText.header(context, txt: 'Product List'),
           spacer(context),
           TextField(
             controller: con.search.value,
@@ -51,42 +51,42 @@ class UserScreen extends StatelessWidget {
               controller: scroll,
               scrollDirection: Axis.horizontal,
               child: Obx(
-                () => AppDataTable(
+                    () => AppDataTable(
                   column: [
                     DataTableWidget.dataColumn(context, 'No'),
-                    DataTableWidget.dataColumn(context, 'Full Name'),
-                    DataTableWidget.dataColumn(context, 'Role level'),
-                    DataTableWidget.dataColumn(context, 'User Login'),
-                    DataTableWidget.dataColumn(context, 'Date Create'),
-                    DataTableWidget.dataColumn(context, 'Status'),
+                    DataTableWidget.dataColumn(context, 'Brand'),
+                    DataTableWidget.dataColumn(context, 'Model'),
                     DataTableWidget.dataColumn(context, 'Action'),
                   ],
                   row: List.generate(
                     con.filteredUsers.length,
-                    (index) => DataRow(cells: [
-                      DataTableWidget.dataRowTxt(
-                        context,
-                        con.filteredUsers[index].id,
-                      ),
-                      DataTableWidget.dataRowTxt(
-                        context,
-                        con.filteredUsers[index].name,
-                      ),
-                      DataTableWidget.dataRowTxt(
-                        context,
-                        con.filteredUsers[index].role,
-                      ),
-                      DataTableWidget.dataRowBtn(
-                        context,
-                        edit: () => debugPrint('Edit $index'),
-                        delete: () => debugPrint('Delete $index'),
-                      ),
-                    ]),
+                        (index) => DataRow(
+                      cells: [
+                        DataTableWidget.dataRowTxt(
+                          context,
+                          con.filteredUsers[index].id,
+                        ),
+                        DataTableWidget.dataRowTxt(
+                          context,
+                          con.filteredUsers[index].name,
+                        ),
+                        DataTableWidget.dataRowTxt(
+                          context,
+                          con.filteredUsers[index].role,
+                        ),
+                        DataTableWidget.dataRowBtn(
+                          context,
+                          edit: () => debugPrint('Edit $index'),
+                          delete: () => debugPrint('Delete $index'),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
             ),
           ),
+          spacer(context),
           spacer(context),
           spacer(context),
           const UnderLine(color: secondGreyColor),
@@ -95,11 +95,20 @@ class UserScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               AppButton(
-                txt: 'New',
+                txt: 'Back',
                 width: Responsive.isDesktop(context) ? 150.px : 100.px,
-                tap: () {
+                tap: () async {
                   startInactivityTimer();
-                  con1.index.value = 16;
+                  conMain.index.value =conMain.index.value -1;
+                },
+              ),
+              spacer(context),
+              spacer(context),
+              AppButton(
+                txt: 'Save',
+                width: Responsive.isDesktop(context) ? 150.px : 100.px,
+                tap: () async {
+                  startInactivityTimer();
                 },
               ),
             ],

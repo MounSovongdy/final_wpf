@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:motor/constants/constants.dart';
 import 'package:motor/constants/responsive.dart';
 import 'package:motor/controllers/create_product_controller.dart';
+import 'package:motor/controllers/main_controller.dart';
 import 'package:motor/screens/components/app_button.dart';
 import 'package:motor/screens/components/app_text_field.dart';
 import 'package:motor/screens/components/row_text_field.dart';
@@ -15,6 +16,7 @@ class CreateProductScreen extends StatelessWidget {
   CreateProductScreen({super.key});
 
   final con = Get.put(CreateProductController());
+  final conMain = Get.put(MainController());
 
   @override
   Widget build(BuildContext context) {
@@ -56,6 +58,7 @@ class CreateProductScreen extends StatelessWidget {
                   tap: () {
                     startInactivityTimer();
                     con.clearText();
+                    conMain.index.value = conMain.index.value - 1;
                   },
                 ),
                 spacer(context),

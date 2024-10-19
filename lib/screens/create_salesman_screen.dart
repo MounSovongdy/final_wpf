@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:motor/constants/constants.dart';
 import 'package:motor/constants/responsive.dart';
 import 'package:motor/controllers/create_salesman_controller.dart';
+import 'package:motor/controllers/main_controller.dart';
 import 'package:motor/screens/components/app_button.dart';
 import 'package:motor/screens/components/app_dropdown.dart';
 import 'package:motor/screens/components/app_text_field.dart';
@@ -16,8 +17,10 @@ class CreateSalesmanScreen extends StatelessWidget {
   CreateSalesmanScreen({super.key});
 
   final con = Get.put(CreateSalesmanController());
+  final conMain = Get.put(MainController());
   final gender = ['Male', 'Female'];
   final position = ['Sale'];
+
 
   @override
   Widget build(BuildContext context) {
@@ -81,12 +84,13 @@ class CreateSalesmanScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 AppButton(
-                  txt: 'Cancel',
+                  txt: 'Back',
                   width: Responsive.isDesktop(context) ? 150.px : 100.px,
                   color: secondGreyColor,
                   tap: () {
                     startInactivityTimer();
                     con.clearText();
+                    conMain.index.value = conMain.index.value - 1;
                   },
                 ),
                 spacer(context),

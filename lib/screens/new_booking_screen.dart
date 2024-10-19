@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:motor/constants/constants.dart';
 import 'package:motor/constants/responsive.dart';
+import 'package:motor/controllers/main_controller.dart';
 import 'package:motor/controllers/new_booking_controller.dart';
 import 'package:motor/screens/components/app_button.dart';
 import 'package:motor/screens/components/app_dropdown.dart';
@@ -15,7 +16,8 @@ import 'package:responsive_sizer/responsive_sizer.dart';
 class NewBookingScreen extends StatelessWidget {
   NewBookingScreen({super.key});
 
-  final con = Get.put(MainController());
+  final con = Get.put(NewBookingController());
+  final conMain = Get.put(MainController());
 
   final micro = ['A', 'C', 'J', 'AP'];
   final status = ['Leasing', 'Cash'];
@@ -149,10 +151,13 @@ class NewBookingScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 AppButton(
-                  txt: 'Cancel',
+                  txt: 'Back',
                   width: Responsive.isDesktop(context) ? 150.px : 100.px,
                   color: secondGreyColor,
-                  tap: () {},
+                  tap: () {
+                    startInactivityTimer();
+                    conMain.index.value = conMain.index.value - 1;
+                  },
                 ),
                 spacer(context),
                 spacer(context),

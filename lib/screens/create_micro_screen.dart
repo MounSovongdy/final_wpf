@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:motor/constants/constants.dart';
 import 'package:motor/constants/responsive.dart';
 import 'package:motor/controllers/create_micro_controller.dart';
+import 'package:motor/controllers/main_controller.dart';
 import 'package:motor/screens/components/app_button.dart';
 import 'package:motor/screens/components/app_text_field.dart';
 import 'package:motor/screens/components/row_text_field.dart';
@@ -15,6 +16,7 @@ class CreateMicroScreen extends StatelessWidget {
   CreateMicroScreen({super.key});
 
   final con = Get.put(CreateMicroController());
+  final conMain = Get.put(MainController());
 
   @override
   Widget build(BuildContext context) {
@@ -93,12 +95,13 @@ class CreateMicroScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 AppButton(
-                  txt: 'Cancel',
+                  txt: 'Back',
                   width: Responsive.isDesktop(context) ? 150.px : 100.px,
                   color: secondGreyColor,
                   tap: () {
                     startInactivityTimer();
                     con.clearText();
+                    conMain.index.value = conMain.index.value - 1;
                   },
                 ),
                 spacer(context),

@@ -4,7 +4,7 @@ import 'package:motor/constants/constants.dart';
 import 'package:motor/constants/firebase.dart';
 import 'package:motor/constants/responsive.dart';
 import 'package:motor/controllers/add_stock_controller.dart';
-import 'package:motor/controllers/new_booking_controller.dart';
+import 'package:motor/controllers/main_controller.dart';
 import 'package:motor/controllers/total_stock_controller.dart';
 import 'package:motor/screens/components/drawer_expansion_tile.dart';
 import 'package:motor/screens/components/drawer_list_tile.dart';
@@ -65,7 +65,7 @@ class DrawerMenu extends StatelessWidget {
                           if (Responsive.isMobile(context)) con.controlDrawer();
                           startInactivityTimer();
 
-                          con.index.value = 2;
+                          con.index.value = 3;
                         },
                         title: 'Leasing',
                         svgSrc: 'assets/icons/SaleRecord.svg',
@@ -78,7 +78,7 @@ class DrawerMenu extends StatelessWidget {
                           if (Responsive.isMobile(context)) con.controlDrawer();
                           startInactivityTimer();
 
-                          con.index.value = 16;
+                          con.index.value = 4;
                         },
                         title: 'Cash',
                         svgSrc: 'assets/icons/TotalExpenses.svg',
@@ -91,9 +91,9 @@ class DrawerMenu extends StatelessWidget {
                           if (Responsive.isMobile(context)) con.controlDrawer();
                           startInactivityTimer();
 
-                          con.index.value = 17;
+                          con.index.value = 5;
                         },
-                        title: 'Report',
+                        title: 'Sales Report',
                         svgSrc: 'assets/icons/Report.svg',
                       ),
                     ),
@@ -104,7 +104,7 @@ class DrawerMenu extends StatelessWidget {
                     if (Responsive.isMobile(context)) con.controlDrawer();
                     startInactivityTimer();
 
-                    con.index.value = 3;
+                    con.index.value = 6;
                   },
                   title: 'Receivable',
                   svgSrc: 'assets/icons/Receivable.svg',
@@ -114,7 +114,7 @@ class DrawerMenu extends StatelessWidget {
                     if (Responsive.isMobile(context)) con.controlDrawer();
                     startInactivityTimer();
 
-                    con.index.value = 9;
+                    con.index.value = 8;
                   },
                   title: 'Print Invoice',
                   svgSrc: 'assets/icons/Invoice.svg',
@@ -132,7 +132,7 @@ class DrawerMenu extends StatelessWidget {
 
                           conTS.filteredUsers.value = user;
                           conTS.search.value.addListener(conTS.filterUserData);
-                          con.index.value = 4;
+                          con.index.value = 9;
                         },
                         title: 'Stock',
                         svgSrc: 'assets/icons/TotalStock.svg',
@@ -145,9 +145,9 @@ class DrawerMenu extends StatelessWidget {
                           if (Responsive.isMobile(context)) con.controlDrawer();
                           startInactivityTimer();
 
-                          con.index.value = 6;
+                          con.index.value = 11;
                         },
-                        title: 'Create Product',
+                        title: 'Product',
                         svgSrc: 'assets/icons/CreateProduct.svg',
                       ),
                     ),
@@ -164,7 +164,7 @@ class DrawerMenu extends StatelessWidget {
                           if (Responsive.isMobile(context)) con.controlDrawer();
                           startInactivityTimer();
 
-                          con.index.value = 7;
+                          con.index.value = 13;
                         },
                         title: 'Financial Report',
                         svgSrc: 'assets/icons/FinancialReport.svg',
@@ -177,7 +177,7 @@ class DrawerMenu extends StatelessWidget {
                           if (Responsive.isMobile(context)) con.controlDrawer();
                           startInactivityTimer();
 
-                          con.index.value = 8;
+                          con.index.value = 14;
                         },
                         title: 'Total Expenses',
                         svgSrc: 'assets/icons/TotalExpenses.svg',
@@ -196,7 +196,7 @@ class DrawerMenu extends StatelessWidget {
                           if (Responsive.isMobile(context)) con.controlDrawer();
                           startInactivityTimer();
 
-                          con.index.value = 13;
+                          con.index.value = 15;
                         },
                         title: 'User',
                         svgSrc: 'assets/icons/CreateUser.svg',
@@ -209,7 +209,7 @@ class DrawerMenu extends StatelessWidget {
                           if (Responsive.isMobile(context)) con.controlDrawer();
                           startInactivityTimer();
 
-                          con.index.value = 14;
+                          con.index.value = 17;
                         },
                         title: 'Salesman',
                         svgSrc: 'assets/icons/CreateSalesman.svg',
@@ -222,7 +222,7 @@ class DrawerMenu extends StatelessWidget {
                           if (Responsive.isMobile(context)) con.controlDrawer();
                           startInactivityTimer();
 
-                          con.index.value = 15;
+                          con.index.value = 19;
                         },
                         title: 'Micro',
                         svgSrc: 'assets/icons/CreateMicro.svg',

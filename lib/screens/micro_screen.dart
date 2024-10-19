@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:motor/constants/constants.dart';
 import 'package:motor/constants/responsive.dart';
-import 'package:motor/controllers/new_booking_controller.dart';
+import 'package:motor/controllers/main_controller.dart';
 import 'package:motor/controllers/micro_controller.dart';
 import 'package:motor/screens/components/app_button.dart';
 import 'package:motor/screens/components/app_data_table.dart';
@@ -98,10 +98,11 @@ class MicroScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               AppButton(
-                txt: 'Create Micro',
+                txt: 'New',
                 width: Responsive.isDesktop(context) ? 150.px : 100.px,
                 tap: () {
-                  con1.index.value = 12;
+                  startInactivityTimer();
+                  con1.index.value = 20;
                 },
               ),
             ],

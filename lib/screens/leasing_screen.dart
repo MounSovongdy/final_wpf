@@ -11,8 +11,8 @@ import 'package:motor/screens/components/under_line.dart';
 import 'package:motor/screens/widgets/app_text.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
-class SaleRecordScreen extends StatelessWidget {
-  SaleRecordScreen({super.key});
+class LeasingScreen extends StatelessWidget {
+  LeasingScreen({super.key});
 
   final con = Get.put(LeasingController());
 

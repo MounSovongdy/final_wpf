@@ -24,6 +24,8 @@ dependencies:
   firebase_core_web: any
   universal_html: any
   restart_app: any
+  pdf: any
+  printing: any
 
 dev_dependencies:
   flutter_test:

@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:motor/constants/constants.dart';
 import 'package:motor/constants/responsive.dart';
 import 'package:motor/controllers/create_user_controller.dart';
+import 'package:motor/controllers/main_controller.dart';
 import 'package:motor/screens/components/app_button.dart';
 import 'package:motor/screens/components/app_dropdown.dart';
 import 'package:motor/screens/components/app_text_field.dart';
@@ -16,6 +17,7 @@ class CreateUserScreen extends StatelessWidget {
   CreateUserScreen({super.key});
 
   final con = Get.put(CreateUserController());
+  final conMain = Get.put(MainController());
 
   final role = ['Super Admin', 'Admin', 'User'];
 
@@ -61,12 +63,13 @@ class CreateUserScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 AppButton(
-                  txt: 'Cancel',
+                  txt: 'Back',
                   width: Responsive.isDesktop(context) ? 150.px : 100.px,
                   color: secondGreyColor,
                   tap: () {
                     startInactivityTimer();
                     con.clearText();
+                    conMain.index.value = conMain.index.value - 1;
                   },
                 ),
                 spacer(context),

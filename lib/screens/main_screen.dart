@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:motor/constants/constants.dart';
 import 'package:motor/constants/responsive.dart';
-import 'package:motor/controllers/new_booking_controller.dart';
+import 'package:motor/controllers/main_controller.dart';
 import 'package:motor/screens/Sale_report_screen.dart';
 import 'package:motor/screens/add_stock_screen.dart';
 import 'package:motor/screens/booking_screen.dart';
@@ -16,6 +16,8 @@ import 'package:motor/screens/dashboard_screen.dart';
 import 'package:motor/screens/financial_record_screen.dart';
 import 'package:motor/screens/invoice_screen.dart';
 import 'package:motor/screens/micro_screen.dart';
+import 'package:motor/screens/new_receivable_screen.dart';
+import 'package:motor/screens/product_screen.dart';
 import 'package:motor/screens/receivable_screen.dart';
 import 'package:motor/screens/leasing_screen.dart';
 import 'package:motor/screens/salesman_screen.dart';
@@ -78,39 +80,43 @@ class MainScreen extends StatelessWidget {
         case 1:
           return BookingScreen();
         case 2:
-          return SaleRecordScreen();
-        case 3:
-          return ReceivableScreen();
-        case 4:
-          return TotalStockScreen();
-        case 5:
-          return AddStockScreen();
-        case 6:
-          return CreateProductScreen();
-        case 7:
-          return const FinancialRecordScreen();
-        case 8:
-          return const TotalExpenseScreen();
-        case 9:
-          return InvoiceScreen();
-        case 10:
-          return CreateUserScreen();
-        case 11:
-          return CreateSalesmanScreen();
-        case 12:
-          return CreateMicroScreen();
-        case 13:
-          return UserScreen();
-        case 14:
-          return SalesmanScreen();
-        case 15:
-          return MicroScreen();
-        case 16:
-          return CashScreen();
-        case 17:
-          return SaleReportScreen();
-        case 18:
           return NewBookingScreen();
+        case 3:
+          return LeasingScreen();
+        case 4:
+          return CashScreen();
+        case 5:
+          return SaleReportScreen();
+        case 6:
+          return ReceivableScreen();
+        case 7:
+          return const NewReceivableScreen();
+        case 8:
+          return InvoiceScreen();
+        case 9:
+          return TotalStockScreen();
+        case 10:
+          return AddStockScreen();
+        case 11:
+          return ProductScreen();
+        case 12:
+          return CreateProductScreen();
+        case 13:
+          return const FinancialRecordScreen();
+        case 14:
+          return const TotalExpenseScreen();
+        case 15:
+          return UserScreen();
+        case 16:
+          return CreateUserScreen();
+        case 17:
+          return SalesmanScreen();
+        case 18:
+          return CreateSalesmanScreen();
+        case 19:
+          return MicroScreen();
+        case 20:
+          return CreateMicroScreen();
         default:
           return DashboardScreen();
       }
