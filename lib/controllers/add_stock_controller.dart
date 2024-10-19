@@ -23,14 +23,14 @@ class AddStockController extends GetxController {
   var totalPrice = TextEditingController().obs;
 
   void createAddStock(BuildContext context) async {
-    var newQty = int.parse(qty.value.text);
+    var newQty = int.tryParse(qty.value.text);
 
     if (model != null &&
         brand.value.text != '' &&
         proYear.value.text.length == 4 &&
         condition != null &&
         date.value.text != '' &&
-        newQty > 0 &&
+        newQty! > 0 &&
         price.value.text != '' &&
         totalPrice.value.text != '') {
       await getLastAddStock();

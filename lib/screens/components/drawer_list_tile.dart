@@ -3,7 +3,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:motor/constants/constants.dart';
 import 'package:motor/constants/responsive.dart';
-import 'package:motor/controllers/newBooking_controller.dart';
+import 'package:motor/controllers/new_booking_controller.dart';
 import 'package:motor/screens/widgets/app_text.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 

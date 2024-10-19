@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:motor/constants/constants.dart';
 import 'package:motor/constants/responsive.dart';
-import 'package:motor/controllers/newBooking_controller.dart';
+import 'package:motor/controllers/new_booking_controller.dart';
 import 'package:motor/controllers/micro_controller.dart';
 import 'package:motor/screens/components/app_button.dart';
 import 'package:motor/screens/components/app_data_table.dart';

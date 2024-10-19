@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:motor/constants/constants.dart';
+import 'package:motor/constants/firebase.dart';
 import 'package:motor/constants/responsive.dart';
-import 'package:motor/controllers/newBooking_controller.dart';
+import 'package:motor/controllers/add_stock_controller.dart';
+import 'package:motor/controllers/new_booking_controller.dart';
 import 'package:motor/controllers/total_stock_controller.dart';
 import 'package:motor/screens/components/app_button.dart';
 import 'package:motor/screens/components/app_data_table.dart';
@@ -16,6 +18,7 @@ class TotalStockScreen extends StatelessWidget {
 
   final con = Get.put(TotalStockController());
   final con1 = Get.put(MainController());
+  final con2 = Get.put(AddStockController());
   final scroll = ScrollController();
 
   @override
@@ -110,7 +113,15 @@ class TotalStockScreen extends StatelessWidget {
               AppButton(
                 txt: 'Add Stock',
                 width: Responsive.isDesktop(context) ? 150.px : 100.px,
-                tap: () {con1.index.value = 5;},
+                tap: () async {
+                  startInactivityTimer();
+                  con2.listModel.clear();
+                  await getAllProduct();
+                  for (var pro in product) {
+                    con2.listModel.add(pro.model);
+                  }
+                  con1.index.value = 5;
+                },
               ),
             ],
           ),
