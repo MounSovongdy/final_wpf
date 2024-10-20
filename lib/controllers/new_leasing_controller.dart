@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class LeasingController extends GetxController {
+class NewLeasingController extends GetxController {
 
   var idCard = TextEditingController().obs;
   var name = TextEditingController().obs;

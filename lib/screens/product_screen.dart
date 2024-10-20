@@ -62,20 +62,11 @@ class ProductScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               AppButton(
-                txt: 'Back',
+                txt: 'New',
                 width: Responsive.isDesktop(context) ? 150.px : 100.px,
                 tap: () async {
                   startInactivityTimer();
-                  conMain.index.value = conMain.index.value - 1;
-                },
-              ),
-              spacer(context),
-              spacer(context),
-              AppButton(
-                txt: 'Save',
-                width: Responsive.isDesktop(context) ? 150.px : 100.px,
-                tap: () async {
-                  startInactivityTimer();
+                  conMain.index.value = 12;
                 },
               ),
             ],

@@ -16,7 +16,7 @@ class LeasingScreen extends StatelessWidget {
   LeasingScreen({super.key});
 
   final con = Get.put(LeasingController());
-  final con1 = Get.put(MainController());
+  final conMain = Get.put(MainController());
   final scroll = ScrollController();
 
   @override
@@ -33,7 +33,7 @@ class LeasingScreen extends StatelessWidget {
         shrinkWrap: true,
         physics: const BouncingScrollPhysics(),
         children: [
-          AppText.header(context, txt: 'Booking List'),
+          AppText.header(context, txt: 'Leasing List'),
           spacer(context),
           TextField(
             controller: con.search.value,
@@ -55,11 +55,14 @@ class LeasingScreen extends StatelessWidget {
               DataTableWidget.column(context, 'Age'),
               DataTableWidget.column(context, 'Telephone'),
               DataTableWidget.column(context, 'Address'),
-              DataTableWidget.column(context, 'Brand'),
               DataTableWidget.column(context, 'Model'),
+              DataTableWidget.column(context, 'Brand'),
               DataTableWidget.column(context, 'Color'),
               DataTableWidget.column(context, 'Year'),
               DataTableWidget.column(context, 'Condition'),
+              DataTableWidget.column(context, 'Engine No'),
+              DataTableWidget.column(context, 'Frame No'),
+              DataTableWidget.column(context, 'Plate No'),
               DataTableWidget.column(context, 'Price'),
               DataTableWidget.column(context, 'Discount'),
               DataTableWidget.column(context, 'Deposit'),
@@ -67,7 +70,10 @@ class LeasingScreen extends StatelessWidget {
               DataTableWidget.column(context, 'Method'),
               DataTableWidget.column(context, 'Micro'),
               DataTableWidget.column(context, 'Salesman'),
-              DataTableWidget.column(context, 'Status'),
+              DataTableWidget.column(context, 'Come by'),
+              DataTableWidget.column(context, 'Introduced Name'),
+              DataTableWidget.column(context, 'Introduced Tel'),
+              DataTableWidget.column(context, 'Commission fee'),
               DataTableWidget.column(context, 'Action'),
             ],
             source: LeasingDataSource(),
@@ -83,7 +89,8 @@ class LeasingScreen extends StatelessWidget {
                 txt: 'New',
                 width: Responsive.isDesktop(context) ? 150.px : 100.px,
                 tap: () {
-                  con1.index.value = 2;
+                  startInactivityTimer();
+                  conMain.index.value = 22;
                 },
               ),
             ],

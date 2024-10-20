@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:motor/constants/constants.dart';
 import 'package:motor/constants/responsive.dart';
+import 'package:motor/controllers/main_controller.dart';
 import 'package:motor/controllers/new_cash_controller.dart';
 import 'package:motor/screens/components/app_button.dart';
 import 'package:motor/screens/components/app_dropdown.dart';
@@ -15,7 +16,8 @@ import 'package:responsive_sizer/responsive_sizer.dart';
 class NewCashScreen extends StatelessWidget {
   NewCashScreen({super.key});
 
-  final con = Get.put(CashController());
+  final con = Get.put(NewCashController());
+  final conMain = Get.put(MainController());
 
   final gender = ['Male', 'Female'];
   final salesman = ['Thol', 'Sora','Piseth'];
@@ -73,17 +75,17 @@ class NewCashScreen extends StatelessWidget {
             RowTextField(
               spacer: spacer(context),
               widget1: AppDropdown(
-                txt: 'Brand',
-                list: brand,
-                onChanged: (v) {
-                  if (v != null) con.brand = v;
-                },
-              ),
-              widget2: AppDropdown(
                 txt: 'Model',
                 list: model,
                 onChanged: (v) {
                   if (v != null) con.model = v;
+                },
+              ),
+              widget2: AppDropdown(
+                txt: 'Brand',
+                list: brand,
+                onChanged: (v) {
+                  if (v != null) con.brand = v;
                 },
               ),
               widget3: AppDropdown(
@@ -141,17 +143,22 @@ class NewCashScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 AppButton(
-                  txt: 'Cancel',
+                  txt: 'Back',
                   width: Responsive.isDesktop(context) ? 150.px : 100.px,
                   color: secondGreyColor,
-                  tap: () {},
+                  tap: () {
+                    startInactivityTimer();
+                    conMain.index.value = conMain.index.value - 1;
+                  },
                 ),
                 spacer(context),
                 spacer(context),
                 AppButton(
                   txt: 'Save',
                   width: Responsive.isDesktop(context) ? 150.px : 100.px,
-                  tap: () {},
+                  tap: () {
+
+                  },
                 ),
               ],
             ),
