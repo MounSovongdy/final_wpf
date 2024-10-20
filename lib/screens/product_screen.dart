@@ -22,66 +22,68 @@ class ProductScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.all(defWebPad.px),
-      padding: EdgeInsets.all(defWebPad.px),
-      width: MediaQuery.of(context).size.width,
-      decoration: BoxDecoration(
-        color: whiteColor,
-        borderRadius: BorderRadius.circular(defRadius.px),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          AppText.header(context, txt: 'Product List'),
-          spacer(context),
-          TextField(
-            controller: con.search.value,
-            decoration: const InputDecoration(
-              labelText: 'Search',
-              hintText: 'Search by any data',
-              prefixIcon: Icon(Icons.search),
-              border: OutlineInputBorder(),
-            ),
-          ),
-          spacer(context),
-          Obx(
-            () => con.filteredProduct.isNotEmpty
-                ? AppDataTable(
-                    column: [
-                      DataTableWidget.column(context, 'ID'),
-                      DataTableWidget.column(context, 'Model'),
-                      DataTableWidget.column(context, 'Brand'),
-                      DataTableWidget.column(context, 'Action'),
-                    ],
-                    source: ProductDataSource(),
-                  )
-                : Container(
-                    width: MediaQuery.of(context).size.width,
-                    margin: EdgeInsets.only(top: defWebPad.px),
-                    alignment: Alignment.center,
-                    child: AppText.title(context, txt: 'No Data'),
-                  ),
-          ),
-          spacer(context),
-          spacer(context),
-          spacer(context),
-          const UnderLine(color: secondGreyColor),
-          spacer(context),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              AppButton(
-                txt: 'New',
-                width: Responsive.isDesktop(context) ? 150.px : 100.px,
-                tap: () async {
-                  startInactivityTimer();
-                  conMain.index.value = 12;
-                },
+    return SingleChildScrollView(
+      child: Container(
+        margin: EdgeInsets.all(defWebPad.px),
+        padding: EdgeInsets.all(defWebPad.px),
+        width: MediaQuery.of(context).size.width,
+        decoration: BoxDecoration(
+          color: whiteColor,
+          borderRadius: BorderRadius.circular(defRadius.px),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            AppText.header(context, txt: 'Product List'),
+            spacer(context),
+            TextField(
+              controller: con.search.value,
+              decoration: const InputDecoration(
+                labelText: 'Search',
+                hintText: 'Search by any data',
+                prefixIcon: Icon(Icons.search),
+                border: OutlineInputBorder(),
               ),
-            ],
-          ),
-        ],
+            ),
+            spacer(context),
+            Obx(
+              () => con.filteredProduct.isNotEmpty
+                  ? AppDataTable(
+                      column: [
+                        DataTableWidget.column(context, 'ID'),
+                        DataTableWidget.column(context, 'Model'),
+                        DataTableWidget.column(context, 'Brand'),
+                        DataTableWidget.column(context, 'Action'),
+                      ],
+                      source: ProductDataSource(),
+                    )
+                  : Container(
+                      width: MediaQuery.of(context).size.width,
+                      margin: EdgeInsets.only(top: defWebPad.px),
+                      alignment: Alignment.center,
+                      child: AppText.title(context, txt: 'No Data'),
+                    ),
+            ),
+            spacer(context),
+            spacer(context),
+            spacer(context),
+            const UnderLine(color: secondGreyColor),
+            spacer(context),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                AppButton(
+                  txt: 'New',
+                  width: Responsive.isDesktop(context) ? 150.px : 100.px,
+                  tap: () async {
+                    startInactivityTimer();
+                    conMain.index.value = 12;
+                  },
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }

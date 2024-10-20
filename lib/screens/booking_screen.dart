@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:motor/constants/constants.dart';
+import 'package:motor/constants/firebase.dart';
 import 'package:motor/constants/responsive.dart';
 import 'package:motor/controllers/booking_controller.dart';
 import 'package:motor/controllers/main_controller.dart';
+import 'package:motor/controllers/new_booking_controller.dart';
 import 'package:motor/screens/components/app_button.dart';
 import 'package:motor/screens/components/app_data_table.dart';
 import 'package:motor/screens/components/under_line.dart';
@@ -16,10 +18,15 @@ class BookingScreen extends StatelessWidget {
 
   final con = Get.put(BookingController());
   final con1 = Get.put(MainController());
+  final conNewBook = Get.put(NewBookingController());
+
   final scroll = ScrollController();
 
   @override
   Widget build(BuildContext context) {
+    var dateNow = dateFormat.format(DateTime.now());
+    var timeNow = timeFormat.format(DateTime.now());
+
     return Container(
       margin: EdgeInsets.all(defWebPad.px),
       padding: EdgeInsets.all(defWebPad.px),
@@ -81,7 +88,14 @@ class BookingScreen extends StatelessWidget {
               AppButton(
                 txt: 'New',
                 width: Responsive.isDesktop(context) ? 150.px : 100.px,
-                tap: () {
+                tap: () async {
+                  conNewBook.date.value.text = '$dateNow $timeNow';
+                  conNewBook.discount.value.text = '0';
+                  await microName();
+                  await saleManName();
+                  await modelName();
+
+                  startInactivityTimer();
                   con1.index.value = 2;
                 },
               ),
@@ -90,6 +104,30 @@ class BookingScreen extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  Future<void> microName() async {
+    conNewBook.microList.clear();
+    await getAllMicro();
+    for (var data in micro) {
+      conNewBook.microList.add(data.name);
+    }
+  }
+
+  Future<void> saleManName() async {
+    conNewBook.saleManList.clear();
+    await getAllSaleMan();
+    for (var data in saleMan) {
+      conNewBook.saleManList.add(data.name);
+    }
+  }
+
+  Future<void> modelName() async {
+    conNewBook.modelList.clear();
+    await getAllProduct();
+    for (var data in product) {
+      conNewBook.modelList.add(data.model);
+    }
   }
 }
 

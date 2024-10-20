@@ -10,25 +10,32 @@ class CustomAppBar {
     required String txt,
     required VoidCallback tap,
   }) {
-    var size = Responsive.isDesktop(context) ? 28 : 24;
+    var size = Responsive.isDesktop(context) ? 30 : 26;
 
     return AppBar(
       backgroundColor: bgColor,
       leading: !Responsive.isMobile(context)
           ? IconButton(
               onPressed: tap,
-              icon: Icon(Icons.menu, size: size.px, color: blackColor),
+              icon: Icon(Icons.menu, size: size.px, color: whiteColor),
             )
           : null,
       title: Row(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
-          Image.asset(
-            'assets/images/Profile.png',
-            height: Responsive.isDesktop(context) ? 28.px : 28.px - 2,
+          Container(
+            height: Responsive.isDesktop(context) ? size.px : size.px - 2,
+            width: Responsive.isDesktop(context) ? size.px : size.px - 2,
+            decoration: const BoxDecoration(
+              color: whiteColor,
+              shape: BoxShape.circle,
+              image: DecorationImage(
+                image: AssetImage('assets/images/Profile.png'),
+              ),
+            ),
           ),
           SizedBox(width: defWebPad.px / 1.5),
-          AppText.header(context, txt: txt, space: 1.5),
+          AppText.header(context, txt: txt, space: 1.5, color: whiteColor),
         ],
       ),
     );

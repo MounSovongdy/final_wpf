@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:motor/constants/constants.dart';
+import 'package:motor/constants/firebase.dart';
 import 'package:motor/constants/responsive.dart';
 import 'package:motor/controllers/main_controller.dart';
 import 'package:motor/controllers/new_booking_controller.dart';
@@ -19,17 +20,6 @@ class NewBookingScreen extends StatelessWidget {
   final con = Get.put(NewBookingController());
   final conMain = Get.put(MainController());
 
-  final micro = ['A', 'C', 'J', 'AP'];
-  final status = ['Leasing', 'Cash'];
-  final marital = ['Single', 'Married'];
-  final gender = ['Male', 'Female'];
-  final salesman = ['Thol', 'Sora', 'Piseth'];
-  final brand = ['Honda', 'Suzuki', 'Yamaha'];
-  final model = ['Dream', 'Best', 'Scooppy'];
-  final color = ['Red', 'Black', 'Blue'];
-  final condition = ['New', 'Used'];
-  final comeBy = ['Walk In', 'Friend', 'Facebook', 'Tik Tok'];
-
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -46,35 +36,52 @@ class NewBookingScreen extends StatelessWidget {
           children: [
             AppText.header(context, txt: 'New Booking'),
             spacer(context),
-            TitleUnderline(spacer: spacer(context), txt: 'Booking Information'),
+            TitleUnderline(
+              spacer: spacer(context),
+              txt: 'Booking Information',
+            ),
             RowTextField(
               spacer: spacer(context),
-              widget1: AppTextField(txt: 'Date', con: con.date.value),
+              widget1: AppTextField(
+                txt: 'Date',
+                con: con.date.value,
+                readOnly: true,
+              ),
               widget2: AppDropdown(
                 txt: 'Micro',
-                list: micro,
+                list: con.microList,
                 onChanged: (v) {
                   if (v != null) con.micro = v;
                 },
               ),
               widget3: AppDropdown(
                 txt: 'Salesman',
-                list: salesman,
+                list: con.saleManList,
                 onChanged: (v) {
                   if (v != null) con.salesman = v;
                 },
               ),
             ),
             TitleUnderline(
-                spacer: spacer(context), txt: 'Customer Information'),
+              spacer: spacer(context),
+              txt: 'Customer Information',
+            ),
             RowTextField(
               spacer: spacer(context),
-              widget1: AppTextField(txt: 'ID Card', con: con.name.value),
-              widget2: AppTextField(txt: 'Name', con: con.name.value),
+              widget1: AppTextField(
+                txt: 'ID Card',
+                con: con.idCard.value,
+                isNumber: true,
+                digit: 9,
+              ),
+              widget2: AppTextField(
+                txt: 'Name',
+                con: con.name.value,
+              ),
               widget3: AppDropdown(
                 txt: 'Gender',
                 value: con.gender,
-                list: gender,
+                list: con.genderList,
                 onChanged: (v) {
                   if (v != null) con.gender = v;
                 },
@@ -82,57 +89,99 @@ class NewBookingScreen extends StatelessWidget {
             ),
             RowTextField(
               spacer: spacer(context),
-              widget1: AppTextField(txt: 'Age', con: con.age.value),
-              widget2: AppTextField(txt: 'Tel', con: con.phoneCus.value),
-              widget3: AppTextField(txt: 'Address', con: con.address.value),
+              widget1: AppTextField(
+                txt: 'Age',
+                con: con.age.value,
+                isNumber: true,
+                digit: 2,
+              ),
+              widget2: AppTextField(
+                txt: 'Tel',
+                con: con.phoneCus.value,
+                isNumber: true,
+                digit: 10,
+              ),
+              widget3: AppTextField(
+                txt: 'Address',
+                con: con.address.value,
+              ),
             ),
-            TitleUnderline(spacer: spacer(context), txt: 'Product Information'),
+            TitleUnderline(
+              spacer: spacer(context),
+              txt: 'Product Information',
+            ),
             RowTextField(
               spacer: spacer(context),
               widget1: AppDropdown(
-                txt: 'Brand',
-                list: brand,
-                onChanged: (v) {
-                  if (v != null) con.brand = v;
-                },
-              ),
-              widget2: AppDropdown(
                 txt: 'Model',
-                list: model,
+                list: con.modelList,
                 onChanged: (v) {
-                  if (v != null) con.model = v;
+                  if (v != null) {
+                    con.model = v;
+                    for (var data in product) {
+                      if (data.model == con.model) {
+                        con.brand.value.text = data.brand;
+                      }
+                    }
+                  }
                 },
               ),
-              widget3: AppDropdown(
+              widget2: AppTextField(
+                txt: 'Brand',
+                con: con.brand.value,
+                readOnly: true,
+              ),
+              widget3: AppTextField(
+                txt: 'Year',
+                con: con.year.value,
+                isNumber: true,
+                digit: 4,
+              ),
+            ),
+            RowTextField(
+              spacer: spacer(context),
+              widget1: AppDropdown(
                 txt: 'Color',
-                list: color,
+                list: con.colorList,
                 onChanged: (v) {
                   if (v != null) con.color = v;
                 },
               ),
-            ),
-            RowTextField(
-              spacer: spacer(context),
-              widget1: AppTextField(
-                txt: 'Year',
-                con: con.year.value,
-                readOnly: true,
-              ),
               widget2: AppDropdown(
                 txt: 'Condition',
-                list: condition,
+                list: con.conditionList,
                 onChanged: (v) {
                   if (v != null) con.condition = v;
                 },
               ),
             ),
             TitleUnderline(
-                spacer: spacer(context), txt: 'Financial Information'),
+              spacer: spacer(context),
+              txt: 'Financial Information',
+            ),
             RowTextField(
               spacer: spacer(context),
-              widget1: AppTextField(txt: 'Sell Price', con: con.sell.value),
-              widget2: AppTextField(txt: 'Discount', con: con.discount.value),
-              widget3: AppTextField(txt: 'Deposit', con: con.depo.value),
+              widget1: AppTextField(
+                txt: 'Sell Price',
+                con: con.sell.value,
+                isNumber: true,
+                digit: 5,
+                onChanged: (v) => con.calculateRemain(),
+              ),
+              widget2: AppTextField(
+                txt: 'Discount',
+                con: con.discount.value,
+                isNumber: true,
+                digit: 5,
+                onChanged: (v) => con.calculateRemain(),
+              ),
+              widget3: AppTextField(
+                txt: 'Deposit',
+                con: con.depo.value,
+                isNumber: true,
+                digit: 5,
+                onChanged: (v) => con.calculateRemain(),
+              ),
             ),
             RowTextField(
               spacer: spacer(context),
@@ -148,13 +197,34 @@ class NewBookingScreen extends StatelessWidget {
               spacer: spacer(context),
               widget1: AppDropdown(
                 txt: 'Come By',
-                list: comeBy,
+                list: con.comeByList,
                 onChanged: (v) {
-                  if (v != null) con.comeBy = v;
+                  if (v != null) {
+                    con.comeBy = v;
+                    if (con.comeBy == 'Friend') {
+                      con.isFriend.value = true;
+                    } else {
+                      con.isFriend.value = false;
+                    }
+                  }
                 },
               ),
-              widget2: AppTextField(txt: 'Name', con: con.nameIntro.value),
-              widget3: AppTextField(txt: 'Tel', con: con.phoneIntro.value),
+              widget2: Obx(
+                () => AppTextField(
+                  txt: 'Name',
+                  con: con.nameIntro.value,
+                  readOnly: !con.isFriend.value,
+                ),
+              ),
+              widget3: Obx(
+                () => AppTextField(
+                  txt: 'Tel',
+                  con: con.phoneIntro.value,
+                  readOnly: !con.isFriend.value,
+                  isNumber: true,
+                  digit: 10,
+                ),
+              ),
             ),
             spacer(context),
             spacer(context),
