@@ -6,6 +6,8 @@ import 'package:motor/controllers/main_controller.dart';
 import 'package:motor/screens/Sale_report_screen.dart';
 import 'package:motor/screens/add_stock_screen.dart';
 import 'package:motor/screens/booking_screen.dart';
+import 'package:motor/screens/cash_screen.dart';
+import 'package:motor/screens/leasing_screen.dart';
 import 'package:motor/screens/new_booking_screen.dart';
 import 'package:motor/screens/new_cash_screen.dart';
 import 'package:motor/screens/create_micro_screen.dart';
@@ -81,10 +83,6 @@ class MainScreen extends StatelessWidget {
           return BookingScreen();
         case 2:
           return NewBookingScreen();
-        case 3:
-          return NewLeasingScreen();
-        case 4:
-          return NewCashScreen();
         case 5:
           return SaleReportScreen();
         case 6:
@@ -117,6 +115,14 @@ class MainScreen extends StatelessWidget {
           return MicroScreen();
         case 20:
           return CreateMicroScreen();
+        case 21:
+          return LeasingScreen();
+        case 22:
+          return NewLeasingScreen();
+        case 23:
+          return CashScreen();
+        case 24:
+          return NewCashScreen();
         default:
           return DashboardScreen();
       }

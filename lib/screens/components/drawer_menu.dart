@@ -71,7 +71,7 @@ class DrawerMenu extends StatelessWidget {
                           if (Responsive.isMobile(context)) con.controlDrawer();
                           startInactivityTimer();
 
-                          con.index.value = 3;
+                          con.index.value = 21;
                         },
                         title: 'Leasing',
                         svgSrc: 'assets/icons/SaleRecord.svg',
@@ -84,7 +84,7 @@ class DrawerMenu extends StatelessWidget {
                           if (Responsive.isMobile(context)) con.controlDrawer();
                           startInactivityTimer();
 
-                          con.index.value = 4;
+                          con.index.value = 23;
                         },
                         title: 'Cash',
                         svgSrc: 'assets/icons/TotalExpenses.svg',

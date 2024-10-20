@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:motor/constants/constants.dart';
 import 'package:motor/constants/responsive.dart';
+import 'package:motor/controllers/main_controller.dart';
 import 'package:motor/controllers/new_leasing_controller.dart';
 import 'package:motor/screens/components/app_button.dart';
 import 'package:motor/screens/components/app_text_field.dart';
@@ -14,7 +15,8 @@ import 'package:responsive_sizer/responsive_sizer.dart';
 class NewLeasingScreen extends StatelessWidget {
   NewLeasingScreen({super.key});
 
-  final con = Get.put(LeasingController());
+  final con = Get.put(NewLeasingController());
+  final conMain = Get.put(MainController());
 
   @override
   Widget build(BuildContext context) {
@@ -59,8 +61,8 @@ class NewLeasingScreen extends StatelessWidget {
             TitleUnderline(spacer: spacer(context), txt: 'Product Information'),
             RowTextField(
               spacer: spacer(context),
-              widget1: AppTextField(txt: 'Brand', con: con.brand.value,readOnly: true,),
-              widget2: AppTextField(txt: 'Model', con: con.model.value,readOnly: true,),
+              widget1: AppTextField(txt: 'Model', con: con.model.value,readOnly: true,),
+              widget2: AppTextField(txt: 'Brand', con: con.brand.value,readOnly: true,),
               widget3: AppTextField(txt: 'Color', con: con.color.value,readOnly: true,),
             ),
             RowTextField(
@@ -105,7 +107,10 @@ class NewLeasingScreen extends StatelessWidget {
                   txt: 'Cancel',
                   width: Responsive.isDesktop(context) ? 150.px : 100.px,
                   color: secondGreyColor,
-                  tap: () {},
+                  tap: () {
+                    startInactivityTimer();
+                    conMain.index.value = conMain.index.value - 1;
+                  },
                 ),
                 spacer(context),
                 spacer(context),
