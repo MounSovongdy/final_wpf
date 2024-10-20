@@ -3,117 +3,122 @@ import 'package:get/get.dart';
 import 'package:motor/constants/constants.dart';
 import 'package:motor/constants/responsive.dart';
 import 'package:motor/controllers/leasing_controller.dart';
+import 'package:motor/controllers/main_controller.dart';
 import 'package:motor/screens/components/app_button.dart';
-import 'package:motor/screens/components/app_text_field.dart';
-import 'package:motor/screens/components/row_text_field.dart';
-import 'package:motor/screens/components/title_underline.dart';
+import 'package:motor/screens/components/app_data_table.dart';
 import 'package:motor/screens/components/under_line.dart';
 import 'package:motor/screens/widgets/app_text.dart';
+import 'package:motor/screens/widgets/data_table_widget.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 class LeasingScreen extends StatelessWidget {
   LeasingScreen({super.key});
 
   final con = Get.put(LeasingController());
+  final con1 = Get.put(MainController());
+  final scroll = ScrollController();
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Container(
-        margin: EdgeInsets.all(defWebPad.px),
-        padding: EdgeInsets.all(defWebPad.px),
-        width: MediaQuery.of(context).size.width,
-        decoration: BoxDecoration(
-          color: whiteColor,
-          borderRadius: BorderRadius.circular(defRadius.px),
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            AppText.header(context, txt: 'Leasing'),
-            spacer(context),
-            TitleUnderline(spacer: spacer(context), txt: 'Customer Information'),
-            RowTextField(
-              spacer: spacer(context),
-              widget1: AppTextField(txt: 'ID Card', con: con.name.value),
-              widget2: AppTextField(txt: 'Name', con: con.name.value,readOnly: true,),
-              widget3: AppTextField(txt: 'Gender', con: con.gender.value,readOnly: true,),
+    return Container(
+      margin: EdgeInsets.all(defWebPad.px),
+      padding: EdgeInsets.all(defWebPad.px),
+      width: MediaQuery.of(context).size.width,
+      decoration: BoxDecoration(
+        color: whiteColor,
+        borderRadius: BorderRadius.circular(defRadius.px),
+      ),
+      child: ListView(
+        shrinkWrap: true,
+        physics: const BouncingScrollPhysics(),
+        children: [
+          AppText.header(context, txt: 'Booking List'),
+          spacer(context),
+          TextField(
+            controller: con.search.value,
+            decoration: const InputDecoration(
+              labelText: 'Search',
+              hintText: 'Search by any data',
+              prefixIcon: Icon(Icons.search),
+              border: OutlineInputBorder(),
             ),
-            RowTextField(
-              spacer: spacer(context),
-              widget1: AppTextField(txt: 'Age', con: con.age.value,readOnly: true,),
-              widget2: AppTextField(txt: 'Tel', con: con.phoneCus.value,readOnly: true,),
-              widget3: AppTextField(txt: 'Address', con: con.address.value,readOnly: true,),
-            ),
-            TitleUnderline(spacer: spacer(context), txt: 'Booking Information'),
-            RowTextField(
-              spacer: spacer(context),
-              widget1: AppTextField(txt: 'Date', con: con.dateBooking.value,readOnly: true,),
-              widget2: AppTextField(txt: 'Method', con: con.method.value,readOnly: true,),
-              widget3: AppTextField(txt: 'Micro', con: con.micro.value,readOnly: true,),
-            ),
-            RowTextField(
-              spacer: spacer(context),
-              widget1: AppTextField(txt: 'Salesman', con: con.salesman.value,readOnly: true,),
-            ),
-            TitleUnderline(spacer: spacer(context), txt: 'Product Information'),
-            RowTextField(
-              spacer: spacer(context),
-              widget1: AppTextField(txt: 'Brand', con: con.brand.value,readOnly: true,),
-              widget2: AppTextField(txt: 'Model', con: con.model.value,readOnly: true,),
-              widget3: AppTextField(txt: 'Color', con: con.color.value,readOnly: true,),
-            ),
-            RowTextField(
-              spacer: spacer(context),
-              widget1: AppTextField(txt: 'Year', con: con.year.value,readOnly: true,),
-              widget2: AppTextField(txt: 'Condition', con: con.condition.value,readOnly: true,),
-              widget3: AppTextField(txt: 'Engine No', con: con.engine.value),
-            ),
-            RowTextField(
-              spacer: spacer(context),
-              widget1: AppTextField(txt: 'Frame No', con: con.frame.value),
-              widget2: AppTextField(txt: 'Plate No', con: con.plateNo.value),
-            ),
-            TitleUnderline(spacer: spacer(context), txt: 'Financial Information'),
-            RowTextField(
-              spacer: spacer(context),
-              widget1: AppTextField(txt: 'Sell Price', con: con.sell.value,readOnly: true,),
-              widget2: AppTextField(txt: 'Discount', con: con.discount.value,readOnly: true,),
-              widget3: AppTextField(txt: 'Deposit', con: con.deposit.value,readOnly: true,),
-            ),
-            RowTextField(
-              spacer: spacer(context),
-              widget1: AppTextField(txt: 'Remain', con: con.remain.value,readOnly: true,),
-            ),
-            TitleUnderline(spacer: spacer(context), txt: 'Introduced Information'),
-            RowTextField(spacer: spacer(context),
-              widget1: AppTextField(txt: 'Name', con: con.nameIntro.value,readOnly: true,),
-              widget2: AppTextField(txt: 'Tel', con: con.phoneIntro.value,readOnly: true,),
-            ),
-            spacer(context),
-            spacer(context),
-            const UnderLine(color: secondGreyColor),
-            spacer(context),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                AppButton(
-                  txt: 'Cancel',
-                  width: Responsive.isDesktop(context) ? 150.px : 100.px,
-                  color: secondGreyColor,
-                  tap: () {},
+          ),
+          spacer(context),
+          Scrollbar(
+            controller: scroll,
+            interactive: true,
+            child: SingleChildScrollView(
+              controller: scroll,
+              scrollDirection: Axis.horizontal,
+              child: Obx(
+                    () => AppDataTable(
+                  column: [
+                    DataTableWidget.dataColumn(context, 'No'),
+                    DataTableWidget.dataColumn(context, 'Booking Date'),
+                    DataTableWidget.dataColumn(context, 'ID Card'),
+                    DataTableWidget.dataColumn(context, 'Customer Name'),
+                    DataTableWidget.dataColumn(context, 'Gender'),
+                    DataTableWidget.dataColumn(context, 'Age'),
+                    DataTableWidget.dataColumn(context, 'Telephone'),
+                    DataTableWidget.dataColumn(context, 'Address'),
+                    DataTableWidget.dataColumn(context, 'Brand'),
+                    DataTableWidget.dataColumn(context, 'Model'),
+                    DataTableWidget.dataColumn(context, 'Color'),
+                    DataTableWidget.dataColumn(context, 'Year'),
+                    DataTableWidget.dataColumn(context, 'Condition'),
+                    DataTableWidget.dataColumn(context, 'Price'),
+                    DataTableWidget.dataColumn(context, 'Discount'),
+                    DataTableWidget.dataColumn(context, 'Deposit'),
+                    DataTableWidget.dataColumn(context, 'Remain'),
+                    DataTableWidget.dataColumn(context, 'Method'),
+                    DataTableWidget.dataColumn(context, 'Micro'),
+                    DataTableWidget.dataColumn(context, 'Salesman'),
+                    DataTableWidget.dataColumn(context, 'Status'),
+                    DataTableWidget.dataColumn(context, 'Action'),
+                  ],
+                  row: List.generate(
+                    con.filteredUsers.length,
+                        (index) => DataRow(cells: [
+                      DataTableWidget.dataRowTxt(
+                        context,
+                        con.filteredUsers[index].id,
+                      ),
+                      DataTableWidget.dataRowTxt(
+                        context,
+                        con.filteredUsers[index].name,
+                      ),
+                      DataTableWidget.dataRowTxt(
+                        context,
+                        con.filteredUsers[index].role,
+                      ),
+                      DataTableWidget.dataRowBtn(
+                        context,
+                        edit: () => debugPrint('Edit $index'),
+                        delete: () => debugPrint('Delete $index'),
+                      ),
+                    ],),
+                  ),
                 ),
-                spacer(context),
-                spacer(context),
-                AppButton(
-                  txt: 'Save',
-                  width: Responsive.isDesktop(context) ? 150.px : 100.px,
-                  tap: () {},
-                ),
-              ],
+              ),
             ),
-          ],
-        ),
+          ),
+          spacer(context),
+          spacer(context),
+          const UnderLine(color: secondGreyColor),
+          spacer(context),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              AppButton(
+                txt: 'New',
+                width: Responsive.isDesktop(context) ? 150.px : 100.px,
+                tap: () {
+                  con1.index.value = 2;
+                },
+              ),
+            ],
+          ),
+        ],
       ),
     );
   }

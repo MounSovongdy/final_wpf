@@ -1,34 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class LeasingController extends GetxController {
-
-  var idCard = TextEditingController().obs;
-  var name = TextEditingController().obs;
-  var gender = TextEditingController().obs;
-  var age = TextEditingController().obs;
-  var phoneCus = TextEditingController().obs;
-  var address = TextEditingController().obs;
-
-  var dateBooking = TextEditingController().obs;
-  var method = TextEditingController().obs;
-  var micro = TextEditingController().obs;
-  var salesman = TextEditingController().obs;
-
-  var brand = TextEditingController().obs;
-  var model = TextEditingController().obs;
-  var color = TextEditingController().obs;
-  var year = TextEditingController().obs;
-  var condition = TextEditingController().obs;
-  var engine = TextEditingController().obs;
-  var frame = TextEditingController().obs;
-  var plateNo = TextEditingController().obs;
-
-  var sell = TextEditingController().obs;
-  var discount = TextEditingController().obs;
-  var deposit = TextEditingController().obs;
-  var remain = TextEditingController().obs;
-
-  var nameIntro = TextEditingController().obs;
-  var phoneIntro = TextEditingController().obs;
+class LeasingController extends GetxController{
+  var search = TextEditingController().obs;
+  var filteredUsers = [].obs;
 }

@@ -1,31 +1,36 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class CashController extends GetxController {
+class LeasingController extends GetxController {
 
   var idCard = TextEditingController().obs;
   var name = TextEditingController().obs;
-  String? gender;
+  var gender = TextEditingController().obs;
   var age = TextEditingController().obs;
   var phoneCus = TextEditingController().obs;
   var address = TextEditingController().obs;
 
   var dateBooking = TextEditingController().obs;
-  String? salesman;
+  var method = TextEditingController().obs;
+  var micro = TextEditingController().obs;
+  var salesman = TextEditingController().obs;
 
-  String? brand;
-  String? model;
-  String? color;
+  var brand = TextEditingController().obs;
+  var model = TextEditingController().obs;
+  var color = TextEditingController().obs;
   var year = TextEditingController().obs;
-  String? condition;
+  var condition = TextEditingController().obs;
   var engine = TextEditingController().obs;
   var frame = TextEditingController().obs;
   var plateNo = TextEditingController().obs;
 
   var sell = TextEditingController().obs;
   var discount = TextEditingController().obs;
-  var totalPrice = TextEditingController().obs;
+  var deposit = TextEditingController().obs;
+  var remain = TextEditingController().obs;
 
   var nameIntro = TextEditingController().obs;
   var phoneIntro = TextEditingController().obs;
+  var comeBy = TextEditingController().obs;
+  var commission = TextEditingController().obs;
 }
