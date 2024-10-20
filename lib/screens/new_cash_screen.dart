@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:motor/constants/constants.dart';
 import 'package:motor/constants/responsive.dart';
-import 'package:motor/controllers/main_controller.dart';
-import 'package:motor/controllers/new_booking_controller.dart';
+import 'package:motor/controllers/new_cash_controller.dart';
 import 'package:motor/screens/components/app_button.dart';
 import 'package:motor/screens/components/app_dropdown.dart';
 import 'package:motor/screens/components/app_text_field.dart';
@@ -13,22 +12,17 @@ import 'package:motor/screens/components/under_line.dart';
 import 'package:motor/screens/widgets/app_text.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
-class NewBookingScreen extends StatelessWidget {
-  NewBookingScreen({super.key});
+class NewCashScreen extends StatelessWidget {
+  NewCashScreen({super.key});
 
-  final con = Get.put(NewBookingController());
-  final conMain = Get.put(MainController());
+  final con = Get.put(CashController());
 
-  final micro = ['A', 'C', 'J', 'AP'];
-  final status = ['Leasing', 'Cash'];
-  final marital = ['Single', 'Married'];
   final gender = ['Male', 'Female'];
-  final salesman = ['Thol', 'Sora', 'Piseth'];
-  final brand = ['Honda', 'Suzuki', 'Yamaha'];
-  final model = ['Dream', 'Best', 'Scooppy'];
+  final salesman = ['Thol', 'Sora','Piseth'];
+  final brand = ['Honda', 'Suzuki','Yamaha'];
+  final model = ['Dream','Best','Scoopy'];
   final color = ['Red', 'Black', 'Blue'];
   final condition = ['New', 'Used'];
-  final comeBy = ['Walk In', 'Friend', 'Facebook', 'Tik Tok'];
 
   @override
   Widget build(BuildContext context) {
@@ -44,37 +38,15 @@ class NewBookingScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            AppText.header(context, txt: 'New Booking'),
+            AppText.header(context, txt: 'Cash'),
             spacer(context),
-            TitleUnderline(spacer: spacer(context), txt: 'Booking Information'),
+            TitleUnderline(spacer: spacer(context), txt: 'Sell Information'),
             RowTextField(
               spacer: spacer(context),
-              widget1: AppTextField(txt: 'Date', con: con.date.value),
-              widget2: AppDropdown(
-                txt: 'Method',
-                value: con.bookingStatus,
-                list: status,
-                onChanged: (v) {
-                  if (v != null) con.bookingStatus = v;
-                },
-              ),
-              widget3: AppDropdown(
-                txt: 'Micro',
-                list: micro,
-                onChanged: (v) {
-                  if (v != null) con.micro = v;
-                },
-              ),
-            ),
-            RowTextField(
-              spacer: spacer(context),
-              widget1: AppDropdown(
-                txt: 'Salesman',
-                list: salesman,
-                onChanged: (v) {
-                  if (v != null) con.salesman = v;
-                },
-              ),
+              widget1: AppTextField(txt: 'Date', con: con.dateBooking.value),
+              widget2: AppDropdown(txt: 'Salesman', list: salesman, onChanged: (v){
+                if (v != null) con.salesman = v;
+              },),
             ),
             TitleUnderline(
                 spacer: spacer(context), txt: 'Customer Information'),
@@ -124,11 +96,7 @@ class NewBookingScreen extends StatelessWidget {
             ),
             RowTextField(
               spacer: spacer(context),
-              widget1: AppTextField(
-                txt: 'Year',
-                con: con.year.value,
-                readOnly: true,
-              ),
+              widget1: AppTextField(txt: 'Year', con: con.year.value),
               widget2: AppDropdown(
                 txt: 'Condition',
                 list: condition,
@@ -136,6 +104,12 @@ class NewBookingScreen extends StatelessWidget {
                   if (v != null) con.condition = v;
                 },
               ),
+              widget3: AppTextField(txt: 'Engine No', con: con.engine.value),
+            ),
+            RowTextField(
+              spacer: spacer(context),
+              widget1: AppTextField(txt: 'Frame No', con: con.frame.value),
+              widget2: AppTextField(txt: 'Plate No', con: con.plateNo.value),
             ),
             TitleUnderline(
                 spacer: spacer(context), txt: 'Financial Information'),
@@ -143,46 +117,22 @@ class NewBookingScreen extends StatelessWidget {
               spacer: spacer(context),
               widget1: AppTextField(txt: 'Sell Price', con: con.sell.value),
               widget2: AppTextField(txt: 'Discount', con: con.discount.value),
-              widget3: AppTextField(txt: 'Deposit', con: con.depo.value),
-            ),
-            RowTextField(
-              spacer: spacer(context),
-              widget1: AppTextField(
-                txt: 'Remain',
-                con: con.remain.value,
+              widget3: AppTextField(
+                txt: 'Total Price',
+                con: con.totalPrice.value,
                 readOnly: true,
               ),
             ),
             TitleUnderline(
                 spacer: spacer(context), txt: 'Introduced Information'),
-            RowTextField(
-              spacer: spacer(context),
-              widget1: AppDropdown(
-                txt: 'Come By',
-                list: comeBy,
-                onChanged: (v) {
-                  if (v != null) con.comeBy = v;
-                },
-              ),
+            RowTextField(spacer: spacer(context),
+              widget1: AppTextField(txt: 'Come By', con: con.comeBy.value),
               widget2: AppTextField(txt: 'Name', con: con.nameIntro.value),
               widget3: AppTextField(txt: 'Tel', con: con.phoneIntro.value),
             ),
-            spacer(context),
-            spacer(context),
-            Responsive.isDesktop(context)
-                ? Container(
-                    margin: EdgeInsets.only(left: 5.px, right: defWebPad.px),
-                    child: AppTextField(
-                      txt: 'Remark',
-                      con: con.remark.value,
-                      flex: 10,
-                    ),
-                  )
-                : RowTextField(
-                    spacer: spacer(context),
-                    widget1: AppTextField(txt: 'Remark', con: con.remark.value),
-                  ),
-            spacer(context),
+            RowTextField(spacer: spacer(context),
+              widget1: AppTextField(txt: 'Commission fee', con: con.commission.value),
+            ),
             spacer(context),
             spacer(context),
             const UnderLine(color: secondGreyColor),
@@ -191,13 +141,10 @@ class NewBookingScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 AppButton(
-                  txt: 'Back',
+                  txt: 'Cancel',
                   width: Responsive.isDesktop(context) ? 150.px : 100.px,
                   color: secondGreyColor,
-                  tap: () {
-                    startInactivityTimer();
-                    conMain.index.value = conMain.index.value - 1;
-                  },
+                  tap: () {},
                 ),
                 spacer(context),
                 spacer(context),

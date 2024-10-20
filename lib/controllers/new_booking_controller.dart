@@ -14,6 +14,7 @@ class NewBookingController extends GetxController {
   String? model;
   String? color;
   String? condition;
+  String? comeBy;
   var phoneCus = TextEditingController().obs;
   var age = TextEditingController().obs;
   var address = TextEditingController().obs;

@@ -7,7 +7,7 @@ import 'package:motor/screens/Sale_report_screen.dart';
 import 'package:motor/screens/add_stock_screen.dart';
 import 'package:motor/screens/booking_screen.dart';
 import 'package:motor/screens/new_booking_screen.dart';
-import 'package:motor/screens/cash_screen.dart';
+import 'package:motor/screens/new_cash_screen.dart';
 import 'package:motor/screens/create_micro_screen.dart';
 import 'package:motor/screens/create_product_screen.dart';
 import 'package:motor/screens/create_salesman_screen.dart';
@@ -19,7 +19,7 @@ import 'package:motor/screens/micro_screen.dart';
 import 'package:motor/screens/new_receivable_screen.dart';
 import 'package:motor/screens/product_screen.dart';
 import 'package:motor/screens/receivable_screen.dart';
-import 'package:motor/screens/leasing_screen.dart';
+import 'package:motor/screens/new_leasing_screen.dart';
 import 'package:motor/screens/salesman_screen.dart';
 import 'package:motor/screens/total_expense_screen.dart';
 import 'package:motor/screens/total_stock_screen.dart';
@@ -82,9 +82,9 @@ class MainScreen extends StatelessWidget {
         case 2:
           return NewBookingScreen();
         case 3:
-          return LeasingScreen();
+          return NewLeasingScreen();
         case 4:
-          return CashScreen();
+          return NewCashScreen();
         case 5:
           return SaleReportScreen();
         case 6:
