@@ -11,7 +11,6 @@ class NewLeasingController extends GetxController {
   var address = TextEditingController().obs;
 
   var dateBooking = TextEditingController().obs;
-  var method = TextEditingController().obs;
   var micro = TextEditingController().obs;
   var salesman = TextEditingController().obs;
 

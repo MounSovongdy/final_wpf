@@ -32,7 +32,7 @@ class NewLeasingScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            AppText.header(context, txt: 'Leasing'),
+            AppText.header(context, txt: 'New Leasing'),
             spacer(context),
             TitleUnderline(spacer: spacer(context), txt: 'Customer Information'),
             RowTextField(
@@ -51,12 +51,8 @@ class NewLeasingScreen extends StatelessWidget {
             RowTextField(
               spacer: spacer(context),
               widget1: AppTextField(txt: 'Date', con: con.dateBooking.value,readOnly: true,),
-              widget2: AppTextField(txt: 'Method', con: con.method.value,readOnly: true,),
-              widget3: AppTextField(txt: 'Micro', con: con.micro.value,readOnly: true,),
-            ),
-            RowTextField(
-              spacer: spacer(context),
-              widget1: AppTextField(txt: 'Salesman', con: con.salesman.value,readOnly: true,),
+              widget2: AppTextField(txt: 'Micro', con: con.micro.value,readOnly: true,),
+              widget3: AppTextField(txt: 'Salesman', con: con.salesman.value,readOnly: true,),
             ),
             TitleUnderline(spacer: spacer(context), txt: 'Product Information'),
             RowTextField(
