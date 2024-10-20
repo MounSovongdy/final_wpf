@@ -51,24 +51,13 @@ class NewBookingScreen extends StatelessWidget {
               spacer: spacer(context),
               widget1: AppTextField(txt: 'Date', con: con.date.value),
               widget2: AppDropdown(
-                txt: 'Method',
-                value: con.bookingStatus,
-                list: status,
-                onChanged: (v) {
-                  if (v != null) con.bookingStatus = v;
-                },
-              ),
-              widget3: AppDropdown(
                 txt: 'Micro',
                 list: micro,
                 onChanged: (v) {
                   if (v != null) con.micro = v;
                 },
               ),
-            ),
-            RowTextField(
-              spacer: spacer(context),
-              widget1: AppDropdown(
+              widget3: AppDropdown(
                 txt: 'Salesman',
                 list: salesman,
                 onChanged: (v) {
