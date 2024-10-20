@@ -26,7 +26,7 @@ class CreateSalesmanController extends GetxController {
       if (saleMan.isNotEmpty) newId = int.parse(saleMan[0].id) + 1;
 
       SaleManModel newSale = SaleManModel(
-        id: '$newId',
+        id: newId,
         name: fullName.value.text,
         gender: gender ?? '',
         tel: tel.value.text,

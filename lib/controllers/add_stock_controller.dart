@@ -44,7 +44,7 @@ class AddStockController extends GetxController {
       if (totalStock.isNotEmpty) newTotalId = int.parse(totalStock[0].id) + 1;
 
       AddStockModel newAddStock = AddStockModel(
-        id: '$newAddId',
+        id: newAddId,
         model: model ?? '',
         brand: brand.value.text,
         year: proYear.value.text,
@@ -62,7 +62,7 @@ class AddStockController extends GetxController {
 
       if (stockByModel.isEmpty) {
         TotalStockModel newTotalStock = TotalStockModel(
-          id: '$newTotalId',
+          id: newTotalId,
           model: model ?? '',
           brand: brand.value.text,
           year: proYear.value.text,

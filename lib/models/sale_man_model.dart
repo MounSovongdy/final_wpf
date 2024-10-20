@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 class SaleManModel {
-  final String id;
+  final int id;
   final String name;
   final String gender;
   final String tel;
@@ -11,7 +11,7 @@ class SaleManModel {
   final String date;
 
   SaleManModel({
-    this.id = 'id',
+    this.id = 0,
     this.name = 'name',
     this.gender = 'gender',
     this.tel = 'tel',
@@ -22,7 +22,7 @@ class SaleManModel {
   });
 
   SaleManModel copyWith({
-    String? id,
+    int? id,
     String? name,
     String? gender,
     String? tel,
@@ -58,7 +58,7 @@ class SaleManModel {
 
   factory SaleManModel.fromMap(Map<String, dynamic> map) {
     return SaleManModel(
-      id: map['id'] as String,
+      id: map['id'] as int,
       name: map['name'] as String,
       gender: map['gender'] as String,
       tel: map['tel'] as String,

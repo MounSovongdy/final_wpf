@@ -23,7 +23,7 @@ class CreateMicroController extends GetxController {
       if (micro.isNotEmpty) newId = int.parse(micro[0].id) + 1;
 
       MicroModel newMicro = MicroModel(
-        id: '$newId',
+        id: newId,
         name: nameInstitution.value.text,
         tel: tel.value.text,
         email: email.value.text,

@@ -17,7 +17,7 @@ class CreateProductController extends GetxController {
       if (product.isNotEmpty) newId = int.parse(product[0].id) + 1;
 
       ProductModel newProduct = ProductModel(
-        id: '$newId',
+        id: newId,
         brand: proBrand.value.text,
         model: proModel.value.text,
       );

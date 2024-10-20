@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 class MicroModel {
-  final String id;
+  final int id;
   final String name;
   final String tel;
   final String email;
@@ -12,7 +12,7 @@ class MicroModel {
   final String contactPosition;
 
   MicroModel({
-    this.id = 'id',
+    this.id = 0,
     this.name = 'name',
     this.tel = 'tel',
     this.email = 'email',
@@ -24,7 +24,7 @@ class MicroModel {
   });
 
   MicroModel copyWith({
-    String? id,
+    int? id,
     String? name,
     String? tel,
     String? email,
@@ -63,7 +63,7 @@ class MicroModel {
 
   factory MicroModel.fromMap(Map<String, dynamic> map) {
     return MicroModel(
-      id: map['id'] as String,
+      id: map['id'] as int,
       name: map['name'] as String,
       tel: map['tel'] as String,
       email: map['email'] as String,

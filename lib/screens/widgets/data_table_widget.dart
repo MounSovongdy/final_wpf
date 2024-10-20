@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:motor/constants/constants.dart';
 import 'package:motor/screens/widgets/app_text.dart';
-import 'package:responsive_sizer/responsive_sizer.dart';
 
 class DataTableWidget {
   static DataColumn dataColumn(
@@ -42,7 +41,6 @@ class DataTableWidget {
             color: greenColor,
           ),
         ),
-        SizedBox(width: 20.px),
         IconButton(
           onPressed: delete,
           icon: const Icon(

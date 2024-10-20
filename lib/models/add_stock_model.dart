@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 class AddStockModel {
-  final String id;
+  final int id;
   final String model;
   final String brand;
   final String year;
@@ -16,7 +16,7 @@ class AddStockModel {
   final String totalPrice;
 
   AddStockModel({
-    this.id = '',
+    this.id = 0,
     this.model = '',
     this.brand = '',
     this.year = '',
@@ -32,7 +32,7 @@ class AddStockModel {
   });
 
   AddStockModel copyWith({
-    String? id,
+    int? id,
     String? model,
     String? brand,
     String? year,
@@ -83,7 +83,7 @@ class AddStockModel {
 
   factory AddStockModel.fromMap(Map<String, dynamic> map) {
     return AddStockModel(
-      id: map['id'] as String,
+      id: map['id'] as int,
       model: map['model'] as String,
       brand: map['brand'] as String,
       year: map['year'] as String,

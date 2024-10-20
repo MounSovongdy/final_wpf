@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 class UserModel {
-  final String id;
+  final int id;
   final String name;
   final String role;
   final String user;
@@ -10,7 +10,7 @@ class UserModel {
   final String status;
 
   UserModel({
-    this.id = 'id',
+    this.id = 0,
     this.name = 'name',
     this.role = 'role',
     this.user = 'user',
@@ -20,7 +20,7 @@ class UserModel {
   });
 
   UserModel copyWith({
-    String? id,
+    int? id,
     String? name,
     String? role,
     String? user,
@@ -53,7 +53,7 @@ class UserModel {
 
   factory UserModel.fromMap(Map<String, dynamic> map) {
     return UserModel(
-      id: map['id'] as String,
+      id: map['id'] as int,
       name: map['name'] as String,
       role: map['role'] as String,
       user: map['user'] as String,

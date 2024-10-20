@@ -14,10 +14,10 @@ class CreateUserController extends GetxController {
     if (name.value.text != '' && userLogin.value.text != '' && role != null) {
       await getLastUser();
       var newId = 1;
-      if (byUser.isNotEmpty) newId = int.parse(byUser[0].id) + 1;
+      if (user.isNotEmpty) newId = int.parse(user[0].id) + 1;
 
       UserModel newUser = UserModel(
-        id: '$newId',
+        id: newId,
         name: name.value.text,
         user: userLogin.value.text,
         password: '123456',

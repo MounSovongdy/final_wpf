@@ -44,7 +44,7 @@ Future<void> getLastUser() async {
 
 Future<void> insertUser(UserModel user) async {
   try {
-    await userCol.doc(user.id).set(user.toMap());
+    await userCol.doc('${user.id}').set(user.toMap());
   } catch (e) {
     debugPrint('Failed to add user: $e');
   }
@@ -79,7 +79,7 @@ Future<void> getLastSaleMan() async {
 
 Future<void> insertSaleMan(SaleManModel sale) async {
   try {
-    await saleManCol.doc(sale.id).set(sale.toMap());
+    await saleManCol.doc('${sale.id}').set(sale.toMap());
   } catch (e) {
     debugPrint('Failed to add sale man: $e');
   }
@@ -113,7 +113,7 @@ Future<void> getLastMicro() async {
 
 Future<void> insertMicro(MicroModel micro) async {
   try {
-    await microCol.doc(micro.id).set(micro.toMap());
+    await microCol.doc('${micro.id}').set(micro.toMap());
   } catch (e) {
     debugPrint('Failed to add micro: $e');
   }
@@ -148,7 +148,7 @@ Future<void> getAllProduct() async {
 
 Future<void> insertProduct(ProductModel pro) async {
   try {
-    await productCol.doc(pro.id).set(pro.toMap());
+    await productCol.doc('${pro.id}').set(pro.toMap());
   } catch (e) {
     debugPrint('Failed to add product: $e');
   }
@@ -177,7 +177,7 @@ Future<void> getLastAddStock() async {
 
 Future<void> insertAddStock(AddStockModel add) async {
   try {
-    await addStockCol.doc(add.id).set(add.toMap());
+    await addStockCol.doc('${add.id}').set(add.toMap());
   } catch (e) {
     debugPrint('Failed to add stock: $e');
   }
@@ -207,7 +207,7 @@ Future<void> getStockByModel({
 
 Future<void> insertTotalStock(TotalStockModel total) async {
   try {
-    await totalStockCol.doc(total.id).set(total.toMap());
+    await totalStockCol.doc('${total.id}').set(total.toMap());
   } catch (e) {
     debugPrint('Failed to add total stock: $e');
   }
