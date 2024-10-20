@@ -9,6 +9,7 @@ import 'package:motor/screens/components/app_data_table.dart';
 import 'package:motor/screens/components/under_line.dart';
 import 'package:motor/screens/widgets/app_text.dart';
 import 'package:motor/screens/widgets/data_table_widget.dart';
+import 'package:motor/screens/widgets/loading_widget.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 class LeasingScreen extends StatelessWidget {
@@ -44,63 +45,32 @@ class LeasingScreen extends StatelessWidget {
             ),
           ),
           spacer(context),
-          Scrollbar(
-            controller: scroll,
-            interactive: true,
-            child: SingleChildScrollView(
-              controller: scroll,
-              scrollDirection: Axis.horizontal,
-              child: Obx(
-                    () => AppDataTable(
-                  column: [
-                    DataTableWidget.dataColumn(context, 'No'),
-                    DataTableWidget.dataColumn(context, 'Booking Date'),
-                    DataTableWidget.dataColumn(context, 'ID Card'),
-                    DataTableWidget.dataColumn(context, 'Customer Name'),
-                    DataTableWidget.dataColumn(context, 'Gender'),
-                    DataTableWidget.dataColumn(context, 'Age'),
-                    DataTableWidget.dataColumn(context, 'Telephone'),
-                    DataTableWidget.dataColumn(context, 'Address'),
-                    DataTableWidget.dataColumn(context, 'Brand'),
-                    DataTableWidget.dataColumn(context, 'Model'),
-                    DataTableWidget.dataColumn(context, 'Color'),
-                    DataTableWidget.dataColumn(context, 'Year'),
-                    DataTableWidget.dataColumn(context, 'Condition'),
-                    DataTableWidget.dataColumn(context, 'Price'),
-                    DataTableWidget.dataColumn(context, 'Discount'),
-                    DataTableWidget.dataColumn(context, 'Deposit'),
-                    DataTableWidget.dataColumn(context, 'Remain'),
-                    DataTableWidget.dataColumn(context, 'Method'),
-                    DataTableWidget.dataColumn(context, 'Micro'),
-                    DataTableWidget.dataColumn(context, 'Salesman'),
-                    DataTableWidget.dataColumn(context, 'Status'),
-                    DataTableWidget.dataColumn(context, 'Action'),
-                  ],
-                  row: List.generate(
-                    con.filteredUsers.length,
-                        (index) => DataRow(cells: [
-                      DataTableWidget.dataRowTxt(
-                        context,
-                        con.filteredUsers[index].id,
-                      ),
-                      DataTableWidget.dataRowTxt(
-                        context,
-                        con.filteredUsers[index].name,
-                      ),
-                      DataTableWidget.dataRowTxt(
-                        context,
-                        con.filteredUsers[index].role,
-                      ),
-                      DataTableWidget.dataRowBtn(
-                        context,
-                        edit: () => debugPrint('Edit $index'),
-                        delete: () => debugPrint('Delete $index'),
-                      ),
-                    ],),
-                  ),
-                ),
-              ),
-            ),
+          AppDataTable(
+            column: [
+              DataTableWidget.column(context, 'No'),
+              DataTableWidget.column(context, 'Booking Date'),
+              DataTableWidget.column(context, 'ID Card'),
+              DataTableWidget.column(context, 'Customer Name'),
+              DataTableWidget.column(context, 'Gender'),
+              DataTableWidget.column(context, 'Age'),
+              DataTableWidget.column(context, 'Telephone'),
+              DataTableWidget.column(context, 'Address'),
+              DataTableWidget.column(context, 'Brand'),
+              DataTableWidget.column(context, 'Model'),
+              DataTableWidget.column(context, 'Color'),
+              DataTableWidget.column(context, 'Year'),
+              DataTableWidget.column(context, 'Condition'),
+              DataTableWidget.column(context, 'Price'),
+              DataTableWidget.column(context, 'Discount'),
+              DataTableWidget.column(context, 'Deposit'),
+              DataTableWidget.column(context, 'Remain'),
+              DataTableWidget.column(context, 'Method'),
+              DataTableWidget.column(context, 'Micro'),
+              DataTableWidget.column(context, 'Salesman'),
+              DataTableWidget.column(context, 'Status'),
+              DataTableWidget.column(context, 'Action'),
+            ],
+            source: LeasingDataSource(),
           ),
           spacer(context),
           spacer(context),
@@ -122,4 +92,69 @@ class LeasingScreen extends StatelessWidget {
       ),
     );
   }
+}
+
+class LeasingDataSource extends DataTableSource {
+  final con = Get.put(LeasingController());
+  int selectedCount = 0;
+
+  @override
+  DataRow? getRow(int index) {
+    assert(index >= 0);
+    if (index >= rowCount) return null;
+
+    return DataRow.byIndex(
+      index: index,
+      cells: [
+        DataTableWidget.cell(
+          Get.context!,
+          '${con.filteredUsers[index].id}',
+        ),
+        DataTableWidget.cell(
+          Get.context!,
+          con.filteredUsers[index].name,
+        ),
+        DataTableWidget.cell(
+          Get.context!,
+          con.filteredUsers[index].role,
+        ),
+        DataTableWidget.cell(
+          Get.context!,
+          con.filteredUsers[index].user,
+        ),
+        DataTableWidget.cell(
+          Get.context!,
+          con.filteredUsers[index].dateCreate,
+        ),
+        DataTableWidget.cellBtn(
+          Get.context!,
+          edit: () => debugPrint('Edit $index'),
+          delete: () {
+            startInactivityTimer();
+            LoadingWidget.showTextDialog(
+              Get.context!,
+              title: 'Warning',
+              content: 'Are you sure to delete?',
+              color: redColor,
+              txtBack: 'Cancel',
+              btnColor: secondGreyColor,
+              widget: TextButton(
+                onPressed: () {},
+                child: AppText.title(Get.context!, txt: 'Confirm'),
+              ),
+            );
+          },
+        ),
+      ],
+    );
+  }
+
+  @override
+  int get rowCount => con.filteredUsers.length;
+
+  @override
+  bool get isRowCountApproximate => false;
+
+  @override
+  int get selectedRowCount => selectedCount;
 }

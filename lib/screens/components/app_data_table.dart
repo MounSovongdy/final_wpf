@@ -4,24 +4,35 @@ import 'package:responsive_sizer/responsive_sizer.dart';
 
 class AppDataTable extends StatelessWidget {
   final List<DataColumn> column;
-  final List<DataRow> row;
+  final DataTableSource source;
+  AppDataTable({super.key, required this.column, required this.source});
 
-  const AppDataTable({
-    super.key,
-    required this.column,
-    required this.row,
-  });
+  final scroll = ScrollController();
 
   @override
   Widget build(BuildContext context) {
-    return DataTable(
-      dataRowMinHeight: 10.px,
-      dataRowMaxHeight: 35.px,
-      headingRowHeight: 35.px,
-      border: TableBorder.all(),
-      headingRowColor: const WidgetStatePropertyAll(bgColor),
-      columns: column,
-      rows: row,
+    return SizedBox(
+      width: MediaQuery.of(context).size.width,
+      child: Scrollbar(
+        controller: scroll,
+        interactive: true,
+        thumbVisibility: true,
+        scrollbarOrientation: ScrollbarOrientation.bottom,
+        child: PaginatedDataTable(
+          controller: scroll,
+          showFirstLastButtons: true,
+          headingRowColor: const WidgetStatePropertyAll(bgColor),
+          showCheckboxColumn: false,
+          dataRowMinHeight: 10.px,
+          dataRowMaxHeight: 35.px,
+          headingRowHeight: 40.px,
+          showEmptyRows: false,
+          rowsPerPage: 8,
+          availableRowsPerPage: const [8],
+          columns: column,
+          source: source,
+        ),
+      ),
     );
   }
 }

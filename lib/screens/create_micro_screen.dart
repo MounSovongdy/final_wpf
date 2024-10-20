@@ -50,19 +50,12 @@ class CreateMicroScreen extends StatelessWidget {
               widget2: AppTextField(
                 txt: 'Tel',
                 con: con.tel.value,
+                isNumber: true,
+                digit: 10,
               ),
               widget3: AppTextField(
                 txt: 'Email',
                 con: con.email.value,
-              ),
-            ),
-            RowTextField(
-              spacer: spacer(context),
-              widget1: AppTextField(
-                txt: 'T Bonus',
-                con: con.tBonus.value,
-                isNumber: true,
-                digit: 5,
               ),
             ),
             TitleUnderline(
@@ -78,6 +71,8 @@ class CreateMicroScreen extends StatelessWidget {
               widget2: AppTextField(
                 txt: 'Tel',
                 con: con.telContact.value,
+                isNumber: true,
+                digit: 10,
               ),
               widget3: AppTextField(
                 txt: 'Email',
@@ -89,6 +84,12 @@ class CreateMicroScreen extends StatelessWidget {
               widget1: AppTextField(
                 txt: 'Position',
                 con: con.positionContact.value,
+              ),
+              widget2: AppTextField(
+                txt: 'Bonus',
+                con: con.tBonus.value,
+                isNumber: true,
+                digit: 5,
               ),
             ),
             spacer(context),

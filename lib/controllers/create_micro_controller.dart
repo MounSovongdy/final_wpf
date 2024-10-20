@@ -20,7 +20,7 @@ class CreateMicroController extends GetxController {
     if (nameInstitution.value.text != '' && tBonus.value.text != '') {
       await getLastMicro();
       var newId = 1;
-      if (micro.isNotEmpty) newId = int.parse(micro[0].id) + 1;
+      if (micro.isNotEmpty) newId = micro[0].id + 1;
 
       MicroModel newMicro = MicroModel(
         id: newId,

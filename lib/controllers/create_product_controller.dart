@@ -14,7 +14,7 @@ class CreateProductController extends GetxController {
         proModel.value.text != '' ) {
       await getLastProduct();
       var newId = 1;
-      if (product.isNotEmpty) newId = int.parse(product[0].id) + 1;
+      if (product.isNotEmpty) newId = product[0].id + 1;
 
       ProductModel newProduct = ProductModel(
         id: newId,

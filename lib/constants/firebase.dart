@@ -50,7 +50,7 @@ Future<void> insertUser(UserModel user) async {
   }
 }
 
-Future<void> deleteUser(String id) async {
+Future<void> deleteUser(int id) async {
   try {
     var docId = '';
     var result = await userCol.where('id', isEqualTo: id).get();
@@ -85,7 +85,7 @@ Future<void> insertSaleMan(SaleManModel sale) async {
   }
 }
 
-Future<void> deleteSaleMan(String id) async {
+Future<void> deleteSaleMan(int id) async {
   try {
     var docId = '';
     var result = await saleManCol.where('id', isEqualTo: id).get();
@@ -119,7 +119,7 @@ Future<void> insertMicro(MicroModel micro) async {
   }
 }
 
-Future<void> deleteMicro(String id) async {
+Future<void> deleteMicro(int id) async {
   try {
     var docId = '';
     var result = await microCol.where('id', isEqualTo: id).get();

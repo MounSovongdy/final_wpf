@@ -44,47 +44,14 @@ class ProductScreen extends StatelessWidget {
             ),
           ),
           spacer(context),
-          Scrollbar(
-            controller: scroll,
-            interactive: true,
-            child: SingleChildScrollView(
-              controller: scroll,
-              scrollDirection: Axis.horizontal,
-              child: Obx(
-                    () => AppDataTable(
-                  column: [
-                    DataTableWidget.dataColumn(context, 'No'),
-                    DataTableWidget.dataColumn(context, 'Brand'),
-                    DataTableWidget.dataColumn(context, 'Model'),
-                    DataTableWidget.dataColumn(context, 'Action'),
-                  ],
-                  row: List.generate(
-                    con.filteredUsers.length,
-                        (index) => DataRow(
-                      cells: [
-                        DataTableWidget.dataRowTxt(
-                          context,
-                          con.filteredUsers[index].id,
-                        ),
-                        DataTableWidget.dataRowTxt(
-                          context,
-                          con.filteredUsers[index].name,
-                        ),
-                        DataTableWidget.dataRowTxt(
-                          context,
-                          con.filteredUsers[index].role,
-                        ),
-                        DataTableWidget.dataRowBtn(
-                          context,
-                          edit: () => debugPrint('Edit $index'),
-                          delete: () => debugPrint('Delete $index'),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-            ),
+          AppDataTable(
+            column: [
+              DataTableWidget.column(context, 'No'),
+              DataTableWidget.column(context, 'Brand'),
+              DataTableWidget.column(context, 'Model'),
+              DataTableWidget.column(context, 'Action'),
+            ],
+            source: ProductDataSource(),
           ),
           spacer(context),
           spacer(context),
@@ -99,7 +66,7 @@ class ProductScreen extends StatelessWidget {
                 width: Responsive.isDesktop(context) ? 150.px : 100.px,
                 tap: () async {
                   startInactivityTimer();
-                  conMain.index.value =conMain.index.value -1;
+                  conMain.index.value = conMain.index.value - 1;
                 },
               ),
               spacer(context),
@@ -117,4 +84,47 @@ class ProductScreen extends StatelessWidget {
       ),
     );
   }
+}
+
+class ProductDataSource extends DataTableSource {
+  final con = Get.put(ProductController());
+  int selectedCount = 0;
+
+  @override
+  DataRow? getRow(int index) {
+    assert(index >= 0);
+    if (index >= rowCount) return null;
+
+    return DataRow.byIndex(
+      index: index,
+      cells: [
+        DataTableWidget.cell(
+          Get.context!,
+          '${con.filteredUsers[index].id}',
+        ),
+        DataTableWidget.cell(
+          Get.context!,
+          con.filteredUsers[index].name,
+        ),
+        DataTableWidget.cell(
+          Get.context!,
+          con.filteredUsers[index].role,
+        ),
+        DataTableWidget.cellBtn(
+          Get.context!,
+          edit: () => debugPrint('Edit $index'),
+          delete: () => debugPrint('Delete $index'),
+        ),
+      ],
+    );
+  }
+
+  @override
+  int get rowCount => con.filteredUsers.length;
+
+  @override
+  bool get isRowCountApproximate => false;
+
+  @override
+  int get selectedRowCount => selectedCount;
 }

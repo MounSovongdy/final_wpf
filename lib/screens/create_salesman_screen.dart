@@ -60,7 +60,12 @@ class CreateSalesmanScreen extends StatelessWidget {
                   if (v != null) con.gender = v;
                 },
               ),
-              widget3: AppTextField(txt: 'Tel', con: con.tel.value),
+              widget3: AppTextField(
+                txt: 'Tel',
+                con: con.tel.value,
+                isNumber: true,
+                digit: 10,
+              ),
             ),
             RowTextField(
               spacer: spacer(context),

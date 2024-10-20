@@ -40,8 +40,8 @@ class AddStockController extends GetxController {
 
       var newAddId = 1;
       var newTotalId = 1;
-      if (addStock.isNotEmpty) newAddId = int.parse(addStock[0].id) + 1;
-      if (totalStock.isNotEmpty) newTotalId = int.parse(totalStock[0].id) + 1;
+      if (addStock.isNotEmpty) newAddId = addStock[0].id + 1;
+      if (totalStock.isNotEmpty) newTotalId = totalStock[0].id + 1;
 
       AddStockModel newAddStock = AddStockModel(
         id: newAddId,

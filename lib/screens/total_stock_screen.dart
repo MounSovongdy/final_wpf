@@ -11,6 +11,7 @@ import 'package:motor/screens/components/app_data_table.dart';
 import 'package:motor/screens/components/under_line.dart';
 import 'package:motor/screens/widgets/app_text.dart';
 import 'package:motor/screens/widgets/data_table_widget.dart';
+import 'package:motor/screens/widgets/loading_widget.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 class TotalStockScreen extends StatelessWidget {
@@ -47,53 +48,22 @@ class TotalStockScreen extends StatelessWidget {
             ),
           ),
           spacer(context),
-          Scrollbar(
-            controller: scroll,
-            interactive: true,
-            child: SingleChildScrollView(
-              controller: scroll,
-              scrollDirection: Axis.horizontal,
-              child: Obx(
-                () => AppDataTable(
-                  column: [
-                    DataTableWidget.dataColumn(context, 'No'),
-                    DataTableWidget.dataColumn(context, 'Date In'),
-                    DataTableWidget.dataColumn(context, 'Model'),
-                    DataTableWidget.dataColumn(context, 'Brand'),
-                    DataTableWidget.dataColumn(context, 'Year'),
-                    DataTableWidget.dataColumn(context, 'Condition'),
-                    DataTableWidget.dataColumn(context, 'QTY Begin'),
-                    DataTableWidget.dataColumn(context, 'QTY Today'),
-                    DataTableWidget.dataColumn(context, 'Total Stock'),
-                    DataTableWidget.dataColumn(context, 'Price in QTY Begin'),
-                    DataTableWidget.dataColumn(context, 'Price in QTY Today'),
-                    DataTableWidget.dataColumn(context, 'Action'),
-                  ],
-                  row: List.generate(
-                    con.filteredUsers.length,
-                    (index) => DataRow(cells: [
-                      DataTableWidget.dataRowTxt(
-                        context,
-                        con.filteredUsers[index].id,
-                      ),
-                      DataTableWidget.dataRowTxt(
-                        context,
-                        con.filteredUsers[index].name,
-                      ),
-                      DataTableWidget.dataRowTxt(
-                        context,
-                        con.filteredUsers[index].role,
-                      ),
-                      DataTableWidget.dataRowBtn(
-                        context,
-                        edit: () => debugPrint('Edit $index'),
-                        delete: () => debugPrint('Delete $index'),
-                      ),
-                    ]),
-                  ),
-                ),
-              ),
-            ),
+          AppDataTable(
+            column: [
+              DataTableWidget.column(context, 'No'),
+              DataTableWidget.column(context, 'Date In'),
+              DataTableWidget.column(context, 'Model'),
+              DataTableWidget.column(context, 'Brand'),
+              DataTableWidget.column(context, 'Year'),
+              DataTableWidget.column(context, 'Condition'),
+              DataTableWidget.column(context, 'QTY Begin'),
+              DataTableWidget.column(context, 'QTY Today'),
+              DataTableWidget.column(context, 'Total Stock'),
+              DataTableWidget.column(context, 'Price in QTY Begin'),
+              DataTableWidget.column(context, 'Price in QTY Today'),
+              DataTableWidget.column(context, 'Action'),
+            ],
+            source: TotalStockDataSource(),
           ),
           spacer(context),
           spacer(context),
@@ -129,4 +99,69 @@ class TotalStockScreen extends StatelessWidget {
       ),
     );
   }
+}
+
+class TotalStockDataSource extends DataTableSource {
+  final con = Get.put(TotalStockController());
+  int selectedCount = 0;
+
+  @override
+  DataRow? getRow(int index) {
+    assert(index >= 0);
+    if (index >= rowCount) return null;
+
+    return DataRow.byIndex(
+      index: index,
+      cells: [
+        DataTableWidget.cell(
+          Get.context!,
+          '${con.filteredUsers[index].id}',
+        ),
+        DataTableWidget.cell(
+          Get.context!,
+          con.filteredUsers[index].name,
+        ),
+        DataTableWidget.cell(
+          Get.context!,
+          con.filteredUsers[index].role,
+        ),
+        DataTableWidget.cell(
+          Get.context!,
+          con.filteredUsers[index].user,
+        ),
+        DataTableWidget.cell(
+          Get.context!,
+          con.filteredUsers[index].dateCreate,
+        ),
+        DataTableWidget.cellBtn(
+          Get.context!,
+          edit: () => debugPrint('Edit $index'),
+          delete: () {
+            startInactivityTimer();
+            LoadingWidget.showTextDialog(
+              Get.context!,
+              title: 'Warning',
+              content: 'Are you sure to delete?',
+              color: redColor,
+              txtBack: 'Cancel',
+              btnColor: secondGreyColor,
+              widget: TextButton(
+                onPressed: () {},
+                child: AppText.title(Get.context!, txt: 'Confirm'),
+              ),
+            );
+          },
+        ),
+      ],
+    );
+  }
+
+  @override
+  int get rowCount => con.filteredUsers.length;
+
+  @override
+  bool get isRowCountApproximate => false;
+
+  @override
+  int get selectedRowCount => selectedCount;
 }

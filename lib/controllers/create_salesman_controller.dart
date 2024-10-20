@@ -23,7 +23,7 @@ class CreateSalesmanController extends GetxController {
         position != null) {
       await getLastSaleMan();
       var newId = 1;
-      if (saleMan.isNotEmpty) newId = int.parse(saleMan[0].id) + 1;
+      if (saleMan.isNotEmpty) newId = saleMan[0].id + 1;
 
       SaleManModel newSale = SaleManModel(
         id: newId,

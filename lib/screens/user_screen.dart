@@ -43,6 +43,7 @@ class UserScreen extends StatelessWidget {
                 border: OutlineInputBorder(),
               ),
             ),
+            spacer(context),
             Obx(
               () => con.filteredUsers.isNotEmpty
                   ? SizedBox(
@@ -55,23 +56,24 @@ class UserScreen extends StatelessWidget {
                         child: PaginatedDataTable(
                           controller: scroll,
                           showFirstLastButtons: true,
-                          headingRowColor:
-                              const WidgetStatePropertyAll(bgColor),
+                          headingRowColor: const WidgetStatePropertyAll(
+                            bgColor,
+                          ),
                           showCheckboxColumn: false,
                           dataRowMinHeight: 10.px,
                           dataRowMaxHeight: 35.px,
                           headingRowHeight: 40.px,
-                          rowsPerPage: con.filteredUsers.length > 10
-                              ? 10
+                          rowsPerPage: con.filteredUsers.length > 8
+                              ? 8
                               : con.filteredUsers.length,
-                          availableRowsPerPage: const [10],
+                          availableRowsPerPage: const [8],
                           columns: [
-                            DataTableWidget.dataColumn(context, 'ID'),
-                            DataTableWidget.dataColumn(context, 'Full Name'),
-                            DataTableWidget.dataColumn(context, 'Role level'),
-                            DataTableWidget.dataColumn(context, 'User Login'),
-                            DataTableWidget.dataColumn(context, 'Date Create'),
-                            DataTableWidget.dataColumn(context, 'Action'),
+                            DataTableWidget.column(context, 'ID'),
+                            DataTableWidget.column(context, 'Full Name'),
+                            DataTableWidget.column(context, 'Role level'),
+                            DataTableWidget.column(context, 'User Login'),
+                            DataTableWidget.column(context, 'Date Create'),
+                            DataTableWidget.column(context, 'Action'),
                           ],
                           source: UserDataSource(),
                         ),
@@ -120,27 +122,27 @@ class UserDataSource extends DataTableSource {
     return DataRow.byIndex(
       index: index,
       cells: [
-        DataTableWidget.dataRowTxt(
+        DataTableWidget.cell(
           Get.context!,
-          con.filteredUsers[index].id,
+          '${con.filteredUsers[index].id}',
         ),
-        DataTableWidget.dataRowTxt(
+        DataTableWidget.cell(
           Get.context!,
           con.filteredUsers[index].name,
         ),
-        DataTableWidget.dataRowTxt(
+        DataTableWidget.cell(
           Get.context!,
           con.filteredUsers[index].role,
         ),
-        DataTableWidget.dataRowTxt(
+        DataTableWidget.cell(
           Get.context!,
           con.filteredUsers[index].user,
         ),
-        DataTableWidget.dataRowTxt(
+        DataTableWidget.cell(
           Get.context!,
           con.filteredUsers[index].dateCreate,
         ),
-        DataTableWidget.dataRowBtn(
+        DataTableWidget.cellBtn(
           Get.context!,
           edit: () => debugPrint('Edit $index'),
           delete: () {

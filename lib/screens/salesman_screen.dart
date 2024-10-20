@@ -22,146 +22,153 @@ class SalesmanScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.all(defWebPad.px),
-      padding: EdgeInsets.all(defWebPad.px),
-      width: MediaQuery.of(context).size.width,
-      decoration: BoxDecoration(
-        color: whiteColor,
-        borderRadius: BorderRadius.circular(defRadius.px),
-      ),
-      child: ListView(
-        shrinkWrap: true,
-        physics: const BouncingScrollPhysics(),
-        children: [
-          AppText.header(context, txt: 'Salesman List'),
-          spacer(context),
-          TextField(
-            controller: con.search.value,
-            decoration: const InputDecoration(
-              labelText: 'Search',
-              hintText: 'Search by any data',
-              prefixIcon: Icon(Icons.search),
-              border: OutlineInputBorder(),
-            ),
-          ),
-          spacer(context),
-          Scrollbar(
-            controller: scroll,
-            interactive: true,
-            child: SingleChildScrollView(
-              controller: scroll,
-              scrollDirection: Axis.horizontal,
-              child: Obx(
-                () => con.filteredSale.isNotEmpty
-                    ? AppDataTable(
-                        column: [
-                          DataTableWidget.dataColumn(context, 'ID'),
-                          DataTableWidget.dataColumn(
-                            context,
-                            'Full Name                 ',
-                          ),
-                          DataTableWidget.dataColumn(context, 'Gender   '),
-                          DataTableWidget.dataColumn(context, 'Tel'),
-                          DataTableWidget.dataColumn(context, 'Position'),
-                          DataTableWidget.dataColumn(context, 'Salary'),
-                          DataTableWidget.dataColumn(context, 'Bonus'),
-                          DataTableWidget.dataColumn(context, 'Join Date   '),
-                          DataTableWidget.dataColumn(context, 'Action    '),
-                        ],
-                        row: List.generate(
-                          con.filteredSale.length,
-                          (index) => DataRow(
-                            cells: [
-                              DataTableWidget.dataRowTxt(
-                                context,
-                                con.filteredSale[index].id,
-                              ),
-                              DataTableWidget.dataRowTxt(
-                                context,
-                                con.filteredSale[index].name,
-                              ),
-                              DataTableWidget.dataRowTxt(
-                                context,
-                                con.filteredSale[index].gender,
-                              ),
-                              DataTableWidget.dataRowTxt(
-                                context,
-                                con.filteredSale[index].tel,
-                              ),
-                              DataTableWidget.dataRowTxt(
-                                context,
-                                con.filteredSale[index].position,
-                              ),
-                              DataTableWidget.dataRowTxt(
-                                context,
-                                con.filteredSale[index].salary,
-                              ),
-                              DataTableWidget.dataRowTxt(
-                                context,
-                                con.filteredSale[index].bonus,
-                              ),
-                              DataTableWidget.dataRowTxt(
-                                context,
-                                con.filteredSale[index].date,
-                              ),
-                              DataTableWidget.dataRowBtn(
-                                context,
-                                edit: () => debugPrint('Edit $index'),
-                                delete: () {
-                                  startInactivityTimer();
-                                  LoadingWidget.showTextDialog(
-                                    context,
-                                    title: 'Warning',
-                                    content: 'Are you sure to delete?',
-                                    color: redColor,
-                                    txtBack: 'Cancel',
-                                    btnColor: secondGreyColor,
-                                    widget: TextButton(
-                                      onPressed: () async {
-                                        deleteSaleMan(
-                                            con.filteredSale[index].id);
-                                        await getAllSaleMan();
-                                        con.filteredSale.value = saleMan;
-                                        Get.back();
-                                      },
-                                      child: AppText.title(context,
-                                          txt: 'Confirm'),
-                                    ),
-                                  );
-                                },
-                              ),
-                            ],
-                          ),
-                        ),
-                      )
-                    : Container(
-                        width: 100.px,
-                        alignment: Alignment.center,
-                        child: AppText.title(context, txt: "No Date"),
-                      ),
+    return SingleChildScrollView(
+      child: Container(
+        margin: EdgeInsets.all(defWebPad.px),
+        padding: EdgeInsets.all(defWebPad.px),
+        decoration: BoxDecoration(
+          color: whiteColor,
+          borderRadius: BorderRadius.circular(defRadius.px),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            AppText.header(context, txt: 'Sale Man List'),
+            spacer(context),
+            TextField(
+              controller: con.search.value,
+              decoration: const InputDecoration(
+                labelText: 'Search',
+                hintText: 'Search by any data',
+                prefixIcon: Icon(Icons.search),
+                border: OutlineInputBorder(),
               ),
             ),
-          ),
-          spacer(context),
-          spacer(context),
-          const UnderLine(color: secondGreyColor),
-          spacer(context),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              AppButton(
-                txt: 'New',
-                width: Responsive.isDesktop(context) ? 150.px : 100.px,
-                tap: () {
-                  startInactivityTimer();
-                  con1.index.value = 18;
-                },
-              ),
-            ],
-          ),
-        ],
+            Obx(
+              () => con.filteredSale.isNotEmpty
+                  ? AppDataTable(
+                      column: [
+                        DataTableWidget.column(context, 'ID'),
+                        DataTableWidget.column(context, 'Full Name'),
+                        DataTableWidget.column(context, 'Gender'),
+                        DataTableWidget.column(context, 'Tel'),
+                        DataTableWidget.column(context, 'Position'),
+                        DataTableWidget.column(context, 'Salary'),
+                        DataTableWidget.column(context, 'Bonus'),
+                        DataTableWidget.column(context, 'Join Date'),
+                        DataTableWidget.column(context, 'Action'),
+                      ],
+                      source: SaleManDataSource(),
+                    )
+                  : Container(
+                      width: MediaQuery.of(context).size.width,
+                      margin: EdgeInsets.only(top: defWebPad.px),
+                      alignment: Alignment.center,
+                      child: AppText.title(context, txt: 'No Data'),
+                    ),
+            ),
+            spacer(context),
+            spacer(context),
+            const UnderLine(color: secondGreyColor),
+            spacer(context),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                AppButton(
+                  txt: 'New',
+                  width: Responsive.isDesktop(context) ? 150.px : 100.px,
+                  tap: () {
+                    startInactivityTimer();
+                    con1.index.value = 18;
+                  },
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
+}
+
+class SaleManDataSource extends DataTableSource {
+  final con = Get.put(SalesmanController());
+  int selectedCount = 0;
+
+  @override
+  DataRow? getRow(int index) {
+    assert(index >= 0);
+    if (index >= rowCount) return null;
+
+    return DataRow.byIndex(
+      index: index,
+      cells: [
+        DataTableWidget.cell(
+          Get.context!,
+          '${con.filteredSale[index].id}',
+        ),
+        DataTableWidget.cell(
+          Get.context!,
+          con.filteredSale[index].name,
+        ),
+        DataTableWidget.cell(
+          Get.context!,
+          con.filteredSale[index].gender,
+        ),
+        DataTableWidget.cell(
+          Get.context!,
+          con.filteredSale[index].tel,
+        ),
+        DataTableWidget.cell(
+          Get.context!,
+          con.filteredSale[index].position,
+        ),
+        DataTableWidget.cell(
+          Get.context!,
+          con.filteredSale[index].salary,
+        ),
+        DataTableWidget.cell(
+          Get.context!,
+          con.filteredSale[index].bonus,
+        ),
+        DataTableWidget.cell(
+          Get.context!,
+          con.filteredSale[index].date,
+        ),
+        DataTableWidget.cellBtn(
+          Get.context!,
+          edit: () => debugPrint('Edit $index'),
+          delete: () {
+            startInactivityTimer();
+            LoadingWidget.showTextDialog(
+              Get.context!,
+              title: 'Warning',
+              content: 'Are you sure to delete?',
+              color: redColor,
+              txtBack: 'Cancel',
+              btnColor: secondGreyColor,
+              widget: TextButton(
+                onPressed: () async {
+                  deleteSaleMan(con.filteredSale[index].id);
+                  await getAllSaleMan();
+                  con.filteredSale.value = saleMan;
+                  Get.back();
+                },
+                child: AppText.title(Get.context!, txt: 'Confirm'),
+              ),
+            );
+          },
+        ),
+      ],
+    );
+  }
+
+  @override
+  int get rowCount => con.filteredSale.length;
+
+  @override
+  bool get isRowCountApproximate => false;
+
+  @override
+  int get selectedRowCount => selectedCount;
 }
