@@ -5,6 +5,7 @@ import 'package:motor/constants/firebase.dart';
 import 'package:motor/constants/responsive.dart';
 import 'package:motor/controllers/add_stock_controller.dart';
 import 'package:motor/controllers/main_controller.dart';
+import 'package:motor/controllers/total_stock_controller.dart';
 import 'package:motor/screens/components/app_button.dart';
 import 'package:motor/screens/components/app_date_text_field.dart';
 import 'package:motor/screens/components/app_dropdown.dart';
@@ -19,6 +20,7 @@ class AddStockScreen extends StatelessWidget {
   AddStockScreen({super.key});
 
   final con = Get.put(AddStockController());
+  final conTS = Get.put(TotalStockController());
   final conMain = Get.put(MainController());
 
   @override
@@ -169,9 +171,13 @@ class AddStockScreen extends StatelessWidget {
                   txt: 'Back',
                   width: Responsive.isDesktop(context) ? 150.px : 100.px,
                   color: secondGreyColor,
-                  tap: () {
+                  tap: () async {
                     startInactivityTimer();
                     con.clearText();
+                    await getAllStock();
+                    conTS.filteredTotalStock.value = totalStock;
+                    conTS.search.value.addListener(conTS.filterTotalStockData);
+                    
                     conMain.index.value = conMain.index.value - 1;
                   },
                 ),

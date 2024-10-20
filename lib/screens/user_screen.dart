@@ -6,6 +6,7 @@ import 'package:motor/constants/responsive.dart';
 import 'package:motor/controllers/main_controller.dart';
 import 'package:motor/controllers/user_controller.dart';
 import 'package:motor/screens/components/app_button.dart';
+import 'package:motor/screens/components/app_data_table.dart';
 import 'package:motor/screens/components/under_line.dart';
 import 'package:motor/screens/widgets/app_text.dart';
 import 'package:motor/screens/widgets/data_table_widget.dart';
@@ -46,38 +47,16 @@ class UserScreen extends StatelessWidget {
             spacer(context),
             Obx(
               () => con.filteredUsers.isNotEmpty
-                  ? SizedBox(
-                      width: MediaQuery.of(context).size.width,
-                      child: Scrollbar(
-                        controller: scroll,
-                        interactive: true,
-                        thumbVisibility: true,
-                        scrollbarOrientation: ScrollbarOrientation.bottom,
-                        child: PaginatedDataTable(
-                          controller: scroll,
-                          showFirstLastButtons: true,
-                          headingRowColor: const WidgetStatePropertyAll(
-                            bgColor,
-                          ),
-                          showCheckboxColumn: false,
-                          dataRowMinHeight: 10.px,
-                          dataRowMaxHeight: 35.px,
-                          headingRowHeight: 40.px,
-                          rowsPerPage: con.filteredUsers.length > 8
-                              ? 8
-                              : con.filteredUsers.length,
-                          availableRowsPerPage: const [8],
-                          columns: [
-                            DataTableWidget.column(context, 'ID'),
-                            DataTableWidget.column(context, 'Full Name'),
-                            DataTableWidget.column(context, 'Role level'),
-                            DataTableWidget.column(context, 'User Login'),
-                            DataTableWidget.column(context, 'Date Create'),
-                            DataTableWidget.column(context, 'Action'),
-                          ],
-                          source: UserDataSource(),
-                        ),
-                      ),
+                  ? AppDataTable(
+                      column: [
+                        DataTableWidget.column(context, 'ID'),
+                        DataTableWidget.column(context, 'Full Name'),
+                        DataTableWidget.column(context, 'Role level'),
+                        DataTableWidget.column(context, 'User Login'),
+                        DataTableWidget.column(context, 'Date Create'),
+                        DataTableWidget.column(context, 'Action'),
+                      ],
+                      source: UserDataSource(),
                     )
                   : Container(
                       width: MediaQuery.of(context).size.width,

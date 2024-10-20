@@ -101,7 +101,7 @@ class AddStockController extends GetxController {
       LoadingWidget.showTextDialog(
         Get.context!,
         title: 'Successfully',
-        content: 'The Product already created.',
+        content: 'The Stock is already added.',
         color: greenColor,
       );
     } else {

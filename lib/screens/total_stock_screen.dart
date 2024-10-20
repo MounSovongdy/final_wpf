@@ -11,7 +11,6 @@ import 'package:motor/screens/components/app_data_table.dart';
 import 'package:motor/screens/components/under_line.dart';
 import 'package:motor/screens/widgets/app_text.dart';
 import 'package:motor/screens/widgets/data_table_widget.dart';
-import 'package:motor/screens/widgets/loading_widget.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 class TotalStockScreen extends StatelessWidget {
@@ -48,22 +47,34 @@ class TotalStockScreen extends StatelessWidget {
             ),
           ),
           spacer(context),
-          AppDataTable(
-            column: [
-              DataTableWidget.column(context, 'No'),
-              DataTableWidget.column(context, 'Date In'),
-              DataTableWidget.column(context, 'Model'),
-              DataTableWidget.column(context, 'Brand'),
-              DataTableWidget.column(context, 'Year'),
-              DataTableWidget.column(context, 'Condition'),
-              DataTableWidget.column(context, 'QTY Begin'),
-              DataTableWidget.column(context, 'QTY Today'),
-              DataTableWidget.column(context, 'Total Stock'),
-              DataTableWidget.column(context, 'Price in QTY Begin'),
-              DataTableWidget.column(context, 'Price in QTY Today'),
-              DataTableWidget.column(context, 'Action'),
-            ],
-            source: TotalStockDataSource(),
+          Obx(
+            () => con.filteredTotalStock.isNotEmpty
+                ? AppDataTable(
+                    column: [
+                      DataTableWidget.column(context, 'ID'),
+                      DataTableWidget.column(context, 'Date In'),
+                      DataTableWidget.column(context, 'Model'),
+                      DataTableWidget.column(context, 'Brand'),
+                      DataTableWidget.column(context, 'Year'),
+                      DataTableWidget.column(context, 'Condition'),
+                      DataTableWidget.column(context, 'QTY Begin'),
+                      DataTableWidget.column(context, 'QTY Today'),
+                      DataTableWidget.column(context, 'Total QTY'),
+                      DataTableWidget.column(context, 'Price in QTY Begin'),
+                      DataTableWidget.column(context, 'Price in QTY Today'),
+                      DataTableWidget.column(
+                          context, 'Total Price in QTY Begin'),
+                      DataTableWidget.column(
+                          context, 'Total Price in QTY Today'),
+                    ],
+                    source: TotalStockDataSource(),
+                  )
+                : Container(
+                    width: MediaQuery.of(context).size.width,
+                    margin: EdgeInsets.only(top: defWebPad.px),
+                    alignment: Alignment.center,
+                    child: AppText.title(context, txt: 'No Data'),
+                  ),
           ),
           spacer(context),
           spacer(context),
@@ -73,8 +84,8 @@ class TotalStockScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               AppButton(
-                txt: 'Print Report',
-                width: Responsive.isDesktop(context) ? 150.px : 100.px,
+                txt: 'Download Report',
+                width: Responsive.isDesktop(context) ? 200.px : 150.px,
                 color: secondGreyColor,
                 tap: () {},
               ),
@@ -115,49 +126,62 @@ class TotalStockDataSource extends DataTableSource {
       cells: [
         DataTableWidget.cell(
           Get.context!,
-          '${con.filteredUsers[index].id}',
+          '${con.filteredTotalStock[index].id}',
         ),
         DataTableWidget.cell(
           Get.context!,
-          con.filteredUsers[index].name,
+          con.filteredTotalStock[index].newDateIn,
         ),
         DataTableWidget.cell(
           Get.context!,
-          con.filteredUsers[index].role,
+          con.filteredTotalStock[index].model,
         ),
         DataTableWidget.cell(
           Get.context!,
-          con.filteredUsers[index].user,
+          con.filteredTotalStock[index].brand,
         ),
         DataTableWidget.cell(
           Get.context!,
-          con.filteredUsers[index].dateCreate,
+          con.filteredTotalStock[index].year,
         ),
-        DataTableWidget.cellBtn(
+        DataTableWidget.cell(
           Get.context!,
-          edit: () => debugPrint('Edit $index'),
-          delete: () {
-            startInactivityTimer();
-            LoadingWidget.showTextDialog(
-              Get.context!,
-              title: 'Warning',
-              content: 'Are you sure to delete?',
-              color: redColor,
-              txtBack: 'Cancel',
-              btnColor: secondGreyColor,
-              widget: TextButton(
-                onPressed: () {},
-                child: AppText.title(Get.context!, txt: 'Confirm'),
-              ),
-            );
-          },
+          con.filteredTotalStock[index].condition,
+        ),
+        DataTableWidget.cell(
+          Get.context!,
+          con.filteredTotalStock[index].oldQty,
+        ),
+        DataTableWidget.cell(
+          Get.context!,
+          con.filteredTotalStock[index].newQty,
+        ),
+        DataTableWidget.cell(
+          Get.context!,
+          con.filteredTotalStock[index].totalQty,
+        ),
+        DataTableWidget.cell(
+          Get.context!,
+          con.filteredTotalStock[index].oldPrice,
+        ),
+        DataTableWidget.cell(
+          Get.context!,
+          con.filteredTotalStock[index].newPrice,
+        ),
+        DataTableWidget.cell(
+          Get.context!,
+          con.filteredTotalStock[index].oldTotalPrice,
+        ),
+        DataTableWidget.cell(
+          Get.context!,
+          con.filteredTotalStock[index].newTotalPrice,
         ),
       ],
     );
   }
 
   @override
-  int get rowCount => con.filteredUsers.length;
+  int get rowCount => con.filteredTotalStock.length;
 
   @override
   bool get isRowCountApproximate => false;

@@ -44,6 +44,7 @@ class SalesmanScreen extends StatelessWidget {
                 border: OutlineInputBorder(),
               ),
             ),
+            spacer(context),
             Obx(
               () => con.filteredSale.isNotEmpty
                   ? AppDataTable(

@@ -65,6 +65,21 @@ Future<void> deleteUser(int id) async {
   }
 }
 
+Future<void> updateUserPassword(String user, String password) async {
+  try {
+    var docId = '';
+    var result = await userCol.where('user', isEqualTo: user).get();
+
+    for (var doc in result.docs) {
+      docId = doc.id;
+    }
+
+    await userCol.doc(docId).update({'password': password});
+  } catch (e) {
+    debugPrint('Failed to update user password: $e');
+  }
+}
+
 Future<void> getAllSaleMan() async {
   var res = await saleManCol.orderBy('id', descending: true).get();
   saleMan.value =
@@ -102,8 +117,7 @@ Future<void> deleteSaleMan(int id) async {
 
 Future<void> getAllMicro() async {
   var res = await microCol.orderBy('id', descending: true).get();
-  micro.value =
-      res.docs.map((doc) => MicroModel.fromMap(doc.data())).toList();
+  micro.value = res.docs.map((doc) => MicroModel.fromMap(doc.data())).toList();
 }
 
 Future<void> getLastMicro() async {
@@ -134,14 +148,14 @@ Future<void> deleteMicro(int id) async {
   }
 }
 
-Future<void> getLastProduct() async {
-  var res = await productCol.orderBy('id', descending: true).limit(1).get();
+Future<void> getAllProduct() async {
+  var res = await productCol.orderBy('id', descending: true).get();
   product.value =
       res.docs.map((doc) => ProductModel.fromMap(doc.data())).toList();
 }
 
-Future<void> getAllProduct() async {
-  var res = await productCol.orderBy('id', descending: true).get();
+Future<void> getLastProduct() async {
+  var res = await productCol.orderBy('id', descending: true).limit(1).get();
   product.value =
       res.docs.map((doc) => ProductModel.fromMap(doc.data())).toList();
 }
@@ -154,18 +168,18 @@ Future<void> insertProduct(ProductModel pro) async {
   }
 }
 
-Future<void> updateUserPassword(String user, String password) async {
+Future<void> deleteProduct(int id) async {
   try {
     var docId = '';
-    var result = await userCol.where('user', isEqualTo: user).get();
+    var result = await productCol.where('id', isEqualTo: id).get();
 
     for (var doc in result.docs) {
       docId = doc.id;
     }
 
-    await userCol.doc(docId).update({'password': password});
+    await productCol.doc(docId).delete();
   } catch (e) {
-    debugPrint('Failed to update user password: $e');
+    debugPrint('Failed to deleteProduct: $e');
   }
 }
 
@@ -202,6 +216,12 @@ Future<void> getStockByModel({
       .where('condition', isEqualTo: condition)
       .get();
   stockByModel.value =
+      res.docs.map((doc) => TotalStockModel.fromMap(doc.data())).toList();
+}
+
+Future<void> getAllStock() async {
+  var res = await totalStockCol.orderBy('id', descending: true).get();
+  totalStock.value =
       res.docs.map((doc) => TotalStockModel.fromMap(doc.data())).toList();
 }
 

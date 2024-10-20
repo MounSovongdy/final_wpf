@@ -4,15 +4,15 @@ import 'package:motor/constants/firebase.dart';
 
 class TotalStockController extends GetxController {
   var search = TextEditingController().obs;
-  var filteredUsers = [].obs;
+  var filteredTotalStock = [].obs;
 
-  void filterUserData() {
+  void filterTotalStockData() {
     String query = search.value.text.toLowerCase();
 
-    filteredUsers.value = byUser.where((data) {
+    filteredTotalStock.value = totalStock.where((data) {
       return data.id.toString().contains(query) ||
-          data.name.toLowerCase().contains(query) ||
-          data.role.toLowerCase().contains(query);
+          data.model.toLowerCase().contains(query) ||
+          data.brand.toLowerCase().contains(query);
     }).toList();
   }
 }
