@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:motor/constants/constants.dart';
 import 'package:motor/constants/firebase.dart';
 import 'package:motor/constants/responsive.dart';
+import 'package:motor/controllers/create_micro_controller.dart';
 import 'package:motor/controllers/main_controller.dart';
 import 'package:motor/controllers/micro_controller.dart';
 import 'package:motor/screens/components/app_button.dart';
@@ -17,6 +18,7 @@ class MicroScreen extends StatelessWidget {
   MicroScreen({super.key});
 
   final con = Get.put(MicroController());
+  final conCM = Get.put(CreateMicroController());
   final con1 = Get.put(MainController());
   final scroll = ScrollController();
 
@@ -81,6 +83,7 @@ class MicroScreen extends StatelessWidget {
                 width: Responsive.isDesktop(context) ? 150.px : 100.px,
                 tap: () {
                   startInactivityTimer();
+                  conCM.clearText();
                   con1.index.value = 20;
                 },
               ),

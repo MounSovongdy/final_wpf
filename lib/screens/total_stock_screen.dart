@@ -96,6 +96,7 @@ class TotalStockScreen extends StatelessWidget {
                 width: Responsive.isDesktop(context) ? 150.px : 100.px,
                 tap: () async {
                   startInactivityTimer();
+                  con2.clearText();
                   con2.listModel.clear();
                   await getAllProduct();
                   for (var pro in product) {

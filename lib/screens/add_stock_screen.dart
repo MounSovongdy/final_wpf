@@ -8,7 +8,7 @@ import 'package:motor/controllers/main_controller.dart';
 import 'package:motor/controllers/total_stock_controller.dart';
 import 'package:motor/screens/components/app_button.dart';
 import 'package:motor/screens/components/app_date_text_field.dart';
-import 'package:motor/screens/components/app_dropdown.dart';
+import 'package:motor/screens/components/app_dropdown_search.dart';
 import 'package:motor/screens/components/app_text_field.dart';
 import 'package:motor/screens/components/row_text_field.dart';
 import 'package:motor/screens/components/title_underline.dart';
@@ -45,7 +45,7 @@ class AddStockScreen extends StatelessWidget {
             TitleUnderline(spacer: spacer(context), txt: 'Stock Information'),
             RowTextField(
               spacer: spacer(context),
-              widget1: AppDropdown(
+              widget1: AppDropdownSearch(
                 txt: 'Model',
                 value: con.model,
                 list: con.listModel,
@@ -78,7 +78,7 @@ class AddStockScreen extends StatelessWidget {
             RowTextField(
               spacer: spacer(context),
               widget1: Obx(
-                () => AppDropdown(
+                () => AppDropdownSearch(
                   txt: 'Condition',
                   value: con.condition,
                   list: isModel.value ? condition : [],

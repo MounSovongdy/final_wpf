@@ -89,6 +89,7 @@ class BookingScreen extends StatelessWidget {
                 txt: 'New',
                 width: Responsive.isDesktop(context) ? 150.px : 100.px,
                 tap: () async {
+                  conNewBook.clearText();
                   conNewBook.date.value.text = '$dateNow $timeNow';
                   conNewBook.discount.value.text = '0';
                   await microName();

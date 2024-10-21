@@ -78,6 +78,7 @@ class ProductScreen extends StatelessWidget {
                   txt: 'New',
                   width: Responsive.isDesktop(context) ? 150.px : 100.px,
                   tap: () async {
+                    conCP.clearText();
                     conCP.brandList.clear();
                     await getAllBrand();
                     for (var data in brand) {

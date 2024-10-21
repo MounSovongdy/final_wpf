@@ -28,6 +28,7 @@ dependencies:
   printing: any
   intl: any
   fl_chart: any
+  dropdown_search: any
 
 dev_dependencies:
   flutter_test:

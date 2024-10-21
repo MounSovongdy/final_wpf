@@ -5,6 +5,7 @@ class NewBookingController extends GetxController {
   var microList = [''].obs;
   var saleManList = [''].obs;
   var genderList = ['Male', 'Female'].obs;
+  var addressList = [''].obs;
   var brandList = [''].obs;
   var modelList = [''].obs;
   var colorList = ['Red', 'Black', 'Blue', 'White', 'Grey'].obs;
@@ -18,7 +19,6 @@ class NewBookingController extends GetxController {
   ].obs;
 
   var isFriend = false.obs;
-  var isBrand = false.obs;
 
   var micro = Rxn<String>();
   var salesman = Rxn<String>();
@@ -28,13 +28,13 @@ class NewBookingController extends GetxController {
   var color = Rxn<String>();
   var condition = Rxn<String>();
   var comeBy = Rxn<String>();
+  var address = Rxn<String>();
 
   var date = TextEditingController().obs;
   var idCard = TextEditingController().obs;
   var name = TextEditingController().obs;
   var age = TextEditingController().obs;
   var phoneCus = TextEditingController().obs;
-  var address = TextEditingController().obs;
   var year = TextEditingController().obs;
   var sell = TextEditingController().obs;
   var discount = TextEditingController().obs;
@@ -56,5 +56,30 @@ class NewBookingController extends GetxController {
     } else {
       remain.value.text = '';
     }
+  }
+
+  void clearText() {
+    micro.value = null;
+    salesman.value = null;
+    gender.value = null;
+    brand.value = null;
+    model.value = null;
+    color.value = null;
+    condition.value = null;
+    comeBy.value = null;
+    address.value = null;
+    date.value.clear();
+    idCard.value.clear();
+    name.value.clear();
+    age.value.clear();
+    phoneCus.value.clear();
+    year.value.clear();
+    sell.value.clear();
+    discount.value.clear();
+    depo.value.clear();
+    remain.value.clear();
+    nameIntro.value.clear();
+    phoneIntro.value.clear();
+    remark.value.clear();
   }
 }

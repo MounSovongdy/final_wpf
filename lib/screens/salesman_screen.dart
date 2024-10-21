@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:motor/constants/constants.dart';
 import 'package:motor/constants/firebase.dart';
 import 'package:motor/constants/responsive.dart';
+import 'package:motor/controllers/create_salesman_controller.dart';
 import 'package:motor/controllers/main_controller.dart';
 import 'package:motor/controllers/salesman_controller.dart';
 import 'package:motor/screens/components/app_button.dart';
@@ -17,6 +18,7 @@ class SalesmanScreen extends StatelessWidget {
   SalesmanScreen({super.key});
 
   final con = Get.put(SalesmanController());
+  final conCS = Get.put(CreateSalesmanController());
   final con1 = Get.put(MainController());
   final scroll = ScrollController();
 
@@ -80,6 +82,7 @@ class SalesmanScreen extends StatelessWidget {
                   width: Responsive.isDesktop(context) ? 150.px : 100.px,
                   tap: () {
                     startInactivityTimer();
+                    conCS.clearText();
                     con1.index.value = 18;
                   },
                 ),

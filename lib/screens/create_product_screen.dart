@@ -7,7 +7,7 @@ import 'package:motor/controllers/create_product_controller.dart';
 import 'package:motor/controllers/main_controller.dart';
 import 'package:motor/controllers/product_controller.dart';
 import 'package:motor/screens/components/app_button.dart';
-import 'package:motor/screens/components/app_dropdown.dart';
+import 'package:motor/screens/components/app_dropdown_search.dart';
 import 'package:motor/screens/components/app_text_field.dart';
 import 'package:motor/screens/components/row_text_field.dart';
 import 'package:motor/screens/components/title_underline.dart';
@@ -44,7 +44,7 @@ class CreateProductScreen extends StatelessWidget {
             ),
             RowTextField(
               spacer: spacer(context),
-              widget1: AppDropdown(
+              widget1: AppDropdownSearch(
                 txt: 'Brand',
                 value: con.brand,
                 list: con.brandList,
