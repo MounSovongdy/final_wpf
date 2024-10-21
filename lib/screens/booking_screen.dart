@@ -17,7 +17,7 @@ class BookingScreen extends StatelessWidget {
   BookingScreen({super.key});
 
   final con = Get.put(BookingController());
-  final con1 = Get.put(MainController());
+  final conMain = Get.put(MainController());
   final conNewBook = Get.put(NewBookingController());
 
   final scroll = ScrollController();
@@ -97,7 +97,7 @@ class BookingScreen extends StatelessWidget {
                   await brandName();
 
                   startInactivityTimer();
-                  con1.index.value = 2;
+                  conMain.index.value = 2;
                 },
               ),
             ],

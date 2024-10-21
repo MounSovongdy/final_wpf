@@ -239,6 +239,9 @@ class NewBookingScreen extends StatelessWidget {
                 ),
               ),
             ),
+            TitleUnderline(
+                spacer: spacer(context), txt: 'Document Support'),
+            
             spacer(context),
             spacer(context),
             Responsive.isDesktop(context)

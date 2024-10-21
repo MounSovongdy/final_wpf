@@ -88,7 +88,7 @@ class MainScreen extends StatelessWidget {
         case 6:
           return ReceivableScreen();
         case 7:
-          return const NewReceivableScreen();
+          return NewReceivableScreen();
         case 8:
           return InvoiceScreen();
         case 9:
