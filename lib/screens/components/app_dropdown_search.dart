@@ -61,8 +61,12 @@ class AppDropdownSearch extends StatelessWidget {
                 popupProps: PopupProps.menu(
                   showSearchBox: true,
                   fit: FlexFit.loose,
+                  constraints: BoxConstraints(maxHeight: 200.px),
+                  scrollbarProps: const ScrollbarProps(
+                    interactive: true,
+                    thumbVisibility: true,
+                  ),
                   suggestedItemProps: const SuggestedItemProps(),
-                  constraints: const BoxConstraints(),
                   searchFieldProps: TextFieldProps(
                     autofocus: true,
                     decoration: InputDecoration(
