@@ -45,15 +45,37 @@ class AppText {
       );
 
   static Widget title(
-    BuildContext context, {
-    required String txt,
-    double size = 16,
-    double? space,
-    Color color = blackColor,
-    FontWeight fontWeight = FontWeight.w500,
-    TextOverflow overflow = TextOverflow.ellipsis,
-    TextAlign textAlign = TextAlign.left,
-  }) =>
+      BuildContext context, {
+        required String txt,
+        double size = 16,
+        double? space,
+        Color color = blackColor,
+        FontWeight fontWeight = FontWeight.w500,
+        TextOverflow overflow = TextOverflow.ellipsis,
+        TextAlign textAlign = TextAlign.left,
+      }) =>
+      Text(
+        txt,
+        textAlign: textAlign,
+        style: TextStyle(
+          color: color,
+          letterSpacing: space,
+          fontSize: Responsive.isDesktop(context) ? size.px : size.px - 2,
+          fontWeight: fontWeight,
+          overflow: overflow,
+        ),
+      );
+
+  static Widget titleWhite(
+      BuildContext context, {
+        required String txt,
+        double size = 16,
+        double? space,
+        Color color = whiteColor,
+        FontWeight fontWeight = FontWeight.w500,
+        TextOverflow overflow = TextOverflow.ellipsis,
+        TextAlign textAlign = TextAlign.left,
+      }) =>
       Text(
         txt,
         textAlign: textAlign,
