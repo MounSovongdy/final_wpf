@@ -12,6 +12,7 @@ import 'package:motor/screens/components/row_text_field.dart';
 import 'package:motor/screens/components/title_underline.dart';
 import 'package:motor/screens/components/under_line.dart';
 import 'package:motor/screens/widgets/app_text.dart';
+import 'package:motor/screens/widgets/loading_widget.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 class NewBookingScreen extends StatelessWidget {
@@ -239,9 +240,7 @@ class NewBookingScreen extends StatelessWidget {
                 ),
               ),
             ),
-            TitleUnderline(
-                spacer: spacer(context), txt: 'Document Support'),
-            
+            TitleUnderline(spacer: spacer(context), txt: 'Document Support'),
             spacer(context),
             spacer(context),
             Responsive.isDesktop(context)
@@ -279,7 +278,12 @@ class NewBookingScreen extends StatelessWidget {
                 AppButton(
                   txt: 'Save',
                   width: Responsive.isDesktop(context) ? 150.px : 100.px,
-                  tap: () {},
+                  tap: () {
+                    LoadingWidget.showEditStatusDialog(
+                      context,
+                      title: AppText.title(context, txt: "Status Edit"),
+                    );
+                  },
                 ),
               ],
             ),
