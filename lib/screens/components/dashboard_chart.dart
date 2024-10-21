@@ -9,7 +9,7 @@ class DashboardChart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
+    var maxValue = 2000.0.obs;
     var total = 0.0.obs;
     var empSalary = 800.0.obs;
     var empBonus = 300.0.obs;
@@ -40,7 +40,7 @@ class DashboardChart extends StatelessWidget {
           child: BarChart(
             BarChartData(
               alignment: BarChartAlignment.spaceAround,
-              maxY: 2500,
+              maxY: maxValue.value,
               // Adjust maxY to make sure the bars fit well.
               barGroups: [
                 BarChartGroupData(
@@ -48,7 +48,7 @@ class DashboardChart extends StatelessWidget {
                   barRods: [
                     BarChartRodData(
                       toY: total.value,
-                      color: Colors.cyan,
+                      color: bgColor,
                       width: 20,
                       borderRadius: BorderRadius.zero,
                     ),
@@ -60,7 +60,7 @@ class DashboardChart extends StatelessWidget {
                   barRods: [
                     BarChartRodData(
                       toY: empSalary.value,
-                      color: Colors.cyan,
+                      color: bgColor,
                       width: 20,
                       borderRadius: BorderRadius.zero,
                     ),
@@ -72,7 +72,7 @@ class DashboardChart extends StatelessWidget {
                   barRods: [
                     BarChartRodData(
                       toY: empBonus.value,
-                      color: Colors.orange,
+                      color: bgColor,
                       width: 20,
                       borderRadius: BorderRadius.zero,
                     ),
@@ -84,7 +84,7 @@ class DashboardChart extends StatelessWidget {
                   barRods: [
                     BarChartRodData(
                       toY: teacherBonus.value,
-                      color: Colors.pink,
+                      color: bgColor,
                       width: 20,
                       borderRadius: BorderRadius.zero,
                     ),
@@ -96,7 +96,7 @@ class DashboardChart extends StatelessWidget {
                   barRods: [
                     BarChartRodData(
                       toY: advertising.value,
-                      color: Colors.pink,
+                      color: bgColor,
                       width: 20,
                       borderRadius: BorderRadius.zero,
                     ),
@@ -108,7 +108,7 @@ class DashboardChart extends StatelessWidget {
                   barRods: [
                     BarChartRodData(
                       toY: kpiPaid.value,
-                      color: Colors.pink,
+                      color: bgColor,
                       width: 20,
                       borderRadius: BorderRadius.zero,
                     ),
@@ -120,7 +120,7 @@ class DashboardChart extends StatelessWidget {
                   barRods: [
                     BarChartRodData(
                       toY: sellGift.value,
-                      color: Colors.pink,
+                      color: bgColor,
                       width: 20,
                       borderRadius: BorderRadius.zero,
                     ),
@@ -132,7 +132,7 @@ class DashboardChart extends StatelessWidget {
                   barRods: [
                     BarChartRodData(
                       toY: commission.value,
-                      color: Colors.pink,
+                      color: bgColor,
                       width: 20,
                       borderRadius: BorderRadius.zero,
                     ),
@@ -143,8 +143,8 @@ class DashboardChart extends StatelessWidget {
               borderData: FlBorderData(
                 show: true,
                 border: const Border(
-                  left: BorderSide(color: Colors.black, width: 1),
-                  bottom: BorderSide(color: Colors.black, width: 1),
+                  left: BorderSide(color: bgColor, width: 1),
+                  bottom: BorderSide(color: bgColor, width: 1),
                   right: BorderSide.none,
                   top: BorderSide.none,
                 ),
@@ -152,10 +152,9 @@ class DashboardChart extends StatelessWidget {
               titlesData: FlTitlesData(
                 show: true,
                 topTitles: const AxisTitles(
-                  sideTitles: SideTitles(
-                    showTitles: false,
-                  )
-                ),
+                    sideTitles: SideTitles(
+                  showTitles: false,
+                )),
                 leftTitles: AxisTitles(
                   sideTitles: SideTitles(
                     reservedSize: 50,

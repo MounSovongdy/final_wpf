@@ -36,18 +36,19 @@ class DashboardCard extends StatelessWidget {
                     topLeft: Radius.circular(defRadius.px),
                     topRight: Radius.circular(defRadius.px),
                   ),
-                  color: bgColor.withOpacity(0.5),
+                  color: bgColor
                 ),
                 padding: EdgeInsets.symmetric(horizontal: defWebPad.px),
                 child: Row(
                   children: [
-                    AppText.title(context,
+                    AppText.titleWhite(context,
                         txt: '${con.itemTitle[index]['name']}'),
                     const Spacer(),
                     IconButton(
                       onPressed: () {},
                       icon: const Icon(Icons.refresh_rounded),
                       iconSize: 18,
+                      color: whiteColor,
                     ),
                   ],
                 ),
