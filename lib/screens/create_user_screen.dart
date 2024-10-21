@@ -49,7 +49,7 @@ class CreateUserScreen extends StatelessWidget {
                 value: con.role,
                 list: role,
                 onChanged: (v) {
-                  if (v != null) con.role = v;
+                  if (v != null) con.role.value = v;
                 },
               ),
               widget3: AppTextField(

@@ -5,19 +5,19 @@ class NewCashController extends GetxController {
 
   var idCard = TextEditingController().obs;
   var name = TextEditingController().obs;
-  String? gender;
+  var gender = Rxn<String>();
   var age = TextEditingController().obs;
   var phoneCus = TextEditingController().obs;
   var address = TextEditingController().obs;
 
   var dateBooking = TextEditingController().obs;
-  String? salesman;
+  var salesman = Rxn<String>();
 
-  String? brand;
-  String? model;
-  String? color;
+  var brand = Rxn<String>();
+  var model = Rxn<String>();
+  var color = Rxn<String>();
   var year = TextEditingController().obs;
-  String? condition;
+  var condition = Rxn<String>();
   var engine = TextEditingController().obs;
   var frame = TextEditingController().obs;
   var plateNo = TextEditingController().obs;

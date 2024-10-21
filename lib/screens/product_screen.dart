@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:motor/constants/constants.dart';
 import 'package:motor/constants/firebase.dart';
 import 'package:motor/constants/responsive.dart';
+import 'package:motor/controllers/create_product_controller.dart';
 import 'package:motor/controllers/main_controller.dart';
 import 'package:motor/controllers/product_controller.dart';
 import 'package:motor/screens/components/app_button.dart';
@@ -17,6 +18,7 @@ class ProductScreen extends StatelessWidget {
   ProductScreen({super.key});
 
   final con = Get.put(ProductController());
+  final conCP = Get.put(CreateProductController());
   final conMain = Get.put(MainController());
   final scroll = ScrollController();
 
@@ -51,8 +53,8 @@ class ProductScreen extends StatelessWidget {
                   ? AppDataTable(
                       column: [
                         DataTableWidget.column(context, 'ID'),
-                        DataTableWidget.column(context, 'Model'),
                         DataTableWidget.column(context, 'Brand'),
+                        DataTableWidget.column(context, 'Model'),
                         DataTableWidget.column(context, 'Action'),
                       ],
                       source: ProductDataSource(),
@@ -76,6 +78,12 @@ class ProductScreen extends StatelessWidget {
                   txt: 'New',
                   width: Responsive.isDesktop(context) ? 150.px : 100.px,
                   tap: () async {
+                    conCP.brandList.clear();
+                    await getAllBrand();
+                    for (var data in brand) {
+                      conCP.brandList.add(data.brand);
+                    }
+
                     startInactivityTimer();
                     conMain.index.value = 12;
                   },
@@ -91,28 +99,20 @@ class ProductScreen extends StatelessWidget {
 
 class ProductDataSource extends DataTableSource {
   final con = Get.put(ProductController());
-  int selectedCount = 0;
 
   @override
   DataRow? getRow(int index) {
     assert(index >= 0);
-    if (index >= rowCount) return null;
+    if (index >= con.filteredProduct.length) return null;
+
+    var data = con.filteredProduct[index];
 
     return DataRow.byIndex(
       index: index,
       cells: [
-        DataTableWidget.cell(
-          Get.context!,
-          '${con.filteredProduct[index].id}',
-        ),
-        DataTableWidget.cell(
-          Get.context!,
-          con.filteredProduct[index].model,
-        ),
-        DataTableWidget.cell(
-          Get.context!,
-          con.filteredProduct[index].brand,
-        ),
+        DataTableWidget.cell(Get.context!, '${data.id}'),
+        DataTableWidget.cell(Get.context!, data.brand),
+        DataTableWidget.cell(Get.context!, data.model),
         DataTableWidget.cellBtn(
           Get.context!,
           edit: () => debugPrint('Edit $index'),
@@ -127,7 +127,8 @@ class ProductDataSource extends DataTableSource {
               btnColor: secondGreyColor,
               widget: TextButton(
                 onPressed: () async {
-                  deleteProduct(con.filteredProduct[index].id);
+                  await deleteProduct(con.filteredProduct[index].id);
+                  con.filteredProduct.clear();
                   await getAllProduct();
                   con.filteredProduct.value = product;
                   Get.back();
@@ -148,5 +149,5 @@ class ProductDataSource extends DataTableSource {
   bool get isRowCountApproximate => false;
 
   @override
-  int get selectedRowCount => selectedCount;
+  int get selectedRowCount => 0;
 }

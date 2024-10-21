@@ -91,36 +91,22 @@ class UserScreen extends StatelessWidget {
 
 class UserDataSource extends DataTableSource {
   final con = Get.put(UserController());
-  int selectedCount = 0;
 
   @override
   DataRow? getRow(int index) {
     assert(index >= 0);
-    if (index >= rowCount) return null;
+    if (index >= con.filteredUsers.length) return null;
+
+    var data = con.filteredUsers[index];
 
     return DataRow.byIndex(
       index: index,
       cells: [
-        DataTableWidget.cell(
-          Get.context!,
-          '${con.filteredUsers[index].id}',
-        ),
-        DataTableWidget.cell(
-          Get.context!,
-          con.filteredUsers[index].name,
-        ),
-        DataTableWidget.cell(
-          Get.context!,
-          con.filteredUsers[index].role,
-        ),
-        DataTableWidget.cell(
-          Get.context!,
-          con.filteredUsers[index].user,
-        ),
-        DataTableWidget.cell(
-          Get.context!,
-          con.filteredUsers[index].dateCreate,
-        ),
+        DataTableWidget.cell(Get.context!, '${data.id}'),
+        DataTableWidget.cell(Get.context!, data.name),
+        DataTableWidget.cell(Get.context!, data.role),
+        DataTableWidget.cell(Get.context!, data.user),
+        DataTableWidget.cell(Get.context!, data.dateCreate),
         DataTableWidget.cellBtn(
           Get.context!,
           edit: () => debugPrint('Edit $index'),
@@ -135,7 +121,7 @@ class UserDataSource extends DataTableSource {
               btnColor: secondGreyColor,
               widget: TextButton(
                 onPressed: () async {
-                  deleteUser(con.filteredUsers[index].id);
+                  await deleteUser(con.filteredUsers[index].id);
                   con.filteredUsers.clear();
                   await getAllUser();
                   con.filteredUsers.value = user;
@@ -157,5 +143,5 @@ class UserDataSource extends DataTableSource {
   bool get isRowCountApproximate => false;
 
   @override
-  int get selectedRowCount => selectedCount;
+  int get selectedRowCount => 0;
 }

@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:motor/models/add_stock_model.dart';
+import 'package:motor/models/brand_model.dart';
 import 'package:motor/models/micro_model.dart';
 import 'package:motor/models/product_model.dart';
 import 'package:motor/models/sale_man_model.dart';
@@ -13,6 +14,7 @@ final _firebase = FirebaseFirestore.instance;
 final userCol = _firebase.collection('user');
 final saleManCol = _firebase.collection('sale_man');
 final microCol = _firebase.collection('micro');
+final brandCol = _firebase.collection('brand');
 final productCol = _firebase.collection('product');
 final addStockCol = _firebase.collection('add_stock');
 final totalStockCol = _firebase.collection('total_stock');
@@ -22,6 +24,8 @@ var byUser = [].obs;
 var user = [].obs;
 var saleMan = [].obs;
 var micro = [].obs;
+var brand = [].obs;
+var byProduct = [].obs;
 var product = [].obs;
 var addStock = [].obs;
 var stockByModel = [].obs;
@@ -146,6 +150,17 @@ Future<void> deleteMicro(int id) async {
   } catch (e) {
     debugPrint('Failed to deleteMicro: $e');
   }
+}
+
+Future<void> getAllBrand() async {
+  var res = await brandCol.orderBy('id', descending: true).get();
+  brand.value = res.docs.map((doc) => BrandModel.fromMap(doc.data())).toList();
+}
+
+Future<void> getByProduct(String brand) async {
+  var res = await productCol.where('brand', isEqualTo: brand).get();
+  byProduct.value =
+      res.docs.map((doc) => ProductModel.fromMap(doc.data())).toList();
 }
 
 Future<void> getAllProduct() async {

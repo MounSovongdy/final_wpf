@@ -5,6 +5,7 @@ class NewBookingController extends GetxController {
   var microList = [''].obs;
   var saleManList = [''].obs;
   var genderList = ['Male', 'Female'].obs;
+  var brandList = [''].obs;
   var modelList = [''].obs;
   var colorList = ['Red', 'Black', 'Blue', 'White', 'Grey'].obs;
   var conditionList = ['New', 'Used'].obs;
@@ -17,14 +18,16 @@ class NewBookingController extends GetxController {
   ].obs;
 
   var isFriend = false.obs;
+  var isBrand = false.obs;
 
-  String? micro;
-  String? salesman;
-  String? gender;
-  String? model;
-  String? color;
-  String? condition;
-  String? comeBy;
+  var micro = Rxn<String>();
+  var salesman = Rxn<String>();
+  var gender = Rxn<String>();
+  var brand = Rxn<String>();
+  var model = Rxn<String>();
+  var color = Rxn<String>();
+  var condition = Rxn<String>();
+  var comeBy = Rxn<String>();
 
   var date = TextEditingController().obs;
   var idCard = TextEditingController().obs;
@@ -32,7 +35,6 @@ class NewBookingController extends GetxController {
   var age = TextEditingController().obs;
   var phoneCus = TextEditingController().obs;
   var address = TextEditingController().obs;
-  var brand = TextEditingController().obs;
   var year = TextEditingController().obs;
   var sell = TextEditingController().obs;
   var discount = TextEditingController().obs;

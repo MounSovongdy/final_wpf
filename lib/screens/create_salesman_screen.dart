@@ -57,7 +57,7 @@ class CreateSalesmanScreen extends StatelessWidget {
                 value: con.gender,
                 list: gender,
                 onChanged: (v) {
-                  if (v != null) con.gender = v;
+                  if (v != null) con.gender.value = v;
                 },
               ),
               widget3: AppTextField(
@@ -74,7 +74,7 @@ class CreateSalesmanScreen extends StatelessWidget {
                 value: con.position,
                 list: position,
                 onChanged: (v) {
-                  if (v != null) con.position = v;
+                  if (v != null) con.position.value = v;
                 },
               ),
               widget2: AppTextField(

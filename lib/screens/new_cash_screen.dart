@@ -20,9 +20,9 @@ class NewCashScreen extends StatelessWidget {
   final conMain = Get.put(MainController());
 
   final gender = ['Male', 'Female'];
-  final salesman = ['Thol', 'Sora','Piseth'];
-  final brand = ['Honda', 'Suzuki','Yamaha'];
-  final model = ['Dream','Best','Scoopy'];
+  final salesman = ['Thol', 'Sora', 'Piseth'];
+  final brand = ['Honda', 'Suzuki', 'Yamaha'];
+  final model = ['Dream', 'Best', 'Scoopy'];
   final color = ['Red', 'Black', 'Blue'];
   final condition = ['New', 'Used'];
 
@@ -46,12 +46,19 @@ class NewCashScreen extends StatelessWidget {
             RowTextField(
               spacer: spacer(context),
               widget1: AppTextField(txt: 'Date', con: con.dateBooking.value),
-              widget2: AppDropdown(txt: 'Salesman', list: salesman, onChanged: (v){
-                if (v != null) con.salesman = v;
-              },),
+              widget2: AppDropdown(
+                txt: 'Salesman',
+                value: con.salesman,
+                list: salesman,
+                onChanged: (v) {
+                  if (v != null) con.salesman.value = v;
+                },
+              ),
             ),
             TitleUnderline(
-                spacer: spacer(context), txt: 'Customer Information'),
+              spacer: spacer(context),
+              txt: 'Customer Information',
+            ),
             RowTextField(
               spacer: spacer(context),
               widget1: AppTextField(txt: 'ID Card', con: con.name.value),
@@ -61,7 +68,7 @@ class NewCashScreen extends StatelessWidget {
                 value: con.gender,
                 list: gender,
                 onChanged: (v) {
-                  if (v != null) con.gender = v;
+                  if (v != null) con.gender.value = v;
                 },
               ),
             ),
@@ -76,23 +83,26 @@ class NewCashScreen extends StatelessWidget {
               spacer: spacer(context),
               widget1: AppDropdown(
                 txt: 'Model',
+                value: con.model,
                 list: model,
                 onChanged: (v) {
-                  if (v != null) con.model = v;
+                  if (v != null) con.model.value = v;
                 },
               ),
               widget2: AppDropdown(
                 txt: 'Brand',
+                value: con.brand,
                 list: brand,
                 onChanged: (v) {
-                  if (v != null) con.brand = v;
+                  if (v != null) con.brand.value = v;
                 },
               ),
               widget3: AppDropdown(
                 txt: 'Color',
+                value: con.color,
                 list: color,
                 onChanged: (v) {
-                  if (v != null) con.color = v;
+                  if (v != null) con.color.value = v;
                 },
               ),
             ),
@@ -101,9 +111,10 @@ class NewCashScreen extends StatelessWidget {
               widget1: AppTextField(txt: 'Year', con: con.year.value),
               widget2: AppDropdown(
                 txt: 'Condition',
+                value: con.condition,
                 list: condition,
                 onChanged: (v) {
-                  if (v != null) con.condition = v;
+                  if (v != null) con.condition.value = v;
                 },
               ),
               widget3: AppTextField(txt: 'Engine No', con: con.engine.value),
@@ -127,13 +138,16 @@ class NewCashScreen extends StatelessWidget {
             ),
             TitleUnderline(
                 spacer: spacer(context), txt: 'Introduced Information'),
-            RowTextField(spacer: spacer(context),
+            RowTextField(
+              spacer: spacer(context),
               widget1: AppTextField(txt: 'Come By', con: con.comeBy.value),
               widget2: AppTextField(txt: 'Name', con: con.nameIntro.value),
               widget3: AppTextField(txt: 'Tel', con: con.phoneIntro.value),
             ),
-            RowTextField(spacer: spacer(context),
-              widget1: AppTextField(txt: 'Commission fee', con: con.commission.value),
+            RowTextField(
+              spacer: spacer(context),
+              widget1: AppTextField(
+                  txt: 'Commission fee', con: con.commission.value),
             ),
             spacer(context),
             spacer(context),
@@ -156,9 +170,7 @@ class NewCashScreen extends StatelessWidget {
                 AppButton(
                   txt: 'Save',
                   width: Responsive.isDesktop(context) ? 150.px : 100.px,
-                  tap: () {
-
-                  },
+                  tap: () {},
                 ),
               ],
             ),

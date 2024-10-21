@@ -49,16 +49,18 @@ class NewBookingScreen extends StatelessWidget {
               ),
               widget2: AppDropdown(
                 txt: 'Micro',
+                value: con.micro,
                 list: con.microList,
                 onChanged: (v) {
-                  if (v != null) con.micro = v;
+                  if (v != null) con.micro.value = v;
                 },
               ),
               widget3: AppDropdown(
                 txt: 'Salesman',
+                value: con.salesman,
                 list: con.saleManList,
                 onChanged: (v) {
-                  if (v != null) con.salesman = v;
+                  if (v != null) con.salesman.value = v;
                 },
               ),
             ),
@@ -83,7 +85,7 @@ class NewBookingScreen extends StatelessWidget {
                 value: con.gender,
                 list: con.genderList,
                 onChanged: (v) {
-                  if (v != null) con.gender = v;
+                  if (v != null) con.gender.value = v;
                 },
               ),
             ),
@@ -113,23 +115,43 @@ class NewBookingScreen extends StatelessWidget {
             RowTextField(
               spacer: spacer(context),
               widget1: AppDropdown(
-                txt: 'Model',
-                list: con.modelList,
-                onChanged: (v) {
+                txt: 'Brand',
+                list: con.brandList,
+                value: con.model,
+                onChanged: (v) async {
+                  con.isBrand.value = false;
                   if (v != null) {
-                    con.model = v;
-                    for (var data in product) {
-                      if (data.model == con.model) {
-                        con.brand.value.text = data.brand;
-                      }
+                    byProduct.clear();
+                    con.modelList.clear();
+                    con.model.value = null;
+                    await getByProduct(v);
+                    for (var data in byProduct) {
+                      con.modelList.add(data.model);
                     }
+
+                    con.brand.value = v;
+                    con.isBrand.value = true;
                   }
                 },
               ),
-              widget2: AppTextField(
-                txt: 'Brand',
-                con: con.brand.value,
-                readOnly: true,
+              widget2: Obx(
+                () => con.isBrand.value == true
+                    ? AppDropdown(
+                        txt: 'Model',
+                        value: con.model,
+                        list: con.modelList,
+                        onChanged: (v) {
+                          if (v != null) con.model.value = v;
+                        },
+                      )
+                    : AppDropdown(
+                        txt: 'Model',
+                        value: con.model,
+                        list: const [],
+                        onChanged: (v) {
+                          if (v != null) con.model.value = v;
+                        },
+                      ),
               ),
               widget3: AppTextField(
                 txt: 'Year',
@@ -142,16 +164,18 @@ class NewBookingScreen extends StatelessWidget {
               spacer: spacer(context),
               widget1: AppDropdown(
                 txt: 'Color',
+                value: con.color,
                 list: con.colorList,
                 onChanged: (v) {
-                  if (v != null) con.color = v;
+                  if (v != null) con.color.value = v;
                 },
               ),
               widget2: AppDropdown(
                 txt: 'Condition',
+                value: con.condition,
                 list: con.conditionList,
                 onChanged: (v) {
-                  if (v != null) con.condition = v;
+                  if (v != null) con.condition.value = v;
                 },
               ),
             ),
@@ -197,11 +221,12 @@ class NewBookingScreen extends StatelessWidget {
               spacer: spacer(context),
               widget1: AppDropdown(
                 txt: 'Come By',
+                value: con.comeBy,
                 list: con.comeByList,
                 onChanged: (v) {
                   if (v != null) {
-                    con.comeBy = v;
-                    if (con.comeBy == 'Friend') {
+                    con.comeBy.value = v;
+                    if (con.comeBy.value == 'Friend') {
                       con.isFriend.value = true;
                     } else {
                       con.isFriend.value = false;
@@ -271,5 +296,15 @@ class NewBookingScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Future<void> modelName(String brand) async {
+    byProduct.clear();
+    con.modelList.clear();
+    con.model.value = null;
+    await getByProduct(brand);
+    for (var data in byProduct) {
+      con.modelList.add(data.model);
+    }
   }
 }

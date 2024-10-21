@@ -51,7 +51,7 @@ class AddStockScreen extends StatelessWidget {
                 list: con.listModel,
                 onChanged: (v) async {
                   if (v != null) {
-                    con.model = v;
+                    con.model.value = v;
                     isModel.value = true;
                     for (var data in product) {
                       if (con.model == data.model) {
@@ -84,7 +84,7 @@ class AddStockScreen extends StatelessWidget {
                   list: isModel.value ? condition : [],
                   onChanged: (v) async {
                     if (v != null) {
-                      con.condition = v;
+                      con.condition.value = v;
                       con.getDataByModel();
                     }
                   },

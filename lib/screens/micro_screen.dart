@@ -94,52 +94,26 @@ class MicroScreen extends StatelessWidget {
 
 class MicroDataSource extends DataTableSource {
   final con = Get.put(MicroController());
-  int selectedCount = 0;
 
   @override
   DataRow? getRow(int index) {
     assert(index >= 0);
-    if (index >= rowCount) return null;
+    if (index >= con.filteredMicro.length) return null;
+
+    var data = con.filteredMicro[index];
 
     return DataRow.byIndex(
       index: index,
       cells: [
-        DataTableWidget.cell(
-          Get.context!,
-          '${con.filteredMicro[index].id}',
-        ),
-        DataTableWidget.cell(
-          Get.context!,
-          con.filteredMicro[index].name,
-        ),
-        DataTableWidget.cell(
-          Get.context!,
-          con.filteredMicro[index].tel,
-        ),
-        DataTableWidget.cell(
-          Get.context!,
-          con.filteredMicro[index].email,
-        ),
-        DataTableWidget.cell(
-          Get.context!,
-          con.filteredMicro[index].contactName,
-        ),
-        DataTableWidget.cell(
-          Get.context!,
-          con.filteredMicro[index].contactTel,
-        ),
-        DataTableWidget.cell(
-          Get.context!,
-          con.filteredMicro[index].contactEmail,
-        ),
-             DataTableWidget.cell(
-          Get.context!,
-          con.filteredMicro[index].contactPosition,
-        ),
-        DataTableWidget.cell(
-          Get.context!,
-          con.filteredMicro[index].tBonus,
-        ),
+        DataTableWidget.cell(Get.context!, '${data.id}'),
+        DataTableWidget.cell(Get.context!, data.name),
+        DataTableWidget.cell(Get.context!, data.tel),
+        DataTableWidget.cell(Get.context!, data.email),
+        DataTableWidget.cell(Get.context!, data.contactName),
+        DataTableWidget.cell(Get.context!, data.contactTel),
+        DataTableWidget.cell(Get.context!, data.contactEmail),
+        DataTableWidget.cell(Get.context!, data.contactPosition),
+        DataTableWidget.cell(Get.context!, data.tBonus),
         DataTableWidget.cellBtn(
           Get.context!,
           edit: () => debugPrint('Edit $index'),
@@ -154,7 +128,7 @@ class MicroDataSource extends DataTableSource {
               btnColor: secondGreyColor,
               widget: TextButton(
                 onPressed: () async {
-                  deleteMicro(con.filteredMicro[index].id);
+                  await deleteMicro(con.filteredMicro[index].id);
                   con.filteredMicro.clear();
                   await getAllMicro();
                   con.filteredMicro.value = micro;
@@ -176,5 +150,5 @@ class MicroDataSource extends DataTableSource {
   bool get isRowCountApproximate => false;
 
   @override
-  int get selectedRowCount => selectedCount;
+  int get selectedRowCount => 0;
 }

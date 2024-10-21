@@ -93,7 +93,7 @@ class BookingScreen extends StatelessWidget {
                   conNewBook.discount.value.text = '0';
                   await microName();
                   await saleManName();
-                  await modelName();
+                  await brandName();
 
                   startInactivityTimer();
                   con1.index.value = 2;
@@ -122,11 +122,11 @@ class BookingScreen extends StatelessWidget {
     }
   }
 
-  Future<void> modelName() async {
-    conNewBook.modelList.clear();
-    await getAllProduct();
-    for (var data in product) {
-      conNewBook.modelList.add(data.model);
+  Future<void> brandName() async {
+    conNewBook.brandList.clear();
+    await getAllBrand();
+    for (var data in brand) {
+      conNewBook.brandList.add(data.brand);
     }
   }
 }
@@ -145,7 +145,7 @@ class BookingDataSource extends DataTableSource {
       cells: [
         DataTableWidget.cell(
           Get.context!,
-          con.filteredUsers[index].id,
+          '${con.filteredUsers[index].id}',
         ),
         DataTableWidget.cell(
           Get.context!,

@@ -94,48 +94,25 @@ class SalesmanScreen extends StatelessWidget {
 
 class SaleManDataSource extends DataTableSource {
   final con = Get.put(SalesmanController());
-  int selectedCount = 0;
 
   @override
   DataRow? getRow(int index) {
     assert(index >= 0);
-    if (index >= rowCount) return null;
+    if (index >= con.filteredSale.length) return null;
+
+    var data = con.filteredSale[index];
 
     return DataRow.byIndex(
       index: index,
       cells: [
-        DataTableWidget.cell(
-          Get.context!,
-          '${con.filteredSale[index].id}',
-        ),
-        DataTableWidget.cell(
-          Get.context!,
-          con.filteredSale[index].name,
-        ),
-        DataTableWidget.cell(
-          Get.context!,
-          con.filteredSale[index].gender,
-        ),
-        DataTableWidget.cell(
-          Get.context!,
-          con.filteredSale[index].tel,
-        ),
-        DataTableWidget.cell(
-          Get.context!,
-          con.filteredSale[index].position,
-        ),
-        DataTableWidget.cell(
-          Get.context!,
-          con.filteredSale[index].salary,
-        ),
-        DataTableWidget.cell(
-          Get.context!,
-          con.filteredSale[index].bonus,
-        ),
-        DataTableWidget.cell(
-          Get.context!,
-          con.filteredSale[index].date,
-        ),
+        DataTableWidget.cell(Get.context!, '${data.id}'),
+        DataTableWidget.cell(Get.context!, data.name),
+        DataTableWidget.cell(Get.context!, data.gender),
+        DataTableWidget.cell(Get.context!, data.tel),
+        DataTableWidget.cell(Get.context!, data.position),
+        DataTableWidget.cell(Get.context!, data.salary),
+        DataTableWidget.cell(Get.context!, data.bonus),
+        DataTableWidget.cell(Get.context!, data.date),
         DataTableWidget.cellBtn(
           Get.context!,
           edit: () => debugPrint('Edit $index'),
@@ -150,7 +127,8 @@ class SaleManDataSource extends DataTableSource {
               btnColor: secondGreyColor,
               widget: TextButton(
                 onPressed: () async {
-                  deleteSaleMan(con.filteredSale[index].id);
+                  await deleteSaleMan(con.filteredSale[index].id);
+                  con.filteredSale.clear();
                   await getAllSaleMan();
                   con.filteredSale.value = saleMan;
                   Get.back();
@@ -171,5 +149,5 @@ class SaleManDataSource extends DataTableSource {
   bool get isRowCountApproximate => false;
 
   @override
-  int get selectedRowCount => selectedCount;
+  int get selectedRowCount => 0;
 }

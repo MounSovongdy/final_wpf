@@ -6,8 +6,8 @@ import 'package:motor/models/sale_man_model.dart';
 import 'package:motor/screens/widgets/loading_widget.dart';
 
 class CreateSalesmanController extends GetxController {
-  String? gender;
-  String? position;
+  var gender = Rxn<String>();
+  var position = Rxn<String>();
 
   var fullName = TextEditingController().obs;
   var tel = TextEditingController().obs;
@@ -19,8 +19,8 @@ class CreateSalesmanController extends GetxController {
     if (fullName.value.text != '' &&
         salary.value.text != '' &&
         bonus.value.text != '' &&
-        gender != null &&
-        position != null) {
+        gender.value != null &&
+        position.value != null) {
       await getLastSaleMan();
       var newId = 1;
       if (saleMan.isNotEmpty) newId = saleMan[0].id + 1;
@@ -28,9 +28,9 @@ class CreateSalesmanController extends GetxController {
       SaleManModel newSale = SaleManModel(
         id: newId,
         name: fullName.value.text,
-        gender: gender ?? '',
+        gender: gender.value ?? '',
         tel: tel.value.text,
-        position: position ?? '',
+        position: position.value ?? '',
         salary: salary.value.text,
         bonus: bonus.value.text,
         date: joinDate.value.text,
@@ -54,6 +54,8 @@ class CreateSalesmanController extends GetxController {
   }
 
   void clearText() {
+    gender.value = null;
+    position.value = null;
     fullName.value.clear();
     tel.value.clear();
     salary.value.clear();

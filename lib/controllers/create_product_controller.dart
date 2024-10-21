@@ -6,20 +6,21 @@ import 'package:motor/models/product_model.dart';
 import 'package:motor/screens/widgets/loading_widget.dart';
 
 class CreateProductController extends GetxController {
-  var proBrand = TextEditingController().obs;
-  var proModel = TextEditingController().obs;
+  var brandList = [''].obs;
+
+  var model = TextEditingController().obs;
+  var brand = Rxn<String>();
 
   void createProduct(BuildContext context) async {
-    if (proBrand.value.text != '' &&
-        proModel.value.text != '' ) {
+    if (brand.value != null && model.value.text != '') {
       await getLastProduct();
       var newId = 1;
       if (product.isNotEmpty) newId = product[0].id + 1;
 
       ProductModel newProduct = ProductModel(
         id: newId,
-        brand: proBrand.value.text,
-        model: proModel.value.text,
+        brand: brand.value ?? '',
+        model: model.value.text,
       );
       await insertProduct(newProduct);
       clearText();
@@ -40,7 +41,7 @@ class CreateProductController extends GetxController {
   }
 
   void clearText() {
-    proBrand.value.clear();
-    proModel.value.clear();
+    brand.value = null;
+    model.value.clear();
   }
 }

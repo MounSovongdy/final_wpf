@@ -9,8 +9,9 @@ import 'package:motor/screens/widgets/loading_widget.dart';
 class AddStockController extends GetxController {
   List<String> listModel = [];
 
-  String? model;
-  String? condition;
+  var model = Rxn<String>();
+  var condition = Rxn<String>();
+
   var brand = TextEditingController().obs;
   var proYear = TextEditingController().obs;
   var qTotal = TextEditingController().obs;
@@ -27,10 +28,10 @@ class AddStockController extends GetxController {
   void createAddStock(BuildContext context) async {
     var newQty = int.tryParse(qty.value.text);
 
-    if (model != null &&
+    if (model.value != null &&
         brand.value.text != '' &&
         proYear.value.text.length == 4 &&
-        condition != null &&
+        condition.value != null &&
         date.value.text != '' &&
         newQty! > 0 &&
         price.value.text != '' &&
@@ -45,10 +46,10 @@ class AddStockController extends GetxController {
 
       AddStockModel newAddStock = AddStockModel(
         id: newAddId,
-        model: model ?? '',
+        model: model.value ?? '',
         brand: brand.value.text,
         year: proYear.value.text,
-        condition: condition ?? '',
+        condition: condition.value ?? '',
         oldDateIn: dateIn.value.text,
         oldQty: qBegin.value.text,
         oldPrice: priceQBegin.value.text,
@@ -63,10 +64,10 @@ class AddStockController extends GetxController {
       if (stockByModel.isEmpty) {
         TotalStockModel newTotalStock = TotalStockModel(
           id: newTotalId,
-          model: model ?? '',
+          model: model.value ?? '',
           brand: brand.value.text,
           year: proYear.value.text,
-          condition: condition ?? '',
+          condition: condition.value ?? '',
           oldDateIn: dateIn.value.text,
           oldQty: qBegin.value.text,
           oldPrice: priceQBegin.value.text,
@@ -81,10 +82,10 @@ class AddStockController extends GetxController {
       } else {
         var tQty = int.parse(stockByModel[0].totalQty) + newQty;
         await updateTotalStock(
-          model: model ?? '',
+          model: model.value ?? '',
           brand: brand.value.text,
           year: proYear.value.text,
-          condition: condition ?? '',
+          condition: condition.value ?? '',
           oldPrice: priceQBegin.value.text,
           oldQty: qBegin.value.text,
           oldTotalPrice: totalPriceQBegin.value.text,
@@ -115,6 +116,8 @@ class AddStockController extends GetxController {
   }
 
   void clearText() {
+    model.value = null;
+    condition.value = null;
     brand.value.clear();
     proYear.value.clear();
     qBegin.value.clear();
@@ -129,10 +132,10 @@ class AddStockController extends GetxController {
 
   void getDataByModel() async {
     await getStockByModel(
-      model: model ?? '',
+      model: model.value ?? '',
       brand: brand.value.text,
       year: proYear.value.text,
-      condition: condition ?? '',
+      condition: condition.value ?? '',
     );
 
     if (stockByModel.isNotEmpty) {

@@ -114,68 +114,30 @@ class TotalStockScreen extends StatelessWidget {
 
 class TotalStockDataSource extends DataTableSource {
   final con = Get.put(TotalStockController());
-  int selectedCount = 0;
 
   @override
   DataRow? getRow(int index) {
     assert(index >= 0);
-    if (index >= rowCount) return null;
+    if (index >= con.filteredTotalStock.length) return null;
+
+    var data = con.filteredTotalStock[index];
 
     return DataRow.byIndex(
       index: index,
       cells: [
-        DataTableWidget.cell(
-          Get.context!,
-          '${con.filteredTotalStock[index].id}',
-        ),
-        DataTableWidget.cell(
-          Get.context!,
-          con.filteredTotalStock[index].newDateIn,
-        ),
-        DataTableWidget.cell(
-          Get.context!,
-          con.filteredTotalStock[index].model,
-        ),
-        DataTableWidget.cell(
-          Get.context!,
-          con.filteredTotalStock[index].brand,
-        ),
-        DataTableWidget.cell(
-          Get.context!,
-          con.filteredTotalStock[index].year,
-        ),
-        DataTableWidget.cell(
-          Get.context!,
-          con.filteredTotalStock[index].condition,
-        ),
-        DataTableWidget.cell(
-          Get.context!,
-          con.filteredTotalStock[index].oldQty,
-        ),
-        DataTableWidget.cell(
-          Get.context!,
-          con.filteredTotalStock[index].newQty,
-        ),
-        DataTableWidget.cell(
-          Get.context!,
-          con.filteredTotalStock[index].totalQty,
-        ),
-        DataTableWidget.cell(
-          Get.context!,
-          con.filteredTotalStock[index].oldPrice,
-        ),
-        DataTableWidget.cell(
-          Get.context!,
-          con.filteredTotalStock[index].newPrice,
-        ),
-        DataTableWidget.cell(
-          Get.context!,
-          con.filteredTotalStock[index].oldTotalPrice,
-        ),
-        DataTableWidget.cell(
-          Get.context!,
-          con.filteredTotalStock[index].newTotalPrice,
-        ),
+        DataTableWidget.cell(Get.context!, '${data.id}'),
+        DataTableWidget.cell(Get.context!, data.newDateIn),
+        DataTableWidget.cell(Get.context!, data.model),
+        DataTableWidget.cell(Get.context!, data.brand),
+        DataTableWidget.cell(Get.context!, data.year),
+        DataTableWidget.cell(Get.context!, data.condition),
+        DataTableWidget.cell(Get.context!, data.oldQty),
+        DataTableWidget.cell(Get.context!, data.newQty),
+        DataTableWidget.cell(Get.context!, data.totalQty),
+        DataTableWidget.cell(Get.context!, data.oldPrice),
+        DataTableWidget.cell(Get.context!, data.newPrice),
+        DataTableWidget.cell(Get.context!, data.oldTotalPrice),
+        DataTableWidget.cell(Get.context!, data.newTotalPrice),
       ],
     );
   }
@@ -187,5 +149,5 @@ class TotalStockDataSource extends DataTableSource {
   bool get isRowCountApproximate => false;
 
   @override
-  int get selectedRowCount => selectedCount;
+  int get selectedRowCount => 0;
 }
