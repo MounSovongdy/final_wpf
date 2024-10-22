@@ -51,6 +51,37 @@ class CreateMicroController extends GetxController {
     }
   }
 
+  void updateMicro(BuildContext context) async {
+    if (nameInstitution.value.text != '' && tBonus.value.text != '') {
+      MicroModel newMicro = MicroModel(
+        name: nameInstitution.value.text,
+        tel: tel.value.text,
+        email: email.value.text,
+        tBonus: tBonus.value.text,
+        contactName: nameContact.value.text,
+        contactTel: telContact.value.text,
+        contactEmail: emailContact.value.text,
+        contactPosition: positionContact.value.text,
+        id: byMicro[0].id,
+      );
+      await updateByMicro(byMicro[0].id, newMicro);
+      clearText();
+      LoadingWidget.showTextDialog(
+        Get.context!,
+        title: 'Successfully',
+        content: 'The Micro already updated.',
+        color: greenColor,
+      );
+    } else {
+      LoadingWidget.showTextDialog(
+        context,
+        title: 'Error',
+        content: 'Please input all information.',
+        color: redColor,
+      );
+    }
+  }
+
   void clearText() {
     nameInstitution.value.clear();
     tel.value.clear();

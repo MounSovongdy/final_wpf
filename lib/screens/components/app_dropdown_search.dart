@@ -10,6 +10,7 @@ class AppDropdownSearch extends StatelessWidget {
   final bool showSuffixIcon;
   final Widget? suffix;
   final double width, height;
+  final bool enable;
   final List<String> list;
   final Rxn<String> value;
   final Function(String?)? onChanged;
@@ -24,6 +25,7 @@ class AppDropdownSearch extends StatelessWidget {
     this.suffix,
     this.width = 150,
     this.height = 40,
+    this.enable = true,
   });
 
   final dropDownKey = GlobalKey<DropdownSearchState>();
@@ -41,14 +43,16 @@ class AppDropdownSearch extends StatelessWidget {
         ),
         Expanded(
           flex: 2,
-          child: SizedBox(
+          child: Container(
             width: width.px,
             height: height.px,
+            color: enable ? noneColor : secondGreyColor.withOpacity(0.5),
             child: Obx(
               () => DropdownSearch<String>(
                 key: dropDownKey,
                 selectedItem: value.value,
                 onChanged: onChanged,
+                enabled: enable,
                 items: (filter, props) => getItems(filter, props),
                 decoratorProps: DropDownDecoratorProps(
                   decoration: InputDecoration(

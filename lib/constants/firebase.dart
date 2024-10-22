@@ -31,6 +31,7 @@ var byProduct = [].obs;
 var product = [].obs;
 var addStock = [].obs;
 var stockByModel = [].obs;
+var byTotalStock = [].obs;
 var totalStock = [].obs;
 
 Future<void> getByUser(String userlogin) async {
@@ -216,6 +217,12 @@ Future<void> deleteMicro(int id) async {
   }
 }
 
+Future<void> getByProductID(int id) async {
+  var res = await productCol.where('id', isEqualTo: id).get();
+  byProduct.value =
+      res.docs.map((doc) => ProductModel.fromMap(doc.data())).toList();
+}
+
 Future<void> getAllBrand() async {
   var res = await brandCol.orderBy('id', descending: true).get();
   brand.value = res.docs.map((doc) => BrandModel.fromMap(doc.data())).toList();
@@ -244,6 +251,21 @@ Future<void> insertProduct(ProductModel pro) async {
     await productCol.doc('${pro.id}').set(pro.toMap());
   } catch (e) {
     debugPrint('Failed to add product: $e');
+  }
+}
+
+Future<void> updateByProduct(int id, ProductModel pro) async {
+  try {
+    var docId = '';
+    var result = await productCol.where('id', isEqualTo: id).get();
+
+    for (var doc in result.docs) {
+      docId = doc.id;
+    }
+
+    await productCol.doc(docId).update(pro.toMap());
+  } catch (e) {
+    debugPrint('Failed to updateByProduct: $e');
   }
 }
 
@@ -298,6 +320,12 @@ Future<void> getStockByModel({
       res.docs.map((doc) => TotalStockModel.fromMap(doc.data())).toList();
 }
 
+Future<void> getByTotalStockID(int id) async {
+  var res = await totalStockCol.where('id', isEqualTo: id).get();
+  byTotalStock.value =
+      res.docs.map((doc) => TotalStockModel.fromMap(doc.data())).toList();
+}
+
 Future<void> getAllStock() async {
   var res = await totalStockCol.orderBy('id', descending: true).get();
   totalStock.value =
@@ -309,6 +337,28 @@ Future<void> insertTotalStock(TotalStockModel total) async {
     await totalStockCol.doc('${total.id}').set(total.toMap());
   } catch (e) {
     debugPrint('Failed to add total stock: $e');
+  }
+}
+
+Future<void> updateByTotalStock(
+  int id, {
+  required String model,
+  required String brand,
+}) async {
+  try {
+    var docId = '';
+    var result = await totalStockCol.where('id', isEqualTo: id).get();
+
+    for (var doc in result.docs) {
+      docId = doc.id;
+    }
+
+    await totalStockCol.doc(docId).update({
+      'model': model,
+      'brand': brand,
+    });
+  } catch (e) {
+    debugPrint('Failed to updateByTotalStock: $e');
   }
 }
 

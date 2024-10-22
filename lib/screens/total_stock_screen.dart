@@ -66,6 +66,7 @@ class TotalStockScreen extends StatelessWidget {
                           context, 'Total Price in QTY Begin'),
                       DataTableWidget.column(
                           context, 'Total Price in QTY Today'),
+                      DataTableWidget.column(context, 'Actions'),
                     ],
                     source: TotalStockDataSource(),
                   )
@@ -96,6 +97,8 @@ class TotalStockScreen extends StatelessWidget {
                 width: Responsive.isDesktop(context) ? 150.px : 100.px,
                 tap: () async {
                   startInactivityTimer();
+                  con.title.value = 'Add Stock';
+                  con2.isRead.value = false;
                   con2.clearText();
                   con2.listModel.clear();
                   await getAllProduct();
@@ -115,6 +118,8 @@ class TotalStockScreen extends StatelessWidget {
 
 class TotalStockDataSource extends DataTableSource {
   final con = Get.put(TotalStockController());
+  final conAS = Get.put(AddStockController());
+  final conMain = Get.put(MainController());
 
   @override
   DataRow? getRow(int index) {
@@ -139,6 +144,22 @@ class TotalStockDataSource extends DataTableSource {
         DataTableWidget.cell(Get.context!, data.newPrice),
         DataTableWidget.cell(Get.context!, data.oldTotalPrice),
         DataTableWidget.cell(Get.context!, data.newTotalPrice),
+        DataTableWidget.cellBtn(
+          Get.context!,
+          btnDelete: false,
+          edit: () async {
+            startInactivityTimer();
+            con.title.value = 'Edit Stock';
+            conAS.clearText();
+            conAS.listModel.clear();
+            await getAllProduct();
+            for (var pro in product) {
+              conAS.listModel.add(pro.model);
+            }
+            await con.editTotalStock(data.id);
+            conMain.index.value = 10;
+          },
+        ),
       ],
     );
   }

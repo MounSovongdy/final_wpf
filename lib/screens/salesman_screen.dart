@@ -98,6 +98,7 @@ class SalesmanScreen extends StatelessWidget {
 
 class SaleManDataSource extends DataTableSource {
   final con = Get.put(SalesmanController());
+  final conCS = Get.put(CreateSalesmanController());
   final conMain = Get.put(MainController());
 
   @override
@@ -122,6 +123,7 @@ class SaleManDataSource extends DataTableSource {
           Get.context!,
           edit: () async {
             startInactivityTimer();
+            conCS.clearText();
             con.title.value = 'Edit Salesman';
             await con.editSales(data.id);
             conMain.index.value = 18;

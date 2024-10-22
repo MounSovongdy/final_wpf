@@ -36,7 +36,7 @@ class CreateProductScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            AppText.header(context, txt: 'Create Product'),
+            AppText.header(context, txt: conPro.title.value),
             spacer(context),
             TitleUnderline(
               spacer: spacer(context),
@@ -86,7 +86,11 @@ class CreateProductScreen extends StatelessWidget {
                   width: Responsive.isDesktop(context) ? 150.px : 100.px,
                   tap: () {
                     startInactivityTimer();
-                    con.createProduct(context);
+                    if (conPro.title.value == 'Create Product') {
+                      con.createProduct(context);
+                    } else {
+                      con.updateProduct(context);
+                    }
                   },
                 ),
               ],

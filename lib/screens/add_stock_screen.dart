@@ -40,7 +40,7 @@ class AddStockScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            AppText.header(context, txt: 'Add Stock'),
+            AppText.header(context, txt: conTS.title.value),
             spacer(context),
             TitleUnderline(spacer: spacer(context), txt: 'Stock Information'),
             RowTextField(
@@ -70,6 +70,7 @@ class AddStockScreen extends StatelessWidget {
               widget3: AppTextField(
                 txt: 'Year',
                 con: con.proYear.value,
+                readOnly: con.isRead.value,
                 isNumber: true,
                 digit: 4,
                 onChanged: (v) => con.getDataByModel(),
@@ -81,6 +82,7 @@ class AddStockScreen extends StatelessWidget {
                 () => AppDropdownSearch(
                   txt: 'Condition',
                   value: con.condition,
+                  enable: !con.isRead.value,
                   list: isModel.value ? condition : [],
                   onChanged: (v) async {
                     if (v != null) {
@@ -120,11 +122,16 @@ class AddStockScreen extends StatelessWidget {
             ),
             RowTextField(
               spacer: spacer(context),
-              widget1: AppDateTextField(txt: 'Date In', con: con.date.value),
+              widget1: AppDateTextField(
+                txt: 'Date In',
+                con: con.date.value,
+                readOnly: con.isRead.value,
+              ),
               widget2: AppTextField(
                 txt: 'Qty',
                 con: con.qty.value,
                 isNumber: true,
+                readOnly: con.isRead.value,
                 onChanged: (v) {
                   if (con.price.value.text != '' && con.qty.value.text != '') {
                     var num = int.parse(con.qty.value.text) *
@@ -138,6 +145,7 @@ class AddStockScreen extends StatelessWidget {
               widget3: AppTextField(
                 txt: 'Price',
                 con: con.price.value,
+                readOnly: con.isRead.value,
                 isNumber: true,
                 digit: 5,
                 onChanged: (v) {
@@ -177,7 +185,7 @@ class AddStockScreen extends StatelessWidget {
                     await getAllStock();
                     conTS.filteredTotalStock.value = totalStock;
                     conTS.search.value.addListener(conTS.filterTotalStockData);
-                    
+
                     conMain.index.value = conMain.index.value - 1;
                   },
                 ),
@@ -188,7 +196,11 @@ class AddStockScreen extends StatelessWidget {
                   width: Responsive.isDesktop(context) ? 150.px : 100.px,
                   tap: () {
                     startInactivityTimer();
-                    con.createAddStock(context);
+                    if (conTS.title.value == 'Add Stock') {
+                      con.createAddStock(context);
+                    } else {
+                      con.updateProduct(context);
+                    }
                   },
                 ),
               ],

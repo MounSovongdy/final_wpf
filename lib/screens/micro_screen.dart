@@ -98,6 +98,7 @@ class MicroScreen extends StatelessWidget {
 
 class MicroDataSource extends DataTableSource {
   final con = Get.put(MicroController());
+  final conCM = Get.put(CreateMicroController());
   final conMain = Get.put(MainController());
 
   @override
@@ -123,6 +124,7 @@ class MicroDataSource extends DataTableSource {
           Get.context!,
           edit: () async {
             startInactivityTimer();
+            conCM.clearText();
             con.title.value = 'Edit Micro';
             await con.editMicro(data.id);
             conMain.index.value = 20;

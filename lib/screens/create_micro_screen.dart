@@ -121,7 +121,11 @@ class CreateMicroScreen extends StatelessWidget {
                   width: Responsive.isDesktop(context) ? 150.px : 100.px,
                   tap: () {
                     startInactivityTimer();
-                    con.createMicro(context);
+                    if (conMi.title.value == 'Create Micro') {
+                      con.createMicro(context);
+                    } else {
+                      con.updateMicro(context);
+                    }
                   },
                 ),
               ],

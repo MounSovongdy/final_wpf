@@ -95,6 +95,7 @@ class UserScreen extends StatelessWidget {
 
 class UserDataSource extends DataTableSource {
   final con = Get.put(UserController());
+  final conCU = Get.put(CreateUserController());
   final conMain = Get.put(MainController());
 
   @override
@@ -116,6 +117,7 @@ class UserDataSource extends DataTableSource {
           Get.context!,
           edit: () async {
             startInactivityTimer();
+            conCU.clearText();
             con.title.value = 'Edit User';
             await con.editUser(data.id);
             conMain.index.value = 16;

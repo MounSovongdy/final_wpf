@@ -44,7 +44,7 @@ class AppDateTextField extends StatelessWidget {
               controller: con,
               obscureText: obscureText,
               readOnly: readOnly,
-              onTap: () async {
+              onTap: readOnly ? null : () async {
                 DateTime? picked = await showDatePicker(
                   context: context,
                   initialDate: DateTime.now(),

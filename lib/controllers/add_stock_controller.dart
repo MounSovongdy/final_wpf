@@ -9,12 +9,13 @@ import 'package:motor/screens/widgets/loading_widget.dart';
 class AddStockController extends GetxController {
   List<String> listModel = [];
 
+  var isRead = false.obs;
+
   var model = Rxn<String>();
   var condition = Rxn<String>();
 
   var brand = TextEditingController().obs;
   var proYear = TextEditingController().obs;
-  var qTotal = TextEditingController().obs;
   var qBegin = TextEditingController().obs;
   var priceQBegin = TextEditingController().obs;
   var totalPriceQBegin = TextEditingController().obs;
@@ -115,6 +116,30 @@ class AddStockController extends GetxController {
     }
   }
 
+  void updateProduct(BuildContext context) async {
+    if (model.value != null && brand.value.text != '') {
+      await updateByTotalStock(
+        byTotalStock[0].id,
+        model: model.value ?? '',
+        brand: brand.value.text,
+      );
+      clearText();
+      LoadingWidget.showTextDialog(
+        Get.context!,
+        title: 'Successfully',
+        content: 'The Information already updated.',
+        color: greenColor,
+      );
+    } else {
+      LoadingWidget.showTextDialog(
+        context,
+        title: 'Error',
+        content: 'Please input all information.',
+        color: redColor,
+      );
+    }
+  }
+
   void clearText() {
     model.value = null;
     condition.value = null;
@@ -140,7 +165,6 @@ class AddStockController extends GetxController {
 
     if (stockByModel.isNotEmpty) {
       dateIn.value.text = stockByModel[0].newDateIn;
-      qTotal.value.text = stockByModel[0].totalQty;
       qBegin.value.text = stockByModel[0].newQty;
       priceQBegin.value.text = stockByModel[0].newPrice;
       totalPriceQBegin.value.text = stockByModel[0].newTotalPrice;

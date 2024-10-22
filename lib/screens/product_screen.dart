@@ -78,6 +78,7 @@ class ProductScreen extends StatelessWidget {
                   txt: 'New',
                   width: Responsive.isDesktop(context) ? 150.px : 100.px,
                   tap: () async {
+                    con.title.value = 'Create Product';
                     conCP.clearText();
                     conCP.brandList.clear();
                     await getAllBrand();
@@ -100,6 +101,8 @@ class ProductScreen extends StatelessWidget {
 
 class ProductDataSource extends DataTableSource {
   final con = Get.put(ProductController());
+  final conCP = Get.put(CreateProductController());
+  final conMain = Get.put(MainController());
 
   @override
   DataRow? getRow(int index) {
@@ -116,7 +119,18 @@ class ProductDataSource extends DataTableSource {
         DataTableWidget.cell(Get.context!, data.model),
         DataTableWidget.cellBtn(
           Get.context!,
-          edit: () => debugPrint('Edit $index'),
+          edit: () async {
+            startInactivityTimer();
+            conCP.clearText();
+            con.title.value = 'Edit Product';
+            conCP.brandList.clear();
+            await getAllBrand();
+            for (var data in brand) {
+              conCP.brandList.add(data.brand);
+            }
+            await con.editProduct(data.id);
+            conMain.index.value = 12;
+          },
           delete: () {
             startInactivityTimer();
             LoadingWidget.showTextDialog(

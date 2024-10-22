@@ -40,6 +40,31 @@ class CreateProductController extends GetxController {
     }
   }
 
+  void updateProduct(BuildContext context) async {
+    if (brand.value != null && model.value.text != '') {
+      ProductModel newPro = ProductModel(
+        brand: brand.value ?? '',
+        model: model.value.text,
+        id: byProduct[0].id,
+      );
+      await updateByProduct(byProduct[0].id, newPro);
+      clearText();
+      LoadingWidget.showTextDialog(
+        Get.context!,
+        title: 'Successfully',
+        content: 'The Product already updated.',
+        color: greenColor,
+      );
+    } else {
+      LoadingWidget.showTextDialog(
+        context,
+        title: 'Error',
+        content: 'Please input all information.',
+        color: redColor,
+      );
+    }
+  }
+
   void clearText() {
     brand.value = null;
     model.value.clear();
