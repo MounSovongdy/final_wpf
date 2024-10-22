@@ -92,19 +92,6 @@ class DrawerMenu extends StatelessWidget {
                         svgSrc: 'assets/icons/TotalExpenses.svg',
                       ),
                     ),
-                    Container(
-                      padding: EdgeInsets.only(left: 36.px),
-                      child: DrawerListTile(
-                        tap: () {
-                          if (Responsive.isMobile(context)) con.controlDrawer();
-                          startInactivityTimer();
-
-                          con.index.value = 5;
-                        },
-                        title: 'Sales Report',
-                        svgSrc: 'assets/icons/Report.svg',
-                      ),
-                    ),
                   ],
                 ),
                 DrawerListTile(

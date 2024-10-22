@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:motor/constants/constants.dart';
+import 'package:motor/controllers/alert_dailog_edit_status_controller.dart';
 import 'package:motor/screens/widgets/app_text.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
@@ -72,61 +73,42 @@ class LoadingWidget {
     Color btnColor = blackColor,
     String txtBack = 'Confirm',
     Widget? widget,
+        onChanged,
   }) {
+    bool isChecked = false;
     showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(5), // No rounded corners
+          ),
           title: title,
           actions: [
             TextButton(
               onPressed: () => Navigator.of(context).pop(),
               child: AppText.title(context, txt: txtBack, color: bgColor),
             ),
-            widget ?? Container(),
+            widget ?? Container(), // Optional widget
           ],
           content: SizedBox(
-            height: 208.px,
             child: Column(
               children: [
                 Container(
                   padding: const EdgeInsets.all(10.0),
                   decoration: BoxDecoration(
-                    border: Border.all(width: 1, color: bgColor)
+                    border: Border.all(width: 1, color: bgColor),
                   ),
-                  height: 40,
-                  child: const Row(
-                    children: [Text("Padding"), Spacer(), Text("1")],
-                  ),
-                ),
-                spacer(context),
-                Container(
-                  decoration: BoxDecoration(
-                      border: Border.all(width: 1, color: bgColor)
-                  ),
-                  height: 40,
-                  child: const Row(
-                    children: [Text("Approved"), Spacer(), Text("1")],
-                  ),
-                ),
-                spacer(context),
-                Container(
-                  decoration: BoxDecoration(
-                      border: Border.all(width: 1, color: bgColor)
-                  ),
-                  height: 40,
-                  child: const Row(
-                    children: [Text("Canceled"), Spacer(), Text("1")],
-                  ),
-                ),
-                spacer(context),
-                Container(
-                  decoration: BoxDecoration(
-                      border: Border.all(width: 1, color: bgColor)
-                  ),
-                  height: 40,
-                  child: const Row(
-                    children: [Text("Rejected"), Spacer(), Text("1")],
+                  height: 40, // Row height
+                  child: Row(
+                    children: [
+                      Checkbox(
+                        value: isChecked,
+                        onChanged: onChanged,
+                      ),
+                      Spacer(),
+                      Text("Padding"),
+                    ],
                   ),
                 ),
               ],
