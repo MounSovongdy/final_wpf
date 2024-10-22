@@ -22,7 +22,9 @@ final totalStockCol = _firebase.collection('total_stock');
 var currVersion = '1.0.0'.obs;
 var byUser = [].obs;
 var user = [].obs;
+var bySaleMan = [].obs;
 var saleMan = [].obs;
+var byMicro = [].obs;
 var micro = [].obs;
 var brand = [].obs;
 var byProduct = [].obs;
@@ -33,6 +35,11 @@ var totalStock = [].obs;
 
 Future<void> getByUser(String userlogin) async {
   var res = await userCol.where('user', isEqualTo: userlogin).get();
+  byUser.value = res.docs.map((doc) => UserModel.fromMap(doc.data())).toList();
+}
+
+Future<void> getByUserID(int id) async {
+  var res = await userCol.where('id', isEqualTo: id).get();
   byUser.value = res.docs.map((doc) => UserModel.fromMap(doc.data())).toList();
 }
 
@@ -51,6 +58,21 @@ Future<void> insertUser(UserModel user) async {
     await userCol.doc('${user.id}').set(user.toMap());
   } catch (e) {
     debugPrint('Failed to add user: $e');
+  }
+}
+
+Future<void> updateByUser(int id, UserModel user) async {
+  try {
+    var docId = '';
+    var result = await userCol.where('id', isEqualTo: id).get();
+
+    for (var doc in result.docs) {
+      docId = doc.id;
+    }
+
+    await userCol.doc(docId).update(user.toMap());
+  } catch (e) {
+    debugPrint('Failed to updateUser: $e');
   }
 }
 
@@ -84,6 +106,12 @@ Future<void> updateUserPassword(String user, String password) async {
   }
 }
 
+Future<void> getBySaleManID(int id) async {
+  var res = await saleManCol.where('id', isEqualTo: id).get();
+  bySaleMan.value =
+      res.docs.map((doc) => SaleManModel.fromMap(doc.data())).toList();
+}
+
 Future<void> getAllSaleMan() async {
   var res = await saleManCol.orderBy('id', descending: true).get();
   saleMan.value =
@@ -104,6 +132,21 @@ Future<void> insertSaleMan(SaleManModel sale) async {
   }
 }
 
+Future<void> updateBySalenan(int id, SaleManModel sale) async {
+  try {
+    var docId = '';
+    var result = await saleManCol.where('id', isEqualTo: id).get();
+
+    for (var doc in result.docs) {
+      docId = doc.id;
+    }
+
+    await saleManCol.doc(docId).update(sale.toMap());
+  } catch (e) {
+    debugPrint('Failed to updateBySalenan: $e');
+  }
+}
+
 Future<void> deleteSaleMan(int id) async {
   try {
     var docId = '';
@@ -117,6 +160,12 @@ Future<void> deleteSaleMan(int id) async {
   } catch (e) {
     debugPrint('Failed to deleteSaleMan: $e');
   }
+}
+
+Future<void> getByMicroID(int id) async {
+  var res = await microCol.where('id', isEqualTo: id).get();
+  byMicro.value =
+      res.docs.map((doc) => MicroModel.fromMap(doc.data())).toList();
 }
 
 Future<void> getAllMicro() async {
@@ -134,6 +183,21 @@ Future<void> insertMicro(MicroModel micro) async {
     await microCol.doc('${micro.id}').set(micro.toMap());
   } catch (e) {
     debugPrint('Failed to add micro: $e');
+  }
+}
+
+Future<void> updateByMicro(int id, MicroModel micro) async {
+  try {
+    var docId = '';
+    var result = await microCol.where('id', isEqualTo: id).get();
+
+    for (var doc in result.docs) {
+      docId = doc.id;
+    }
+
+    await microCol.doc(docId).update(micro.toMap());
+  } catch (e) {
+    debugPrint('Failed to updateByMicro: $e');
   }
 }
 

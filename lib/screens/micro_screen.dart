@@ -84,6 +84,7 @@ class MicroScreen extends StatelessWidget {
                 tap: () {
                   startInactivityTimer();
                   conCM.clearText();
+                  con.title.value = 'Create Micro';
                   con1.index.value = 20;
                 },
               ),
@@ -97,6 +98,7 @@ class MicroScreen extends StatelessWidget {
 
 class MicroDataSource extends DataTableSource {
   final con = Get.put(MicroController());
+  final conMain = Get.put(MainController());
 
   @override
   DataRow? getRow(int index) {
@@ -119,7 +121,12 @@ class MicroDataSource extends DataTableSource {
         DataTableWidget.cell(Get.context!, data.tBonus),
         DataTableWidget.cellBtn(
           Get.context!,
-          edit: () => debugPrint('Edit $index'),
+          edit: () async {
+            startInactivityTimer();
+            con.title.value = 'Edit Micro';
+            await con.editMicro(data.id);
+            conMain.index.value = 20;
+          },
           delete: () {
             startInactivityTimer();
             LoadingWidget.showTextDialog(

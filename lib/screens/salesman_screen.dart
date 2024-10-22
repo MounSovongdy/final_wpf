@@ -35,7 +35,7 @@ class SalesmanScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            AppText.header(context, txt: 'Sale Man List'),
+            AppText.header(context, txt: 'Salesman List'),
             spacer(context),
             TextField(
               controller: con.search.value,
@@ -83,6 +83,7 @@ class SalesmanScreen extends StatelessWidget {
                   tap: () {
                     startInactivityTimer();
                     conCS.clearText();
+                    con.title.value = 'Create Salesman';
                     con1.index.value = 18;
                   },
                 ),
@@ -97,6 +98,7 @@ class SalesmanScreen extends StatelessWidget {
 
 class SaleManDataSource extends DataTableSource {
   final con = Get.put(SalesmanController());
+  final conMain = Get.put(MainController());
 
   @override
   DataRow? getRow(int index) {
@@ -118,7 +120,12 @@ class SaleManDataSource extends DataTableSource {
         DataTableWidget.cell(Get.context!, data.date),
         DataTableWidget.cellBtn(
           Get.context!,
-          edit: () => debugPrint('Edit $index'),
+          edit: () async {
+            startInactivityTimer();
+            con.title.value = 'Edit Salesman';
+            await con.editSales(data.id);
+            conMain.index.value = 18;
+          },
           delete: () {
             startInactivityTimer();
             LoadingWidget.showTextDialog(

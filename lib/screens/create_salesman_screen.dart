@@ -40,7 +40,7 @@ class CreateSalesmanScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            AppText.header(context, txt: 'Create Salesman'),
+            AppText.header(context, txt: conSM.title.value),
             spacer(context),
             TitleUnderline(
               spacer: spacer(context),
@@ -126,7 +126,11 @@ class CreateSalesmanScreen extends StatelessWidget {
                   width: Responsive.isDesktop(context) ? 150.px : 100.px,
                   tap: () {
                     startInactivityTimer();
-                    con.createSaleman(context);
+                    if (conSM.title.value == 'Create Salesman') {
+                      con.createSaleman(context);
+                    } else {
+                      con.updateSaleman(context);
+                    }
                   },
                 ),
               ],

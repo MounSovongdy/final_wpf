@@ -35,7 +35,7 @@ class CreateMicroScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            AppText.header(context, txt: 'Create Micro'),
+            AppText.header(context, txt: conMi.title.value),
             spacer(context),
             TitleUnderline(
               spacer: spacer(context),

@@ -38,7 +38,7 @@ class CreateUserScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            AppText.header(context, txt: 'Create User'),
+            AppText.header(context, txt: conU.title.value),
             spacer(context),
             TitleUnderline(spacer: spacer(context), txt: 'User Information'),
             RowTextField(
@@ -86,7 +86,11 @@ class CreateUserScreen extends StatelessWidget {
                   width: Responsive.isDesktop(context) ? 150.px : 100.px,
                   tap: () {
                     startInactivityTimer();
-                    con.createUser(context);
+                    if (conU.title.value == 'Create User') {
+                      con.createUser(context);
+                    } else {
+                      con.updateUser(context);
+                    }
                   },
                 ),
               ],

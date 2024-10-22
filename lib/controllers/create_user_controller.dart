@@ -9,6 +9,8 @@ class CreateUserController extends GetxController {
   var role = Rxn<String>();
   var name = TextEditingController().obs;
   var userLogin = TextEditingController().obs;
+  var dateNow = dateFormat.format(DateTime.now());
+  var timeNow = timeFormat.format(DateTime.now());
 
   void createUser(BuildContext context) async {
     if (name.value.text != '' &&
@@ -24,8 +26,7 @@ class CreateUserController extends GetxController {
         user: userLogin.value.text,
         password: '123456',
         role: role.value ?? '',
-        dateCreate:
-            '${dateFormat.format(DateTime.now())} ${timeFormat.format(DateTime.now())}',
+        dateCreate: '$dateNow $timeNow',
         status: 'Online',
       );
       await insertUser(newUser);
@@ -34,6 +35,37 @@ class CreateUserController extends GetxController {
         Get.context!,
         title: 'Successfully',
         content: 'The user already created.',
+        color: greenColor,
+      );
+    } else {
+      LoadingWidget.showTextDialog(
+        context,
+        title: 'Error',
+        content: 'Please input all information.',
+        color: redColor,
+      );
+    }
+  }
+
+  void updateUser(BuildContext context) async {
+    if (name.value.text != '' &&
+        userLogin.value.text != '' &&
+        role.value != null) {
+      UserModel newUser = UserModel(
+        name: name.value.text,
+        user: userLogin.value.text,
+        role: role.value ?? '',
+        id: byUser[0].id,
+        password: byUser[0].password,
+        dateCreate: byUser[0].dateCreate,
+        status: 'Online',
+      );
+      await updateByUser(byUser[0].id, newUser);
+      clearText();
+      LoadingWidget.showTextDialog(
+        Get.context!,
+        title: 'Successfully',
+        content: 'The user already updated.',
         color: greenColor,
       );
     } else {

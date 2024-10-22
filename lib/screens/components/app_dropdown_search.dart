@@ -61,7 +61,7 @@ class AppDropdownSearch extends StatelessWidget {
                 popupProps: PopupProps.menu(
                   showSearchBox: true,
                   fit: FlexFit.loose,
-                  constraints: BoxConstraints(maxHeight: 200.px),
+                  constraints: BoxConstraints(maxHeight: 300.px),
                   scrollbarProps: const ScrollbarProps(
                     interactive: true,
                     thumbVisibility: true,
@@ -94,7 +94,7 @@ class AppDropdownSearch extends StatelessWidget {
   }
 
   Future<List<String>> getItems(String filter, LoadProps? props) async {
-    await Future.delayed(const Duration(seconds: 1));
+    await Future.delayed(const Duration(microseconds: 100));
 
     List<String> allItems = list;
 

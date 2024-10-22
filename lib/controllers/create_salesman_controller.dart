@@ -53,6 +53,40 @@ class CreateSalesmanController extends GetxController {
     }
   }
 
+  void updateSaleman(BuildContext context) async {
+    if (fullName.value.text != '' &&
+        salary.value.text != '' &&
+        bonus.value.text != '' &&
+        gender.value != null &&
+        position.value != null) {
+      SaleManModel newSale = SaleManModel(
+        name: fullName.value.text,
+        gender: gender.value ?? '',
+        tel: tel.value.text,
+        position: position.value ?? '',
+        salary: salary.value.text,
+        bonus: bonus.value.text,
+        date: joinDate.value.text,
+        id: bySaleMan[0].id,
+      );
+      await updateBySalenan(bySaleMan[0].id, newSale);
+      clearText();
+      LoadingWidget.showTextDialog(
+        Get.context!,
+        title: 'Successfully',
+        content: 'The Salesman already updated.',
+        color: greenColor,
+      );
+    } else {
+      LoadingWidget.showTextDialog(
+        context,
+        title: 'Error',
+        content: 'Please input all information.',
+        color: redColor,
+      );
+    }
+  }
+
   void clearText() {
     gender.value = null;
     position.value = null;

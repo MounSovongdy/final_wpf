@@ -80,6 +80,7 @@ class UserScreen extends StatelessWidget {
                   tap: () {
                     startInactivityTimer();
                     conCU.clearText();
+                    con.title.value = 'Create User';
                     con1.index.value = 16;
                   },
                 ),
@@ -94,6 +95,7 @@ class UserScreen extends StatelessWidget {
 
 class UserDataSource extends DataTableSource {
   final con = Get.put(UserController());
+  final conMain = Get.put(MainController());
 
   @override
   DataRow? getRow(int index) {
@@ -112,7 +114,12 @@ class UserDataSource extends DataTableSource {
         DataTableWidget.cell(Get.context!, data.dateCreate),
         DataTableWidget.cellBtn(
           Get.context!,
-          edit: () => debugPrint('Edit $index'),
+          edit: () async {
+            startInactivityTimer();
+            con.title.value = 'Edit User';
+            await con.editUser(data.id);
+            conMain.index.value = 16;
+          },
           delete: () {
             startInactivityTimer();
             LoadingWidget.showTextDialog(
