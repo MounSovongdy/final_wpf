@@ -64,4 +64,76 @@ class LoadingWidget {
       },
     );
   }
+
+  static void showEditStatusDialog(
+    BuildContext context, {
+    required title,
+    Color color = redColor,
+    Color btnColor = blackColor,
+    String txtBack = 'Confirm',
+    Widget? widget,
+  }) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: title,
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: AppText.title(context, txt: txtBack, color: bgColor),
+            ),
+            widget ?? Container(),
+          ],
+          content: SizedBox(
+            height: 208.px,
+            child: Column(
+              children: [
+                Container(
+                  padding: const EdgeInsets.all(10.0),
+                  decoration: BoxDecoration(
+                    border: Border.all(width: 1, color: bgColor)
+                  ),
+                  height: 40,
+                  child: const Row(
+                    children: [Text("Padding"), Spacer(), Text("1")],
+                  ),
+                ),
+                spacer(context),
+                Container(
+                  decoration: BoxDecoration(
+                      border: Border.all(width: 1, color: bgColor)
+                  ),
+                  height: 40,
+                  child: const Row(
+                    children: [Text("Approved"), Spacer(), Text("1")],
+                  ),
+                ),
+                spacer(context),
+                Container(
+                  decoration: BoxDecoration(
+                      border: Border.all(width: 1, color: bgColor)
+                  ),
+                  height: 40,
+                  child: const Row(
+                    children: [Text("Canceled"), Spacer(), Text("1")],
+                  ),
+                ),
+                spacer(context),
+                Container(
+                  decoration: BoxDecoration(
+                      border: Border.all(width: 1, color: bgColor)
+                  ),
+                  height: 40,
+                  child: const Row(
+                    children: [Text("Rejected"), Spacer(), Text("1")],
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
 }
