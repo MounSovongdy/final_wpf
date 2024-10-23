@@ -8,7 +8,6 @@ import 'package:motor/screens/components/app_button.dart';
 import 'package:motor/screens/components/app_data_table.dart';
 import 'package:motor/screens/components/app_text_field.dart';
 import 'package:motor/screens/components/row_text_field.dart';
-import 'package:motor/screens/components/title_underline.dart';
 import 'package:motor/screens/components/under_line.dart';
 import 'package:motor/screens/widgets/app_text.dart';
 import 'package:motor/screens/widgets/data_table_widget.dart';
@@ -23,17 +22,10 @@ class TotalExpenseScreen extends StatefulWidget {
 }
 
 class _TotalExpenseScreenState extends State<TotalExpenseScreen> {
-  final con = Get.put(TotalExpenseController());
 
+  final con = Get.put(TotalExpenseController());
   final conMain = Get.put(MainController());
 
-  bool _isVisible = false;
-
-  void _toggleVisibility() {
-    setState(() {
-      _isVisible = !_isVisible; // Toggle the visibility of the container
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -80,211 +72,244 @@ class _TotalExpenseScreenState extends State<TotalExpenseScreen> {
             ),
           ),
           spacer(context),
-          Row(
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    // Checkbox to toggle the container visibility
-                    Row(
-                      children: [
-                        Checkbox(
-                          value: _isVisible,
-                          onChanged: (bool? value) {
-                            setState(() {
-                              _isVisible = value!; // Update visibility state
-                            });
-                          },
+
+          RowTextField6(
+            spacer: spacer(context),
+            widget1: Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Row(
+                    children: [
+                      Checkbox(
+                        value: con.isVisibleEmp,
+                        onChanged: (bool? value) {
+                          setState(() {
+                            con.isVisibleEmp = value!; // Update visibility state
+                          });
+                        },
+                      ),
+                      Text(
+                        "Staff Expense",
+                        style: TextStyle(
+                          color: con.isVisibleEmp ? bgColor : Colors.black,
+                          // Change color
+                          fontSize: 16,
                         ),
-                        Text(
-                          "Staff Expense",
-                          style: TextStyle(
-                            color: _isVisible ? Colors.red : Colors.black,
-                            // Change color
-                            fontSize: 16,
-                          ),
-                        ),
-                      ],
-                    ),
-                    // Conditionally rendering the container
-                    _isVisible
-                        ? AppDataTable(
-                            column: [
-                              DataTableWidget.column(context, 'Staff Name'),
-                              DataTableWidget.column(context, 'Salary'),
-                              DataTableWidget.column(context, 'Bonus'),
-                              DataTableWidget.column(context, 'KPI Paid'),
-                              DataTableWidget.column(context, 'Micro Name'),
-                              DataTableWidget.column(context, 'Bonus'),
-                              DataTableWidget.column(context, 'Advertising'),
-                              DataTableWidget.column(context, 'Date'),
-                              DataTableWidget.column(context, 'Sales Gift'),
-                              DataTableWidget.column(context, 'Gift Item'),
-                              DataTableWidget.column(context, 'Commission'),
-                              DataTableWidget.column(context, 'Name'),
-                              DataTableWidget.column(context, 'Telephone'),
-                            ],
-                            source: TotalExpenseDataSource(),
-                          )
-                        : Container(), // Empty container when not visible
-                  ],
-                ),
+                      ),
+                    ],
+                  ),
+                ],
               ),
-              Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    // Checkbox to toggle the container visibility
-                    Row(
-                      children: [
-                        Checkbox(
-                          value: _isVisible,
-                          onChanged: (bool? value) {
-                            setState(() {
-                              _isVisible = value!; // Update visibility state
-                            });
-                          },
+            ),
+            widget2: Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Row(
+                    children: [
+                      Checkbox(
+                        value: con.isVisibleTech,
+                        onChanged: (bool? value) {
+                          setState(() {
+                            con.isVisibleTech = value!; // Update visibility state
+                          });
+                        },
+                      ),
+                      Text(
+                        "Micro Expense",
+                        style: TextStyle(
+                          color: con.isVisibleTech ? bgColor : Colors.black,
+                          // Change color
+                          fontSize: 16,
                         ),
-                        Text(
-                          "Staff Expense",
-                          style: TextStyle(
-                            color: _isVisible ? Colors.red : Colors.black,
-                            // Change color
-                            fontSize: 16,
-                          ),
-                        ),
-                      ],
-                    ),
-                    // Conditionally rendering the container
-                    _isVisible
-                        ? AppDataTable(
-                      column: [
-                        DataTableWidget.column(context, 'Staff Name'),
-                        DataTableWidget.column(context, 'Salary'),
-                        DataTableWidget.column(context, 'Bonus'),
-                        DataTableWidget.column(context, 'KPI Paid'),
-                        DataTableWidget.column(context, 'Micro Name'),
-                        DataTableWidget.column(context, 'Bonus'),
-                        DataTableWidget.column(context, 'Advertising'),
-                        DataTableWidget.column(context, 'Date'),
-                        DataTableWidget.column(context, 'Sales Gift'),
-                        DataTableWidget.column(context, 'Gift Item'),
-                        DataTableWidget.column(context, 'Commission'),
-                        DataTableWidget.column(context, 'Name'),
-                        DataTableWidget.column(context, 'Telephone'),
-                      ],
-                      source: TotalExpenseDataSource(),
-                    )
-                        : Container(), // Empty container when not visible
-                  ],
-                ),
+                      ),
+                    ],
+                  ),
+                ],
               ),
-              Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    // Checkbox to toggle the container visibility
-                    Row(
-                      children: [
-                        Checkbox(
-                          value: _isVisible,
-                          onChanged: (bool? value) {
-                            setState(() {
-                              _isVisible = value!; // Update visibility state
-                            });
-                          },
+            ),
+            widget3: Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Row(
+                    children: [
+                      Checkbox(
+                        value: con.isVisibleAds,
+                        onChanged: (bool? value) {
+                          setState(() {
+                            con.isVisibleAds = value!; // Update visibility state
+                          });
+                        },
+                      ),
+                      Text(
+                        "Advertisement",
+                        style: TextStyle(
+                          color: con.isVisibleAds ? bgColor : Colors.black,
+                          // Change color
+                          fontSize: 16,
                         ),
-                        Text(
-                          "Staff Expense",
-                          style: TextStyle(
-                            color: _isVisible ? Colors.red : Colors.black,
-                            // Change color
-                            fontSize: 16,
-                          ),
-                        ),
-                      ],
-                    ),
-                    // Conditionally rendering the container
-                    _isVisible
-                        ? AppDataTable(
-                      column: [
-                        DataTableWidget.column(context, 'Staff Name'),
-                        DataTableWidget.column(context, 'Salary'),
-                        DataTableWidget.column(context, 'Bonus'),
-                        DataTableWidget.column(context, 'KPI Paid'),
-                        DataTableWidget.column(context, 'Micro Name'),
-                        DataTableWidget.column(context, 'Bonus'),
-                        DataTableWidget.column(context, 'Advertising'),
-                        DataTableWidget.column(context, 'Date'),
-                        DataTableWidget.column(context, 'Sales Gift'),
-                        DataTableWidget.column(context, 'Gift Item'),
-                        DataTableWidget.column(context, 'Commission'),
-                        DataTableWidget.column(context, 'Name'),
-                        DataTableWidget.column(context, 'Telephone'),
-                      ],
-                      source: TotalExpenseDataSource(),
-                    )
-                        : Container(), // Empty container when not visible
-                  ],
-                ),
+                      ),
+                    ],
+                  ),
+                ],
               ),
-              Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    // Checkbox to toggle the container visibility
-                    Row(
-                      children: [
-                        Checkbox(
-                          value: _isVisible,
-                          onChanged: (bool? value) {
-                            setState(() {
-                              _isVisible = value!; // Update visibility state
-                            });
-                          },
+            ),
+            widget4: Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Row(
+                    children: [
+                      Checkbox(
+                        value: con.isVisibleKPI,
+                        onChanged: (bool? value) {
+                          setState(() {
+                            con.isVisibleKPI = value!; // Update visibility state
+                          });
+                        },
+                      ),
+                      Text(
+                        "KPI Paid",
+                        style: TextStyle(
+                          color: con.isVisibleKPI ? bgColor : Colors.black,
+                          // Change color
+                          fontSize: 16,
                         ),
-                        Text(
-                          "Staff Expense",
-                          style: TextStyle(
-                            color: _isVisible ? Colors.red : Colors.black,
-                            // Change color
-                            fontSize: 16,
-                          ),
-                        ),
-                      ],
-                    ),
-                    // Conditionally rendering the container
-                    _isVisible
-                        ? AppDataTable(
-                      column: [
-                        DataTableWidget.column(context, 'Staff Name'),
-                        DataTableWidget.column(context, 'Salary'),
-                        DataTableWidget.column(context, 'Bonus'),
-                        DataTableWidget.column(context, 'KPI Paid'),
-                        DataTableWidget.column(context, 'Micro Name'),
-                        DataTableWidget.column(context, 'Bonus'),
-                        DataTableWidget.column(context, 'Advertising'),
-                        DataTableWidget.column(context, 'Date'),
-                        DataTableWidget.column(context, 'Sales Gift'),
-                        DataTableWidget.column(context, 'Gift Item'),
-                        DataTableWidget.column(context, 'Commission'),
-                        DataTableWidget.column(context, 'Name'),
-                        DataTableWidget.column(context, 'Telephone'),
-                      ],
-                      source: TotalExpenseDataSource(),
-                    )
-                        : Container(), // Empty container when not visible
-                  ],
-                ),
+                      ),
+                    ],
+                  ),
+                ],
               ),
-            ],
+            ),
+            widget5: Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Row(
+                    children: [
+                      Checkbox(
+                        value: con.isVisibleGift,
+                        onChanged: (bool? value) {
+                          setState(() {
+                            con.isVisibleGift = value!; // Update visibility state
+                          });
+                        },
+                      ),
+                      Text(
+                        "Gift Expense",
+                        style: TextStyle(
+                          color: con.isVisibleGift ? bgColor : Colors.black,
+                          // Change color
+                          fontSize: 16,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+            widget6: Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Row(
+                    children: [
+                      Checkbox(
+                        value: con.isVisibleCommission,
+                        onChanged: (bool? value) {
+                          setState(() {
+                            con.isVisibleCommission = value!; // Update visibility state
+                          });
+                        },
+                      ),
+                      Text(
+                        "Commission",
+                        style: TextStyle(
+                          color: con.isVisibleCommission ? bgColor : Colors.black,
+                          // Change color
+                          fontSize: 16,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
           ),
-          spacer(context),
+          con.isVisibleEmp
+              ? AppDataTable(
+            column: [
+              DataTableWidget.column(context, 'No'),
+              DataTableWidget.column(context, 'Date'),
+              DataTableWidget.column(context, 'Staff Name'),
+              DataTableWidget.column(context, 'Salary'),
+            ],
+            source: TotalExpenseDataSource(),
+          )
+              : Container(),
+          con.isVisibleTech
+              ? AppDataTable(
+            column: [
+              DataTableWidget.column(context, 'Micro Name'),
+              DataTableWidget.column(context, 'Teacher Name'),
+              DataTableWidget.column(context, 'Bonus'),
+            ],
+            source: TotalExpenseDataSource(),
+          )
+              : Container(),
+          con.isVisibleAds
+              ? AppDataTable(
+            column: [
+              DataTableWidget.column(context, 'No'),
+              DataTableWidget.column(context, 'Date'),
+              DataTableWidget.column(context, 'Amount'),
+              DataTableWidget.column(context, 'Method'),
+            ],
+            source: TotalExpenseDataSource(),
+          )
+              : Container(),
+          con.isVisibleKPI
+              ? AppDataTable(
+            column: [
+              DataTableWidget.column(context, 'No'),
+              DataTableWidget.column(context, 'Date'),
+              DataTableWidget.column(context, 'Amount'),
+              DataTableWidget.column(context, 'Gift Item'),
+            ],
+            source: TotalExpenseDataSource(),
+          )
+              : Container(),
+          con.isVisibleGift
+              ? AppDataTable(
+            column: [
+              DataTableWidget.column(context, 'No'),
+              DataTableWidget.column(context, 'Date'),
+              DataTableWidget.column(context, 'Gift Item'),
+              DataTableWidget.column(context, 'Amount'),
+            ],
+            source: TotalExpenseDataSource(),
+          )
+              : Container(),
+          con.isVisibleCommission
+              ? AppDataTable(
+            column: [
+              DataTableWidget.column(context, 'No'),
+              DataTableWidget.column(context, 'Date'),
+              DataTableWidget.column(context, 'Name'),
+              DataTableWidget.column(context, 'Telephone'),
+              DataTableWidget.column(context, 'Amount'),
+            ],
+            source: TotalExpenseDataSource(),
+          )
+              : Container(),
           spacer(context),
           spacer(context),
           const UnderLine(color: secondGreyColor),
