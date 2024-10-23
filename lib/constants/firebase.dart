@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:motor/models/add_stock_model.dart';
+import 'package:motor/models/booking_model.dart';
 import 'package:motor/models/brand_model.dart';
 import 'package:motor/models/micro_model.dart';
 import 'package:motor/models/product_model.dart';
@@ -18,6 +19,7 @@ final brandCol = _firebase.collection('brand');
 final productCol = _firebase.collection('product');
 final addStockCol = _firebase.collection('add_stock');
 final totalStockCol = _firebase.collection('total_stock');
+final bookingCol = _firebase.collection('booking');
 
 var currVersion = '1.0.0'.obs;
 var byUser = [].obs;
@@ -33,6 +35,7 @@ var addStock = [].obs;
 var stockByModel = [].obs;
 var byTotalStock = [].obs;
 var totalStock = [].obs;
+var booking = [].obs;
 
 Future<void> getByUser(String userlogin) async {
   var res = await userCol.where('user', isEqualTo: userlogin).get();
@@ -403,5 +406,19 @@ Future<void> updateTotalStock({
     });
   } catch (e) {
     debugPrint('Failed to update user password: $e');
+  }
+}
+
+Future<void> getLastBooking() async {
+  var res = await bookingCol.orderBy('id', descending: true).limit(1).get();
+  booking.value =
+      res.docs.map((doc) => BookingModel.fromMap(doc.data())).toList();
+}
+
+Future<void> insertBooking(BookingModel book) async {
+  try {
+    await bookingCol.doc('${book.id}').set(book.toMap());
+  } catch (e) {
+    debugPrint('Failed to add booking: $e');
   }
 }
