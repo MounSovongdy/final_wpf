@@ -104,16 +104,6 @@ class DrawerMenu extends StatelessWidget {
                   title: 'Receivable',
                   svgSrc: 'assets/icons/Receivable.svg',
                 ),
-                DrawerListTile(
-                  tap: () {
-                    if (Responsive.isMobile(context)) con.controlDrawer();
-                    startInactivityTimer();
-
-                    con.index.value = 8;
-                  },
-                  title: 'Print Invoice',
-                  svgSrc: 'assets/icons/Invoice.svg',
-                ),
                 DrawerExpansionTile(
                   title: 'Stock',
                   svgSrc: 'assets/icons/Stock.svg',
@@ -164,10 +154,10 @@ class DrawerMenu extends StatelessWidget {
                           if (Responsive.isMobile(context)) con.controlDrawer();
                           startInactivityTimer();
 
-                          con.index.value = 13;
+                          con.index.value = 25;
                         },
-                        title: 'Financial Report',
-                        svgSrc: 'assets/icons/FinancialReport.svg',
+                        title: 'Expenses',
+                        svgSrc: 'assets/icons/TotalExpenses.svg',
                       ),
                     ),
                     Container(
@@ -177,10 +167,10 @@ class DrawerMenu extends StatelessWidget {
                           if (Responsive.isMobile(context)) con.controlDrawer();
                           startInactivityTimer();
 
-                          con.index.value = 14;
+                          con.index.value = 13;
                         },
-                        title: 'Total Expenses',
-                        svgSrc: 'assets/icons/TotalExpenses.svg',
+                        title: 'Financial Report',
+                        svgSrc: 'assets/icons/FinancialReport.svg',
                       ),
                     ),
                   ],

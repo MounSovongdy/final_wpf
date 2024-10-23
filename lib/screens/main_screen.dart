@@ -15,8 +15,8 @@ import 'package:motor/screens/create_salesman_screen.dart';
 import 'package:motor/screens/create_user_screen.dart';
 import 'package:motor/screens/dashboard_screen.dart';
 import 'package:motor/screens/financial_record_screen.dart';
-import 'package:motor/screens/invoice_screen.dart';
 import 'package:motor/screens/micro_screen.dart';
+import 'package:motor/screens/new_expense_screen.dart';
 import 'package:motor/screens/new_receivable_screen.dart';
 import 'package:motor/screens/product_screen.dart';
 import 'package:motor/screens/receivable_screen.dart';
@@ -81,13 +81,11 @@ class MainScreen extends StatelessWidget {
         case 1:
           return BookingScreen();
         case 2:
-          return NewBookingScreen();
+          return const NewBookingScreen();
         case 6:
           return ReceivableScreen();
         case 7:
           return NewReceivableScreen();
-        case 8:
-          return InvoiceScreen();
         case 9:
           return TotalStockScreen();
         case 10:
@@ -98,8 +96,6 @@ class MainScreen extends StatelessWidget {
           return CreateProductScreen();
         case 13:
           return const FinancialRecordScreen();
-        case 14:
-          return const TotalExpenseScreen();
         case 15:
           return UserScreen();
         case 16:
@@ -120,6 +116,10 @@ class MainScreen extends StatelessWidget {
           return CashScreen();
         case 24:
           return NewCashScreen();
+        case 25:
+          return TotalExpenseScreen();
+        case 26:
+          return const NewExpenseScreen();
         default:
           return DashboardScreen();
       }

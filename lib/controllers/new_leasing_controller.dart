@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+
 class NewLeasingController extends GetxController {
 
   var idCard = TextEditingController().obs;
@@ -32,4 +33,15 @@ class NewLeasingController extends GetxController {
   var phoneIntro = TextEditingController().obs;
   var comeBy = TextEditingController().obs;
   var commission = TextEditingController().obs;
+
+  var totalOwn= TextEditingController().obs;
+  var firstPayDate = TextEditingController().obs;
+  var amountLeft = TextEditingController().obs;
+  var rate = TextEditingController().obs;
+  var term = TextEditingController().obs;
+
+  var type = TextEditingController().obs;
+  var amount = TextEditingController().obs;
+  var date = TextEditingController().obs;
+
 }

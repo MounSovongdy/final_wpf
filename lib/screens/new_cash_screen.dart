@@ -4,6 +4,7 @@ import 'package:motor/constants/constants.dart';
 import 'package:motor/constants/responsive.dart';
 import 'package:motor/controllers/main_controller.dart';
 import 'package:motor/controllers/new_cash_controller.dart';
+import 'package:motor/controllers/open_printer_dailog_controller.dart';
 import 'package:motor/screens/components/app_button.dart';
 import 'package:motor/screens/components/app_dropdown.dart';
 import 'package:motor/screens/components/app_text_field.dart';
@@ -11,6 +12,7 @@ import 'package:motor/screens/components/row_text_field.dart';
 import 'package:motor/screens/components/title_underline.dart';
 import 'package:motor/screens/components/under_line.dart';
 import 'package:motor/screens/widgets/app_text.dart';
+import 'package:pdf/pdf.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 class NewCashScreen extends StatelessWidget {
@@ -18,11 +20,12 @@ class NewCashScreen extends StatelessWidget {
 
   final con = Get.put(NewCashController());
   final conMain = Get.put(MainController());
+  final conPrint = Get.put(OpenPrinterDaiLogController());
 
   final gender = ['Male', 'Female'];
   final salesman = ['Thol', 'Sora', 'Piseth'];
   final brand = ['Honda', 'Suzuki', 'Yamaha'];
-  final model = ['Dream', 'Best', 'Scoopy'];
+  final model = ['Dream', 'Best', 'Sccoopy'];
   final color = ['Red', 'Black', 'Blue'];
   final condition = ['New', 'Used'];
 
@@ -163,6 +166,20 @@ class NewCashScreen extends StatelessWidget {
                   tap: () {
                     startInactivityTimer();
                     conMain.index.value = conMain.index.value - 1;
+                  },
+                ),
+                spacer(context),
+                spacer(context),
+                AppButton(
+                  txt: 'Print Invoice',
+                  width: Responsive.isDesktop(context) ? 150.px : 100.px,
+                  tap: () async {
+                    startInactivityTimer();
+                    final pdfData = await conPrint.generatePdf(
+                      PdfPageFormat.a4,
+                      'Hello World! This is a test print with a custom font.',
+                    );
+                    conPrint.printPdf(pdfData);
                   },
                 ),
                 spacer(context),

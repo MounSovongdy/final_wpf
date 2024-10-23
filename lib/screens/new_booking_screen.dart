@@ -29,9 +29,6 @@ class _NewBookingScreenState extends State<NewBookingScreen> {
 
   bool isChecked = false;
 
-  void toggleCheckbox() {
-
-  }
 
   @override
   Widget build(BuildContext context) {

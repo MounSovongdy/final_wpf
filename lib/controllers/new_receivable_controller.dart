@@ -24,6 +24,11 @@ class NewReceivableController extends GetxController {
   var frame = TextEditingController().obs;
   var plateNo = TextEditingController().obs;
 
+  var sell = TextEditingController().obs;
+  var discount = TextEditingController().obs;
+  var deposit = TextEditingController().obs;
+  var remain = TextEditingController().obs;
+
   var totalOwn= TextEditingController().obs;
   var firstPayDate = TextEditingController().obs;
   var amountLeft = TextEditingController().obs;
