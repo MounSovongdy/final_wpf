@@ -65,11 +65,9 @@ class ReceivableScreen extends StatelessWidget {
               DataTableWidget.column(context, 'Term'),
               DataTableWidget.column(context, 'First Payment'),
               DataTableWidget.column(context, 'Salesman'),
-              DataTableWidget.column(context, 'Status'),
-              DataTableWidget.column(context, 'Action'),
 
-            ], source: BookingDataSource(),
-            //source: BookingDataSource(),
+            ],
+            source: BookingDataSource(),
           ),
           spacer(context),
           spacer(context),
