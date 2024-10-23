@@ -258,6 +258,8 @@ class _TotalExpenseScreenState extends State<TotalExpenseScreen> {
           con.isVisibleTech
               ? AppDataTable(
             column: [
+              DataTableWidget.column(context, 'No'),
+              DataTableWidget.column(context, 'Date'),
               DataTableWidget.column(context, 'Micro Name'),
               DataTableWidget.column(context, 'Teacher Name'),
               DataTableWidget.column(context, 'Bonus'),
