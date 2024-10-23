@@ -25,7 +25,7 @@ class NewBookingController extends GetxController {
   ].obs;
 
   var isFriend = false.obs;
-  var isChecked = false.obs;
+  var isRead = false.obs;
 
   var micro = Rxn<String>();
   var salesman = Rxn<String>();
@@ -52,6 +52,8 @@ class NewBookingController extends GetxController {
   var remark = TextEditingController().obs;
 
   void createBooking(BuildContext context) async {
+    var newRemain = int.tryParse(remain.value.text) ?? -1;
+
     if (micro.value != null &&
         salesman.value != null &&
         gender.value != null &&
@@ -70,7 +72,7 @@ class NewBookingController extends GetxController {
         sell.value.text != '' &&
         discount.value.text != '' &&
         depo.value.text != '' &&
-        remain.value.text != '') {
+        newRemain >= 0) {
       await getLastBooking();
       var id = DateFormat('yyMMddkkmmss').format(DateTime.now());
       int newBookID = int.parse(id);
@@ -143,6 +145,8 @@ class NewBookingController extends GetxController {
   }
 
   void updateBooking(BuildContext context) async {
+    var newRemain = int.tryParse(remain.value.text) ?? -1;
+
     if (micro.value != null &&
         salesman.value != null &&
         gender.value != null &&
@@ -161,9 +165,53 @@ class NewBookingController extends GetxController {
         sell.value.text != '' &&
         discount.value.text != '' &&
         depo.value.text != '' &&
-        remain.value.text != '') {
-      
-    
+        newRemain >= 0) {
+      BookingModel newBook = BookingModel(
+        bookingDate: date.value.text,
+        micro: micro.value ?? '',
+        saleman: salesman.value ?? '',
+        idCard: idCard.value.text,
+        name: name.value.text,
+        gender: gender.value ?? '',
+        age: age.value.text,
+        tel: phoneCus.value.text,
+        address: address.value ?? '',
+        brand: brand.value ?? '',
+        model: model.value ?? '',
+        year: year.value.text,
+        color: color.value ?? '',
+        condition: condition.value ?? '',
+        price: sell.value.text,
+        discount: discount.value.text,
+        deposit: depo.value.text,
+        remain: remain.value.text,
+        comeBy: comeBy.value ?? '',
+        comeByName: nameIntro.value.text,
+        comeByTel: phoneIntro.value.text,
+        remark: remark.value.text,
+        id: byBooking[0].id,
+        statusBooking: byBooking[0].statusBooking,
+        statusDate: byBooking[0].statusDate,
+        statusDone: byBooking[0].statusDone,
+        workingHours: byBooking[0].workingHours,
+      );
+      BookingMicroModel newBookMicro = BookingMicroModel(
+        bookingDate: date.value.text,
+        name: name.value.text,
+        idCard: idCard.value.text,
+        tel: phoneCus.value.text,
+        micro1: micro.value ?? '',
+        id: byBookingMicro[0].id,
+        bookingID: byBookingMicro[0].bookingID,
+        statusBooking1: byBookingMicro[0].statusBooking1,
+        statusDate1: byBookingMicro[0].statusDate1,
+        workingHours1: byBookingMicro[0].workingHours1,
+        micro2: byBookingMicro[0].micro2,
+        statusBooking2: byBookingMicro[0].statusBooking2,
+        statusDate2: byBookingMicro[0].statusDate2,
+        workingHours2: byBookingMicro[0].workingHours2,
+      );
+      await updateByBooking(byBooking[0].id, newBook, newBookMicro);
       clearText();
       LoadingWidget.showTextDialog(
         Get.context!,

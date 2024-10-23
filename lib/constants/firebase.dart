@@ -415,9 +415,13 @@ Future<void> updateTotalStock({
 }
 
 Future<void> getByBookingID(int id) async {
-  var res = await bookingCol.where('id', isEqualTo: id).get();
+  var res1 = await bookingCol.where('id', isEqualTo: id).get();
   byBooking.value =
-      res.docs.map((doc) => BookingModel.fromMap(doc.data())).toList();
+      res1.docs.map((doc) => BookingModel.fromMap(doc.data())).toList();
+
+  var res2 = await bookingMicroCol.where('booking_id', isEqualTo: id).get();
+  byBookingMicro.value =
+      res2.docs.map((doc) => BookingMicroModel.fromMap(doc.data())).toList();
 }
 
 Future<void> getAllBooking() async {
@@ -442,6 +446,33 @@ Future<void> insertBooking(
     await bookingMicroCol.doc('${bookMicro.id}').set(bookMicro.toMap());
   } catch (e) {
     debugPrint('Failed to add booking: $e');
+  }
+}
+
+Future<void> updateByBooking(
+  int id,
+  BookingModel book,
+  BookingMicroModel bookMicro,
+) async {
+  try {
+    var docId1 = '';
+    var result1 = await bookingCol.where('id', isEqualTo: id).get();
+
+    var docId2 = '';
+    var result2 =
+        await bookingMicroCol.where('booking_id', isEqualTo: id).get();
+
+    for (var doc in result1.docs) {
+      docId1 = doc.id;
+    }
+    for (var doc in result2.docs) {
+      docId2 = doc.id;
+    }
+
+    await bookingCol.doc(docId1).update(book.toMap());
+    await bookingMicroCol.doc(docId2).update(bookMicro.toMap());
+  } catch (e) {
+    debugPrint('Failed to updateByBooking: $e');
   }
 }
 

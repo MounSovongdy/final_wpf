@@ -36,6 +36,7 @@ class BookingController extends GetxController {
 
   Future<void> editBooking(int id) async {
     await getByBookingID(id);
+    con.isRead.value = true;
     con.micro.value = byBooking[0].micro;
     con.salesman.value = byBooking[0].saleman;
     con.gender.value = byBooking[0].gender;
@@ -45,5 +46,18 @@ class BookingController extends GetxController {
     con.condition.value = byBooking[0].condition;
     con.comeBy.value = byBooking[0].comeBy;
     con.address.value = byBooking[0].address;
+    con.date.value.text = byBooking[0].bookingDate;
+    con.idCard.value.text = byBooking[0].idCard;
+    con.name.value.text = byBooking[0].name;
+    con.age.value.text = byBooking[0].age;
+    con.phoneCus.value.text = byBooking[0].tel;
+    con.year.value.text = byBooking[0].year;
+    con.sell.value.text = byBooking[0].price;
+    con.discount.value.text = byBooking[0].discount;
+    con.depo.value.text = byBooking[0].deposit;
+    con.remain.value.text = byBooking[0].remain;
+    con.nameIntro.value.text = byBooking[0].comeByName;
+    con.phoneIntro.value.text = byBooking[0].comeByTel;
+    con.remark.value.text = byBooking[0].remark;
   }
 }

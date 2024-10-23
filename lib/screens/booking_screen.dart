@@ -178,6 +178,9 @@ class BookingDataSource extends DataTableSource {
           edit: () async {
             conNewBook.clearText();
             con.title.value = 'Edit Booking';
+            await microName();
+            await saleManName();
+            await brandName();
             await con.editBooking(data.id);
 
             conMain.index.value = 2;
@@ -196,4 +199,28 @@ class BookingDataSource extends DataTableSource {
 
   @override
   int get selectedRowCount => 0;
+
+  Future<void> microName() async {
+    conNewBook.microList.clear();
+    await getAllMicro();
+    for (var data in micro) {
+      conNewBook.microList.add(data.name);
+    }
+  }
+
+  Future<void> saleManName() async {
+    conNewBook.saleManList.clear();
+    await getAllSaleMan();
+    for (var data in saleMan) {
+      conNewBook.saleManList.add(data.name);
+    }
+  }
+
+  Future<void> brandName() async {
+    conNewBook.brandList.clear();
+    await getAllBrand();
+    for (var data in brand) {
+      conNewBook.brandList.add(data.brand);
+    }
+  }
 }

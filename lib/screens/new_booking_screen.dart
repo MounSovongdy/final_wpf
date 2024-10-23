@@ -47,6 +47,7 @@ class NewBookingScreen extends StatelessWidget {
               widget1: AppTextField(
                 txt: 'Date',
                 con: con.date.value,
+                readOnly: con.isRead.value,
               ),
               widget2: AppDropdownSearch(
                 txt: 'Micro',
@@ -222,6 +223,8 @@ class NewBookingScreen extends StatelessWidget {
                       con.isFriend.value = true;
                     } else {
                       con.isFriend.value = false;
+                      con.nameIntro.value.text = '';
+                      con.phoneIntro.value.text = '';
                     }
                   }
                 },
@@ -242,10 +245,6 @@ class NewBookingScreen extends StatelessWidget {
                   digit: 10,
                 ),
               ),
-            ),
-            TitleUnderline(
-              spacer: spacer(context),
-              txt: 'Document Support',
             ),
             spacer(context),
             spacer(context),
@@ -291,7 +290,11 @@ class NewBookingScreen extends StatelessWidget {
                   width: Responsive.isDesktop(context) ? 150.px : 100.px,
                   tap: () {
                     startInactivityTimer();
-                    con.createBooking(context);
+                    if (conBook.title.value == 'New Booking') {
+                      con.createBooking(context);
+                    } else {
+                      con.updateBooking(context);
+                    }
                   },
                 ),
               ],
