@@ -67,14 +67,14 @@ class LoadingWidget {
 
   static void showEditStatusDialog(
     BuildContext context, {
-    required title,
+      required title,
     Color color = redColor,
     Color btnColor = blackColor,
     String txtBack = 'Confirm',
     Widget? widget,
-        onChanged,
+    onChanged,
+    value,
   }) {
-    bool isChecked = false;
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -82,7 +82,7 @@ class LoadingWidget {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(5), // No rounded corners
           ),
-          title: title,
+          title: AppText.header(context, txt: title,),
           actions: [
             TextButton(
               onPressed: () => Navigator.of(context).pop(),
@@ -91,24 +91,32 @@ class LoadingWidget {
             widget ?? Container(), // Optional widget
           ],
           content: SizedBox(
+            height: 100.px,
             child: Column(
               children: [
-                Container(
-                  padding: const EdgeInsets.all(10.0),
-                  decoration: BoxDecoration(
-                    border: Border.all(width: 1, color: bgColor),
-                  ),
-                  height: 40,
-                  child: Row(
-                    children: [
-                      Checkbox(
-                        value: isChecked,
-                        onChanged: onChanged,
-                      ),
-                      const Spacer(),
-                      const Text("Padding"),
-                    ],
-                  ),
+                Row(
+                  children: [
+                    Checkbox(value: value, onChanged: onChanged),
+                    spacer(context),
+                    spacer(context),
+                    AppText.title(context, txt: "Approved"),
+                  ],
+                ),
+                Row(
+                  children: [
+                    Checkbox(value: value, onChanged: onChanged),
+                    spacer(context),
+                    spacer(context),
+                    AppText.title(context, txt: "Rejected"),
+                  ],
+                ),
+                Row(
+                  children: [
+                    Checkbox(value: value, onChanged: onChanged),
+                    spacer(context),
+                    spacer(context),
+                    AppText.title(context, txt: "Cancel"),
+                  ],
                 ),
               ],
             ),

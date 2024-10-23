@@ -12,13 +12,26 @@ import 'package:motor/screens/components/row_text_field.dart';
 import 'package:motor/screens/components/title_underline.dart';
 import 'package:motor/screens/components/under_line.dart';
 import 'package:motor/screens/widgets/app_text.dart';
+import 'package:motor/screens/widgets/loading_widget.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
-class NewBookingScreen extends StatelessWidget {
-  NewBookingScreen({super.key});
+class NewBookingScreen extends StatefulWidget {
+  const NewBookingScreen({super.key});
+
+  @override
+  State<NewBookingScreen> createState() => _NewBookingScreenState();
+}
+
+class _NewBookingScreenState extends State<NewBookingScreen> {
 
   final con = Get.put(NewBookingController());
   final conMain = Get.put(MainController());
+
+  bool isChecked = false;
+
+  void toggleCheckbox() {
+
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -280,7 +293,16 @@ class NewBookingScreen extends StatelessWidget {
                   txt: 'Save',
                   width: Responsive.isDesktop(context) ? 150.px : 100.px,
                   tap: () {
-
+                    LoadingWidget.showEditStatusDialog(
+                      context,
+                      title: "Booking Status",
+                      value: isChecked,
+                      onChanged: (bool? value) {
+                        setState(() {
+                          isChecked = value ?? false;
+                        });
+                      },
+                    );
                   },
                 ),
               ],

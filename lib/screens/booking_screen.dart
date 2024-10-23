@@ -74,6 +74,7 @@ class BookingScreen extends StatelessWidget {
               DataTableWidget.column(context, 'Micro'),
               DataTableWidget.column(context, 'Salesman'),
               DataTableWidget.column(context, 'Status'),
+              DataTableWidget.column(context, 'Duration'),
               DataTableWidget.column(context, 'Action'),
             ],
             source: BookingDataSource(),
