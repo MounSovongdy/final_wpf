@@ -12,23 +12,13 @@ import 'package:motor/screens/components/row_text_field.dart';
 import 'package:motor/screens/components/title_underline.dart';
 import 'package:motor/screens/components/under_line.dart';
 import 'package:motor/screens/widgets/app_text.dart';
-import 'package:motor/screens/widgets/loading_widget.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
-class NewBookingScreen extends StatefulWidget {
-  const NewBookingScreen({super.key});
-
-  @override
-  State<NewBookingScreen> createState() => _NewBookingScreenState();
-}
-
-class _NewBookingScreenState extends State<NewBookingScreen> {
+class NewBookingScreen extends StatelessWidget {
+  NewBookingScreen({super.key});
 
   final con = Get.put(NewBookingController());
   final conMain = Get.put(MainController());
-
-  bool isChecked = false;
-
 
   @override
   Widget build(BuildContext context) {
@@ -251,7 +241,10 @@ class _NewBookingScreenState extends State<NewBookingScreen> {
                 ),
               ),
             ),
-            TitleUnderline(spacer: spacer(context), txt: 'Document Support'),
+            TitleUnderline(
+              spacer: spacer(context),
+              txt: 'Document Support',
+            ),
             spacer(context),
             spacer(context),
             Responsive.isDesktop(context)
@@ -290,16 +283,7 @@ class _NewBookingScreenState extends State<NewBookingScreen> {
                   txt: 'Save',
                   width: Responsive.isDesktop(context) ? 150.px : 100.px,
                   tap: () {
-                    LoadingWidget.showEditStatusDialog(
-                      context,
-                      title: "Booking Status",
-                      value: isChecked,
-                      onChanged: (bool? value) {
-                        setState(() {
-                          isChecked = value ?? false;
-                        });
-                      },
-                    );
+                    startInactivityTimer();
                   },
                 ),
               ],

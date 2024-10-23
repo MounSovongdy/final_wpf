@@ -3,10 +3,10 @@ import 'dart:convert';
 class BrandModel {
   final int id;
   final String brand;
-  
+
   BrandModel({
-    required this.id,
-    required this.brand,
+    this.id = 0,
+    this.brand='',
   });
 
   BrandModel copyWith({
@@ -35,7 +35,8 @@ class BrandModel {
 
   String toJson() => json.encode(toMap());
 
-  factory BrandModel.fromJson(String source) => BrandModel.fromMap(json.decode(source) as Map<String, dynamic>);
+  factory BrandModel.fromJson(String source) =>
+      BrandModel.fromMap(json.decode(source) as Map<String, dynamic>);
 
   @override
   String toString() => 'BrandModel(id: $id, brand: $brand)';
@@ -43,10 +44,8 @@ class BrandModel {
   @override
   bool operator ==(covariant BrandModel other) {
     if (identical(this, other)) return true;
-  
-    return 
-      other.id == id &&
-      other.brand == brand;
+
+    return other.id == id && other.brand == brand;
   }
 
   @override

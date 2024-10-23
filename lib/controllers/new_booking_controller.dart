@@ -19,6 +19,7 @@ class NewBookingController extends GetxController {
   ].obs;
 
   var isFriend = false.obs;
+  var isChecked = false.obs;
 
   var micro = Rxn<String>();
   var salesman = Rxn<String>();

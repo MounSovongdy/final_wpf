@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:motor/models/add_stock_model.dart';
+import 'package:motor/models/booking_micro_model.dart';
 import 'package:motor/models/booking_model.dart';
 import 'package:motor/models/brand_model.dart';
 import 'package:motor/models/micro_model.dart';
@@ -20,6 +21,7 @@ final productCol = _firebase.collection('product');
 final addStockCol = _firebase.collection('add_stock');
 final totalStockCol = _firebase.collection('total_stock');
 final bookingCol = _firebase.collection('booking');
+final bookingMicroCol = _firebase.collection('booking_micro');
 
 var currVersion = '1.0.0'.obs;
 var byUser = [].obs;
@@ -36,6 +38,7 @@ var stockByModel = [].obs;
 var byTotalStock = [].obs;
 var totalStock = [].obs;
 var booking = [].obs;
+var bookingMicro = [].obs;
 
 Future<void> getByUser(String userlogin) async {
   var res = await userCol.where('user', isEqualTo: userlogin).get();
@@ -415,9 +418,13 @@ Future<void> getLastBooking() async {
       res.docs.map((doc) => BookingModel.fromMap(doc.data())).toList();
 }
 
-Future<void> insertBooking(BookingModel book) async {
+Future<void> insertBooking(
+  BookingModel book,
+  BookingMicroModel bookMicro,
+) async {
   try {
     await bookingCol.doc('${book.id}').set(book.toMap());
+    await bookingMicroCol.doc('${bookMicro.id}').set(bookMicro.toMap());
   } catch (e) {
     debugPrint('Failed to add booking: $e');
   }

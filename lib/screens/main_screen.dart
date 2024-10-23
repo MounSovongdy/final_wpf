@@ -81,7 +81,7 @@ class MainScreen extends StatelessWidget {
         case 1:
           return BookingScreen();
         case 2:
-          return const NewBookingScreen();
+          return NewBookingScreen();
         case 6:
           return ReceivableScreen();
         case 7:
@@ -117,7 +117,7 @@ class MainScreen extends StatelessWidget {
         case 24:
           return NewCashScreen();
         case 25:
-          return TotalExpenseScreen();
+          return const TotalExpenseScreen();
         case 26:
           return const NewExpenseScreen();
         default:

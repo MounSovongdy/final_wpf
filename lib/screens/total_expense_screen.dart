@@ -8,7 +8,6 @@ import 'package:motor/screens/components/app_button.dart';
 import 'package:motor/screens/components/app_data_table.dart';
 import 'package:motor/screens/components/app_text_field.dart';
 import 'package:motor/screens/components/row_text_field.dart';
-import 'package:motor/screens/components/title_underline.dart';
 import 'package:motor/screens/components/under_line.dart';
 import 'package:motor/screens/widgets/app_text.dart';
 import 'package:motor/screens/widgets/data_table_widget.dart';
@@ -29,9 +28,9 @@ class _TotalExpenseScreenState extends State<TotalExpenseScreen> {
 
   bool _isVisible = false;
 
-  void _toggleVisibility() {
+  void toggleVisibility() {
     setState(() {
-      _isVisible = !_isVisible; // Toggle the visibility of the container
+      _isVisible = !_isVisible;
     });
   }
 
