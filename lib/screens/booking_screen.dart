@@ -51,33 +51,37 @@ class BookingScreen extends StatelessWidget {
             ),
           ),
           spacer(context),
-          AppDataTable(
-            column: [
-              DataTableWidget.column(context, 'No'),
-              DataTableWidget.column(context, 'Booking Date'),
-              DataTableWidget.column(context, 'ID Card'),
-              DataTableWidget.column(context, 'Customer Name'),
-              DataTableWidget.column(context, 'Gender'),
-              DataTableWidget.column(context, 'Age'),
-              DataTableWidget.column(context, 'Telephone'),
-              DataTableWidget.column(context, 'Address'),
-              DataTableWidget.column(context, 'Brand'),
-              DataTableWidget.column(context, 'Model'),
-              DataTableWidget.column(context, 'Color'),
-              DataTableWidget.column(context, 'Year'),
-              DataTableWidget.column(context, 'Condition'),
-              DataTableWidget.column(context, 'Price'),
-              DataTableWidget.column(context, 'Discount'),
-              DataTableWidget.column(context, 'Deposit'),
-              DataTableWidget.column(context, 'Remain'),
-              DataTableWidget.column(context, 'Method'),
-              DataTableWidget.column(context, 'Micro'),
-              DataTableWidget.column(context, 'Salesman'),
-              DataTableWidget.column(context, 'Status'),
-              DataTableWidget.column(context, 'Duration'),
-              DataTableWidget.column(context, 'Action'),
-            ],
-            source: BookingDataSource(),
+          Obx(
+            () => con.filteredBooking.isNotEmpty
+                ? AppDataTable(
+                    column: [
+                      DataTableWidget.column(context, 'ID'),
+                      DataTableWidget.column(context, 'Saleman'),
+                      DataTableWidget.column(context, 'Date'),
+                      DataTableWidget.column(context, 'ID Card'),
+                      DataTableWidget.column(context, 'Name'),
+                      DataTableWidget.column(context, 'Tel'),
+                      DataTableWidget.column(context, 'Brand'),
+                      DataTableWidget.column(context, 'Model'),
+                      DataTableWidget.column(context, 'Color'),
+                      DataTableWidget.column(context, 'Year'),
+                      DataTableWidget.column(context, 'Condition'),
+                      DataTableWidget.column(context, 'Price'),
+                      DataTableWidget.column(context, 'Remain'),
+                      DataTableWidget.column(context, 'Micro'),
+                      DataTableWidget.column(context, 'Status Booking'),
+                      DataTableWidget.column(context, 'Status Done'),
+                      DataTableWidget.column(context, 'Working Hours'),
+                      DataTableWidget.column(context, 'Action'),
+                    ],
+                    source: BookingDataSource(),
+                  )
+                : Container(
+                    width: MediaQuery.of(context).size.width,
+                    margin: EdgeInsets.only(top: defWebPad.px),
+                    alignment: Alignment.center,
+                    child: AppText.title(context, txt: 'No Data'),
+                  ),
           ),
           spacer(context),
           spacer(context),
@@ -91,6 +95,8 @@ class BookingScreen extends StatelessWidget {
                 width: Responsive.isDesktop(context) ? 150.px : 100.px,
                 tap: () async {
                   conNewBook.clearText();
+                  con.title.value = 'New Booking';
+
                   conNewBook.date.value.text = '$dateNow $timeNow';
                   conNewBook.discount.value.text = '0';
                   await microName();
@@ -135,43 +141,59 @@ class BookingScreen extends StatelessWidget {
 
 class BookingDataSource extends DataTableSource {
   final con = Get.put(BookingController());
-  int selectedCount = 0;
+  final conNewBook = Get.put(NewBookingController());
+  final conMain = Get.put(MainController());
 
   @override
   DataRow? getRow(int index) {
     assert(index >= 0);
-    if (index >= rowCount) return null;
+    if (index >= con.filteredBooking.length) return null;
+
+    var data = con.filteredBooking[index];
 
     return DataRow.byIndex(
       index: index,
       cells: [
-        DataTableWidget.cell(
-          Get.context!,
-          '${con.filteredUsers[index].id}',
-        ),
-        DataTableWidget.cell(
-          Get.context!,
-          con.filteredUsers[index].name,
-        ),
-        DataTableWidget.cell(
-          Get.context!,
-          con.filteredUsers[index].role,
-        ),
+        DataTableWidget.cell(Get.context!, '${data.id}'),
+        DataTableWidget.cell(Get.context!, data.saleman),
+        DataTableWidget.cell(Get.context!, data.bookingDate),
+        DataTableWidget.cell(Get.context!, data.idCard),
+        DataTableWidget.cell(Get.context!, data.name),
+        DataTableWidget.cell(Get.context!, data.tel),
+        DataTableWidget.cell(Get.context!, data.brand),
+        DataTableWidget.cell(Get.context!, data.model),
+        DataTableWidget.cell(Get.context!, data.color),
+        DataTableWidget.cell(Get.context!, data.year),
+        DataTableWidget.cell(Get.context!, data.condition),
+        DataTableWidget.cell(Get.context!, data.price),
+        DataTableWidget.cell(Get.context!, data.remain),
+        DataTableWidget.cell(Get.context!, data.micro),
+        DataTableWidget.cell(Get.context!, data.statusBooking),
+        DataTableWidget.cell(Get.context!, data.statusDone),
+        DataTableWidget.cell(Get.context!, data.workingHours),
         DataTableWidget.cellBtn(
           Get.context!,
-          edit: () => debugPrint('Edit $index'),
-          delete: () => debugPrint('Delete $index'),
+          btnDelete: false,
+          btnUpdate: true,
+          edit: () async {
+            conNewBook.clearText();
+            con.title.value = 'Edit Booking';
+            await con.editBooking(data.id);
+
+            conMain.index.value = 2;
+          },
+          update: () => debugPrint('Update $index'),
         ),
       ],
     );
   }
 
   @override
-  int get rowCount => con.filteredUsers.length;
+  int get rowCount => con.filteredBooking.length;
 
   @override
   bool get isRowCountApproximate => false;
 
   @override
-  int get selectedRowCount => selectedCount;
+  int get selectedRowCount => 0;
 }

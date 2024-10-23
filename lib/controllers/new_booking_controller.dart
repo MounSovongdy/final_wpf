@@ -1,5 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
+import 'package:motor/constants/constants.dart';
+import 'package:motor/constants/firebase.dart';
+import 'package:motor/models/booking_micro_model.dart';
+import 'package:motor/models/booking_model.dart';
+import 'package:motor/screens/widgets/loading_widget.dart';
 
 class NewBookingController extends GetxController {
   var microList = [''].obs;
@@ -44,6 +50,136 @@ class NewBookingController extends GetxController {
   var nameIntro = TextEditingController().obs;
   var phoneIntro = TextEditingController().obs;
   var remark = TextEditingController().obs;
+
+  void createBooking(BuildContext context) async {
+    if (micro.value != null &&
+        salesman.value != null &&
+        gender.value != null &&
+        brand.value != null &&
+        model.value != null &&
+        color.value != null &&
+        condition.value != null &&
+        comeBy.value != null &&
+        address.value != null &&
+        date.value.text != '' &&
+        idCard.value.text != '' &&
+        name.value.text != '' &&
+        age.value.text != '' &&
+        phoneCus.value.text != '' &&
+        year.value.text != '' &&
+        sell.value.text != '' &&
+        discount.value.text != '' &&
+        depo.value.text != '' &&
+        remain.value.text != '') {
+      await getLastBooking();
+      var id = DateFormat('yyMMddkkmmss').format(DateTime.now());
+      int newBookID = int.parse(id);
+
+      var newBookMicroID = 1;
+      if (bookingMicro.isNotEmpty) newBookMicroID = bookingMicro[0].id + 1;
+
+      BookingModel newBook = BookingModel(
+        id: newBookID,
+        bookingDate: date.value.text,
+        micro: micro.value ?? '',
+        saleman: salesman.value ?? '',
+        idCard: idCard.value.text,
+        name: name.value.text,
+        gender: gender.value ?? '',
+        age: age.value.text,
+        tel: phoneCus.value.text,
+        address: address.value ?? '',
+        brand: brand.value ?? '',
+        model: model.value ?? '',
+        year: year.value.text,
+        color: color.value ?? '',
+        condition: condition.value ?? '',
+        price: sell.value.text,
+        discount: discount.value.text,
+        deposit: depo.value.text,
+        remain: remain.value.text,
+        comeBy: comeBy.value ?? '',
+        comeByName: nameIntro.value.text,
+        comeByTel: phoneIntro.value.text,
+        remark: remark.value.text,
+        statusBooking: 'New',
+        statusDate: '',
+        statusDone: '',
+        workingHours: '',
+      );
+      BookingMicroModel newBookMicro = BookingMicroModel(
+        id: newBookMicroID,
+        bookingID: newBookID,
+        bookingDate: date.value.text,
+        name: name.value.text,
+        idCard: idCard.value.text,
+        tel: phoneCus.value.text,
+        micro1: micro.value ?? '',
+        statusBooking1: 'New',
+        statusDate1: '',
+        workingHours1: '',
+        micro2: '',
+        statusBooking2: '',
+        statusDate2: '',
+        workingHours2: '',
+      );
+
+      await insertBooking(newBook, newBookMicro);
+      clearText();
+      LoadingWidget.showTextDialog(
+        Get.context!,
+        title: 'Successfully',
+        content: 'The Booking already created.',
+        color: greenColor,
+      );
+    } else {
+      LoadingWidget.showTextDialog(
+        context,
+        title: 'Error',
+        content: 'Please input all information.',
+        color: redColor,
+      );
+    }
+  }
+
+  void updateBooking(BuildContext context) async {
+    if (micro.value != null &&
+        salesman.value != null &&
+        gender.value != null &&
+        brand.value != null &&
+        model.value != null &&
+        color.value != null &&
+        condition.value != null &&
+        comeBy.value != null &&
+        address.value != null &&
+        date.value.text != '' &&
+        idCard.value.text != '' &&
+        name.value.text != '' &&
+        age.value.text != '' &&
+        phoneCus.value.text != '' &&
+        year.value.text != '' &&
+        sell.value.text != '' &&
+        discount.value.text != '' &&
+        depo.value.text != '' &&
+        remain.value.text != '') {
+      
+    
+      clearText();
+      LoadingWidget.showTextDialog(
+        Get.context!,
+        title: 'Successfully',
+        content: 'The booking already updated.',
+        color: greenColor,
+      );
+    } else {
+      LoadingWidget.showTextDialog(
+        context,
+        title: 'Error',
+        content: 'Please input all information.',
+        color: redColor,
+      );
+    }
+  }
 
   void calculateRemain() {
     if (sell.value.text != '' &&

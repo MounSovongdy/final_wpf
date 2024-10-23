@@ -4,6 +4,7 @@ import 'package:motor/constants/constants.dart';
 import 'package:motor/constants/firebase.dart';
 import 'package:motor/constants/responsive.dart';
 import 'package:motor/controllers/add_stock_controller.dart';
+import 'package:motor/controllers/booking_controller.dart';
 import 'package:motor/controllers/main_controller.dart';
 import 'package:motor/controllers/micro_controller.dart';
 import 'package:motor/controllers/product_controller.dart';
@@ -27,6 +28,7 @@ class DrawerMenu extends StatelessWidget {
   final conMi = Get.put(MicroController());
   final conSM = Get.put(SalesmanController());
   final conPro = Get.put(ProductController());
+  final conBook = Get.put(BookingController());
 
   @override
   Widget build(BuildContext context) {
@@ -53,9 +55,12 @@ class DrawerMenu extends StatelessWidget {
                   svgSrc: 'assets/icons/Dashboard.svg',
                 ),
                 DrawerListTile(
-                  tap: () {
+                  tap: () async {
                     if (Responsive.isMobile(context)) con.controlDrawer();
                     startInactivityTimer();
+                    await getAllBooking();
+                    conBook.filteredBooking.value = booking;
+                    conBook.search.value.addListener(conBook.filterBookingData);
 
                     con.index.value = 1;
                   },

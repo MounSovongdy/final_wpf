@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:motor/constants/constants.dart';
 import 'package:motor/constants/firebase.dart';
 import 'package:motor/constants/responsive.dart';
+import 'package:motor/controllers/booking_controller.dart';
 import 'package:motor/controllers/main_controller.dart';
 import 'package:motor/controllers/new_booking_controller.dart';
 import 'package:motor/screens/components/app_button.dart';
@@ -18,6 +19,7 @@ class NewBookingScreen extends StatelessWidget {
   NewBookingScreen({super.key});
 
   final con = Get.put(NewBookingController());
+  final conBook = Get.put(BookingController());
   final conMain = Get.put(MainController());
 
   @override
@@ -34,7 +36,7 @@ class NewBookingScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            AppText.header(context, txt: 'New Booking'),
+            AppText.header(context, txt: conBook.title.value),
             spacer(context),
             TitleUnderline(
               spacer: spacer(context),
@@ -272,8 +274,13 @@ class NewBookingScreen extends StatelessWidget {
                   txt: 'Back',
                   width: Responsive.isDesktop(context) ? 150.px : 100.px,
                   color: secondGreyColor,
-                  tap: () {
+                  tap: () async {
                     startInactivityTimer();
+                    con.clearText();
+                    await getAllBooking();
+                    conBook.filteredBooking.value = booking;
+                    conBook.search.value.addListener(conBook.filterBookingData);
+
                     conMain.index.value = conMain.index.value - 1;
                   },
                 ),
@@ -284,6 +291,7 @@ class NewBookingScreen extends StatelessWidget {
                   width: Responsive.isDesktop(context) ? 150.px : 100.px,
                   tap: () {
                     startInactivityTimer();
+                    con.createBooking(context);
                   },
                 ),
               ],

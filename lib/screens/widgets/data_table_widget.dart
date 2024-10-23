@@ -31,8 +31,10 @@ class DataTableWidget {
     BuildContext context, {
     bool btnEdit = true,
     bool btnDelete = true,
+    bool btnUpdate = false,
     Function()? edit,
     Function()? delete,
+    Function()? update,
   }) {
     return DataCell(
       Row(
@@ -54,22 +56,48 @@ class DataTableWidget {
                   ),
                 )
               : Container(),
-          spacer(context),
           btnDelete
-              ? InkWell(
-                  onTap: delete,
-                  child: Container(
-                    padding: EdgeInsets.symmetric(
-                      horizontal: defWebPad.px / 2,
-                      vertical: defWebPad.px / 6,
-                    ),
-                    color: redColor,
-                    child: AppText.subTitle(
-                      context,
-                      txt: 'Delete',
-                      color: whiteColor,
-                    ),
-                  ),
+              ? Row(
+                  children: [
+                    spacer(context),
+                    InkWell(
+                      onTap: delete,
+                      child: Container(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: defWebPad.px / 2,
+                          vertical: defWebPad.px / 6,
+                        ),
+                        color: redColor,
+                        child: AppText.subTitle(
+                          context,
+                          txt: 'Delete',
+                          color: whiteColor,
+                        ),
+                      ),
+                    )
+                  ],
+                )
+              : Container(),
+          btnUpdate
+              ? Row(
+                  children: [
+                    spacer(context),
+                    InkWell(
+                      onTap: update,
+                      child: Container(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: defWebPad.px / 2,
+                          vertical: defWebPad.px / 6,
+                        ),
+                        color: updateColor,
+                        child: AppText.subTitle(
+                          context,
+                          txt: 'Update',
+                          color: whiteColor,
+                        ),
+                      ),
+                    )
+                  ],
                 )
               : Container(),
         ],

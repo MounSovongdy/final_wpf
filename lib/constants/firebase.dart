@@ -37,7 +37,9 @@ var addStock = [].obs;
 var stockByModel = [].obs;
 var byTotalStock = [].obs;
 var totalStock = [].obs;
+var byBooking = [].obs;
 var booking = [].obs;
+var byBookingMicro = [].obs;
 var bookingMicro = [].obs;
 
 Future<void> getByUser(String userlogin) async {
@@ -412,10 +414,23 @@ Future<void> updateTotalStock({
   }
 }
 
-Future<void> getLastBooking() async {
-  var res = await bookingCol.orderBy('id', descending: true).limit(1).get();
+Future<void> getByBookingID(int id) async {
+  var res = await bookingCol.where('id', isEqualTo: id).get();
+  byBooking.value =
+      res.docs.map((doc) => BookingModel.fromMap(doc.data())).toList();
+}
+
+Future<void> getAllBooking() async {
+  var res = await bookingCol.orderBy('id', descending: true).get();
   booking.value =
       res.docs.map((doc) => BookingModel.fromMap(doc.data())).toList();
+}
+
+Future<void> getLastBooking() async {
+  var res =
+      await bookingMicroCol.orderBy('id', descending: true).limit(1).get();
+  bookingMicro.value =
+      res.docs.map((doc) => BookingMicroModel.fromMap(doc.data())).toList();
 }
 
 Future<void> insertBooking(
@@ -427,5 +442,41 @@ Future<void> insertBooking(
     await bookingMicroCol.doc('${bookMicro.id}').set(bookMicro.toMap());
   } catch (e) {
     debugPrint('Failed to add booking: $e');
+  }
+}
+
+Future<void> insertSaleRecord({
+  required String model,
+  required String brand,
+  required String year,
+  required String condition,
+  required String qty,
+}) async {
+  try {
+    var docId = '';
+    var res = await totalStockCol
+        .where('model', isEqualTo: model)
+        .where('brand', isEqualTo: brand)
+        .where('year', isEqualTo: year)
+        .where('condition', isEqualTo: condition)
+        .get();
+    stockByModel.value =
+        res.docs.map((doc) => TotalStockModel.fromMap(doc.data())).toList();
+
+    var oldQty = int.tryParse(stockByModel[0].totalQty) ?? 0;
+
+    if (oldQty > 0) {
+      int newQty = oldQty - int.tryParse(qty)!;
+
+      for (var doc in res.docs) {
+        docId = doc.id;
+      }
+
+      await totalStockCol.doc(docId).update({
+        'total_qty': '$newQty',
+      });
+    }
+  } catch (e) {
+    debugPrint('Failed to add SaleRecord: $e');
   }
 }

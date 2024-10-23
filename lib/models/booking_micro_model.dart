@@ -2,7 +2,7 @@ import 'dart:convert';
 
 class BookingMicroModel {
   final int id;
-  final String bookingID;
+  final int bookingID;
   final String bookingDate;
   final String name;
   final String idCard;
@@ -18,7 +18,7 @@ class BookingMicroModel {
 
   BookingMicroModel({
     this.id = 0,
-    this.bookingID = '',
+    this.bookingID = 0,
     this.bookingDate = '',
     this.name = '',
     this.idCard = '',
@@ -35,7 +35,7 @@ class BookingMicroModel {
 
   BookingMicroModel copyWith({
     int? id,
-    String? bookingID,
+    int? bookingID,
     String? bookingDate,
     String? name,
     String? idCard,
@@ -89,7 +89,7 @@ class BookingMicroModel {
   factory BookingMicroModel.fromMap(Map<String, dynamic> map) {
     return BookingMicroModel(
       id: map['id'] as int,
-      bookingID: map['booking_id'] as String,
+      bookingID: map['booking_id'] as int,
       bookingDate: map['booking_date'] as String,
       name: map['name'] as String,
       idCard: map['id_card'] as String,
