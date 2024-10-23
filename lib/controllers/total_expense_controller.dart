@@ -20,4 +20,11 @@ class TotalExpenseController extends GetxController{
   var expense = TextEditingController().obs;
   var days = TextEditingController().obs;
   var amount = TextEditingController().obs;
+
+  bool isVisibleEmp = false;
+  bool isVisibleTech = false;
+  bool isVisibleAds = false;
+  bool isVisibleKPI = false;
+  bool isVisibleGift = false;
+  bool isVisibleCommission = false;
 }
