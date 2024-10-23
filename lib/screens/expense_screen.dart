@@ -79,7 +79,6 @@ class _TotalExpenseScreenState extends State<TotalExpenseScreen> {
             ),
           ),
           spacer(context),
-
           RowTextField6(
             spacer: spacer(context),
             widget1: Padding(
@@ -258,6 +257,7 @@ class _TotalExpenseScreenState extends State<TotalExpenseScreen> {
               DataTableWidget.column(context, 'Date'),
               DataTableWidget.column(context, 'Staff Name'),
               DataTableWidget.column(context, 'Salary'),
+              DataTableWidget.column(context, 'Remark'),
             ],
             source: TotalExpenseDataSource(),
           )
@@ -268,8 +268,8 @@ class _TotalExpenseScreenState extends State<TotalExpenseScreen> {
               DataTableWidget.column(context, 'No'),
               DataTableWidget.column(context, 'Date'),
               DataTableWidget.column(context, 'Micro Name'),
-              DataTableWidget.column(context, 'Teacher Name'),
               DataTableWidget.column(context, 'Bonus'),
+              DataTableWidget.column(context, 'Remark'),
             ],
             source: TotalExpenseDataSource(),
           )
@@ -279,8 +279,9 @@ class _TotalExpenseScreenState extends State<TotalExpenseScreen> {
             column: [
               DataTableWidget.column(context, 'No'),
               DataTableWidget.column(context, 'Date'),
-              DataTableWidget.column(context, 'Amount'),
               DataTableWidget.column(context, 'Method'),
+              DataTableWidget.column(context, 'Amount'),
+              DataTableWidget.column(context, 'Remark'),
             ],
             source: TotalExpenseDataSource(),
           )
@@ -290,8 +291,9 @@ class _TotalExpenseScreenState extends State<TotalExpenseScreen> {
             column: [
               DataTableWidget.column(context, 'No'),
               DataTableWidget.column(context, 'Date'),
+              DataTableWidget.column(context, 'Staff Name'),
               DataTableWidget.column(context, 'Amount'),
-              DataTableWidget.column(context, 'Gift Item'),
+              DataTableWidget.column(context, 'Remark'),
             ],
             source: TotalExpenseDataSource(),
           )
@@ -313,8 +315,8 @@ class _TotalExpenseScreenState extends State<TotalExpenseScreen> {
               DataTableWidget.column(context, 'No'),
               DataTableWidget.column(context, 'Date'),
               DataTableWidget.column(context, 'Name'),
-              DataTableWidget.column(context, 'Telephone'),
               DataTableWidget.column(context, 'Amount'),
+              DataTableWidget.column(context, 'Remark'),
             ],
             source: TotalExpenseDataSource(),
           )

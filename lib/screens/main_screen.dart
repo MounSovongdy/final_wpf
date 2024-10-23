@@ -22,7 +22,7 @@ import 'package:motor/screens/product_screen.dart';
 import 'package:motor/screens/receivable_screen.dart';
 import 'package:motor/screens/new_leasing_screen.dart';
 import 'package:motor/screens/salesman_screen.dart';
-import 'package:motor/screens/total_expense_screen.dart';
+import 'package:motor/screens/expense_screen.dart';
 import 'package:motor/screens/total_stock_screen.dart';
 import 'package:motor/screens/user_screen.dart';
 import 'package:motor/screens/widgets/custom_app_bar.dart';
@@ -119,7 +119,7 @@ class MainScreen extends StatelessWidget {
         case 25:
           return const TotalExpenseScreen();
         case 26:
-          return const NewExpenseScreen();
+          return NewExpenseScreen();
         default:
           return DashboardScreen();
       }
