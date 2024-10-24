@@ -51,6 +51,7 @@ class NewLeasingScreen extends StatelessWidget {
                 list: con.bookingIdList,
                 onChanged: (v) {
                   if (v != null) {
+                    con.clearText();
                     con.bookingId.value = v;
                     con.getDataByBookingIDAndIdCard();
                   }
@@ -62,6 +63,7 @@ class NewLeasingScreen extends StatelessWidget {
                 list: con.idCardList,
                 onChanged: (v) {
                   if (v != null) {
+                    con.clearText();
                     con.idCard.value = v;
                     con.getDataByBookingIDAndIdCard();
                   }
@@ -76,16 +78,24 @@ class NewLeasingScreen extends StatelessWidget {
             RowTextField(
               spacer: spacer(context),
               widget1: AppTextField(
+                txt: 'Gender',
+                con: con.gender.value,
+                readOnly: true,
+              ),
+              widget2: AppTextField(
                 txt: 'Age',
                 con: con.age.value,
                 readOnly: true,
               ),
-              widget2: AppTextField(
+              widget3: AppTextField(
                 txt: 'Tel',
                 con: con.phoneCus.value,
                 readOnly: true,
               ),
-              widget3: AppTextField(
+            ),
+            RowTextField(
+              spacer: spacer(context),
+              widget1: AppTextField(
                 txt: 'Address',
                 con: con.address.value,
                 readOnly: true,
@@ -146,26 +156,16 @@ class NewLeasingScreen extends StatelessWidget {
                   }
                 },
               ),
-              widget3: AppDropdownSearch(
-                txt: 'Color',
-                value: con.color,
-                list: con.colorList,
-                onChanged: (v) {
-                  if (v != null) {
-                    con.color.value = v;
-                  }
-                },
-              ),
-            ),
-            RowTextField(
-              spacer: spacer(context),
-              widget1: AppTextField(
+              widget3: AppTextField(
                 txt: 'Year',
                 con: con.year.value,
                 isNumber: true,
                 digit: 4,
               ),
-              widget2: AppDropdownSearch(
+            ),
+            RowTextField(
+              spacer: spacer(context),
+              widget1: AppDropdownSearch(
                 txt: 'Color',
                 value: con.color,
                 list: con.colorList,
@@ -173,18 +173,32 @@ class NewLeasingScreen extends StatelessWidget {
                   if (v != null) con.color.value = v;
                 },
               ),
-              widget3: AppTextField(
-                txt: 'Engine No',
-                con: con.engine.value,
+              widget2: AppTextField(
+                txt: 'Power',
+                con: con.power.value,
+                isNumber: true,
+                digit: 3,
+              ),
+              widget3: AppDropdownSearch(
+                txt: 'Condition',
+                value: con.condition,
+                list: con.conditionList,
+                onChanged: (v) {
+                  if (v != null) con.condition.value = v;
+                },
               ),
             ),
             RowTextField(
               spacer: spacer(context),
               widget1: AppTextField(
+                txt: 'Engine No',
+                con: con.engine.value,
+              ),
+              widget2: AppTextField(
                 txt: 'Frame No',
                 con: con.frame.value,
               ),
-              widget2: AppDropdownSearch(
+              widget3: AppDropdownSearch(
                 txt: 'Type',
                 value: con.type,
                 list: con.typeList,
@@ -199,14 +213,16 @@ class NewLeasingScreen extends StatelessWidget {
                   }
                 },
               ),
-              widget3: Obx(
-                () => AppTextField(
-                  txt: 'Plate No',
-                  con: con.plateNo.value,
-                  readOnly: con.isTax.value,
-                ),
-              ),
             ),
+            RowTextField(
+                spacer: spacer(context),
+                widget1: Obx(
+                  () => AppTextField(
+                    txt: 'Plate No',
+                    con: con.plateNo.value,
+                    readOnly: con.isTax.value,
+                  ),
+                )),
             TitleUnderline(
               spacer: spacer(context),
               txt: 'Financial Information',
@@ -218,21 +234,30 @@ class NewLeasingScreen extends StatelessWidget {
                 con: con.sell.value,
                 isNumber: true,
                 digit: 5,
-                onChanged: (v) => con.calculateRemain(),
+                onChanged: (v) {
+                  con.calculateRemain();
+                  con.calculateTotalDebt();
+                },
               ),
               widget2: AppTextField(
                 txt: 'Discount',
                 con: con.discount.value,
                 isNumber: true,
                 digit: 5,
-                onChanged: (v) => con.calculateRemain(),
+                onChanged: (v) {
+                  con.calculateRemain();
+                  con.calculateTotalDebt();
+                },
               ),
               widget3: AppTextField(
                 txt: 'Deposit',
                 con: con.deposit.value,
                 isNumber: true,
                 digit: 5,
-                onChanged: (v) => con.calculateRemain(),
+                onChanged: (v) {
+                  con.calculateRemain();
+                  con.calculateTotalDebt();
+                },
               ),
             ),
             RowTextField(
@@ -241,14 +266,20 @@ class NewLeasingScreen extends StatelessWidget {
                 txt: 'Remain',
                 con: con.remain.value,
                 readOnly: true,
-                onChanged: (v) => con.calculateTotalDebt(),
+                onChanged: (v) {
+                  con.calculateRemain();
+                  con.calculateTotalDebt();
+                },
               ),
               widget2: AppTextField(
                 txt: 'Approved',
                 con: con.approve.value,
                 isNumber: true,
                 digit: 5,
-                onChanged: (v) => con.calculateTotalDebt(),
+                onChanged: (v) {
+                  con.calculateRemain();
+                  con.calculateTotalDebt();
+                },
               ),
               widget3: AppTextField(
                 txt: 'Total Debt',
@@ -262,20 +293,36 @@ class NewLeasingScreen extends StatelessWidget {
             ),
             RowTextField(
               spacer: spacer(context),
-              widget1: AppTextField(
+              widget1: AppDropdownSearch(
                 txt: 'Come By',
-                con: con.comeBy.value,
-                readOnly: true,
+                value: con.comeBy,
+                list: con.comeByList,
+                onChanged: (v) {
+                  if (v != null) {
+                    con.comeBy.value = v;
+                    if (con.comeBy.value == 'Friend') {
+                      con.isFriend.value = true;
+                    } else {
+                      con.isFriend.value = false;
+                      con.nameIntro.value.text = '';
+                      con.phoneIntro.value.text = '';
+                    }
+                  }
+                },
               ),
-              widget2: AppTextField(
-                txt: 'Name',
-                con: con.nameIntro.value,
-                readOnly: true,
+              widget2: Obx(
+                () => AppTextField(
+                  txt: 'Name',
+                  con: con.nameIntro.value,
+                  readOnly: !con.isFriend.value,
+                ),
               ),
-              widget3: AppTextField(
-                txt: 'Tel',
-                con: con.phoneIntro.value,
-                readOnly: true,
+              widget3: Obx(
+                () => AppTextField(
+                  txt: 'Tel',
+                  con: con.phoneIntro.value,
+                  readOnly: !con.isFriend.value,
+                ),
               ),
             ),
             RowTextField(
@@ -298,6 +345,7 @@ class NewLeasingScreen extends StatelessWidget {
                   color: secondGreyColor,
                   tap: () {
                     startInactivityTimer();
+                    con.clearText();
                     conMain.index.value = conMain.index.value - 1;
                   },
                 ),

@@ -92,6 +92,7 @@ class LeasingScreen extends StatelessWidget {
                 width: Responsive.isDesktop(context) ? 150.px : 100.px,
                 tap: () async {
                   startInactivityTimer();
+                  conNL.clearText();
                   await con.getBookingIDandIDCard();
                   await brandName();
 

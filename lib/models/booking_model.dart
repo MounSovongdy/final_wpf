@@ -15,6 +15,7 @@ class BookingModel {
   final String model;
   final String year;
   final String color;
+  final String power;
   final String condition;
   final String price;
   final String discount;
@@ -44,6 +45,7 @@ class BookingModel {
     this.model = '',
     this.year = '',
     this.color = '',
+    this.power = '',
     this.condition = '',
     this.price = '',
     this.discount = '',
@@ -74,6 +76,7 @@ class BookingModel {
     String? model,
     String? year,
     String? color,
+    String? power,
     String? condition,
     String? price,
     String? discount,
@@ -103,6 +106,7 @@ class BookingModel {
       model: model ?? this.model,
       year: year ?? this.year,
       color: color ?? this.color,
+      power: power ?? this.power,
       condition: condition ?? this.condition,
       price: price ?? this.price,
       discount: discount ?? this.discount,
@@ -135,6 +139,7 @@ class BookingModel {
       'model': model,
       'year': year,
       'color': color,
+      'power': power,
       'condition': condition,
       'price': price,
       'discount': discount,
@@ -167,6 +172,7 @@ class BookingModel {
       model: map['model'] as String,
       year: map['year'] as String,
       color: map['color'] as String,
+      power: map['power'] as String,
       condition: map['condition'] as String,
       price: map['price'] as String,
       discount: map['discount'] as String,
@@ -190,7 +196,7 @@ class BookingModel {
 
   @override
   String toString() {
-    return 'BookingModel(id: $id, booking_date: $bookingDate, micro: $micro, saleman: $saleman, id_card: $idCard, name: $name, gender: $gender, age: $age, tel: $tel, address: $address, brand: $brand, model: $model, year: $year, color: $color, condition: $condition, price: $price, discount: $discount, deposit: $deposit, remain: $remain, come_by: $comeBy, come_by_name: $comeByName, come_by_tel: $comeByTel, remark: $remark, status_booking: $statusBooking, status_done: $statusDone, status_date: $statusDate, working_hours: $workingHours)';
+    return 'BookingModel(id: $id, booking_date: $bookingDate, micro: $micro, saleman: $saleman, id_card: $idCard, name: $name, gender: $gender, age: $age, tel: $tel, address: $address, brand: $brand, model: $model, year: $year, color: $color, power: $power, condition: $condition, price: $price, discount: $discount, deposit: $deposit, remain: $remain, come_by: $comeBy, come_by_name: $comeByName, come_by_tel: $comeByTel, remark: $remark, status_booking: $statusBooking, status_done: $statusDone, status_date: $statusDate, working_hours: $workingHours)';
   }
 
   @override
@@ -210,6 +216,7 @@ class BookingModel {
         other.brand == brand &&
         other.model == model &&
         other.year == year &&
+        other.power == power &&
         other.color == color &&
         other.condition == condition &&
         other.price == price &&
@@ -242,6 +249,7 @@ class BookingModel {
         model.hashCode ^
         year.hashCode ^
         color.hashCode ^
+        power.hashCode ^
         condition.hashCode ^
         price.hashCode ^
         discount.hashCode ^

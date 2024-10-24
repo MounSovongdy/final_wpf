@@ -9,8 +9,16 @@ class NewLeasingController extends GetxController {
   var modelList = [''].obs;
   var colorList = ['Red', 'Black', 'Blue', 'White', 'Grey'].obs;
   var conditionList = ['New', 'Used'].obs;
-  var typeList = ['Tax Papper', 'Plate Number'].obs;
+  var typeList = ['Tax Paper', 'Plate Number'].obs;
+  var comeByList = [
+    'Walk In',
+    'Friend',
+    'Facebook',
+    'Tik Tok',
+    'Instagram',
+  ].obs;
 
+  var isFriend = false.obs;
   var isTax = true.obs;
 
   var bookingId = Rxn<String>();
@@ -29,6 +37,7 @@ class NewLeasingController extends GetxController {
   var brand = Rxn<String>();
   var model = Rxn<String>();
   var color = Rxn<String>();
+  var power = TextEditingController().obs;
   var year = TextEditingController().obs;
   var condition = Rxn<String>();
   var engine = TextEditingController().obs;
@@ -43,9 +52,9 @@ class NewLeasingController extends GetxController {
   var approve = TextEditingController().obs;
   var totalOwn = TextEditingController().obs;
 
+  var comeBy = Rxn<String>();
   var nameIntro = TextEditingController().obs;
   var phoneIntro = TextEditingController().obs;
-  var comeBy = TextEditingController().obs;
   var commission = TextEditingController().obs;
 
   void getDataByBookingIDAndIdCard() {
@@ -64,6 +73,7 @@ class NewLeasingController extends GetxController {
       if (int.tryParse(bookId) == data.id) {
         idCard.value = data.idCard;
         name.value.text = data.name;
+        gender.value.text = data.gender;
         age.value.text = data.age;
         phoneCus.value.text = data.tel;
         address.value.text = data.address;
@@ -74,11 +84,15 @@ class NewLeasingController extends GetxController {
         model.value = data.model;
         color.value = data.color;
         year.value.text = data.year;
+        power.value.text = data.power;
         condition.value = data.condition;
         sell.value.text = data.price;
         discount.value.text = data.discount;
         deposit.value.text = data.deposit;
         remain.value.text = data.remain;
+        comeBy.value = data.comeBy;
+        nameIntro.value.text = data.comeByName;
+        phoneIntro.value.text = data.comeByTel;
       }
     }
   }
@@ -106,5 +120,38 @@ class NewLeasingController extends GetxController {
     } else {
       totalOwn.value.text = '';
     }
+  }
+
+  void clearText() {
+    bookingId.value = null;
+    idCard.value = null;
+    name.value.text = '';
+    gender.value.text = '';
+    age.value.text = '';
+    phoneCus.value.text = '';
+    address.value.text = '';
+    dateBooking.value.text = '';
+    micro.value.text = '';
+    salesman.value.text = '';
+    brand.value = null;
+    model.value = null;
+    color.value = null;
+    year.value.text = '';
+    power.value.text = '';
+    condition.value = null;
+    engine.value.text = '';
+    frame.value.text = '';
+    type.value = null;
+    plateNo.value.text = '';
+    sell.value.text = '';
+    discount.value.text = '';
+    deposit.value.text = '';
+    remain.value.text = '';
+    approve.value.text = '';
+    totalOwn.value.text = '';
+    comeBy.value = null;
+    nameIntro.value.text = '';
+    phoneIntro.value.text = '';
+    commission.value.text = '';
   }
 }

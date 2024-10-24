@@ -161,7 +161,13 @@ class NewBookingScreen extends StatelessWidget {
                   if (v != null) con.color.value = v;
                 },
               ),
-              widget2: AppDropdownSearch(
+              widget2: AppTextField(
+                txt: 'Power',
+                con: con.power.value,
+                isNumber: true,
+                digit: 3,
+              ),
+              widget3: AppDropdownSearch(
                 txt: 'Condition',
                 value: con.condition,
                 list: con.conditionList,

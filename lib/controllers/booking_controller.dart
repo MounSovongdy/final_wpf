@@ -23,6 +23,7 @@ class BookingController extends GetxController {
           data.brand.toLowerCase().contains(query) ||
           data.model.toLowerCase().contains(query) ||
           data.color.toLowerCase().contains(query) ||
+          data.power.toLowerCase().contains(query) ||
           data.year.toLowerCase().contains(query) ||
           data.condition.toLowerCase().contains(query) ||
           data.price.toLowerCase().contains(query) ||
@@ -52,6 +53,7 @@ class BookingController extends GetxController {
     con.age.value.text = byBooking[0].age;
     con.phoneCus.value.text = byBooking[0].tel;
     con.year.value.text = byBooking[0].year;
+    con.power.value.text = byBooking[0].power;
     con.sell.value.text = byBooking[0].price;
     con.discount.value.text = byBooking[0].discount;
     con.depo.value.text = byBooking[0].deposit;

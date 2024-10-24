@@ -43,6 +43,7 @@ class NewBookingController extends GetxController {
   var age = TextEditingController().obs;
   var phoneCus = TextEditingController().obs;
   var year = TextEditingController().obs;
+  var power = TextEditingController().obs;
   var sell = TextEditingController().obs;
   var discount = TextEditingController().obs;
   var depo = TextEditingController().obs;
@@ -60,6 +61,7 @@ class NewBookingController extends GetxController {
         brand.value != null &&
         model.value != null &&
         color.value != null &&
+        power.value.text != '' &&
         condition.value != null &&
         comeBy.value != null &&
         address.value != null &&
@@ -95,6 +97,7 @@ class NewBookingController extends GetxController {
         model: model.value ?? '',
         year: year.value.text,
         color: color.value ?? '',
+        power: power.value.text,
         condition: condition.value ?? '',
         price: sell.value.text,
         discount: discount.value.text,
@@ -180,6 +183,7 @@ class NewBookingController extends GetxController {
         model: model.value ?? '',
         year: year.value.text,
         color: color.value ?? '',
+        power: power.value.text,
         condition: condition.value ?? '',
         price: sell.value.text,
         discount: discount.value.text,
@@ -259,6 +263,7 @@ class NewBookingController extends GetxController {
     age.value.clear();
     phoneCus.value.clear();
     year.value.clear();
+    power.value.clear();
     sell.value.clear();
     discount.value.clear();
     depo.value.clear();
