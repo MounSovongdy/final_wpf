@@ -308,10 +308,7 @@ class NewLeasingScreen extends StatelessWidget {
                   width: Responsive.isDesktop(context) ? 150.px : 100.px,
                   tap: () async {
                     startInactivityTimer();
-                    final pdfData = await conPrint.generatePdf(
-                      PdfPageFormat.a4,
-                      'Hello World! This is a test print with a custom font.',
-                    );
+                    final pdfData = await conPrint.generatePdf();
                     conPrint.printPdf(pdfData);
                   },
                 ),

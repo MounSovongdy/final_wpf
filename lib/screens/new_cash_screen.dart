@@ -176,8 +176,7 @@ class NewCashScreen extends StatelessWidget {
                   tap: () async {
                     startInactivityTimer();
                     final pdfData = await conPrint.generatePdf(
-                      PdfPageFormat.a4,
-                      'Hello World! This is a test print with a custom font.',
+
                     );
                     conPrint.printPdf(pdfData);
                   },

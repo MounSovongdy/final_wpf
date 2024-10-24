@@ -32,7 +32,6 @@ class LoadingWidget {
         );
       },
     );
-
     Future.delayed(Duration(seconds: duration), () {
       Get.back();
     });
