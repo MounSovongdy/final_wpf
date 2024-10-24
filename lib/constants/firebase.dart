@@ -476,6 +476,13 @@ Future<void> updateByBooking(
   }
 }
 
+Future<void> getBookingApprove() async {
+  var res =
+      await bookingCol.where('status_booking', isEqualTo: 'Approve').get();
+  booking.value =
+      res.docs.map((doc) => BookingModel.fromMap(doc.data())).toList();
+}
+
 Future<void> insertSaleRecord({
   required String model,
   required String brand,

@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:motor/constants/constants.dart';
+import 'package:motor/constants/firebase.dart';
 import 'package:motor/constants/responsive.dart';
 import 'package:motor/controllers/leasing_controller.dart';
 import 'package:motor/controllers/main_controller.dart';
+import 'package:motor/controllers/new_leasing_controller.dart';
 import 'package:motor/screens/components/app_button.dart';
 import 'package:motor/screens/components/app_data_table.dart';
 import 'package:motor/screens/components/under_line.dart';
@@ -16,8 +18,8 @@ class LeasingScreen extends StatelessWidget {
   LeasingScreen({super.key});
 
   final con = Get.put(LeasingController());
+  final conNL = Get.put(NewLeasingController());
   final conMain = Get.put(MainController());
-  final scroll = ScrollController();
 
   @override
   Widget build(BuildContext context) {
@@ -88,8 +90,11 @@ class LeasingScreen extends StatelessWidget {
               AppButton(
                 txt: 'New',
                 width: Responsive.isDesktop(context) ? 150.px : 100.px,
-                tap: () {
+                tap: () async {
                   startInactivityTimer();
+                  await con.getBookingIDandIDCard();
+                  await brandName();
+
                   conMain.index.value = 22;
                 },
               ),
@@ -99,11 +104,18 @@ class LeasingScreen extends StatelessWidget {
       ),
     );
   }
+
+  Future<void> brandName() async {
+    conNL.brandList.clear();
+    await getAllBrand();
+    for (var data in brand) {
+      conNL.brandList.add(data.brand);
+    }
+  }
 }
 
 class LeasingDataSource extends DataTableSource {
   final con = Get.put(LeasingController());
-  int selectedCount = 0;
 
   @override
   DataRow? getRow(int index) {
@@ -163,5 +175,5 @@ class LeasingDataSource extends DataTableSource {
   bool get isRowCountApproximate => false;
 
   @override
-  int get selectedRowCount => selectedCount;
+  int get selectedRowCount => 0;
 }
