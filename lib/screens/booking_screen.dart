@@ -8,6 +8,7 @@ import 'package:motor/controllers/main_controller.dart';
 import 'package:motor/controllers/new_booking_controller.dart';
 import 'package:motor/screens/components/app_button.dart';
 import 'package:motor/screens/components/app_data_table.dart';
+import 'package:motor/screens/components/app_dropdown_search.dart';
 import 'package:motor/screens/components/under_line.dart';
 import 'package:motor/screens/widgets/app_text.dart';
 import 'package:motor/screens/widgets/data_table_widget.dart';
@@ -55,8 +56,9 @@ class BookingScreen extends StatelessWidget {
             () => con.filteredBooking.isNotEmpty
                 ? AppDataTable(
                     column: [
+                      DataTableWidget.column(context, 'Action'),
                       DataTableWidget.column(context, 'ID'),
-                      DataTableWidget.column(context, 'Saleman'),
+                      DataTableWidget.column(context, 'Salesman'),
                       DataTableWidget.column(context, 'Date'),
                       DataTableWidget.column(context, 'ID Card'),
                       DataTableWidget.column(context, 'Name'),
@@ -73,7 +75,6 @@ class BookingScreen extends StatelessWidget {
                       DataTableWidget.column(context, 'Status Booking'),
                       DataTableWidget.column(context, 'Status Done'),
                       DataTableWidget.column(context, 'Working Hours'),
-                      DataTableWidget.column(context, 'Action'),
                     ],
                     source: BookingDataSource(),
                   )
@@ -155,6 +156,19 @@ class BookingDataSource extends DataTableSource {
     return DataRow.byIndex(
       index: index,
       cells: [
+        DataTableWidget.cellBtn(Get.context!, btnDelete: false, btnUpdate: true,
+            edit: () async {
+          conNewBook.clearText();
+          con.title.value = 'Edit Booking';
+          await microName();
+          await saleManName();
+          await brandName();
+          await con.editBooking(data.id);
+
+          conMain.index.value = 2;
+        }, update: () {
+          showDialogStatus(Get.context!);
+        }),
         DataTableWidget.cell(Get.context!, '${data.id}'),
         DataTableWidget.cell(Get.context!, data.saleman),
         DataTableWidget.cell(Get.context!, data.bookingDate),
@@ -173,22 +187,6 @@ class BookingDataSource extends DataTableSource {
         DataTableWidget.cell(Get.context!, data.statusBooking),
         DataTableWidget.cell(Get.context!, data.statusDone),
         DataTableWidget.cell(Get.context!, data.workingHours),
-        DataTableWidget.cellBtn(
-          Get.context!,
-          btnDelete: false,
-          btnUpdate: true,
-          edit: () async {
-            conNewBook.clearText();
-            con.title.value = 'Edit Booking';
-            await microName();
-            await saleManName();
-            await brandName();
-            await con.editBooking(data.id);
-
-            conMain.index.value = 2;
-          },
-          update: () => debugPrint('Update $index'),
-        ),
       ],
     );
   }
@@ -224,5 +222,55 @@ class BookingDataSource extends DataTableSource {
     for (var data in brand) {
       conNewBook.brandList.add(data.brand);
     }
+  }
+
+  Widget showDialogStatus(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(5), // Rounded corners
+          ),
+          title: AppText.title(context, txt: 'Booking Status'),
+          content: SizedBox(
+            height: 180.px,
+            child: Column(
+              children: [
+                AppDropdownSearch(
+                  txt: 'Status',
+                  value: con.status,
+                  list: con.statusList,
+                  onChanged: (v) async {},
+                ),
+                spacer(context),
+                AppDropdownSearch(
+                  txt: 'New Micro',
+                  value: con.status,
+                  list: con.statusList,
+                  onChanged: (v) async {},
+                ),
+                spacer(context),
+                AppDropdownSearch(
+                  txt: 'Micro Name',
+                  value: con.status,
+                  list: con.statusList,
+                  onChanged: (v) async {},
+                ),
+              ],
+            ),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(); // Close the dialog
+              },
+              child: AppText.title(context, txt: 'Update'),
+            ),
+          ],
+        );
+      },
+    );
+    return Container();
   }
 }

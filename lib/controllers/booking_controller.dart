@@ -62,4 +62,7 @@ class BookingController extends GetxController {
     con.phoneIntro.value.text = byBooking[0].comeByTel;
     con.remark.value.text = byBooking[0].remark;
   }
+
+  var status = Rxn<String>();
+  var statusList = [''].obs;
 }

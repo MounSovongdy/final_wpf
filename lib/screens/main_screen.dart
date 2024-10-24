@@ -74,55 +74,57 @@ class MainScreen extends StatelessWidget {
   }
 
   Widget get screenWidget {
-    return Obx(() {
-      switch (con.index.value) {
-        case 0:
-          return DashboardScreen();
-        case 1:
-          return BookingScreen();
-        case 2:
-          return NewBookingScreen();
-        case 6:
-          return ReceivableScreen();
-        case 7:
-          return NewReceivableScreen();
-        case 9:
-          return TotalStockScreen();
-        case 10:
-          return AddStockScreen();
-        case 11:
-          return ProductScreen();
-        case 12:
-          return CreateProductScreen();
-        case 13:
-          return const FinancialRecordScreen();
-        case 15:
-          return UserScreen();
-        case 16:
-          return CreateUserScreen();
-        case 17:
-          return SalesmanScreen();
-        case 18:
-          return CreateSalesmanScreen();
-        case 19:
-          return MicroScreen();
-        case 20:
-          return CreateMicroScreen();
-        case 21:
-          return LeasingScreen();
-        case 22:
-          return NewLeasingScreen();
-        case 23:
-          return CashScreen();
-        case 24:
-          return NewCashScreen();
-        case 25:
-          return const TotalExpenseScreen();
-        case 26:
-          return NewExpenseScreen();
-        default:
-          return DashboardScreen();
-      }
-    });
+    return Obx(
+      () {
+        switch (con.index.value) {
+          case 0:
+            return DashboardScreen();
+          case 1:
+            return BookingScreen();
+          case 2:
+            return NewBookingScreen();
+          case 6:
+            return ReceivableScreen();
+          case 7:
+            return NewReceivableScreen();
+          case 9:
+            return TotalStockScreen();
+          case 10:
+            return AddStockScreen();
+          case 11:
+            return ProductScreen();
+          case 12:
+            return CreateProductScreen();
+          case 13:
+            return const FinancialRecordScreen();
+          case 15:
+            return UserScreen();
+          case 16:
+            return CreateUserScreen();
+          case 17:
+            return SalesmanScreen();
+          case 18:
+            return CreateSalesmanScreen();
+          case 19:
+            return MicroScreen();
+          case 20:
+            return CreateMicroScreen();
+          case 21:
+            return LeasingScreen();
+          case 22:
+            return NewLeasingScreen();
+          case 23:
+            return CashScreen();
+          case 24:
+            return NewCashScreen();
+          case 25:
+            return const TotalExpenseScreen();
+          case 26:
+            return NewExpenseScreen();
+          default:
+            return DashboardScreen();
+        }
+      },
+    );
   }
 }

@@ -12,7 +12,6 @@ import 'package:motor/screens/components/row_text_field.dart';
 import 'package:motor/screens/components/title_underline.dart';
 import 'package:motor/screens/components/under_line.dart';
 import 'package:motor/screens/widgets/app_text.dart';
-import 'package:pdf/pdf.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 class NewCashScreen extends StatelessWidget {
@@ -176,8 +175,7 @@ class NewCashScreen extends StatelessWidget {
                   tap: () async {
                     startInactivityTimer();
                     final pdfData = await conPrint.generatePdf(
-                      PdfPageFormat.a4,
-                      'Hello World! This is a test print with a custom font.',
+
                     );
                     conPrint.printPdf(pdfData);
                   },

@@ -31,12 +31,10 @@ class LoadingWidget {
         );
       },
     );
-
     Future.delayed(Duration(seconds: duration), () {
       Get.back();
     });
   }
-
   static void showTextDialog(
     BuildContext context, {
     required title,
@@ -60,67 +58,6 @@ class LoadingWidget {
             ),
             widget ?? Container(),
           ],
-        );
-      },
-    );
-  }
-
-  static void showEditStatusDialog(
-    BuildContext context, {
-      required title,
-    Color color = redColor,
-    Color btnColor = blackColor,
-    String txtBack = 'Confirm',
-    Widget? widget,
-    onChanged,
-    value,
-  }) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(5), // No rounded corners
-          ),
-          title: AppText.header(context, txt: title,),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.of(context).pop(),
-              child: AppText.title(context, txt: txtBack, color: bgColor),
-            ),
-            widget ?? Container(), // Optional widget
-          ],
-          content: SizedBox(
-            height: 100.px,
-            child: Column(
-              children: [
-                Row(
-                  children: [
-                    Checkbox(value: value, onChanged: onChanged),
-                    spacer(context),
-                    spacer(context),
-                    AppText.title(context, txt: "Approved"),
-                  ],
-                ),
-                Row(
-                  children: [
-                    Checkbox(value: value, onChanged: onChanged),
-                    spacer(context),
-                    spacer(context),
-                    AppText.title(context, txt: "Rejected"),
-                  ],
-                ),
-                Row(
-                  children: [
-                    Checkbox(value: value, onChanged: onChanged),
-                    spacer(context),
-                    spacer(context),
-                    AppText.title(context, txt: "Cancel"),
-                  ],
-                ),
-              ],
-            ),
-          ),
         );
       },
     );
