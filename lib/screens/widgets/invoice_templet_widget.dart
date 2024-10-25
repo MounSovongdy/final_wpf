@@ -61,7 +61,6 @@ class InvoiceTamplet extends StatelessWidget {
           buildFormField("Vehicle Model:"),
           buildFormField("Price:"),
           buildFormField("Amount Paid:"),
-
           // Signature and Stamp
           const Spacer(),
           const Row(
