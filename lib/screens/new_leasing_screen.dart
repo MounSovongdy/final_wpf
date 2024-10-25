@@ -214,14 +214,15 @@ class NewLeasingScreen extends StatelessWidget {
               ),
             ),
             RowTextField(
-                spacer: spacer(context),
-                widget1: Obx(
-                  () => AppTextField(
-                    txt: 'Plate No',
-                    con: con.plateNo.value,
-                    readOnly: con.isTax.value,
-                  ),
-                )),
+              spacer: spacer(context),
+              widget1: Obx(
+                () => AppTextField(
+                  txt: 'Plate No',
+                  con: con.plateNo.value,
+                  readOnly: con.isTax.value,
+                ),
+              ),
+            ),
             TitleUnderline(
               spacer: spacer(context),
               txt: 'Financial Information',

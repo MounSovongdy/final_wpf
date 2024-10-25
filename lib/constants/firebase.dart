@@ -5,6 +5,7 @@ import 'package:motor/models/add_stock_model.dart';
 import 'package:motor/models/booking_micro_model.dart';
 import 'package:motor/models/booking_model.dart';
 import 'package:motor/models/brand_model.dart';
+import 'package:motor/models/leasing_model.dart';
 import 'package:motor/models/micro_model.dart';
 import 'package:motor/models/product_model.dart';
 import 'package:motor/models/sale_man_model.dart';
@@ -22,6 +23,7 @@ final addStockCol = _firebase.collection('add_stock');
 final totalStockCol = _firebase.collection('total_stock');
 final bookingCol = _firebase.collection('booking');
 final bookingMicroCol = _firebase.collection('booking_micro');
+final leasingCol = _firebase.collection('leasing');
 
 var currVersion = '1.0.0'.obs;
 var byUser = [].obs;
@@ -41,6 +43,8 @@ var byBooking = [].obs;
 var booking = [].obs;
 var byBookingMicro = [].obs;
 var bookingMicro = [].obs;
+var byLeasing = [].obs;
+var leasing = [].obs;
 
 Future<void> getByUser(String userlogin) async {
   var res = await userCol.where('user', isEqualTo: userlogin).get();
@@ -483,13 +487,39 @@ Future<void> getBookingApprove() async {
       res.docs.map((doc) => BookingModel.fromMap(doc.data())).toList();
 }
 
-Future<void> insertSaleRecord({
+Future<void> getLastLeasing() async {
+  var res = await leasingCol.orderBy('id', descending: true).limit(1).get();
+  byLeasing.value =
+      res.docs.map((doc) => LeasingModel.fromMap(doc.data())).toList();
+}
+
+Future<void> insertLeasing(
+  LeasingModel leasing, {
   required String model,
   required String brand,
   required String year,
   required String condition,
   required String qty,
+  required int bookingId,
 }) async {
+  try {
+    await leasingCol.doc('${leasing.id}').set(leasing.toMap());
+    await updateTotalStockQty(brand, model, year, condition);
+    await updateStatusbooking(bookingId);
+    await insertCommissionSaleman();
+    await insertCommissionMicro();
+    await insertCommissionFriend();
+  } catch (e) {
+    debugPrint('Failed to add Leasing: $e');
+  }
+}
+
+Future<void> updateTotalStockQty(
+  String model,
+  String brand,
+  String year,
+  String condition,
+) async {
   try {
     var docId = '';
     var res = await totalStockCol
@@ -497,24 +527,44 @@ Future<void> insertSaleRecord({
         .where('brand', isEqualTo: brand)
         .where('year', isEqualTo: year)
         .where('condition', isEqualTo: condition)
+        .where('total_qty', isNotEqualTo: '0')
         .get();
+
+    for (var doc in res.docs) {
+      docId = doc.id;
+    }
+
     stockByModel.value =
         res.docs.map((doc) => TotalStockModel.fromMap(doc.data())).toList();
 
-    var oldQty = int.tryParse(stockByModel[0].totalQty) ?? 0;
-
-    if (oldQty > 0) {
-      int newQty = oldQty - int.tryParse(qty)!;
-
-      for (var doc in res.docs) {
-        docId = doc.id;
-      }
-
-      await totalStockCol.doc(docId).update({
-        'total_qty': '$newQty',
-      });
+    if (stockByModel.isNotEmpty) {
+      var oldQty = int.parse(stockByModel[0].totalQty);
+      var currQty = int.parse('1');
+      var newQty = oldQty - currQty;
+      await totalStockCol.doc(docId).update({'total_qty': '$newQty'});
     }
   } catch (e) {
-    debugPrint('Failed to add SaleRecord: $e');
+    debugPrint('Failed to update stock: $e');
   }
 }
+
+Future<void> updateStatusbooking(int id) async {
+  try {
+    var docId = '';
+    var res = await bookingCol.where('id', isEqualTo: id).get();
+
+    for (var doc in res.docs) {
+      docId = doc.id;
+    }
+
+    await bookingCol.doc(docId).update({'status_done': 'Done'});
+  } catch (e) {
+    debugPrint('Failed to update status booking: $e');
+  }
+}
+
+Future<void> insertCommissionSaleman() async {}
+
+Future<void> insertCommissionMicro() async {}
+
+Future<void> insertCommissionFriend() async {}
