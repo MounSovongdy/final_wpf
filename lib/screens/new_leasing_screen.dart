@@ -20,7 +20,7 @@ class NewLeasingScreen extends StatelessWidget {
 
   final con = Get.put(NewLeasingController());
   final conMain = Get.put(MainController());
-  final conPrint = Get.put(OpenPrinterDaiLogController());
+  final conPrint = Get.put(OpenPrinterDialogController());
 
   @override
   Widget build(BuildContext context) {

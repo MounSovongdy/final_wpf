@@ -19,7 +19,7 @@ class NewCashScreen extends StatelessWidget {
 
   final con = Get.put(NewCashController());
   final conMain = Get.put(MainController());
-  final conPrint = Get.put(OpenPrinterDaiLogController());
+  final conPrint = Get.put(OpenPrinterDialogController());
 
   final gender = ['Male', 'Female'];
   final salesman = ['Thol', 'Sora', 'Piseth'];
@@ -27,6 +27,7 @@ class NewCashScreen extends StatelessWidget {
   final model = ['Dream', 'Best', 'Sccoopy'];
   final color = ['Red', 'Black', 'Blue'];
   final condition = ['New', 'Used'];
+
 
   @override
   Widget build(BuildContext context) {
@@ -174,9 +175,7 @@ class NewCashScreen extends StatelessWidget {
                   width: Responsive.isDesktop(context) ? 150.px : 100.px,
                   tap: () async {
                     startInactivityTimer();
-                    final pdfData = await conPrint.generatePdf(
-
-                    );
+                    final pdfData = await conPrint.generatePdf();
                     conPrint.printPdf(pdfData);
                   },
                 ),

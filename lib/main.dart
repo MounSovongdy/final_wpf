@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       title: 'Motor Shop',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(fontFamily: 'Inter'),
+      // theme: ThemeData(fontFamily: 'Inter'),
       home: MainScreen(),
     );
   }

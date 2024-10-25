@@ -1,55 +1,79 @@
-import 'package:get/get.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:universal_html/html.dart' as html;
+import '../constants/constants.dart';
 
-class OpenPrinterDaiLogController extends GetxController {
+class OpenPrinterDialogController extends GetxController {
   Future<Uint8List> generatePdf() async {
     final pdf = pw.Document();
-    // final fontData = await rootBundle.load('assets/fonts/Inter-Bold.ttf');
-    // final ttf = pw.Font.ttf(fontData.buffer.asByteData());
+    final ByteData fontData = await rootBundle.load('assets/fonts/Koulen-Regular.ttf');
+    final pw.Font khmerFont = pw.Font.ttf(fontData);
+
+    // Add a page to the PDF document
     pdf.addPage(
       pw.Page(
         build: (pw.Context context) => pw.Column(
           children: [
-            pw.Container(
-              width: 1,
+            pw.Center(
+              child: pw.Column(
+                children: [
+                  pw.Container(
+                    height: 1,
+                    color: invoiceText, // Ensure invoiceText is defined in your constants
+                  ),
+                  pw.Text(
+                    'ទិញលក់ និង បង់រំលស់ម៉ូតូគ្រប់ប្រភេទ', // Khmer text
+                    style: pw.TextStyle(
+                        font: khmerFont, color: invoiceText
+                    ),
+                  ),
+                  pw.SizedBox(height: 30),
+                  pw.Row(
+                    children: [
+                      pw.Column(
+                        crossAxisAlignment: pw.CrossAxisAlignment.start,
+                        children: [
+                          pw.Text('096 888 3369', style: pw.TextStyle(font: khmerFont, color: invoiceText)),
+                          pw.Text('097 888 3369', style: pw.TextStyle(font: khmerFont, color: invoiceText)),
+                          pw.Text('012 888 795', style: pw.TextStyle(font: khmerFont, color: invoiceText)),
+                        ],
+                      ),
+                      pw.Spacer(),
+                      pw.Column(
+                        crossAxisAlignment: pw.CrossAxisAlignment.start,
+                        children: [
+                          pw.Row(
+                            children: [
+                              pw.Text('វិក្កយបត្រលេខ : ', style: pw.TextStyle(font: khmerFont, color: invoiceText)),
+                              pw.Text('00001', style: pw.TextStyle(font: khmerFont, color: invoiceText)),
+                            ],
+                          ),
+                          pw.Row(
+                            children: [
+                              pw.Text('កាលបរិច្ឆទ : ', style: pw.TextStyle(font: khmerFont, color: invoiceText)),
+                              pw.Text('25 - 10 - 2024', style: pw.TextStyle(font: khmerFont, color: invoiceText)),
+                            ],
+                          ),
+                          pw.Row(
+                            children: [
+                              pw.Text('ពន្ធ/ស្លាកលេខ : ', style: pw.TextStyle(font: khmerFont, color: invoiceText)),
+                              pw.Text('0001', style: pw.TextStyle(font: khmerFont, color: invoiceText)),
+                            ],
+                          ),
+                        ],
+                      )
+                    ],
+                  ),
+                ],
+              ),
             ),
-            pw.Text('ទិញ លក់ និង បង់រំលស់ម៉ូតូគ្រប់ប្រភេទ'),
-            // pw.Text('Invoice', style: const pw.TextStyle(fontSize: 30)),
-            // pw.SizedBox(height: 20),
-            // pw.Text('HSP Motor Shop'),
-            // pw.SizedBox(height: 20),
-            // pw.Text('Invoice Number: 001'),
-            // pw.Text('Date: ${DateTime.now().toLocal()}'),
-            // pw.SizedBox(height: 20),
-            // pw.Text('Customer Name: John Doe'),
-            // pw.Text('Address: 123 Main St.'),
-            // pw.Text('Phone: 123-456-7890'),
-            // pw.SizedBox(height: 20),
-            // pw.Divider(),
-            // pw.Text('Items:'),
-            // pw.Row(
-            //   children: [
-            //     pw.Text('Vehicle Model:'),
-            //     pw.SizedBox(width: 10),
-            //     pw.Text('Motorbike XYZ'),
-            //   ],
-            // ),
-            // pw.Row(
-            //   children: [
-            //     pw.Text('Price:'),
-            //     pw.SizedBox(width: 10),
-            //     pw.Text('\$1000'),
-            //   ],
-            // ),
-            // pw.SizedBox(height: 20),
-            // pw.Divider(),
-            // pw.Text('Thank you for your business!'),
           ],
         ),
       ),
     );
+
+    // Return the generated PDF document as a byte array
     return pdf.save();
   }
 
@@ -63,7 +87,7 @@ class OpenPrinterDaiLogController extends GetxController {
 
     Future.delayed(
       const Duration(seconds: 1),
-      () => html.Url.revokeObjectUrl(url),
+          () => html.Url.revokeObjectUrl(url),
     );
   }
 }

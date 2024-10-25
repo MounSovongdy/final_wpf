@@ -24,11 +24,12 @@ dependencies:
   firebase_core_web: any
   universal_html: any
   restart_app: any
-  pdf: any
+  pdf: ^3.6.0
   printing: any
   intl: any
   fl_chart: any
   dropdown_search: any
+  google_fonts: any
 
 dev_dependencies:
   flutter_test:
@@ -65,3 +66,19 @@ flutter:
           weight: 200
         - asset: assets/fonts/Inter-Thin.ttf
           weight: 100
+
+    - family: NotoSansKhmer
+      fonts:
+        - asset: assets/fonts/NotoSansKhmer-Bold.ttf
+          weight: 700
+        - asset: assets/fonts/NotoSansKhmer-Regular.ttf
+          weight: 400
+        - asset: assets/fonts/NotoSansKhmer-Light.ttf
+          weight: 300
+
+    - family: KhmerFont
+      fonts:
+        - asset: assets/fonts/Khmer-Regular.ttf
+          weight: 400
+        - asset: assets/fonts/Koulen-Regular.ttf
+          weight: 700

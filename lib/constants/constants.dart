@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:motor/constants/responsive.dart';
+import 'package:pdf/pdf.dart';
 import 'package:universal_html/html.dart' as html;
 
 const noneColor = Colors.transparent;
@@ -14,6 +15,8 @@ const blackColor = Color.fromRGBO(0, 0, 0, 1);
 const redColor = Colors.red;
 const greenColor = Colors.green;
 const updateColor = Color.fromARGB(255, 0, 217, 255);
+
+const invoiceText = PdfColor.fromInt(0xff031993);
 
 var defRadius = 10.0;
 var defWebPad = 16.0;
