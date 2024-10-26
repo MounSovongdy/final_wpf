@@ -12,8 +12,26 @@ class LeasingController extends GetxController {
   void filterLeasingData() {
     String query = search.value.text.toLowerCase();
 
-    filteredLeasing.value = user.where((data) {
-      return data.id.toString().contains(query);
+    filteredLeasing.value = leasing.where((data) {
+      return data.id.toString().contains(query) ||
+          data.leasingDate.toLowerCase().contains(query) ||
+          data.idCard.toLowerCase().contains(query) ||
+          data.name.toLowerCase().contains(query) ||
+          data.age.toLowerCase().contains(query) ||
+          data.tel.toLowerCase().contains(query) ||
+          data.address.toLowerCase().contains(query) ||
+          data.micro.toLowerCase().contains(query) ||
+          data.brand.toLowerCase().contains(query) ||
+          data.model.toLowerCase().contains(query) ||
+          data.color.toLowerCase().contains(query) ||
+          data.year.toLowerCase().contains(query) ||
+          data.condition.toLowerCase().contains(query) ||
+          data.price.toLowerCase().contains(query) ||
+          data.remain.toLowerCase().contains(query) ||
+          data.approveAmount.toLowerCase().contains(query) ||
+          data.totalDebt.toLowerCase().contains(query) ||
+          data.saleman.toLowerCase().contains(query) ||
+          data.comeBy.toLowerCase().contains(query);
     }).toList();
   }
 

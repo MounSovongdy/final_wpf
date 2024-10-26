@@ -63,6 +63,16 @@ class BookingController extends GetxController {
     con.remark.value.text = byBooking[0].remark;
   }
 
+  var isApp = false.obs;
   var status = Rxn<String>();
-  var statusList = [''].obs;
+  var newMicro = Rxn<String>();
+  var oldMicro = Rxn<String>();
+  var statusList = ['Approve', 'Reject'].obs;
+
+  void clearDialog() {
+    isApp.value = false;
+    status.value = null;
+    newMicro.value = null;
+    oldMicro.value = null;
+  }
 }

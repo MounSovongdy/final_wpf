@@ -156,19 +156,29 @@ class BookingDataSource extends DataTableSource {
     return DataRow.byIndex(
       index: index,
       cells: [
-        DataTableWidget.cellBtn(Get.context!, btnDelete: false, btnUpdate: true,
-            edit: () async {
-          conNewBook.clearText();
-          con.title.value = 'Edit Booking';
-          await microName();
-          await saleManName();
-          await brandName();
-          await con.editBooking(data.id);
+        DataTableWidget.cellBtn(
+          Get.context!,
+          btnDelete: false,
+          btnUpdate: data.statusBooking == 'New' ? true : false,
+          edit: () async {
+            startInactivityTimer();
+            conNewBook.clearText();
+            con.title.value = 'Edit Booking';
+            await microName();
+            await saleManName();
+            await brandName();
+            await con.editBooking(data.id);
 
-          conMain.index.value = 2;
-        }, update: () {
-          showDialogStatus(Get.context!);
-        }),
+            conMain.index.value = 2;
+          },
+          update: () async {
+            startInactivityTimer();
+            con.clearDialog();
+            con.status.value = data.statusBooking;
+            await microName();
+            showDialogStatus(Get.context!, data.micro);
+          },
+        ),
         DataTableWidget.cell(Get.context!, '${data.id}'),
         DataTableWidget.cell(Get.context!, data.saleman),
         DataTableWidget.cell(Get.context!, data.bookingDate),
@@ -224,53 +234,78 @@ class BookingDataSource extends DataTableSource {
     }
   }
 
-  Widget showDialogStatus(BuildContext context) {
+  void showDialogStatus(BuildContext context, String oldMicro) {
     showDialog(
       context: context,
+      barrierDismissible: false,
       builder: (BuildContext context) {
         return AlertDialog(
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(5), // Rounded corners
+            borderRadius: BorderRadius.circular(5),
           ),
-          title: AppText.title(context, txt: 'Booking Status'),
+          title: AppText.header(context, txt: 'Booking Status'),
           content: SizedBox(
-            height: 180.px,
+            height: 230.px,
             child: Column(
               children: [
+                spacer(context),
                 AppDropdownSearch(
                   txt: 'Status',
                   value: con.status,
                   list: con.statusList,
-                  onChanged: (v) async {},
+                  onChanged: (v) async {
+                    startInactivityTimer();
+                    if (v != null) {
+                      con.status.value = v;
+                      if (v == 'Approve') {
+                        con.isApp.value = false;
+                      } else {
+                        con.isApp.value = true;
+                        con.oldMicro.value = oldMicro;
+                      }
+                    }
+                  },
                 ),
                 spacer(context),
                 AppDropdownSearch(
-                  txt: 'New Micro',
-                  value: con.status,
-                  list: con.statusList,
-                  onChanged: (v) async {},
+                  txt: 'Old Micro',
+                  value: con.oldMicro,
+                  list: conNewBook.microList,
+                  enable: false,
+                  onChanged: (v) {},
                 ),
                 spacer(context),
-                AppDropdownSearch(
-                  txt: 'Micro Name',
-                  value: con.status,
-                  list: con.statusList,
-                  onChanged: (v) async {},
+                Obx(
+                  () => AppDropdownSearch(
+                    txt: 'New Micro',
+                    value: con.newMicro,
+                    list: conNewBook.microList,
+                    enable: con.isApp.value,
+                    onChanged: (v) {
+                      if (v != null) con.newMicro.value = v;
+                    },
+                  ),
                 ),
               ],
             ),
           ),
           actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop(); // Close the dialog
-              },
-              child: AppText.title(context, txt: 'Update'),
+            AppButton(
+              txt: 'Back',
+              width: 100.px,
+              color: secondGreyColor,
+              tap: () => Navigator.of(context).pop(),
+            ),
+            spacer(context),
+            spacer(context),
+            AppButton(
+              txt: 'Update',
+              width: 120.px,
+              tap: () => Navigator.of(context).pop(),
             ),
           ],
         );
       },
     );
-    return Container();
   }
 }
