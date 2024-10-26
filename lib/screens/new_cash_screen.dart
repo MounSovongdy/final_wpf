@@ -19,7 +19,6 @@ class NewCashScreen extends StatelessWidget {
 
   final con = Get.put(NewCashController());
   final conMain = Get.put(MainController());
-  final conPrint = Get.put(OpenPrinterDaiLogController());
 
   final gender = ['Male', 'Female'];
   final salesman = ['Thol', 'Sora', 'Piseth'];
@@ -174,10 +173,8 @@ class NewCashScreen extends StatelessWidget {
                   width: Responsive.isDesktop(context) ? 150.px : 100.px,
                   tap: () async {
                     startInactivityTimer();
-                    final pdfData = await conPrint.generatePdf(
-
-                    );
-                    conPrint.printPdf(pdfData);
+                    final pdfData = await generatePDF(context);
+                    savePdfToFile(pdfData);
                   },
                 ),
                 spacer(context),

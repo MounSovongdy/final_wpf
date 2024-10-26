@@ -5,7 +5,6 @@ import 'package:motor/constants/firebase.dart';
 import 'package:motor/constants/responsive.dart';
 import 'package:motor/controllers/main_controller.dart';
 import 'package:motor/controllers/new_leasing_controller.dart';
-import 'package:motor/controllers/open_printer_dailog_controller.dart';
 import 'package:motor/screens/components/app_button.dart';
 import 'package:motor/screens/components/app_dropdown_search.dart';
 import 'package:motor/screens/components/app_text_field.dart';
@@ -20,7 +19,6 @@ class NewLeasingScreen extends StatelessWidget {
 
   final con = Get.put(NewLeasingController());
   final conMain = Get.put(MainController());
-  final conPrint = Get.put(OpenPrinterDaiLogController());
 
   @override
   Widget build(BuildContext context) {
@@ -355,17 +353,6 @@ class NewLeasingScreen extends StatelessWidget {
                     startInactivityTimer();
                     con.clearText();
                     conMain.index.value = conMain.index.value - 1;
-                  },
-                ),
-                spacer(context),
-                spacer(context),
-                AppButton(
-                  txt: 'Print Invoice',
-                  width: Responsive.isDesktop(context) ? 150.px : 100.px,
-                  tap: () async {
-                    startInactivityTimer();
-                    final pdfData = await conPrint.generatePdf();
-                    conPrint.printPdf(pdfData);
                   },
                 ),
                 spacer(context),
