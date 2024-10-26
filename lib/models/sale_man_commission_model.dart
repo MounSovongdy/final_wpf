@@ -49,5 +49,7 @@ class SaleManCommissionModel {
 
   String toJson() => json.encode(toMap());
 
-  factory SaleManCommissionModel.fromJson(String source) => SaleManCommissionModel.fromMap(json.decode(source) as Map<String, dynamic>);
+  factory SaleManCommissionModel.fromJson(String source) =>
+      SaleManCommissionModel.fromMap(
+          json.decode(source) as Map<String, dynamic>);
 }

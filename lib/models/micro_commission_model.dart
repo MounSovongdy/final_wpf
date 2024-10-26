@@ -11,14 +11,14 @@ class MicroCommissionModel {
   final String totalBonus;
 
   MicroCommissionModel({
-    required this.id,
-    required this.leasingId,
-    required this.leasingDate,
-    required this.microId,
-    required this.microName,
-    required this.tBonus,
-    required this.unitSale,
-    required this.totalBonus,
+    this.id = 0,
+    this.leasingId = 0,
+    this.leasingDate = '',
+    this.microId = 0,
+    this.microName = '',
+    this.tBonus = '',
+    this.unitSale = '',
+    this.totalBonus = '',
   });
 
   Map<String, dynamic> toMap() {

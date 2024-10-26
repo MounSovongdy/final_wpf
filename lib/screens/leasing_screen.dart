@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:motor/constants/constants.dart';
-import 'package:motor/constants/firebase.dart';
 import 'package:motor/constants/responsive.dart';
 import 'package:motor/controllers/leasing_controller.dart';
 import 'package:motor/controllers/main_controller.dart';
@@ -11,7 +10,6 @@ import 'package:motor/screens/components/app_data_table.dart';
 import 'package:motor/screens/components/under_line.dart';
 import 'package:motor/screens/widgets/app_text.dart';
 import 'package:motor/screens/widgets/data_table_widget.dart';
-import 'package:motor/screens/widgets/loading_widget.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 class LeasingScreen extends StatelessWidget {
@@ -47,38 +45,39 @@ class LeasingScreen extends StatelessWidget {
             ),
           ),
           spacer(context),
-          AppDataTable(
-            column: [
-              DataTableWidget.column(context, 'No'),
-              DataTableWidget.column(context, 'Booking Date'),
-              DataTableWidget.column(context, 'ID Card'),
-              DataTableWidget.column(context, 'Customer Name'),
-              DataTableWidget.column(context, 'Gender'),
-              DataTableWidget.column(context, 'Age'),
-              DataTableWidget.column(context, 'Telephone'),
-              DataTableWidget.column(context, 'Address'),
-              DataTableWidget.column(context, 'Model'),
-              DataTableWidget.column(context, 'Brand'),
-              DataTableWidget.column(context, 'Color'),
-              DataTableWidget.column(context, 'Year'),
-              DataTableWidget.column(context, 'Condition'),
-              DataTableWidget.column(context, 'Engine No'),
-              DataTableWidget.column(context, 'Frame No'),
-              DataTableWidget.column(context, 'Plate No'),
-              DataTableWidget.column(context, 'Price'),
-              DataTableWidget.column(context, 'Discount'),
-              DataTableWidget.column(context, 'Deposit'),
-              DataTableWidget.column(context, 'Remain'),
-              DataTableWidget.column(context, 'Method'),
-              DataTableWidget.column(context, 'Micro'),
-              DataTableWidget.column(context, 'Salesman'),
-              DataTableWidget.column(context, 'Come by'),
-              DataTableWidget.column(context, 'Introduced Name'),
-              DataTableWidget.column(context, 'Introduced Tel'),
-              DataTableWidget.column(context, 'Commission fee'),
-              DataTableWidget.column(context, 'Action'),
-            ],
-            source: LeasingDataSource(),
+          Obx(
+            () => con.filteredLeasing.isNotEmpty
+                ? AppDataTable(
+                    column: [
+                      DataTableWidget.column(context, 'ID'),
+                      DataTableWidget.column(context, 'Sale Date'),
+                      DataTableWidget.column(context, 'ID Card'),
+                      DataTableWidget.column(context, 'Name'),
+                      DataTableWidget.column(context, 'Age'),
+                      DataTableWidget.column(context, 'Telephone'),
+                      DataTableWidget.column(context, 'Address'),
+                      DataTableWidget.column(context, 'Micro'),
+                      DataTableWidget.column(context, 'Brand'),
+                      DataTableWidget.column(context, 'Model'),
+                      DataTableWidget.column(context, 'Color'),
+                      DataTableWidget.column(context, 'Year'),
+                      DataTableWidget.column(context, 'Condition'),
+                      DataTableWidget.column(context, 'Price'),
+                      DataTableWidget.column(context, 'Remain'),
+                      DataTableWidget.column(context, 'Bank Receivable'),
+                      DataTableWidget.column(context, 'Acc Receivable'),
+                      DataTableWidget.column(context, 'Saleman'),
+                      DataTableWidget.column(context, 'Come By'),
+                      DataTableWidget.column(context, 'Action'),
+                    ],
+                    source: LeasingDataSource(),
+                  )
+                : Container(
+                    width: MediaQuery.of(context).size.width,
+                    margin: EdgeInsets.only(top: defWebPad.px),
+                    alignment: Alignment.center,
+                    child: AppText.title(context, txt: 'No Data'),
+                  ),
           ),
           spacer(context),
           spacer(context),
@@ -94,7 +93,7 @@ class LeasingScreen extends StatelessWidget {
                   startInactivityTimer();
                   conNL.clearText();
                   await con.getBookingIDandIDCard();
-                  await brandName();
+                  await con.brandName();
 
                   conMain.index.value = 22;
                 },
@@ -105,14 +104,6 @@ class LeasingScreen extends StatelessWidget {
       ),
     );
   }
-
-  Future<void> brandName() async {
-    conNL.brandList.clear();
-    await getAllBrand();
-    for (var data in brand) {
-      conNL.brandList.add(data.brand);
-    }
-  }
 }
 
 class LeasingDataSource extends DataTableSource {
@@ -121,56 +112,47 @@ class LeasingDataSource extends DataTableSource {
   @override
   DataRow? getRow(int index) {
     assert(index >= 0);
-    if (index >= rowCount) return null;
+    if (index >= con.filteredLeasing.length) return null;
+
+    var data = con.filteredLeasing[index];
 
     return DataRow.byIndex(
       index: index,
       cells: [
-        DataTableWidget.cell(
-          Get.context!,
-          '${con.filteredUsers[index].id}',
-        ),
-        DataTableWidget.cell(
-          Get.context!,
-          con.filteredUsers[index].name,
-        ),
-        DataTableWidget.cell(
-          Get.context!,
-          con.filteredUsers[index].role,
-        ),
-        DataTableWidget.cell(
-          Get.context!,
-          con.filteredUsers[index].user,
-        ),
-        DataTableWidget.cell(
-          Get.context!,
-          con.filteredUsers[index].dateCreate,
-        ),
+        DataTableWidget.cell(Get.context!, '${data.id}'),
+        DataTableWidget.cell(Get.context!, data.leasingDate),
+        DataTableWidget.cell(Get.context!, data.idCard),
+        DataTableWidget.cell(Get.context!, data.name),
+        DataTableWidget.cell(Get.context!, data.age),
+        DataTableWidget.cell(Get.context!, data.tel),
+        DataTableWidget.cell(Get.context!, data.address),
+        DataTableWidget.cell(Get.context!, data.micro),
+        DataTableWidget.cell(Get.context!, data.brand),
+        DataTableWidget.cell(Get.context!, data.model),
+        DataTableWidget.cell(Get.context!, data.color),
+        DataTableWidget.cell(Get.context!, data.year),
+        DataTableWidget.cell(Get.context!, data.condition),
+        DataTableWidget.cell(Get.context!, data.price),
+        DataTableWidget.cell(Get.context!, data.remain),
+        DataTableWidget.cell(Get.context!, data.approveAmount),
+        DataTableWidget.cell(Get.context!, data.totalDebt),
+        DataTableWidget.cell(Get.context!, data.saleman),
+        DataTableWidget.cell(Get.context!, data.comeBy),
         DataTableWidget.cellBtn(
           Get.context!,
+          btnEdit: false,
+          btnDelete: false,
+          btnPrint: true,
           edit: () => debugPrint('Edit $index'),
-          delete: () {
-            startInactivityTimer();
-            LoadingWidget.showTextDialog(
-              Get.context!,
-              title: 'Warning',
-              content: 'Are you sure to delete?',
-              color: redColor,
-              txtBack: 'Cancel',
-              btnColor: secondGreyColor,
-              widget: TextButton(
-                onPressed: () {},
-                child: AppText.title(Get.context!, txt: 'Confirm'),
-              ),
-            );
-          },
+          delete: () => debugPrint('Delete $index'),
+          print: () {},
         ),
       ],
     );
   }
 
   @override
-  int get rowCount => con.filteredUsers.length;
+  int get rowCount => con.filteredLeasing.length;
 
   @override
   bool get isRowCountApproximate => false;

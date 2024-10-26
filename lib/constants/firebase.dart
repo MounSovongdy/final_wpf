@@ -1,16 +1,21 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:motor/constants/constants.dart';
 import 'package:motor/models/add_stock_model.dart';
 import 'package:motor/models/booking_micro_model.dart';
 import 'package:motor/models/booking_model.dart';
 import 'package:motor/models/brand_model.dart';
+import 'package:motor/models/friend_commission_model.dart';
 import 'package:motor/models/leasing_model.dart';
+import 'package:motor/models/micro_commission_model.dart';
 import 'package:motor/models/micro_model.dart';
 import 'package:motor/models/product_model.dart';
+import 'package:motor/models/sale_man_commission_model.dart';
 import 'package:motor/models/sale_man_model.dart';
 import 'package:motor/models/total_stock_model.dart';
 import 'package:motor/models/user_model.dart';
+import 'package:motor/screens/widgets/loading_widget.dart';
 
 final _firebase = FirebaseFirestore.instance;
 
@@ -24,6 +29,9 @@ final totalStockCol = _firebase.collection('total_stock');
 final bookingCol = _firebase.collection('booking');
 final bookingMicroCol = _firebase.collection('booking_micro');
 final leasingCol = _firebase.collection('leasing');
+final microComCol = _firebase.collection('micro_commission');
+final saleManComCol = _firebase.collection('sale_man_commission');
+final friendComCol = _firebase.collection('friend_commission');
 
 var currVersion = '1.0.0'.obs;
 var byUser = [].obs;
@@ -43,8 +51,10 @@ var byBooking = [].obs;
 var booking = [].obs;
 var byBookingMicro = [].obs;
 var bookingMicro = [].obs;
-var byLeasing = [].obs;
 var leasing = [].obs;
+var microCom = [].obs;
+var saleManCom = [].obs;
+var friendCom = [].obs;
 
 Future<void> getByUser(String userlogin) async {
   var res = await userCol.where('user', isEqualTo: userlogin).get();
@@ -481,45 +491,31 @@ Future<void> updateByBooking(
 }
 
 Future<void> getBookingApprove() async {
-  var res =
-      await bookingCol.where('status_booking', isEqualTo: 'Approve').get();
+  var res = await bookingCol
+      .where('status_booking', isEqualTo: 'Approve')
+      .where('status_done', isEqualTo: '')
+      .get();
   booking.value =
       res.docs.map((doc) => BookingModel.fromMap(doc.data())).toList();
 }
 
-Future<void> getLastLeasing() async {
-  var res = await leasingCol.orderBy('id', descending: true).limit(1).get();
-  byLeasing.value =
+Future<void> getAllLeasing() async {
+  var res = await leasingCol.orderBy('id', descending: true).get();
+  leasing.value =
       res.docs.map((doc) => LeasingModel.fromMap(doc.data())).toList();
 }
 
 Future<void> insertLeasing(
-  LeasingModel leasing, {
+  LeasingModel leasing,
+  SaleManCommissionModel saleCom,
+  MicroCommissionModel microCom, {
   required String model,
   required String brand,
   required String year,
   required String condition,
-  required String qty,
   required int bookingId,
+  required void Function() clear,
 }) async {
-  try {
-    await leasingCol.doc('${leasing.id}').set(leasing.toMap());
-    await updateTotalStockQty(brand, model, year, condition);
-    await updateStatusbooking(bookingId);
-    await insertCommissionSaleman();
-    await insertCommissionMicro();
-    await insertCommissionFriend();
-  } catch (e) {
-    debugPrint('Failed to add Leasing: $e');
-  }
-}
-
-Future<void> updateTotalStockQty(
-  String model,
-  String brand,
-  String year,
-  String condition,
-) async {
   try {
     var docId = '';
     var res = await totalStockCol
@@ -527,7 +523,6 @@ Future<void> updateTotalStockQty(
         .where('brand', isEqualTo: brand)
         .where('year', isEqualTo: year)
         .where('condition', isEqualTo: condition)
-        .where('total_qty', isNotEqualTo: '0')
         .get();
 
     for (var doc in res.docs) {
@@ -541,10 +536,42 @@ Future<void> updateTotalStockQty(
       var oldQty = int.parse(stockByModel[0].totalQty);
       var currQty = int.parse('1');
       var newQty = oldQty - currQty;
-      await totalStockCol.doc(docId).update({'total_qty': '$newQty'});
+
+      if (oldQty > 0) {
+        LoadingWidget.dialogLoading(duration: 5, isBack: false);
+
+        await totalStockCol.doc(docId).update({'total_qty': '$newQty'});
+        await leasingCol.doc('${leasing.id}').set(leasing.toMap());
+        await updateStatusbooking(bookingId);
+        await insertSaleManCommission(saleCom);
+        await insertMicroCommission(microCom);
+        await getBookingApprove();
+        Get.back();
+        LoadingWidget.showTextDialog(
+          Get.context!,
+          title: 'Successfully',
+          content: 'The Leasing already created.',
+          color: greenColor,
+        );
+        clear();
+      } else {
+        LoadingWidget.showTextDialog(
+          Get.context!,
+          title: 'Error',
+          content: 'The Model is Out of Stock.',
+          color: redColor,
+        );
+      }
+    } else {
+      LoadingWidget.showTextDialog(
+        Get.context!,
+        title: 'Error',
+        content: 'The Model is not yet record stock',
+        color: redColor,
+      );
     }
   } catch (e) {
-    debugPrint('Failed to update stock: $e');
+    debugPrint('Failed to add Leasing: $e');
   }
 }
 
@@ -563,8 +590,57 @@ Future<void> updateStatusbooking(int id) async {
   }
 }
 
-Future<void> insertCommissionSaleman() async {}
+Future<void> getLastSaleManCommission() async {
+  var res = await saleManComCol.orderBy('id', descending: true).limit(1).get();
+  saleManCom.value = res.docs
+      .map((doc) => SaleManCommissionModel.fromMap(doc.data()))
+      .toList();
+}
 
-Future<void> insertCommissionMicro() async {}
+Future<void> getBySaleManName(String name) async {
+  var res = await saleManCol.where('name', isEqualTo: name).get();
+  bySaleMan.value =
+      res.docs.map((doc) => SaleManModel.fromMap(doc.data())).toList();
+}
 
-Future<void> insertCommissionFriend() async {}
+Future<void> insertSaleManCommission(SaleManCommissionModel saleCom) async {
+  try {
+    await saleManComCol.doc('${saleCom.id}').set(saleCom.toMap());
+  } catch (e) {
+    debugPrint('Failed to add insert Saleman Commission: $e');
+  }
+}
+
+Future<void> getLastMicroCommission() async {
+  var res = await microComCol.orderBy('id', descending: true).limit(1).get();
+  microCom.value =
+      res.docs.map((doc) => MicroCommissionModel.fromMap(doc.data())).toList();
+}
+
+Future<void> getByMicroName(String name) async {
+  var res = await microCol.where('name', isEqualTo: name).get();
+  byMicro.value =
+      res.docs.map((doc) => MicroModel.fromMap(doc.data())).toList();
+}
+
+Future<void> insertMicroCommission(MicroCommissionModel microCom) async {
+  try {
+    await microComCol.doc('${microCom.id}').set(microCom.toMap());
+  } catch (e) {
+    debugPrint('Failed to add insert Micro Commission: $e');
+  }
+}
+
+Future<void> getLastFriendCommission() async {
+  var res = await friendComCol.orderBy('id', descending: true).limit(1).get();
+  friendCom.value =
+      res.docs.map((doc) => FriendCommissionModel.fromMap(doc.data())).toList();
+}
+
+Future<void> insertFriendCommission(FriendCommissionModel friCom) async {
+  try {
+    await friendComCol.doc('${friCom.id}').set(friCom.toMap());
+  } catch (e) {
+    debugPrint('Failed to add insert Friend Commission: $e');
+  }
+}

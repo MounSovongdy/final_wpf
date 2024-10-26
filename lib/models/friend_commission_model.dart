@@ -11,14 +11,14 @@ class FriendCommissionModel {
   final String totalCommission;
 
   FriendCommissionModel({
-    required this.id,
-    required this.leasingId,
-    required this.leasingDate,
-    required this.name,
-    required this.tel,
-    required this.commission,
-    required this.unitSale,
-    required this.totalCommission,
+    this.id = 0,
+    this.leasingId = 0,
+    this.leasingDate = '',
+    this.name = '',
+    this.tel = '',
+    this.commission = '',
+    this.unitSale = '',
+    this.totalCommission = '',
   });
 
   Map<String, dynamic> toMap() {

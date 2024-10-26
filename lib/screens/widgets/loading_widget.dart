@@ -17,6 +17,7 @@ class LoadingWidget {
 
   static void dialogLoading({
     required int duration,
+    bool isBack = false,
   }) {
     showDialog(
       context: Get.context!,
@@ -31,10 +32,11 @@ class LoadingWidget {
         );
       },
     );
-    Future.delayed(Duration(seconds: duration), () {
+    isBack ? null : Future.delayed(Duration(seconds: duration), () {
       Get.back();
     });
   }
+
   static void showTextDialog(
     BuildContext context, {
     required title,

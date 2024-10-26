@@ -122,6 +122,14 @@ class NewLeasingScreen extends StatelessWidget {
                 readOnly: true,
               ),
             ),
+            RowTextField(
+              spacer: spacer(context),
+              widget1: AppTextField(
+                txt: 'Duration',
+                con: con.workingHours.value,
+                readOnly: true,
+              ),
+            ),
             TitleUnderline(
               spacer: spacer(context),
               txt: 'Product Information',
@@ -300,10 +308,7 @@ class NewLeasingScreen extends StatelessWidget {
                 onChanged: (v) {
                   if (v != null) {
                     con.comeBy.value = v;
-                    if (con.comeBy.value == 'Friend') {
-                      con.isFriend.value = true;
-                    } else {
-                      con.isFriend.value = false;
+                    if (con.comeBy.value != 'Friend') {
                       con.nameIntro.value.text = '';
                       con.phoneIntro.value.text = '';
                     }
@@ -314,22 +319,25 @@ class NewLeasingScreen extends StatelessWidget {
                 () => AppTextField(
                   txt: 'Name',
                   con: con.nameIntro.value,
-                  readOnly: !con.isFriend.value,
+                  readOnly: con.comeBy.value == 'Friend' ? false : true,
                 ),
               ),
               widget3: Obx(
                 () => AppTextField(
                   txt: 'Tel',
                   con: con.phoneIntro.value,
-                  readOnly: !con.isFriend.value,
+                  readOnly: con.comeBy.value == 'Friend' ? false : true,
                 ),
               ),
             ),
             RowTextField(
               spacer: spacer(context),
-              widget1: AppTextField(
-                txt: 'Commission',
-                con: con.commission.value,
+              widget1: Obx(
+                () => AppTextField(
+                  txt: 'Commission',
+                  con: con.commission.value,
+                  readOnly: con.comeBy.value == 'Friend' ? false : true,
+                ),
               ),
             ),
             spacer(context),
@@ -365,7 +373,10 @@ class NewLeasingScreen extends StatelessWidget {
                 AppButton(
                   txt: 'Save',
                   width: Responsive.isDesktop(context) ? 150.px : 100.px,
-                  tap: () {},
+                  tap: () async {
+                    startInactivityTimer();
+                    con.createLeasing(context);
+                  },
                 ),
               ],
             ),
