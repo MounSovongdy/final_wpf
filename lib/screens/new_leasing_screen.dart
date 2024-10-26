@@ -20,7 +20,6 @@ class NewLeasingScreen extends StatelessWidget {
 
   final con = Get.put(NewLeasingController());
   final conMain = Get.put(MainController());
-  final conPrint = Get.put(OpenPrinterDialogController());
 
   @override
   Widget build(BuildContext context) {
@@ -356,8 +355,6 @@ class NewLeasingScreen extends StatelessWidget {
                   width: Responsive.isDesktop(context) ? 150.px : 100.px,
                   tap: () async {
                     startInactivityTimer();
-                    final pdfData = await conPrint.generatePdf();
-                    conPrint.printPdf(pdfData);
                   },
                 ),
                 spacer(context),
