@@ -24,6 +24,7 @@ class NewLeasingController extends GetxController {
     'Tik Tok',
     'Instagram',
   ].obs;
+  var platePayList = ['Already', 'Not Yet'];
 
   var isTax = true.obs;
 
@@ -63,6 +64,18 @@ class NewLeasingController extends GetxController {
   var nameIntro = TextEditingController().obs;
   var phoneIntro = TextEditingController().obs;
   var commission = TextEditingController().obs;
+
+  var phoneCus2 = TextEditingController().obs;
+  var phoneCus3 = TextEditingController().obs;
+  var document = TextEditingController().obs;
+  var platePay = Rxn<String>();
+  var plateAmount = TextEditingController().obs;
+  var firstPayDate = TextEditingController().obs;
+  var term = TextEditingController().obs;
+  var interest = TextEditingController().obs;
+  var total = TextEditingController().obs;
+  var receievePay = TextEditingController().obs;
+  var amountLeft = TextEditingController().obs;
 
   void createLeasing(BuildContext context) async {
     if (bookingId.value != null &&
