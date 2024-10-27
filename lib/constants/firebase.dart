@@ -490,6 +490,126 @@ Future<void> updateByBooking(
   }
 }
 
+Future<void> updateStatusBooking1({
+  required int id,
+  required String status,
+  required String statusDate,
+  required String workingHours,
+}) async {
+  try {
+    var docId1 = '';
+    var result1 = await bookingCol.where('id', isEqualTo: id).get();
+
+    var docId2 = '';
+    var result2 =
+        await bookingMicroCol.where('booking_id', isEqualTo: id).get();
+
+    for (var doc in result1.docs) {
+      docId1 = doc.id;
+    }
+    for (var doc in result2.docs) {
+      docId2 = doc.id;
+    }
+
+    await bookingCol.doc(docId1).update({
+      'status_booking': status,
+      'status_date': statusDate,
+      'working_hours': workingHours,
+    });
+    await bookingMicroCol.doc(docId2).update({
+      'status_booking1': status,
+      'status_date1': statusDate,
+      'working_hours1': workingHours,
+    });
+  } catch (e) {
+    debugPrint('Failed to updateStatusBooking1: $e');
+  }
+}
+
+Future<void> assignNewMicroBooking({
+  required int id,
+  required String newMicro,
+  required String status,
+  required String statusDate,
+  required String workingHours,
+}) async {
+  try {
+    var docId1 = '';
+    var result1 = await bookingCol.where('id', isEqualTo: id).get();
+
+    var docId2 = '';
+    var result2 =
+        await bookingMicroCol.where('booking_id', isEqualTo: id).get();
+
+    for (var doc in result1.docs) {
+      docId1 = doc.id;
+    }
+    for (var doc in result2.docs) {
+      docId2 = doc.id;
+    }
+
+    await bookingCol.doc(docId1).update({
+      'status_booking': 'New',
+      'status_date': '',
+      'working_hours': '',
+      'micro': newMicro,
+    });
+    await bookingMicroCol.doc(docId2).update({
+      'status_booking1': status,
+      'status_date1': statusDate,
+      'working_hours1': workingHours,
+      'micro2': newMicro,
+      'status_booking2': 'New',
+      'status_date2': '',
+      'working_hours2': '',
+    });
+  } catch (e) {
+    debugPrint('Failed to assignNewMicroBooking: $e');
+  }
+}
+
+Future<void> updateStatusBooking2({
+  required int id,
+  required String status,
+  required String statusDate,
+  required String workingHours,
+}) async {
+  try {
+    var docId1 = '';
+    var result1 = await bookingCol.where('id', isEqualTo: id).get();
+
+    var docId2 = '';
+    var result2 =
+        await bookingMicroCol.where('booking_id', isEqualTo: id).get();
+
+    for (var doc in result1.docs) {
+      docId1 = doc.id;
+    }
+    for (var doc in result2.docs) {
+      docId2 = doc.id;
+    }
+
+    await bookingCol.doc(docId1).update({
+      'status_booking': status,
+      'status_date': statusDate,
+      'working_hours': workingHours,
+    });
+    await bookingMicroCol.doc(docId2).update({
+      'status_booking2': status,
+      'status_date2': statusDate,
+      'working_hours2': workingHours,
+    });
+  } catch (e) {
+    debugPrint('Failed to updateStatusBooking2: $e');
+  }
+}
+
+Future<void> getByBookingMicro(int id) async {
+  var res = await bookingMicroCol.where('booking_id', isEqualTo: id).get();
+  byBookingMicro.value =
+      res.docs.map((doc) => BookingMicroModel.fromMap(doc.data())).toList();
+}
+
 Future<void> getBookingApprove() async {
   var res = await bookingCol
       .where('status_booking', isEqualTo: 'Approve')

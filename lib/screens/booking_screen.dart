@@ -40,7 +40,7 @@ class BookingScreen extends StatelessWidget {
         shrinkWrap: true,
         physics: const BouncingScrollPhysics(),
         children: [
-          AppText.header(context, txt: 'Booking List'),
+          AppText.header(context, txt: 'Booking Sale List'),
           spacer(context),
           TextField(
             controller: con.search.value,
@@ -159,7 +159,7 @@ class BookingDataSource extends DataTableSource {
         DataTableWidget.cellBtn(
           Get.context!,
           btnDelete: false,
-          btnUpdate: data.statusBooking == 'New' ? true : false,
+          btnUpdate: true,
           edit: () async {
             startInactivityTimer();
             conNewBook.clearText();
@@ -173,10 +173,20 @@ class BookingDataSource extends DataTableSource {
           },
           update: () async {
             startInactivityTimer();
-            con.clearDialog();
-            con.status.value = data.statusBooking;
             await microName();
-            showDialogStatus(Get.context!, data.micro);
+            await getByBookingMicro(data.id);
+
+            con.clearDialog();
+            con.status.value = byBookingMicro[0].statusBooking1;
+            con.newStatus.value = byBookingMicro[0].statusBooking2;
+            con.oldMicro.value = byBookingMicro[0].micro1;
+            con.newMicro.value = byBookingMicro[0].micro2;
+
+            showDialogStatus(
+              Get.context!,
+              bookingId: data.id,
+              bookingDate: data.bookingDate,
+            );
           },
         ),
         DataTableWidget.cell(Get.context!, '${data.id}'),
@@ -234,7 +244,13 @@ class BookingDataSource extends DataTableSource {
     }
   }
 
-  void showDialogStatus(BuildContext context, String oldMicro) {
+  void showDialogStatus(
+    BuildContext context, {
+    required int bookingId,
+    required String bookingDate,
+  }) {
+    var res = byBookingMicro[0];
+
     showDialog(
       context: context,
       barrierDismissible: false,
@@ -245,46 +261,58 @@ class BookingDataSource extends DataTableSource {
           ),
           title: AppText.header(context, txt: 'Booking Status'),
           content: SizedBox(
-            height: 230.px,
+            height: 280.px,
             child: Column(
               children: [
+                spacer(context),
+                AppDropdownSearch(
+                  txt: 'Micro',
+                  value: con.oldMicro,
+                  list: conNewBook.microList,
+                  enable: false,
+                  onChanged: (v) {
+                    startInactivityTimer();
+                    if (v != null) con.oldMicro.value = v;
+                  },
+                ),
                 spacer(context),
                 AppDropdownSearch(
                   txt: 'Status',
                   value: con.status,
                   list: con.statusList,
+                  enable: res.statusBooking1 == "New" ? true : false,
                   onChanged: (v) async {
                     startInactivityTimer();
-                    if (v != null) {
-                      con.status.value = v;
-                      if (v == 'Approve') {
-                        con.isApp.value = false;
-                      } else {
-                        con.isApp.value = true;
-                        con.oldMicro.value = oldMicro;
-                      }
-                    }
+                    if (v != null) con.status.value = v;
                   },
                 ),
                 spacer(context),
                 AppDropdownSearch(
-                  txt: 'Old Micro',
-                  value: con.oldMicro,
+                  txt: 'New Micro',
+                  value: con.newMicro,
                   list: conNewBook.microList,
-                  enable: false,
-                  onChanged: (v) {},
+                  enable: res.statusBooking1 == "Reject" && res.micro2 == ''
+                      ? true
+                      : false,
+                  onChanged: (v) {
+                    startInactivityTimer();
+                    if (v != null) con.newMicro.value = v;
+                  },
                 ),
                 spacer(context),
-                Obx(
-                  () => AppDropdownSearch(
-                    txt: 'New Micro',
-                    value: con.newMicro,
-                    list: conNewBook.microList,
-                    enable: con.isApp.value,
-                    onChanged: (v) {
-                      if (v != null) con.newMicro.value = v;
-                    },
-                  ),
+                AppDropdownSearch(
+                  txt: 'New Status',
+                  value: con.newStatus,
+                  list: con.statusList,
+                  enable: res.statusBooking1 == "Reject" &&
+                          res.statusBooking2 == "New" &&
+                          res.micro2 != ''
+                      ? true
+                      : false,
+                  onChanged: (v) async {
+                    startInactivityTimer();
+                    if (v != null) con.newStatus.value = v;
+                  },
                 ),
               ],
             ),
@@ -296,13 +324,28 @@ class BookingDataSource extends DataTableSource {
               color: secondGreyColor,
               tap: () => Navigator.of(context).pop(),
             ),
-            spacer(context),
-            spacer(context),
-            AppButton(
-              txt: 'Update',
-              width: 120.px,
-              tap: () => Navigator.of(context).pop(),
-            ),
+            res.statusBooking1 == 'Approve' || res.statusBooking2 != 'New'
+                ? Container()
+                : spacer(context),
+            res.statusBooking1 == 'Approve' || res.statusBooking2 != 'New'
+                ? Container()
+                : spacer(context),
+            res.statusBooking1 == 'Approve' || res.statusBooking2 != 'New'
+                ? Container()
+                : AppButton(
+                    txt: 'Update',
+                    width: 120.px,
+                    tap: () async {
+                      startInactivityTimer();
+                      await con.updateStaus(bookingId, bookingDate);
+
+                      await getAllBooking();
+                      con.filteredBooking.value = booking;
+                      con.search.value.addListener(con.filterBookingData);
+
+                      Get.back();
+                    },
+                  ),
           ],
         );
       },

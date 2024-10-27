@@ -86,7 +86,7 @@ class DrawerMenu extends StatelessWidget {
 
                           con.index.value = 21;
                         },
-                        title: 'Leasing',
+                        title: 'Leasing Sale',
                         svgSrc: 'assets/icons/SaleRecord.svg',
                       ),
                     ),
@@ -99,7 +99,7 @@ class DrawerMenu extends StatelessWidget {
 
                           con.index.value = 23;
                         },
-                        title: 'Cash',
+                        title: 'Cash Sale',
                         svgSrc: 'assets/icons/TotalExpenses.svg',
                       ),
                     ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:motor/constants/constants.dart';
 import 'package:motor/constants/firebase.dart';
 import 'package:motor/controllers/new_booking_controller.dart';
 
@@ -63,15 +64,80 @@ class BookingController extends GetxController {
     con.remark.value.text = byBooking[0].remark;
   }
 
-  var isApp = false.obs;
-  var status = Rxn<String>();
-  var newMicro = Rxn<String>();
-  var oldMicro = Rxn<String>();
   var statusList = ['Approve', 'Reject'].obs;
 
+  var status = Rxn<String>();
+  var newStatus = Rxn<String>();
+  var newMicro = Rxn<String>();
+  var oldMicro = Rxn<String>();
+
+  Future<void> updateStaus(int id, String bookingDate) async {
+    await getByBookingMicro(id);
+    var data = byBookingMicro[0];
+
+    var dateNow = dateFormat.format(DateTime.now());
+    var timeNow = timeFormat.format(DateTime.now());
+
+    var date1 = DateTime.parse(bookingDate);
+    var date2 = DateTime.parse('$dateNow $timeNow');
+
+    var year1 = date1.year;
+    var month1 = date1.month;
+    var day1 = date1.day;
+    var hour1 = date1.hour;
+    var minute1 = date1.minute;
+
+    var year2 = date2.year;
+    var month2 = date2.month;
+    var day2 = date2.day;
+    var hour2 = date2.hour;
+    var minute2 = date2.minute;
+
+    var start = DateTime(year1, month1, day1, hour1, minute1);
+    var end = DateTime(year2, month2, day2, hour2, minute2);
+    var difference = end.difference(start);
+
+    var workDays = difference.inDays;
+    var workHours = difference.inHours % 24;
+    var workMinutes = difference.inMinutes % 60;
+    var workingHours = '$workDays Days $workHours Hours $workMinutes Minutes';
+
+    if (data.micro2 == '' && data.statusBooking2 == '') {
+      if (status.value != 'New') {
+        await updateStatusBooking1(
+          id: id,
+          status: status.value ?? '',
+          statusDate: '$dateNow $timeNow',
+          workingHours: workingHours,
+        );
+      }
+    }
+    if (data.statusBooking1 == 'Reject' && data.statusBooking2 == '') {
+      if (newMicro.value != null && data.micro1 != newMicro.value) {
+        await assignNewMicroBooking(
+          id: id,
+          newMicro: newMicro.value ?? '',
+          status: status.value ?? '',
+          statusDate: '$dateNow $timeNow',
+          workingHours: workingHours,
+        );
+      }
+    }
+    if (data.statusBooking1 == 'Reject' && data.micro2 != '') {
+      if (newStatus.value != 'New') {
+        await updateStatusBooking2(
+          id: id,
+          status: newStatus.value ?? '',
+          statusDate: '$dateNow $timeNow',
+          workingHours: workingHours,
+        );
+      }
+    }
+  }
+
   void clearDialog() {
-    isApp.value = false;
     status.value = null;
+    newStatus.value = null;
     newMicro.value = null;
     oldMicro.value = null;
   }

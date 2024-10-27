@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:motor/constants/constants.dart';
 import 'package:motor/constants/firebase.dart';
 import 'package:motor/constants/responsive.dart';
+import 'package:motor/controllers/leasing_controller.dart';
 import 'package:motor/controllers/main_controller.dart';
 import 'package:motor/controllers/new_leasing_controller.dart';
 import 'package:motor/screens/components/app_button.dart';
@@ -18,6 +19,7 @@ class NewLeasingScreen extends StatelessWidget {
   NewLeasingScreen({super.key});
 
   final con = Get.put(NewLeasingController());
+  final conL = Get.put(LeasingController());
   final conMain = Get.put(MainController());
 
   @override
@@ -349,9 +351,13 @@ class NewLeasingScreen extends StatelessWidget {
                   txt: 'Cancel',
                   width: Responsive.isDesktop(context) ? 150.px : 100.px,
                   color: secondGreyColor,
-                  tap: () {
+                  tap: () async {
                     startInactivityTimer();
                     con.clearText();
+                    await getAllLeasing();
+                    conL.filteredLeasing.value = leasing;
+                    conL.search.value.addListener(conL.filterLeasingData);
+
                     conMain.index.value = conMain.index.value - 1;
                   },
                 ),

@@ -33,7 +33,7 @@ class LeasingScreen extends StatelessWidget {
         shrinkWrap: true,
         physics: const BouncingScrollPhysics(),
         children: [
-          AppText.header(context, txt: 'Leasing List'),
+          AppText.header(context, txt: 'Leasing Sale List'),
           spacer(context),
           TextField(
             controller: con.search.value,
