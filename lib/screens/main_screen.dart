@@ -96,7 +96,7 @@ class MainScreen extends StatelessWidget {
           case 12:
             return CreateProductScreen();
           case 13:
-            return const FinancialRecordScreen();
+            return FinancialRecordScreen();
           case 15:
             return UserScreen();
           case 16:

@@ -173,8 +173,8 @@ class NewCashScreen extends StatelessWidget {
                   width: Responsive.isDesktop(context) ? 150.px : 100.px,
                   tap: () async {
                     startInactivityTimer();
-                    final pdfData = await generatePDF(context);
-                    savePdfToFile(pdfData);
+                    final pdfData = await generatePdf();
+                    printPdf(pdfData);
                   },
                 ),
                 spacer(context),
