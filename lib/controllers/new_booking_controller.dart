@@ -70,7 +70,7 @@ class NewBookingController extends GetxController {
         name.value.text != '' &&
         age.value.text != '' &&
         phoneCus.value.text != '' &&
-        year.value.text != '' &&
+        year.value.text.length == 4 &&
         sell.value.text != '' &&
         discount.value.text != '' &&
         depo.value.text != '' &&
@@ -166,7 +166,7 @@ class NewBookingController extends GetxController {
         name.value.text != '' &&
         age.value.text != '' &&
         phoneCus.value.text != '' &&
-        year.value.text != '' &&
+        year.value.text.length == 4 &&
         sell.value.text != '' &&
         discount.value.text != '' &&
         depo.value.text != '' &&

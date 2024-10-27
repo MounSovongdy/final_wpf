@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:motor/constants/constants.dart';
+import 'package:motor/constants/firebase.dart';
 import 'package:motor/constants/responsive.dart';
+import 'package:motor/controllers/cash_controller.dart';
 import 'package:motor/controllers/main_controller.dart';
 import 'package:motor/controllers/new_cash_controller.dart';
-import 'package:motor/controllers/open_printer_dailog_controller.dart';
 import 'package:motor/screens/components/app_button.dart';
-import 'package:motor/screens/components/app_dropdown.dart';
+import 'package:motor/screens/components/app_dropdown_search.dart';
 import 'package:motor/screens/components/app_text_field.dart';
 import 'package:motor/screens/components/row_text_field.dart';
 import 'package:motor/screens/components/title_underline.dart';
@@ -18,14 +19,8 @@ class NewCashScreen extends StatelessWidget {
   NewCashScreen({super.key});
 
   final con = Get.put(NewCashController());
+  final conC = Get.put(CashController());
   final conMain = Get.put(MainController());
-
-  final gender = ['Male', 'Female'];
-  final salesman = ['Thol', 'Sora', 'Piseth'];
-  final brand = ['Honda', 'Suzuki', 'Yamaha'];
-  final model = ['Dream', 'Best', 'Sccoopy'];
-  final color = ['Red', 'Black', 'Blue'];
-  final condition = ['New', 'Used'];
 
   @override
   Widget build(BuildContext context) {
@@ -41,16 +36,19 @@ class NewCashScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            AppText.header(context, txt: 'Cash'),
+            AppText.header(context, txt: 'New Cash'),
             spacer(context),
             TitleUnderline(spacer: spacer(context), txt: 'Sell Information'),
             RowTextField(
               spacer: spacer(context),
-              widget1: AppTextField(txt: 'Date', con: con.dateBooking.value),
-              widget2: AppDropdown(
+              widget1: AppTextField(
+                txt: 'Date',
+                con: con.dateBooking.value,
+              ),
+              widget2: AppDropdownSearch(
                 txt: 'Salesman',
                 value: con.salesman,
-                list: salesman,
+                list: con.saleManList,
                 onChanged: (v) {
                   if (v != null) con.salesman.value = v;
                 },
@@ -62,12 +60,20 @@ class NewCashScreen extends StatelessWidget {
             ),
             RowTextField(
               spacer: spacer(context),
-              widget1: AppTextField(txt: 'ID Card', con: con.name.value),
-              widget2: AppTextField(txt: 'Name', con: con.name.value),
-              widget3: AppDropdown(
+              widget1: AppTextField(
+                txt: 'ID Card',
+                con: con.idCard.value,
+                isNumber: true,
+                digit: 9,
+              ),
+              widget2: AppTextField(
+                txt: 'Name',
+                con: con.name.value,
+              ),
+              widget3: AppDropdownSearch(
                 txt: 'Gender',
                 value: con.gender,
-                list: gender,
+                list: con.genderList,
                 onChanged: (v) {
                   if (v != null) con.gender.value = v;
                 },
@@ -75,62 +81,145 @@ class NewCashScreen extends StatelessWidget {
             ),
             RowTextField(
               spacer: spacer(context),
-              widget1: AppTextField(txt: 'Age', con: con.age.value),
-              widget2: AppTextField(txt: 'Tel', con: con.phoneCus.value),
-              widget3: AppTextField(txt: 'Address', con: con.address.value),
+              widget1: AppTextField(
+                txt: 'Age',
+                con: con.age.value,
+                isNumber: true,
+                digit: 2,
+              ),
+              widget2: AppTextField(
+                txt: 'Tel',
+                con: con.phoneCus.value,
+                isNumber: true,
+                digit: 10,
+              ),
+              widget3: AppDropdownSearch(
+                txt: 'Address',
+                value: con.address,
+                list: con.addressList,
+                onChanged: (v) {
+                  if (v != null) con.address.value = v;
+                },
+              ),
             ),
-            TitleUnderline(spacer: spacer(context), txt: 'Product Information'),
+            TitleUnderline(
+              spacer: spacer(context),
+              txt: 'Product Information',
+            ),
             RowTextField(
               spacer: spacer(context),
-              widget1: AppDropdown(
+              widget1: AppDropdownSearch(
+                txt: 'Brand',
+                value: con.proBrand,
+                list: con.brandList,
+                onChanged: (v) async {
+                  if (v != null) {
+                    con.modelList.clear();
+                    con.model.value = null;
+                    await getByProduct(v);
+                    for (var data in byProduct) {
+                      con.modelList.add(data.model);
+                    }
+                    con.proBrand.value = v;
+                  }
+                },
+              ),
+              widget2: AppDropdownSearch(
                 txt: 'Model',
                 value: con.model,
-                list: model,
+                list: con.modelList,
                 onChanged: (v) {
                   if (v != null) con.model.value = v;
                 },
               ),
-              widget2: AppDropdown(
-                txt: 'Brand',
-                value: con.brand,
-                list: brand,
-                onChanged: (v) {
-                  if (v != null) con.brand.value = v;
-                },
+              widget3: AppTextField(
+                txt: 'Year',
+                con: con.year.value,
+                isNumber: true,
+                digit: 4,
               ),
-              widget3: AppDropdown(
+            ),
+            RowTextField(
+              spacer: spacer(context),
+              widget1: AppDropdownSearch(
                 txt: 'Color',
                 value: con.color,
-                list: color,
+                list: con.colorList,
                 onChanged: (v) {
                   if (v != null) con.color.value = v;
                 },
               ),
-            ),
-            RowTextField(
-              spacer: spacer(context),
-              widget1: AppTextField(txt: 'Year', con: con.year.value),
-              widget2: AppDropdown(
+              widget2: AppTextField(
+                txt: 'Power',
+                con: con.power.value,
+                isNumber: true,
+                digit: 3,
+              ),
+              widget3: AppDropdownSearch(
                 txt: 'Condition',
                 value: con.condition,
-                list: condition,
+                list: con.conditionList,
                 onChanged: (v) {
                   if (v != null) con.condition.value = v;
                 },
               ),
-              widget3: AppTextField(txt: 'Engine No', con: con.engine.value),
             ),
             RowTextField(
               spacer: spacer(context),
-              widget1: AppTextField(txt: 'Frame No', con: con.frame.value),
-              widget2: AppTextField(txt: 'Plate No', con: con.plateNo.value),
+              widget1: AppTextField(
+                txt: 'Engine No',
+                con: con.engine.value,
+              ),
+              widget2: AppTextField(
+                txt: 'Frame No',
+                con: con.frame.value,
+              ),
+              widget3: AppDropdownSearch(
+                txt: 'Type',
+                value: con.type,
+                list: con.typeList,
+                onChanged: (v) {
+                  if (v != null) {
+                    con.type.value = v;
+                    if (v == 'Plate Number') {
+                      con.isTax.value = false;
+                    } else {
+                      con.isTax.value = true;
+                    }
+                  }
+                },
+              ),
+            ),
+            RowTextField(
+              spacer: spacer(context),
+              widget1: Obx(
+                () => AppTextField(
+                  txt: 'Plate No',
+                  con: con.plateNo.value,
+                  readOnly: con.isTax.value,
+                ),
+              ),
             ),
             TitleUnderline(
-                spacer: spacer(context), txt: 'Financial Information'),
+              spacer: spacer(context),
+              txt: 'Financial Information',
+            ),
             RowTextField(
               spacer: spacer(context),
-              widget1: AppTextField(txt: 'Sell Price', con: con.sell.value),
-              widget2: AppTextField(txt: 'Discount', con: con.discount.value),
+              widget1: AppTextField(
+                txt: 'Sell Price',
+                con: con.sell.value,
+                isNumber: true,
+                digit: 5,
+                onChanged: (v) => con.calculateRemain(),
+              ),
+              widget2: AppTextField(
+                txt: 'Discount',
+                con: con.discount.value,
+                isNumber: true,
+                digit: 5,
+                onChanged: (v) => con.calculateRemain(),
+              ),
               widget3: AppTextField(
                 txt: 'Total Price',
                 con: con.totalPrice.value,
@@ -138,17 +227,53 @@ class NewCashScreen extends StatelessWidget {
               ),
             ),
             TitleUnderline(
-                spacer: spacer(context), txt: 'Introduced Information'),
-            RowTextField(
               spacer: spacer(context),
-              widget1: AppTextField(txt: 'Come By', con: con.comeBy.value),
-              widget2: AppTextField(txt: 'Name', con: con.nameIntro.value),
-              widget3: AppTextField(txt: 'Tel', con: con.phoneIntro.value),
+              txt: 'Introduced Information',
             ),
             RowTextField(
               spacer: spacer(context),
-              widget1: AppTextField(
-                  txt: 'Commission fee', con: con.commission.value),
+              widget1: AppDropdownSearch(
+                txt: 'Come By',
+                value: con.comeBy,
+                list: con.comeByList,
+                onChanged: (v) {
+                  if (v != null) {
+                    con.comeBy.value = v;
+                    if (con.comeBy.value != 'Friend') {
+                      con.nameIntro.value.text = '';
+                      con.phoneIntro.value.text = '';
+                    }
+                  }
+                },
+              ),
+              widget2: Obx(
+                () => AppTextField(
+                  txt: 'Name',
+                  con: con.nameIntro.value,
+                  readOnly: con.comeBy.value == 'Friend' ? false : true,
+                ),
+              ),
+              widget3: Obx(
+                () => AppTextField(
+                  txt: 'Tel',
+                  con: con.phoneIntro.value,
+                  readOnly: con.comeBy.value == 'Friend' ? false : true,
+                  isNumber: true,
+                  digit: 10,
+                ),
+              ),
+            ),
+            RowTextField(
+              spacer: spacer(context),
+              widget1: Obx(
+                () => AppTextField(
+                  txt: 'Commission',
+                  con: con.commission.value,
+                  readOnly: con.comeBy.value == 'Friend' ? false : true,
+                  isNumber: true,
+                  digit: 3,
+                ),
+              ),
             ),
             spacer(context),
             spacer(context),
@@ -161,20 +286,14 @@ class NewCashScreen extends StatelessWidget {
                   txt: 'Back',
                   width: Responsive.isDesktop(context) ? 150.px : 100.px,
                   color: secondGreyColor,
-                  tap: () {
-                    startInactivityTimer();
-                    conMain.index.value = conMain.index.value - 1;
-                  },
-                ),
-                spacer(context),
-                spacer(context),
-                AppButton(
-                  txt: 'Print Invoice',
-                  width: Responsive.isDesktop(context) ? 150.px : 100.px,
                   tap: () async {
                     startInactivityTimer();
-                    final pdfData = await generatePdf();
-                    printPdf(pdfData);
+                    con.clearText();
+                    await getAllCash();
+                    conC.filteredCash.value = cash;
+                    conC.search.value.addListener(conC.filterCashData);
+
+                    conMain.index.value = conMain.index.value - 1;
                   },
                 ),
                 spacer(context),
@@ -182,7 +301,10 @@ class NewCashScreen extends StatelessWidget {
                 AppButton(
                   txt: 'Save',
                   width: Responsive.isDesktop(context) ? 150.px : 100.px,
-                  tap: () {},
+                  tap: () async {
+                    startInactivityTimer();
+                    con.createCash(context);
+                  },
                 ),
               ],
             ),

@@ -78,7 +78,7 @@ class NewLeasingController extends GetxController {
         model.value != null &&
         color.value != null &&
         power.value.text != '' &&
-        year.value.text != '' &&
+        year.value.text.length == 4 &&
         condition.value != null &&
         engine.value.text != '' &&
         frame.value.text != '' &&

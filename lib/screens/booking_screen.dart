@@ -56,7 +56,6 @@ class BookingScreen extends StatelessWidget {
             () => con.filteredBooking.isNotEmpty
                 ? AppDataTable(
                     column: [
-                      DataTableWidget.column(context, 'Action'),
                       DataTableWidget.column(context, 'ID'),
                       DataTableWidget.column(context, 'Salesman'),
                       DataTableWidget.column(context, 'Date'),
@@ -75,6 +74,7 @@ class BookingScreen extends StatelessWidget {
                       DataTableWidget.column(context, 'Status Booking'),
                       DataTableWidget.column(context, 'Status Done'),
                       DataTableWidget.column(context, 'Working Hours'),
+                      DataTableWidget.column(context, 'Action'),
                     ],
                     source: BookingDataSource(),
                   )
@@ -156,6 +156,24 @@ class BookingDataSource extends DataTableSource {
     return DataRow.byIndex(
       index: index,
       cells: [
+        DataTableWidget.cell(Get.context!, '${data.id}'),
+        DataTableWidget.cell(Get.context!, data.saleman),
+        DataTableWidget.cell(Get.context!, data.bookingDate),
+        DataTableWidget.cell(Get.context!, data.idCard),
+        DataTableWidget.cell(Get.context!, data.name),
+        DataTableWidget.cell(Get.context!, data.tel),
+        DataTableWidget.cell(Get.context!, data.brand),
+        DataTableWidget.cell(Get.context!, data.model),
+        DataTableWidget.cell(Get.context!, data.color),
+        DataTableWidget.cell(Get.context!, data.year),
+        DataTableWidget.cell(Get.context!, data.power),
+        DataTableWidget.cell(Get.context!, data.condition),
+        DataTableWidget.cell(Get.context!, data.price),
+        DataTableWidget.cell(Get.context!, data.remain),
+        DataTableWidget.cell(Get.context!, data.micro),
+        DataTableWidget.cell(Get.context!, data.statusBooking),
+        DataTableWidget.cell(Get.context!, data.statusDone),
+        DataTableWidget.cell(Get.context!, data.workingHours),
         DataTableWidget.cellBtn(
           Get.context!,
           btnDelete: false,
@@ -189,24 +207,6 @@ class BookingDataSource extends DataTableSource {
             );
           },
         ),
-        DataTableWidget.cell(Get.context!, '${data.id}'),
-        DataTableWidget.cell(Get.context!, data.saleman),
-        DataTableWidget.cell(Get.context!, data.bookingDate),
-        DataTableWidget.cell(Get.context!, data.idCard),
-        DataTableWidget.cell(Get.context!, data.name),
-        DataTableWidget.cell(Get.context!, data.tel),
-        DataTableWidget.cell(Get.context!, data.brand),
-        DataTableWidget.cell(Get.context!, data.model),
-        DataTableWidget.cell(Get.context!, data.color),
-        DataTableWidget.cell(Get.context!, data.year),
-        DataTableWidget.cell(Get.context!, data.power),
-        DataTableWidget.cell(Get.context!, data.condition),
-        DataTableWidget.cell(Get.context!, data.price),
-        DataTableWidget.cell(Get.context!, data.remain),
-        DataTableWidget.cell(Get.context!, data.micro),
-        DataTableWidget.cell(Get.context!, data.statusBooking),
-        DataTableWidget.cell(Get.context!, data.statusDone),
-        DataTableWidget.cell(Get.context!, data.workingHours),
       ],
     );
   }

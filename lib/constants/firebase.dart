@@ -6,6 +6,7 @@ import 'package:motor/models/add_stock_model.dart';
 import 'package:motor/models/booking_micro_model.dart';
 import 'package:motor/models/booking_model.dart';
 import 'package:motor/models/brand_model.dart';
+import 'package:motor/models/cash_model.dart';
 import 'package:motor/models/friend_commission_model.dart';
 import 'package:motor/models/leasing_model.dart';
 import 'package:motor/models/micro_commission_model.dart';
@@ -32,6 +33,7 @@ final leasingCol = _firebase.collection('leasing');
 final microComCol = _firebase.collection('micro_commission');
 final saleManComCol = _firebase.collection('sale_man_commission');
 final friendComCol = _firebase.collection('friend_commission');
+final cashCol = _firebase.collection('cash');
 
 var currVersion = '1.0.0'.obs;
 var byUser = [].obs;
@@ -55,6 +57,7 @@ var leasing = [].obs;
 var microCom = [].obs;
 var saleManCom = [].obs;
 var friendCom = [].obs;
+var cash = [].obs;
 
 Future<void> getByUser(String userlogin) async {
   var res = await userCol.where('user', isEqualTo: userlogin).get();
@@ -762,5 +765,72 @@ Future<void> insertFriendCommission(FriendCommissionModel friCom) async {
     await friendComCol.doc('${friCom.id}').set(friCom.toMap());
   } catch (e) {
     debugPrint('Failed to add insert Friend Commission: $e');
+  }
+}
+
+Future<void> getAllCash() async {
+  var res = await cashCol.orderBy('id', descending: true).get();
+  cash.value = res.docs.map((doc) => CashModel.fromMap(doc.data())).toList();
+}
+
+Future<void> insertCash(
+  CashModel cash, {
+  required String model,
+  required String brand,
+  required String year,
+  required String condition,
+  required void Function() clear,
+}) async {
+  try {
+    var docId = '';
+    var res = await totalStockCol
+        .where('model', isEqualTo: model)
+        .where('brand', isEqualTo: brand)
+        .where('year', isEqualTo: year)
+        .where('condition', isEqualTo: condition)
+        .get();
+
+    for (var doc in res.docs) {
+      docId = doc.id;
+    }
+
+    stockByModel.value =
+        res.docs.map((doc) => TotalStockModel.fromMap(doc.data())).toList();
+
+    if (stockByModel.isNotEmpty) {
+      var oldQty = int.parse(stockByModel[0].totalQty);
+      var currQty = int.parse('1');
+      var newQty = oldQty - currQty;
+
+      if (oldQty > 0) {
+        LoadingWidget.dialogLoading(duration: 5, isBack: false);
+        await totalStockCol.doc(docId).update({'total_qty': '$newQty'});
+        await cashCol.doc('${cash.id}').set(cash.toMap());
+        Get.back();
+        LoadingWidget.showTextDialog(
+          Get.context!,
+          title: 'Successfully',
+          content: 'The Leasing already created.',
+          color: greenColor,
+        );
+        clear();
+      } else {
+        LoadingWidget.showTextDialog(
+          Get.context!,
+          title: 'Error',
+          content: 'The Model is Out of Stock.',
+          color: redColor,
+        );
+      }
+    } else {
+      LoadingWidget.showTextDialog(
+        Get.context!,
+        title: 'Error',
+        content: 'The Model is not yet record stock',
+        color: redColor,
+      );
+    }
+  } catch (e) {
+    debugPrint('Failed to add cash: $e');
   }
 }
