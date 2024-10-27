@@ -5,6 +5,7 @@ import 'package:motor/constants/responsive.dart';
 import 'package:motor/controllers/leasing_controller.dart';
 import 'package:motor/controllers/main_controller.dart';
 import 'package:motor/controllers/new_leasing_controller.dart';
+import 'package:motor/controllers/printer_controller.dart';
 import 'package:motor/screens/components/app_button.dart';
 import 'package:motor/screens/components/app_data_table.dart';
 import 'package:motor/screens/components/under_line.dart';
@@ -18,6 +19,7 @@ class LeasingScreen extends StatelessWidget {
   final con = Get.put(LeasingController());
   final conNL = Get.put(NewLeasingController());
   final conMain = Get.put(MainController());
+  final conPrint = Get.put(PrintController());
 
   @override
   Widget build(BuildContext context) {
@@ -81,6 +83,17 @@ class LeasingScreen extends StatelessWidget {
           ),
           spacer(context),
           spacer(context),
+          Column(
+            children: [
+              RepaintBoundary(
+                key: conPrint.globalKey,
+                child: const Text(
+                  "សួស្តីពិភពលោក",
+                  style: TextStyle(fontSize: 24, fontFamily: 'Koulen'), // Ensure font is loaded in pubspec.yaml
+                ),
+              ),
+            ],
+          ),
           const UnderLine(color: secondGreyColor),
           spacer(context),
           Row(
@@ -108,6 +121,7 @@ class LeasingScreen extends StatelessWidget {
 
 class LeasingDataSource extends DataTableSource {
   final con = Get.put(LeasingController());
+  final conPrint = Get.put(PrintController());
 
   @override
   DataRow? getRow(int index) {
@@ -145,7 +159,14 @@ class LeasingDataSource extends DataTableSource {
           btnPrint: true,
           edit: () => debugPrint('Edit $index'),
           delete: () => debugPrint('Delete $index'),
-          print: () {},
+          print: () {
+            WidgetsBinding.instance.addPostFrameCallback((_) async {
+              // Another frame callback to ensure the widget is fully rendered.
+              WidgetsBinding.instance.addPostFrameCallback((_) async {
+                await conPrint.printPdf(data.name);
+              });
+            });
+          },
         ),
       ],
     );

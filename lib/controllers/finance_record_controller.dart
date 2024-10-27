@@ -2,7 +2,8 @@ import 'package:get/get.dart';
 
 class FinanceRecordController extends GetxController{
   var selectedMonth = Rxn<String>();
-  var monthList = ['January',
+  var monthList = [
+    'January',
     'February',
     'March',
     'April',
@@ -13,5 +14,6 @@ class FinanceRecordController extends GetxController{
     'September',
     'October',
     'November',
-    'December'].obs;
+    'December',
+  ].obs;
 }
