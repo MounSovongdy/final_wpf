@@ -1,5 +1,3 @@
-import 'dart:typed_data';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:motor/constants/constants.dart';
@@ -28,8 +26,6 @@ class NewCashScreen extends StatelessWidget {
   final model = ['Dream', 'Best', 'Sccoopy'];
   final color = ['Red', 'Black', 'Blue'];
   final condition = ['New', 'Used'];
-
-  bool _isLoading = false;
 
   @override
   Widget build(BuildContext context) {
@@ -177,8 +173,8 @@ class NewCashScreen extends StatelessWidget {
                   width: Responsive.isDesktop(context) ? 150.px : 100.px,
                   tap: () async {
                     startInactivityTimer();
-                    final pdfData = await generatePDF(context);
-                    savePdfToFile(pdfData);
+                    final pdfData = await generatePdf();
+                    printPdf(pdfData);
                   },
                 ),
                 spacer(context),
