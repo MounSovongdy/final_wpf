@@ -1,6 +1,3 @@
-
-import 'dart:typed_data';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:motor/constants/constants.dart';
@@ -113,6 +110,7 @@ class LeasingScreen extends StatelessWidget {
 class LeasingDataSource extends DataTableSource {
   final con = Get.put(LeasingController());
 
+
   @override
   DataRow? getRow(int index) {
     assert(index >= 0);
@@ -150,10 +148,8 @@ class LeasingDataSource extends DataTableSource {
           edit: () => debugPrint('Edit $index'),
           delete: () => debugPrint('Delete $index'),
           print: () async{
-            // final pdfData = await generatePdf();
-            // printPdf(pdfData);
+            printPdf();
           },
-
         ),
       ],
     );
