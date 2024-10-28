@@ -1,67 +1,39 @@
-import 'dart:typed_data';
-import 'dart:ui' as ui;
-import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
+
 import 'package:flutter/services.dart';
-import 'package:get/get.dart';
 import 'package:pdf/widgets.dart' as pw;
-import 'package:pdf/pdf.dart';
-import 'package:printing/printing.dart';
+import 'package:universal_html/html.dart' as html;
+import 'package:typed_data/typed_data.dart';
 
 
-class PrintController extends GetxController{
-  final GlobalKey globalKey = GlobalKey();
-  String textToPrint = "Default Text";
+  // Future<Uint8List> generatePdf() async {
+  //
+  //   final ByteData fontData = await rootBundle.load('assets/fonts/Battambang-Regular.ttf');
+  //   final pw.Font ttf = pw.Font.ttf(fontData.buffer.asUint8List() as ByteData);
+  //
+  //   final pdf = pw.Document();
+  //   pdf.addPage(
+  //     pw.Page(
+  //       build: (pw.Context context) {
+  //         return pw.Center(
+  //           child: pw.Text(
+  //             'សួស្តីពិភពលោក', // "Hello World" in Khmer
+  //             style: pw.TextStyle(font: ttf, fontSize: 40),
+  //           ),
+  //         );
+  //       },
+  //     ),
+  //   );
+  //
+  //     return await pdf.save();
+  // }
 
-  Future<Uint8List> _captureTextAsImage() async {
-    await Future.delayed(const Duration(milliseconds: 100));
-    final RenderRepaintBoundary? boundary =
-    globalKey.currentContext?.findRenderObject() as RenderRepaintBoundary?;
 
-    if (boundary == null) {
-      throw Exception("RenderRepaintBoundary is not available");
-    }
-
-    final ui.Image image = await boundary.toImage(pixelRatio: 3.0);
-    final ByteData? byteData = await image.toByteData(format: ui.ImageByteFormat.png);
-    return byteData!.buffer.asUint8List();
-  }
-
-  Future<Uint8List> _generatePdfWithImage(Uint8List imageBytes) async {
-    final pdf = pw.Document();
-
-    pdf.addPage(
-      pw.Page(
-        build: (pw.Context context) {
-          return pw.Center(
-            child: pw.Image(
-              pw.MemoryImage(imageBytes),
-              width: 200,
-              height: 100,
-            ),
-          );
-        },
-      ),
-    );
-
-    return pdf.save();
-  }
-  Future<void> printPdf(String text) async {
-    textToPrint = text;  // Update the text to display in the widget
-
-    try {
-      // Capture the updated text as an image
-      Uint8List imageBytes = await _captureTextAsImage();
-
-      // Generate a PDF with the image
-      Uint8List pdfData = await _generatePdfWithImage(imageBytes);
-
-      // Print the PDF
-      await Printing.layoutPdf(
-        onLayout: (PdfPageFormat format) async => pdfData,
-      );
-    } catch (e) {
-      debugPrint("Error generating PDF: $e");
-    }
-  }
+void printPdf(Uint8List pdfData) {
+  final blob = html.Blob([pdfData], 'application/pdf');
+  final url = html.Url.createObjectUrlFromBlob(blob);
+  final anchor = html.AnchorElement(href: url)
+    ..target = 'blank'
+    ..setAttribute('download', 'document.pdf')
+    ..click();
+  html.Url.revokeObjectUrl(url);
 }

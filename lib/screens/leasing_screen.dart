@@ -1,3 +1,6 @@
+
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:motor/constants/constants.dart';
@@ -19,7 +22,6 @@ class LeasingScreen extends StatelessWidget {
   final con = Get.put(LeasingController());
   final conNL = Get.put(NewLeasingController());
   final conMain = Get.put(MainController());
-  final conPrint = Get.put(PrintController());
 
   @override
   Widget build(BuildContext context) {
@@ -83,17 +85,6 @@ class LeasingScreen extends StatelessWidget {
           ),
           spacer(context),
           spacer(context),
-          Column(
-            children: [
-              RepaintBoundary(
-                key: conPrint.globalKey,
-                child: const Text(
-                  "សួស្តីពិភពលោក",
-                  style: TextStyle(fontSize: 24, fontFamily: 'Koulen'),
-                ),
-              ),
-            ],
-          ),
           const UnderLine(color: secondGreyColor),
           spacer(context),
           Row(
@@ -121,7 +112,6 @@ class LeasingScreen extends StatelessWidget {
 
 class LeasingDataSource extends DataTableSource {
   final con = Get.put(LeasingController());
-  final conPrint = Get.put(PrintController());
 
   @override
   DataRow? getRow(int index) {
@@ -159,13 +149,11 @@ class LeasingDataSource extends DataTableSource {
           btnPrint: true,
           edit: () => debugPrint('Edit $index'),
           delete: () => debugPrint('Delete $index'),
-          print: () {
-            WidgetsBinding.instance.addPostFrameCallback((_) async {
-              WidgetsBinding.instance.addPostFrameCallback((_) async {
-                await conPrint.printPdf(data.name);
-              });
-            });
+          print: () async{
+            // final pdfData = await generatePdf();
+            // printPdf(pdfData);
           },
+
         ),
       ],
     );

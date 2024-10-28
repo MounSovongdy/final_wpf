@@ -26,10 +26,14 @@ dependencies:
   restart_app: any
   pdf: ^3.6.0
   printing: ^5.6.0
+  html: ^0.15.0
+  http: any
   intl: any
   fl_chart: any
   dropdown_search: any
   google_fonts: any
+  typed_data: ^1.4.0
+  syncfusion_flutter_pdfviewer: ^27.1.56
 
 dev_dependencies:
   flutter_test:
@@ -46,6 +50,14 @@ flutter:
     - assets/icons/
 
   fonts:
+    - family: Angkor
+      fonts:
+        - asset: assets/fonts/Angkor-Regular.ttf
+
+    - family: Battambang
+      fonts:
+        - asset: assets/fonts/Battambang-Regular.ttf
+
     - family: Inter
       fonts:
         - asset: assets/fonts/Inter-Bold.ttf
@@ -80,9 +92,11 @@ flutter:
       fonts:
         - asset: assets/fonts/Khmer-Regular.ttf
           weight: 400
-        - asset: assets/fonts/Koulen-Regular.ttf
-          weight: 700
         - asset: assets/fonts/KhmerOS.ttf
           weight: 400
         - asset: assets/fonts/KhmerOS_original.ttf
           weight: 700
+
+    - family: Koulen
+      fonts:
+        - asset: assets/fonts/Koulen-Regular.ttf
