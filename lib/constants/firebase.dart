@@ -11,6 +11,7 @@ import 'package:motor/models/friend_commission_model.dart';
 import 'package:motor/models/leasing_model.dart';
 import 'package:motor/models/micro_commission_model.dart';
 import 'package:motor/models/micro_model.dart';
+import 'package:motor/models/payment_table_model.dart';
 import 'package:motor/models/product_model.dart';
 import 'package:motor/models/receivable_model.dart';
 import 'package:motor/models/sale_man_commission_model.dart';
@@ -36,6 +37,7 @@ final saleManComCol = _firebase.collection('sale_man_commission');
 final friendComCol = _firebase.collection('friend_commission');
 final cashCol = _firebase.collection('cash');
 final receivableCol = _firebase.collection('receivable');
+final paymentTableCol = _firebase.collection('payment_table');
 
 var currVersion = '1.0.0'.obs;
 var byUser = [].obs;
@@ -61,6 +63,7 @@ var saleManCom = [].obs;
 var friendCom = [].obs;
 var cash = [].obs;
 var receivable = [].obs;
+var paymentTable = [].obs;
 
 Future<void> getByUser(String userlogin) async {
   var res = await userCol.where('user', isEqualTo: userlogin).get();
@@ -635,7 +638,8 @@ Future<void> insertLeasing(
   LeasingModel leasing,
   SaleManCommissionModel saleCom,
   MicroCommissionModel microCom,
-  ReceivableModel receivable, {
+  ReceivableModel receivable,
+  List<PaymentTableModel> payment, {
   required String model,
   required String brand,
   required String year,
@@ -674,6 +678,17 @@ Future<void> insertLeasing(
         await insertSaleManCommission(saleCom);
         await insertMicroCommission(microCom);
         if (debt > 0) await insertReceivable(receivable);
+        if (debt > 0) {
+          for (var data in payment) {
+            try {
+              await paymentTableCol
+                  .doc('${data.id}-${data.no}')
+                  .set(data.toMap());
+            } catch (e) {
+              debugPrint('Failed to add insert Payment Table: $e');
+            }
+          }
+        }
 
         await getBookingApprove();
         Get.back();

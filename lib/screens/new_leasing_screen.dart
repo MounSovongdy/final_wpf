@@ -386,16 +386,17 @@ class NewLeasingScreen extends StatelessWidget {
                         con: con.firstPayDate.value,
                       ),
                       widget2: AppTextField(
-                        txt: 'Interest',
-                        con: con.interest.value,
+                        txt: 'Term',
+                        con: con.term.value,
                         isNumber: true,
-                        digit: 4,
-                        onChanged: (v) => con.calculateTotal(),
+                        digit: 2,
                       ),
                       widget3: AppTextField(
-                        txt: 'Total',
-                        con: con.total.value,
-                        readOnly: true,
+                        txt: 'Interest %',
+                        con: con.interest.value,
+                        isNumber: true,
+                        digit: 2,
+                        onChanged: (v) => con.calculateTotal(),
                       ),
                     )
                   : Container(),
@@ -405,17 +406,19 @@ class NewLeasingScreen extends StatelessWidget {
                   ? RowTextField(
                       spacer: spacer(context),
                       widget1: AppTextField(
-                        txt: 'Term',
-                        con: con.term.value,
-                        isNumber: true,
-                        digit: 2,
+                        txt: 'Total',
+                        con: con.total.value,
+                        readOnly: true,
                       ),
                       widget2: AppDropdownSearch(
                         txt: 'Plate Payment',
                         value: con.platePay,
                         list: con.platePayList,
                         onChanged: (v) {
-                          if (v != null) con.platePay.value = v;
+                          if (v != null) {
+                            con.platePay.value = v;
+                            con.plateAmount.value.text = '';
+                          }
                         },
                       ),
                       widget3: Obx(
@@ -443,7 +446,7 @@ class NewLeasingScreen extends StatelessWidget {
                   width: Responsive.isDesktop(context) ? 150.px : 100.px,
                   color: secondGreyColor,
                   tap: () {
-                    con.generate();
+                    con.generatePaymentTable();
                   },
                 ),
                 spacer(context),

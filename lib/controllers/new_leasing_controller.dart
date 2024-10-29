@@ -6,6 +6,7 @@ import 'package:motor/constants/firebase.dart';
 import 'package:motor/models/friend_commission_model.dart';
 import 'package:motor/models/leasing_model.dart';
 import 'package:motor/models/micro_commission_model.dart';
+import 'package:motor/models/payment_table_model.dart';
 import 'package:motor/models/receivable_model.dart';
 import 'package:motor/models/sale_man_commission_model.dart';
 import 'package:motor/screens/widgets/loading_widget.dart';
@@ -77,6 +78,9 @@ class NewLeasingController extends GetxController {
   var plateAmount = TextEditingController().obs;
 
   var isReceivable = false.obs;
+  var noList = [].obs;
+  var scheduleList = [].obs;
+  var amountList = [].obs;
 
   void createLeasing(BuildContext context) async {
     if (bookingId.value != null &&
@@ -126,6 +130,7 @@ class NewLeasingController extends GetxController {
       await getByMicroName(micro.value.text);
 
       int debt = int.parse(totalOwn.value.text);
+      List<PaymentTableModel> dataListTable = [];
 
       LeasingModel newLeasing = LeasingModel(
         id: leasingID,
@@ -230,12 +235,30 @@ class NewLeasingController extends GetxController {
                 total.value.text != '' &&
                 term.value.text != '' &&
                 platePay.value != null) {
+              await generatePaymentTable();
+              for (var i = 0; i < noList.length; i++) {
+                PaymentTableModel newPayment = PaymentTableModel(
+                  id: leasingID,
+                  no: int.parse(noList[i]),
+                  type: 'Table',
+                  date: scheduleList[i],
+                  amount: amountList[i],
+                  note: '',
+                  paid: '',
+                  paidDate: '',
+                  lateDate: '',
+                  penalty: '0',
+                );
+                dataListTable.add(newPayment);
+              }
+
               await insertFriendCommission(newFriCom);
               await insertLeasing(
                 newLeasing,
                 newSaleManCom,
                 newMicroCom,
                 newReceivable,
+                dataListTable,
                 model: model.value ?? '',
                 brand: brand.value ?? '',
                 year: year.value.text,
@@ -259,6 +282,7 @@ class NewLeasingController extends GetxController {
               newSaleManCom,
               newMicroCom,
               newReceivable,
+              dataListTable,
               model: model.value ?? '',
               brand: brand.value ?? '',
               year: year.value.text,
@@ -286,11 +310,28 @@ class NewLeasingController extends GetxController {
               total.value.text != '' &&
               term.value.text != '' &&
               platePay.value != null) {
+            await generatePaymentTable();
+            for (var i = 0; i < noList.length; i++) {
+              PaymentTableModel newPayment = PaymentTableModel(
+                id: leasingID,
+                no: int.parse(noList[i]),
+                type: 'Table',
+                date: scheduleList[i],
+                amount: amountList[i],
+                note: '',
+                paid: '',
+                paidDate: '',
+                lateDate: '',
+                penalty: '0',
+              );
+              dataListTable.add(newPayment);
+            }
             await insertLeasing(
               newLeasing,
               newSaleManCom,
               newMicroCom,
               newReceivable,
+              dataListTable,
               model: model.value ?? '',
               brand: brand.value ?? '',
               year: year.value.text,
@@ -313,6 +354,7 @@ class NewLeasingController extends GetxController {
             newSaleManCom,
             newMicroCom,
             newReceivable,
+            dataListTable,
             model: model.value ?? '',
             brand: brand.value ?? '',
             year: year.value.text,
@@ -333,31 +375,51 @@ class NewLeasingController extends GetxController {
     }
   }
 
-  void generate() {
-    var dateList = [].obs;
-    var first = DateTime.parse(firstPayDate.value.text);
+  Future<void> generatePaymentTable() async {
+    var date = DateTime.parse(firstPayDate.value.text);
+    var startDate = DateTime(date.year, date.month, date.day);
+    var x = int.parse(total.value.text);
+    var y = int.tryParse(plateAmount.value.text) ?? 0;
+    var z = int.parse(term.value.text);
+    var temp = (x - y) / z;
+    var perAmount = double.parse(temp.toStringAsFixed(2));
 
-    for (var i = 0; i < int.parse(term.value.text); i++) {
-      dateList.add(first);
-      DateTime nextMonth = addMonthWithCustomDay(first);
-      first = nextMonth;
+    scheduleList.value = [dateFormat.format(startDate)];
+    noList.value = ['1'];
+    amountList.value = ['$perAmount'];
 
-      if (i + 1 == int.parse(term.value.text)) {
-        debugPrint('date month list: $dateList');
+    for (int i = 0; i < int.parse(term.value.text) - 1; i++) {
+      startDate = addMonth(startDate, date.day);
+      var newDate = dateFormat.format(startDate);
+      scheduleList.add(newDate);
+      noList.add('${i + 2}');
+
+      if (i + 1 == (int.parse(term.value.text) - 1)) {
+        var newA = (x - y) - (perAmount * (i + 1));
+        var newB = double.parse(newA.toStringAsFixed(2));
+        amountList.add('$newB');
+      } else {
+        amountList.add('$perAmount');
       }
     }
   }
 
-DateTime addMonthWithCustomDay(DateTime date) {
-  DateTime newDate = DateTime(date.year, date.month + 1, 30);
+  DateTime addMonth(DateTime date, int day) {
+    DateTime newDate = DateTime(date.year, date.month + 1, day);
+    if (day == 29 || day == 30 || day == 31) {
+      if (date.month == 1) {
+        newDate = DateTime(date.year, 3, 0);
+      } else {
+        newDate = DateTime(date.year, date.month + 1, day);
 
-  // If the date overflows (e.g., February 30), Dart adjusts it automatically to the last day of the month.
-  if (newDate.month != (date.month % 12) + 1) {
-    newDate = DateTime(newDate.year, newDate.month + 1, 0); 
+        if (newDate.month != (date.month % 12) + 1) {
+          newDate = DateTime(newDate.year, newDate.month, 0);
+        }
+      }
+    }
+
+    return newDate;
   }
-
-  return newDate;
-}
 
   void getDataByBookingIDAndIdCard() {
     var bookId = bookingId.value ?? '0';
@@ -439,7 +501,7 @@ DateTime addMonthWithCustomDay(DateTime date) {
   void calculateTotal() {
     if (totalOwn.value.text != '' && interest.value.text != '') {
       var own = int.parse(totalOwn.value.text);
-      var inter = int.parse(interest.value.text);
+      var inter = (own * int.parse(interest.value.text)) / 100;
       var tot = own + inter;
       total.value.text = '$tot';
     } else {
