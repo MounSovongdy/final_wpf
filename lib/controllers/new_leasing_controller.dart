@@ -333,6 +333,32 @@ class NewLeasingController extends GetxController {
     }
   }
 
+  void generate() {
+    var dateList = [].obs;
+    var first = DateTime.parse(firstPayDate.value.text);
+
+    for (var i = 0; i < int.parse(term.value.text); i++) {
+      dateList.add(first);
+      DateTime nextMonth = addMonthWithCustomDay(first);
+      first = nextMonth;
+
+      if (i + 1 == int.parse(term.value.text)) {
+        debugPrint('date month list: $dateList');
+      }
+    }
+  }
+
+DateTime addMonthWithCustomDay(DateTime date) {
+  DateTime newDate = DateTime(date.year, date.month + 1, 30);
+
+  // If the date overflows (e.g., February 30), Dart adjusts it automatically to the last day of the month.
+  if (newDate.month != (date.month % 12) + 1) {
+    newDate = DateTime(newDate.year, newDate.month + 1, 0); 
+  }
+
+  return newDate;
+}
+
   void getDataByBookingIDAndIdCard() {
     var bookId = bookingId.value ?? '0';
 

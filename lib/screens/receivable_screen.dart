@@ -114,7 +114,7 @@ class ReceivableDataSource extends DataTableSource {
           edit: () => debugPrint('Edit $index'),
           delete: () => debugPrint('Delete $index'),
           print: () => debugPrint('Print $index'),
-          addPayment: () {},
+          addPayment: () => con.showDialogPayment(Get.context!),
         ),
       ],
     );
