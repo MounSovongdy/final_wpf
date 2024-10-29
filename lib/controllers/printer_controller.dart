@@ -11,6 +11,8 @@ Future<String> generateHtmlContent({
   required String customerAge,
   required String customerId,
   required String customerAddress,
+  required int totalPrice,
+  required int approveAmount,
 }) async {
   final fontBytes =
       await rootBundle.load('assets/fonts/NotoSansKhmer-Regular.ttf');
@@ -250,9 +252,9 @@ Future<String> generateHtmlContent({
 
 <table width="40%" align="right">
 <td style="border: 1px solid black;border-radius: 10px;font-size:17px; font-family:Khmer OS Battambang;color:#282D91" bgcolor="#CEEDFB">
-<b>&nbsp;&nbsp; តម្លៃសរុប</b>
+<b>&nbsp;&nbsp; តម្លៃសរុប $totalPrice</b>
 <hr style="border: 1px solid black">
-<b>&nbsp;&nbsp;  អនុម័ត</b>
+<b>&nbsp;&nbsp;  អនុម័ត $approveAmount</b>
 </td>
 </table>
 
@@ -287,7 +289,10 @@ void downloadPdf() async {
       customerName: 'Sovongdy',
       customerAge: '30',
       customerId: '098765432',
-      customerAddress: 'PP');
+      customerAddress: 'PP',
+      totalPrice: 2000,
+      approveAmount: 1900,
+  );
 
   final div = html.DivElement()
     ..setInnerHtml(htmlContent, treeSanitizer: html.NodeTreeSanitizer.trusted);
@@ -304,10 +309,12 @@ void downloadPdf() async {
 
 void printPdf() async {
   final htmlContent = await generateHtmlContent(
-    customerName: 'Customer Name',
+    customerName: 'Sovongdy',
     customerAge: '25',
     customerId: '123456789',
     customerAddress: 'Phnom Penh, Cambodia',
+    totalPrice: 2000,
+    approveAmount: 1900,
   );
 
   final div = html.DivElement()
