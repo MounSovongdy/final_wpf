@@ -1,39 +1,44 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta name="flutter-web-renderer" content="canvas kit">
-  <!--
-    If you are serving your web app in a path other than the root, change the
-    href value below to reflect the base path you are serving from.
-
-    The path provided below has to start and end with a slash "/" in order for
-    it to work correctly.
-
-    For more details:
-    * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/base
-
-    This is a placeholder for base href that will be replaced by the value of
-    the `--base-href` argument provided to `flutter build`.
-  -->
-  <base href="$FLUTTER_BASE_HREF">
-
   <meta charset="UTF-8">
-  <meta content="IE=Edge" http-equiv="X-UA-Compatible">
-  <meta name="description" content="A new Flutter project.">
+  <title>Motor Shop</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+  <script>
+    // Function to generate and download PDF
+    function downloadPDF() {
+      const element = document.getElementById('pdfContent');
+      if (!element) {
+        console.error("Element with ID 'pdfContent' not found!");
+        return;
+      }
+      const opt = {
+        margin:       1,
+        filename:     'khmer_text.pdf',
+        image:        { type: 'jpeg', quality: 0.98 },
+        html2canvas:  { scale: 2 },
+        jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' }
+      };
+      html2pdf().from(element).set(opt).save().then(() => {
+        console.log('PDF downloaded successfully!');
+      }).catch((err) => {
+        console.error('Error downloading PDF:', err);
+      });
+    }
 
-  <!-- iOS meta tags & icons -->
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black">
-  <meta name="apple-mobile-web-app-title" content="motor">
-  <link rel="apple-touch-icon" href="icons/Icon-192.png">
-
-  <!-- Favicon -->
-  <link rel="icon" type="image/png" href="favicon.png"/>
-
-  <title>motor</title>
-  <link rel="manifest" href="manifest.json">
+    // Function to print content
+    function printContent() {
+      const element = document.getElementById('pdfContent');
+      const printWindow = window.open('', '', 'height=600,width=800');
+      printWindow.document.write('<html><head><title>Print</title></head><body>');
+      printWindow.document.write(element.innerHTML);
+      printWindow.document.write('</body></html>');
+      printWindow.document.close();
+      printWindow.print();
+    }
+  </script>
 </head>
 <body>
-  <script src="flutter_bootstrap.js" async></script>
+<script src="main.dart.js" type="application/javascript"></script>
 </body>
 </html>

@@ -5,6 +5,7 @@ import 'package:motor/constants/responsive.dart';
 import 'package:motor/controllers/leasing_controller.dart';
 import 'package:motor/controllers/main_controller.dart';
 import 'package:motor/controllers/new_leasing_controller.dart';
+import 'package:motor/controllers/printer_controller.dart';
 import 'package:motor/screens/components/app_button.dart';
 import 'package:motor/screens/components/app_data_table.dart';
 import 'package:motor/screens/components/under_line.dart';
@@ -109,6 +110,7 @@ class LeasingScreen extends StatelessWidget {
 class LeasingDataSource extends DataTableSource {
   final con = Get.put(LeasingController());
 
+
   @override
   DataRow? getRow(int index) {
     assert(index >= 0);
@@ -145,11 +147,7 @@ class LeasingDataSource extends DataTableSource {
           btnPrint: true,
           edit: () => debugPrint('Edit $index'),
           delete: () => debugPrint('Delete $index'),
-          print: () async{
-            // final pdfData = await generatePdf();
-            // printPdf(pdfData);
-          },
-
+          print: () =>  printPdf(),
         ),
       ],
     );

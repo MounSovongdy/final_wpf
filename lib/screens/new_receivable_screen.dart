@@ -34,63 +34,161 @@ class NewReceivableScreen extends StatelessWidget {
           children: [
             AppText.header(context, txt: 'New Receivable'),
             spacer(context),
-            TitleUnderline(spacer: spacer(context), txt: 'Customer Information'),
+            TitleUnderline(
+                spacer: spacer(context), txt: 'Customer Information'),
             RowTextField(
               spacer: spacer(context),
               widget1: AppTextField(txt: 'ID Card', con: con.name.value),
-              widget2: AppTextField(txt: 'Name', con: con.name.value,readOnly: true,),
-              widget3: AppTextField(txt: 'Address', con: con.address.value,readOnly: true,),
+              widget2: AppTextField(
+                txt: 'Name',
+                con: con.name.value,
+                readOnly: true,
+              ),
+              widget3: AppTextField(
+                txt: 'Address',
+                con: con.address.value,
+                readOnly: true,
+              ),
             ),
             RowTextField(
               spacer: spacer(context),
-              widget1: AppTextField(txt: 'Phone 1', con: con.phoneCus1.value,readOnly: true,),
-              widget2: AppTextField(txt: 'Phone 2', con: con.phoneCus2.value,),
-              widget3: AppTextField(txt: 'Phone 3', con: con.phoneCus3.value,),
+              widget1: AppTextField(
+                txt: 'Phone 1',
+                con: con.phoneCus1.value,
+                readOnly: true,
+              ),
+              widget2: AppTextField(
+                txt: 'Phone 2',
+                con: con.phoneCus2.value,
+              ),
+              widget3: AppTextField(
+                txt: 'Phone 3',
+                con: con.phoneCus3.value,
+              ),
             ),
-
             TitleUnderline(spacer: spacer(context), txt: 'Sell Information'),
             RowTextField(
               spacer: spacer(context),
-              widget1: AppTextField(txt: 'Sell Date', con: con.dateBooking.value,readOnly: true,),
-              widget2: AppTextField(txt: 'Salesman', con: con.salesman.value,readOnly: true,),
+              widget1: AppTextField(
+                txt: 'Sell Date',
+                con: con.dateBooking.value,
+                readOnly: true,
+              ),
+              widget2: AppTextField(
+                txt: 'Salesman',
+                con: con.salesman.value,
+                readOnly: true,
+              ),
             ),
             TitleUnderline(spacer: spacer(context), txt: 'Product Information'),
             RowTextField(
               spacer: spacer(context),
-              widget1: AppTextField(txt: 'Model', con: con.model.value,readOnly: true,),
-              widget2: AppTextField(txt: 'Year', con: con.year.value,readOnly: true,),
-              widget3: AppTextField(txt: 'Condition', con: con.condition.value,readOnly: true,),
+              widget1: AppTextField(
+                txt: 'Model',
+                con: con.model.value,
+                readOnly: true,
+              ),
+              widget2: AppTextField(
+                txt: 'Year',
+                con: con.year.value,
+                readOnly: true,
+              ),
+              widget3: AppTextField(
+                txt: 'Condition',
+                con: con.condition.value,
+                readOnly: true,
+              ),
             ),
             RowTextField(
               spacer: spacer(context),
-              widget1: AppTextField(txt: 'Engine No', con: con.engine.value,readOnly: true,),
-              widget2: AppTextField(txt: 'Frame No', con: con.frame.value,readOnly: true,),
-              widget3: AppTextField(txt: 'Plate No', con: con.plateNo.value,readOnly: true,),
+              widget1: AppTextField(
+                txt: 'Engine No',
+                con: con.engine.value,
+                readOnly: true,
+              ),
+              widget2: AppTextField(
+                txt: 'Frame No',
+                con: con.frame.value,
+                readOnly: true,
+              ),
+              widget3: AppTextField(
+                txt: 'Plate No',
+                con: con.plateNo.value,
+                readOnly: true,
+              ),
             ),
             RowTextField(
               spacer: spacer(context),
-              widget1: AppTextField(txt: 'Sell Price', con: con.sell.value,readOnly: true,),
-              widget2: AppTextField(txt: 'Discount', con: con.discount.value,readOnly: true,),
-              widget3: AppTextField(txt: 'Deposit', con: con.deposit.value,readOnly: true,),
+              widget1: AppTextField(
+                txt: 'Sell Price',
+                con: con.sell.value,
+                readOnly: true,
+              ),
+              widget2: AppTextField(
+                txt: 'Discount',
+                con: con.discount.value,
+                readOnly: true,
+              ),
+              widget3: AppTextField(
+                txt: 'Deposit',
+                con: con.deposit.value,
+                readOnly: true,
+              ),
             ),
             RowTextField(
               spacer: spacer(context),
-              widget1: AppTextField(txt: 'Remain', con: con.remain.value,readOnly: true,),
-              widget2: AppTextField(txt: 'Approved', con: con.remain.value,readOnly: true,),
-              widget3: AppTextField(txt: 'Total Debt', con: con.totalOwn.value,readOnly: true,),
+              widget1: AppTextField(
+                txt: 'Remain',
+                con: con.remain.value,
+                readOnly: true,
+              ),
+              widget2: AppTextField(
+                txt: 'Approved',
+                con: con.remain.value,
+                readOnly: true,
+              ),
+              widget3: AppTextField(
+                txt: 'Total Debt',
+                con: con.totalOwn.value,
+                readOnly: true,
+              ),
             ),
             TitleUnderline(spacer: spacer(context), txt: 'Payment Information'),
             RowTextField(
               spacer: spacer(context),
-              widget1: AppTextField(txt: 'Term', con: con.term.value,readOnly: true,),
-              widget2: AppTextField(txt: 'First Payment', con: con.firstPayDate.value,readOnly: true,),
-              widget3: AppTextField(txt: 'Rate', con: con.rate.value,readOnly: true,),
+              widget1: AppTextField(
+                txt: 'Term',
+                con: con.term.value,
+                readOnly: true,
+              ),
+              widget2: AppTextField(
+                txt: 'First Payment',
+                con: con.firstPayDate.value,
+                readOnly: true,
+              ),
+              widget3: AppTextField(
+                txt: 'Rate',
+                con: con.rate.value,
+                readOnly: true,
+              ),
             ),
             RowTextField(
               spacer: spacer(context),
-              widget1: AppTextField(txt: 'Type', con: con.term.value,readOnly: true,),
-              widget2: AppTextField(txt: 'Amount', con: con.firstPayDate.value,readOnly: true,),
-              widget3: AppTextField(txt: 'Date', con: con.rate.value,readOnly: true,),
+              widget1: AppTextField(
+                txt: 'Type',
+                con: con.term.value,
+                readOnly: true,
+              ),
+              widget2: AppTextField(
+                txt: 'Amount',
+                con: con.firstPayDate.value,
+                readOnly: true,
+              ),
+              widget3: AppTextField(
+                txt: 'Date',
+                con: con.rate.value,
+                readOnly: true,
+              ),
             ),
             spacer(context),
             spacer(context),
@@ -113,13 +211,60 @@ class NewReceivableScreen extends StatelessWidget {
                 AppButton(
                   txt: 'Save',
                   width: Responsive.isDesktop(context) ? 150.px : 100.px,
-                  tap: () {},
+                  tap: () {
+                    showDialogPayment(context);
+                  },
                 ),
               ],
             ),
           ],
         ),
       ),
+    );
+  }
+
+  void showDialogPayment(BuildContext context) {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(5),
+          ),
+          title: AppText.header(context, txt: 'Table Payment'),
+          content: Column(
+            children: [
+              RowTextField(
+                spacer: spacer(context),
+                widget1: AppTextField(
+                  txt: 'Total Amount',
+                  con: con.totalAmount.value,
+                  readOnly: true,
+                ),
+                widget2: AppTextField(
+                  txt: 'Paid Amount',
+                  con: con.paidAmount.value,
+                  readOnly: true,
+                ),
+                widget3: AppTextField(
+                  txt: 'Left Amount',
+                  con: con.leftAmount.value,
+                  readOnly: true,
+                ),
+              ),
+            ],
+          ),
+          actions: [
+            AppButton(
+              txt: 'Back',
+              width: 100.px,
+              color: secondGreyColor,
+              tap: () => Navigator.of(context).pop(),
+            ),
+          ],
+        );
+      },
     );
   }
 }
