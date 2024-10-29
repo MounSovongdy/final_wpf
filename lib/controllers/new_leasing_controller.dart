@@ -221,6 +221,18 @@ class NewLeasingController extends GetxController {
         receiveAmount: '0',
         amountLeft: total.value.text,
       );
+      PaymentTableModel newPlatePaid = PaymentTableModel(
+        id: leasingID,
+        no: 0,
+        type: 'Plate',
+        date: 'P',
+        amount: plateAmount.value.text,
+        note: '',
+        paid: '',
+        paidDate: '',
+        lateDate: '',
+        penalty: '0',
+      );
 
       if (comeBy.value == 'Friend') {
         if (nameIntro.value.text != '' &&
@@ -258,6 +270,7 @@ class NewLeasingController extends GetxController {
                 newSaleManCom,
                 newMicroCom,
                 newReceivable,
+                newPlatePaid,
                 dataListTable,
                 model: model.value ?? '',
                 brand: brand.value ?? '',
@@ -265,6 +278,7 @@ class NewLeasingController extends GetxController {
                 condition: condition.value ?? '',
                 bookingId: bookID,
                 debt: debt,
+                platePaid: platePay.value == 'Not Yet' ? true : false,
                 clear: clearText,
               );
             } else {
@@ -282,6 +296,7 @@ class NewLeasingController extends GetxController {
               newSaleManCom,
               newMicroCom,
               newReceivable,
+              newPlatePaid,
               dataListTable,
               model: model.value ?? '',
               brand: brand.value ?? '',
@@ -289,6 +304,7 @@ class NewLeasingController extends GetxController {
               condition: condition.value ?? '',
               bookingId: bookID,
               debt: debt,
+              platePaid: platePay.value == 'Not Yet' ? true : false,
               clear: clearText,
             );
           }
@@ -331,6 +347,7 @@ class NewLeasingController extends GetxController {
               newSaleManCom,
               newMicroCom,
               newReceivable,
+              newPlatePaid,
               dataListTable,
               model: model.value ?? '',
               brand: brand.value ?? '',
@@ -338,6 +355,7 @@ class NewLeasingController extends GetxController {
               condition: condition.value ?? '',
               bookingId: bookID,
               debt: debt,
+              platePaid: platePay.value == 'Not Yet' ? true : false,
               clear: clearText,
             );
           } else {
@@ -354,6 +372,7 @@ class NewLeasingController extends GetxController {
             newSaleManCom,
             newMicroCom,
             newReceivable,
+            newPlatePaid,
             dataListTable,
             model: model.value ?? '',
             brand: brand.value ?? '',
@@ -361,6 +380,7 @@ class NewLeasingController extends GetxController {
             condition: condition.value ?? '',
             bookingId: bookID,
             debt: debt,
+            platePaid: platePay.value == 'Not Yet' ? true : false,
             clear: clearText,
           );
         }

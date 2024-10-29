@@ -79,9 +79,12 @@ class AddStockController extends GetxController {
           newTotalPrice: totalPrice.value.text,
           totalQty: '$newQty',
         );
+        LoadingWidget.dialogLoading(duration: 5, isBack: false);
         await insertTotalStock(newTotalStock);
+        Get.back();
       } else {
         var tQty = int.parse(stockByModel[0].totalQty) + newQty;
+        LoadingWidget.dialogLoading(duration: 5, isBack: false);
         await updateTotalStock(
           model: model.value ?? '',
           brand: brand.value.text,
@@ -97,6 +100,7 @@ class AddStockController extends GetxController {
           oldDateIn: dateIn.value.text,
           newDateIn: date.value.text,
         );
+        Get.back();
       }
 
       clearText();
@@ -118,11 +122,13 @@ class AddStockController extends GetxController {
 
   void updateProduct(BuildContext context) async {
     if (model.value != null && brand.value.text != '') {
+      LoadingWidget.dialogLoading(duration: 5, isBack: false);
       await updateByTotalStock(
         byTotalStock[0].id,
         model: model.value ?? '',
         brand: brand.value.text,
       );
+      Get.back();
       clearText();
       LoadingWidget.showTextDialog(
         Get.context!,

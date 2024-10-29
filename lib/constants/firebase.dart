@@ -63,6 +63,7 @@ var saleManCom = [].obs;
 var friendCom = [].obs;
 var cash = [].obs;
 var receivable = [].obs;
+var byPaymentTable = [].obs;
 var paymentTable = [].obs;
 
 Future<void> getByUser(String userlogin) async {
@@ -639,13 +640,15 @@ Future<void> insertLeasing(
   SaleManCommissionModel saleCom,
   MicroCommissionModel microCom,
   ReceivableModel receivable,
-  List<PaymentTableModel> payment, {
+  PaymentTableModel payment,
+  List<PaymentTableModel> paymentList, {
   required String model,
   required String brand,
   required String year,
   required String condition,
   required int bookingId,
   required int debt,
+  required bool platePaid,
   required void Function() clear,
 }) async {
   try {
@@ -679,14 +682,11 @@ Future<void> insertLeasing(
         await insertMicroCommission(microCom);
         if (debt > 0) await insertReceivable(receivable);
         if (debt > 0) {
-          for (var data in payment) {
-            try {
-              await paymentTableCol
-                  .doc('${data.id}-${data.no}')
-                  .set(data.toMap());
-            } catch (e) {
-              debugPrint('Failed to add insert Payment Table: $e');
-            }
+          if (platePaid) {
+            await paymentTableCol.doc('${payment.id}-0').set(payment.toMap());
+          }
+          for (var data in paymentList) {
+            insertPaymentTable(data);
           }
         }
 
@@ -804,6 +804,16 @@ Future<void> insertReceivable(ReceivableModel receivable) async {
   }
 }
 
+Future<void> insertPaymentTable(PaymentTableModel payment) async {
+  try {
+    await paymentTableCol
+        .doc('${payment.id}-${payment.no}')
+        .set(payment.toMap());
+  } catch (e) {
+    debugPrint('Failed to add insert Payment Table: $e');
+  }
+}
+
 Future<void> getAllCash() async {
   var res = await cashCol.orderBy('id', descending: true).get();
   cash.value = res.docs.map((doc) => CashModel.fromMap(doc.data())).toList();
@@ -869,4 +879,13 @@ Future<void> insertCash(
   } catch (e) {
     debugPrint('Failed to add cash: $e');
   }
+}
+
+Future<void> getByPaymentTable(int id) async {
+  var res = await paymentTableCol
+      .where('id', isEqualTo: id)
+      .where('type', isEqualTo: 'Table')
+      .get();
+  byPaymentTable.value =
+      res.docs.map((doc) => PaymentTableModel.fromMap(doc.data())).toList();
 }

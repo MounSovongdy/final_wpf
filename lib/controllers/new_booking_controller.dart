@@ -217,7 +217,10 @@ class NewBookingController extends GetxController {
         statusDate2: byBookingMicro[0].statusDate2,
         workingHours2: byBookingMicro[0].workingHours2,
       );
+
+      LoadingWidget.dialogLoading(duration: 5, isBack: false);
       await updateByBooking(byBooking[0].id, newBook, newBookMicro);
+      Get.back();
       clearText();
       LoadingWidget.showTextDialog(
         Get.context!,

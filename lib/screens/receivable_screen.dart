@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:motor/constants/constants.dart';
+import 'package:motor/constants/firebase.dart';
 import 'package:motor/controllers/main_controller.dart';
 import 'package:motor/controllers/receivable_controller.dart';
 import 'package:motor/screens/components/app_data_table.dart';
@@ -111,10 +112,16 @@ class ReceivableDataSource extends DataTableSource {
           btnEdit: false,
           btnDelete: false,
           btnAddPayment: true,
+          btnViewPayment: true,
           edit: () => debugPrint('Edit $index'),
           delete: () => debugPrint('Delete $index'),
           print: () => debugPrint('Print $index'),
-          addPayment: () => con.showDialogPayment(Get.context!),
+          addPayment: () => con.showDialogAddPayment(Get.context!),
+          viewPayment: () async {
+            byPaymentTable.clear();
+            await getByPaymentTable(data.id);
+            con.showDialogViewPayment(Get.context!);
+          },
         ),
       ],
     );
@@ -122,7 +129,6 @@ class ReceivableDataSource extends DataTableSource {
 
   @override
   int get rowCount => con.filteredRece.length;
-
   @override
   bool get isRowCountApproximate => false;
 

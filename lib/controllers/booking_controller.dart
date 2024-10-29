@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:motor/constants/constants.dart';
 import 'package:motor/constants/firebase.dart';
 import 'package:motor/controllers/new_booking_controller.dart';
+import 'package:motor/screens/widgets/loading_widget.dart';
 
 class BookingController extends GetxController {
   final con = Get.put(NewBookingController());
@@ -102,6 +103,8 @@ class BookingController extends GetxController {
     var workMinutes = difference.inMinutes % 60;
     var workingHours = '$workDays Days $workHours Hours $workMinutes Minutes';
 
+    LoadingWidget.dialogLoading(duration: 5, isBack: false);
+
     if (data.micro2 == '' && data.statusBooking2 == '') {
       if (status.value != 'New') {
         await updateStatusBooking1(
@@ -133,6 +136,8 @@ class BookingController extends GetxController {
         );
       }
     }
+
+    Get.back();
   }
 
   void clearDialog() {

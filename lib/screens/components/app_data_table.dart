@@ -35,3 +35,4 @@ class AppDataTable extends StatelessWidget {
     );
   }
 }
+
