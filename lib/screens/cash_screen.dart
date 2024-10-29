@@ -66,7 +66,7 @@ class CashScreen extends StatelessWidget {
                       DataTableWidget.column(context, 'Year'),
                       DataTableWidget.column(context, 'Condition'),
                       DataTableWidget.column(context, 'Price'),
-                      DataTableWidget.column(context, 'Salesman'),
+                      DataTableWidget.column(context, 'Saleman'),
                       DataTableWidget.column(context, 'Come by'),
                       DataTableWidget.column(context, 'Action'),
                     ],

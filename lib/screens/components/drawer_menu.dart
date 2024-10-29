@@ -10,6 +10,7 @@ import 'package:motor/controllers/leasing_controller.dart';
 import 'package:motor/controllers/main_controller.dart';
 import 'package:motor/controllers/micro_controller.dart';
 import 'package:motor/controllers/product_controller.dart';
+import 'package:motor/controllers/receivable_controller.dart';
 import 'package:motor/controllers/salesman_controller.dart';
 import 'package:motor/controllers/total_stock_controller.dart';
 import 'package:motor/controllers/user_controller.dart';
@@ -33,6 +34,7 @@ class DrawerMenu extends StatelessWidget {
   final conBook = Get.put(BookingController());
   final conLeasing = Get.put(LeasingController());
   final conCash = Get.put(CashController());
+  final conRec = Get.put(ReceivableController());
 
   @override
   Widget build(BuildContext context) {
@@ -112,9 +114,13 @@ class DrawerMenu extends StatelessWidget {
                   ],
                 ),
                 DrawerListTile(
-                  tap: () {
+                  tap: () async {
                     if (Responsive.isMobile(context)) con.controlDrawer();
                     startInactivityTimer();
+                    await getAllReceivable();
+                    conRec.filteredRece.value = receivable;
+                    conRec.search.value
+                        .addListener(conRec.filterReceivableData);
 
                     con.index.value = 6;
                   },

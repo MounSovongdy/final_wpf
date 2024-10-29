@@ -1,13 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:motor/constants/constants.dart';
-import 'package:motor/constants/responsive.dart';
 import 'package:motor/controllers/main_controller.dart';
 import 'package:motor/controllers/receivable_controller.dart';
-import 'package:motor/screens/booking_screen.dart';
-import 'package:motor/screens/components/app_button.dart';
 import 'package:motor/screens/components/app_data_table.dart';
-import 'package:motor/screens/components/under_line.dart';
 import 'package:motor/screens/widgets/app_text.dart';
 import 'package:motor/screens/widgets/data_table_widget.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
@@ -44,50 +40,92 @@ class ReceivableScreen extends StatelessWidget {
             ),
           ),
           spacer(context),
-          AppDataTable(
-            column: [
-              DataTableWidget.column(context, 'No'),
-              DataTableWidget.column(context, 'Receivable  Date'),
-              DataTableWidget.column(context, 'ID Card'),
-              DataTableWidget.column(context, 'Customer Name'),
-              DataTableWidget.column(context, 'Address'),
-              DataTableWidget.column(context, 'Telephone 1'),
-              DataTableWidget.column(context, 'Telephone 2'),
-              DataTableWidget.column(context, 'Telephone 3'),
-              DataTableWidget.column(context, 'Model'),
-              DataTableWidget.column(context, 'Year'),
-              DataTableWidget.column(context, 'Engine No'),
-              DataTableWidget.column(context, 'Frame No'),
-              DataTableWidget.column(context, 'Plate No'),
-              DataTableWidget.column(context, 'Total Debt'),
-              DataTableWidget.column(context, 'Amount Left'),
-              DataTableWidget.column(context, 'Rate'),
-              DataTableWidget.column(context, 'Term'),
-              DataTableWidget.column(context, 'First Payment'),
-              DataTableWidget.column(context, 'Salesman'),
-
-            ],
-            source: BookingDataSource(),
-          ),
-          spacer(context),
-          spacer(context),
-          const UnderLine(color: secondGreyColor),
-          spacer(context),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              AppButton(
-                txt: 'New',
-                width: Responsive.isDesktop(context) ? 150.px : 100.px,
-                tap: () async {
-                  startInactivityTimer();
-                  conMain.index.value = 7;
-                },
-              ),
-            ],
+          Obx(
+            () => con.filteredRece.isNotEmpty
+                ? AppDataTable(
+                    column: [
+                      DataTableWidget.column(context, 'ID'),
+                      DataTableWidget.column(context, 'Saleman'),
+                      DataTableWidget.column(context, 'Receivable Date'),
+                      DataTableWidget.column(context, 'Name'),
+                      DataTableWidget.column(context, 'Telephone 1'),
+                      DataTableWidget.column(context, 'Telephone 2'),
+                      DataTableWidget.column(context, 'Telephone 3'),
+                      DataTableWidget.column(context, 'Document'),
+                      DataTableWidget.column(context, 'Brand'),
+                      DataTableWidget.column(context, 'Model'),
+                      DataTableWidget.column(context, 'Color'),
+                      DataTableWidget.column(context, 'Year'),
+                      DataTableWidget.column(context, 'Condition'),
+                      DataTableWidget.column(context, 'Total Amount'),
+                      DataTableWidget.column(context, 'Receive Payment'),
+                      DataTableWidget.column(context, 'Amount Left'),
+                      DataTableWidget.column(context, 'Action'),
+                    ],
+                    source: ReceivableDataSource(),
+                  )
+                : Container(
+                    width: MediaQuery.of(context).size.width,
+                    margin: EdgeInsets.only(top: defWebPad.px),
+                    alignment: Alignment.center,
+                    child: AppText.title(context, txt: 'No Data'),
+                  ),
           ),
         ],
       ),
     );
   }
+}
+
+class ReceivableDataSource extends DataTableSource {
+  final con = Get.put(ReceivableController());
+
+  @override
+  DataRow? getRow(int index) {
+    assert(index >= 0);
+    if (index >= con.filteredRece.length) return null;
+
+    var data = con.filteredRece[index];
+
+    return DataRow.byIndex(
+      index: index,
+      cells: [
+        DataTableWidget.cell(Get.context!, '${data.id}'),
+        DataTableWidget.cell(Get.context!, data.saleman),
+        DataTableWidget.cell(Get.context!, data.date),
+        DataTableWidget.cell(Get.context!, data.name),
+        DataTableWidget.cell(Get.context!, data.tel1),
+        DataTableWidget.cell(Get.context!, data.tel2),
+        DataTableWidget.cell(Get.context!, data.tel3),
+        DataTableWidget.cell(Get.context!, data.document),
+        DataTableWidget.cell(Get.context!, data.brand),
+        DataTableWidget.cell(Get.context!, data.model),
+        DataTableWidget.cell(Get.context!, data.color),
+        DataTableWidget.cell(Get.context!, data.year),
+        DataTableWidget.cell(Get.context!, data.condition),
+        DataTableWidget.cell(Get.context!, data.total),
+        DataTableWidget.cell(Get.context!, data.receiveAmount),
+        DataTableWidget.cell(Get.context!, data.amountLeft),
+        DataTableWidget.cellBtn(
+          Get.context!,
+          btnEdit: false,
+          btnDelete: false,
+          btnAddPayment: true,
+          edit: () => debugPrint('Edit $index'),
+          delete: () => debugPrint('Delete $index'),
+          print: () => debugPrint('Print $index'),
+          addPayment: () {},
+        ),
+      ],
+    );
+  }
+
+  @override
+  int get rowCount => con.filteredRece.length;
+
+  @override
+  bool get isRowCountApproximate => false;
+
+  @override
+  int get selectedRowCount => 0;
 }

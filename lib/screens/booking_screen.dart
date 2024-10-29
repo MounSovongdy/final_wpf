@@ -57,7 +57,7 @@ class BookingScreen extends StatelessWidget {
                 ? AppDataTable(
                     column: [
                       DataTableWidget.column(context, 'ID'),
-                      DataTableWidget.column(context, 'Salesman'),
+                      DataTableWidget.column(context, 'Saleman'),
                       DataTableWidget.column(context, 'Date'),
                       DataTableWidget.column(context, 'ID Card'),
                       DataTableWidget.column(context, 'Name'),
@@ -324,13 +324,19 @@ class BookingDataSource extends DataTableSource {
               color: secondGreyColor,
               tap: () => Navigator.of(context).pop(),
             ),
-            res.statusBooking1 == 'Approve' || res.statusBooking2 != 'New'
+            res.statusBooking1 == 'Approve' ||
+                    res.statusBooking2 == 'Approve' ||
+                    res.statusBooking2 == 'Reject'
                 ? Container()
                 : spacer(context),
-            res.statusBooking1 == 'Approve' || res.statusBooking2 != 'New'
+            res.statusBooking1 == 'Approve' ||
+                    res.statusBooking2 == 'Approve' ||
+                    res.statusBooking2 == 'Reject'
                 ? Container()
                 : spacer(context),
-            res.statusBooking1 == 'Approve' || res.statusBooking2 != 'New'
+            res.statusBooking1 == 'Approve' ||
+                    res.statusBooking2 == 'Approve' ||
+                    res.statusBooking2 == 'Reject'
                 ? Container()
                 : AppButton(
                     txt: 'Update',

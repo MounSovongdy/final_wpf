@@ -37,7 +37,7 @@ class NewLeasingScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            AppText.header(context, txt: 'New Leasing'),
+            AppText.header(context, txt: 'New Leasing Sale'),
             spacer(context),
             TitleUnderline(
               spacer: spacer(context),
@@ -294,87 +294,7 @@ class NewLeasingScreen extends StatelessWidget {
                 txt: 'Total Debt',
                 con: con.totalOwn.value,
                 readOnly: true,
-              ),
-            ),
-            TitleUnderline(
-              spacer: spacer(context),
-              txt: 'Receivable Information',
-            ),
-            RowTextField(
-              spacer: spacer(context),
-              widget1: AppTextField(
-                txt: 'Tel 2',
-                con: con.phoneCus2.value,
-                isNumber: true,
-                digit: 10,
-              ),
-              widget2: AppTextField(
-                txt: 'Tel 3',
-                con: con.phoneCus3.value,
-                isNumber: true,
-                digit: 10,
-              ),
-              widget3: AppTextField(
-                txt: 'Document',
-                con: con.document.value,
-              ),
-            ),
-            RowTextField(
-              spacer: spacer(context),
-              widget1: AppDropdownSearch(
-                txt: 'Plate Payment',
-                value: con.platePay,
-                list: con.platePayList,
-                onChanged: (v) {
-                  if (v != null) con.platePay.value = v;
-                },
-              ),
-              widget2: Obx(
-                () => AppTextField(
-                  txt: 'Plate Amount',
-                  con: con.plateAmount.value,
-                  readOnly: con.platePay.value == "Not Yet" ? false : true,
-                  isNumber: true,
-                  digit: 4,
-                ),
-              ),
-              widget3: AppTextField(
-                txt: 'Term',
-                con: con.term.value,
-                isNumber: true,
-                digit: 2,
-              ),
-            ),
-            RowTextField(
-              spacer: spacer(context),
-              widget1: AppDateTextField(
-                txt: 'First Payment',
-                con: con.firstPayDate.value,
-              ),
-              widget2: AppTextField(
-                txt: 'Interest',
-                con: con.interest.value,
-                isNumber: true,
-                digit: 4,
-              ),
-              widget3: AppTextField(
-                txt: 'Total',
-                con: con.total.value,
-                readOnly: true,
-              ),
-            ),
-            RowTextField(
-              spacer: spacer(context),
-              widget1: AppTextField(
-                txt: 'Recieve Payment',
-                con: con.receievePay.value,
-                isNumber: true,
-                digit: 4,
-              ),
-              widget2: AppTextField(
-                txt: 'Amount Left',
-                con: con.amountLeft.value,
-                readOnly: true,
+                onChanged: (v) => con.calculateTotal(),
               ),
             ),
             TitleUnderline(
@@ -425,6 +345,91 @@ class NewLeasingScreen extends StatelessWidget {
                   digit: 3,
                 ),
               ),
+            ),
+            Obx(
+              () => con.isReceivable.value
+                  ? TitleUnderline(
+                      spacer: spacer(context),
+                      txt: 'Receivable Information',
+                    )
+                  : Container(),
+            ),
+            Obx(
+              () => con.isReceivable.value
+                  ? RowTextField(
+                      spacer: spacer(context),
+                      widget1: AppTextField(
+                        txt: 'Tel 2',
+                        con: con.phoneCus2.value,
+                        isNumber: true,
+                        digit: 10,
+                      ),
+                      widget2: AppTextField(
+                        txt: 'Tel 3',
+                        con: con.phoneCus3.value,
+                        isNumber: true,
+                        digit: 10,
+                      ),
+                      widget3: AppTextField(
+                        txt: 'Document',
+                        con: con.document.value,
+                      ),
+                    )
+                  : Container(),
+            ),
+            Obx(
+              () => con.isReceivable.value
+                  ? RowTextField(
+                      spacer: spacer(context),
+                      widget1: AppDateTextField(
+                        txt: 'First Payment',
+                        con: con.firstPayDate.value,
+                      ),
+                      widget2: AppTextField(
+                        txt: 'Interest',
+                        con: con.interest.value,
+                        isNumber: true,
+                        digit: 4,
+                        onChanged: (v) => con.calculateTotal(),
+                      ),
+                      widget3: AppTextField(
+                        txt: 'Total',
+                        con: con.total.value,
+                        readOnly: true,
+                      ),
+                    )
+                  : Container(),
+            ),
+            Obx(
+              () => con.isReceivable.value
+                  ? RowTextField(
+                      spacer: spacer(context),
+                      widget1: AppTextField(
+                        txt: 'Term',
+                        con: con.term.value,
+                        isNumber: true,
+                        digit: 2,
+                      ),
+                      widget2: AppDropdownSearch(
+                        txt: 'Plate Payment',
+                        value: con.platePay,
+                        list: con.platePayList,
+                        onChanged: (v) {
+                          if (v != null) con.platePay.value = v;
+                        },
+                      ),
+                      widget3: Obx(
+                        () => AppTextField(
+                          txt: 'Plate Amount',
+                          con: con.plateAmount.value,
+                          readOnly:
+                              con.platePay.value == "Not Yet" ? false : true,
+                          isNumber: true,
+                          digit: 4,
+                        ),
+                      ),
+                    )
+                  : Container(),
             ),
             spacer(context),
             spacer(context),

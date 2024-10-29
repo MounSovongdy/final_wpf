@@ -33,10 +33,12 @@ class DataTableWidget {
     bool btnDelete = true,
     bool btnUpdate = false,
     bool btnPrint = false,
+    bool btnAddPayment = false,
     Function()? edit,
     Function()? delete,
     Function()? update,
     Function()? print,
+    Function()? addPayment,
   }) {
     return DataCell(
       Row(
@@ -121,6 +123,33 @@ class DataTableWidget {
                         child: AppText.subTitle(
                           context,
                           txt: 'Print Invoice',
+                          color: whiteColor,
+                        ),
+                      ),
+                    )
+                  ],
+                )
+              : Container(),
+          btnAddPayment
+              ? Row(
+                  children: [
+                    btnEdit == false &&
+                            btnDelete == false &&
+                            btnUpdate == false &&
+                            btnPrint == false
+                        ? Container()
+                        : spacer(context),
+                    InkWell(
+                      onTap: addPayment,
+                      child: Container(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: defWebPad.px / 2,
+                          vertical: defWebPad.px / 6,
+                        ),
+                        color: bgColor.withOpacity(0.5),
+                        child: AppText.subTitle(
+                          context,
+                          txt: 'Add Payment',
                           color: whiteColor,
                         ),
                       ),

@@ -12,6 +12,7 @@ import 'package:motor/models/leasing_model.dart';
 import 'package:motor/models/micro_commission_model.dart';
 import 'package:motor/models/micro_model.dart';
 import 'package:motor/models/product_model.dart';
+import 'package:motor/models/receivable_model.dart';
 import 'package:motor/models/sale_man_commission_model.dart';
 import 'package:motor/models/sale_man_model.dart';
 import 'package:motor/models/total_stock_model.dart';
@@ -34,6 +35,7 @@ final microComCol = _firebase.collection('micro_commission');
 final saleManComCol = _firebase.collection('sale_man_commission');
 final friendComCol = _firebase.collection('friend_commission');
 final cashCol = _firebase.collection('cash');
+final receivableCol = _firebase.collection('receivable');
 
 var currVersion = '1.0.0'.obs;
 var byUser = [].obs;
@@ -58,6 +60,7 @@ var microCom = [].obs;
 var saleManCom = [].obs;
 var friendCom = [].obs;
 var cash = [].obs;
+var receivable = [].obs;
 
 Future<void> getByUser(String userlogin) async {
   var res = await userCol.where('user', isEqualTo: userlogin).get();
@@ -631,12 +634,14 @@ Future<void> getAllLeasing() async {
 Future<void> insertLeasing(
   LeasingModel leasing,
   SaleManCommissionModel saleCom,
-  MicroCommissionModel microCom, {
+  MicroCommissionModel microCom,
+  ReceivableModel receivable, {
   required String model,
   required String brand,
   required String year,
   required String condition,
   required int bookingId,
+  required int debt,
   required void Function() clear,
 }) async {
   try {
@@ -668,15 +673,17 @@ Future<void> insertLeasing(
         await updateStatusbooking(bookingId);
         await insertSaleManCommission(saleCom);
         await insertMicroCommission(microCom);
+        if (debt > 0) await insertReceivable(receivable);
+
         await getBookingApprove();
         Get.back();
+        clear();
         LoadingWidget.showTextDialog(
           Get.context!,
           title: 'Successfully',
           content: 'The Leasing already created.',
           color: greenColor,
         );
-        clear();
       } else {
         LoadingWidget.showTextDialog(
           Get.context!,
@@ -768,6 +775,20 @@ Future<void> insertFriendCommission(FriendCommissionModel friCom) async {
   }
 }
 
+Future<void> getAllReceivable() async {
+  var res = await receivableCol.orderBy('id', descending: true).get();
+  receivable.value =
+      res.docs.map((doc) => ReceivableModel.fromMap(doc.data())).toList();
+}
+
+Future<void> insertReceivable(ReceivableModel receivable) async {
+  try {
+    await receivableCol.doc('${receivable.id}').set(receivable.toMap());
+  } catch (e) {
+    debugPrint('Failed to add insert Receivable: $e');
+  }
+}
+
 Future<void> getAllCash() async {
   var res = await cashCol.orderBy('id', descending: true).get();
   cash.value = res.docs.map((doc) => CashModel.fromMap(doc.data())).toList();
@@ -810,7 +831,7 @@ Future<void> insertCash(
         LoadingWidget.showTextDialog(
           Get.context!,
           title: 'Successfully',
-          content: 'The Leasing already created.',
+          content: 'The Cash already created.',
           color: greenColor,
         );
         clear();

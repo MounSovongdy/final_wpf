@@ -36,9 +36,12 @@ class NewCashScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            AppText.header(context, txt: 'New Cash'),
+            AppText.header(context, txt: 'New Cash Sale'),
             spacer(context),
-            TitleUnderline(spacer: spacer(context), txt: 'Sell Information'),
+            TitleUnderline(
+              spacer: spacer(context),
+              txt: 'Sell Information',
+            ),
             RowTextField(
               spacer: spacer(context),
               widget1: AppTextField(
@@ -242,6 +245,7 @@ class NewCashScreen extends StatelessWidget {
                     if (con.comeBy.value != 'Friend') {
                       con.nameIntro.value.text = '';
                       con.phoneIntro.value.text = '';
+                      con.commission.value.text = '';
                     }
                   }
                 },

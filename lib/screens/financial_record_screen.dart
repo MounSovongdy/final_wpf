@@ -34,7 +34,9 @@ class FinancialRecordScreen extends StatelessWidget {
                 txt: 'Select Month',
                 value: con.selectedMonth,
                 list: con.monthList,
-                onChanged: (v) {},
+                onChanged: (v) {
+                  if (v != null) con.selectedMonth.value = v;
+                },
               ),
             ),
             spacer(context),

@@ -6,6 +6,7 @@ import 'package:motor/constants/firebase.dart';
 import 'package:motor/models/friend_commission_model.dart';
 import 'package:motor/models/leasing_model.dart';
 import 'package:motor/models/micro_commission_model.dart';
+import 'package:motor/models/receivable_model.dart';
 import 'package:motor/models/sale_man_commission_model.dart';
 import 'package:motor/screens/widgets/loading_widget.dart';
 
@@ -68,14 +69,14 @@ class NewLeasingController extends GetxController {
   var phoneCus2 = TextEditingController().obs;
   var phoneCus3 = TextEditingController().obs;
   var document = TextEditingController().obs;
-  var platePay = Rxn<String>();
-  var plateAmount = TextEditingController().obs;
   var firstPayDate = TextEditingController().obs;
-  var term = TextEditingController().obs;
   var interest = TextEditingController().obs;
   var total = TextEditingController().obs;
-  var receievePay = TextEditingController().obs;
-  var amountLeft = TextEditingController().obs;
+  var term = TextEditingController().obs;
+  var platePay = Rxn<String>();
+  var plateAmount = TextEditingController().obs;
+
+  var isReceivable = false.obs;
 
   void createLeasing(BuildContext context) async {
     if (bookingId.value != null &&
@@ -123,6 +124,8 @@ class NewLeasingController extends GetxController {
 
       await getBySaleManName(salesman.value.text);
       await getByMicroName(micro.value.text);
+
+      int debt = int.parse(totalOwn.value.text);
 
       LeasingModel newLeasing = LeasingModel(
         id: leasingID,
@@ -189,23 +192,82 @@ class NewLeasingController extends GetxController {
         unitSale: '1',
         totalCommission: commission.value.text,
       );
+      ReceivableModel newReceivable = ReceivableModel(
+        id: leasingID,
+        saleman: salesman.value.text,
+        date: '$dateNow $timeNow',
+        name: name.value.text,
+        tel1: phoneCus.value.text,
+        tel2: phoneCus2.value.text,
+        tel3: phoneCus3.value.text,
+        document: document.value.text,
+        brand: brand.value ?? '',
+        model: model.value ?? '',
+        year: year.value.text,
+        color: color.value ?? '',
+        power: power.value.text,
+        condition: condition.value ?? '',
+        firstPayment: firstPayDate.value.text,
+        interest: interest.value.text,
+        total: total.value.text,
+        term: term.value.text,
+        platePayment: platePay.value ?? '',
+        plateAmount: plateAmount.value.text,
+        receiveAmount: '0',
+        amountLeft: total.value.text,
+      );
 
       if (comeBy.value == 'Friend') {
         if (nameIntro.value.text != '' &&
             phoneIntro.value.text != '' &&
             commission.value.text != '') {
-          await insertFriendCommission(newFriCom);
-          await insertLeasing(
-            newLeasing,
-            newSaleManCom,
-            newMicroCom,
-            model: model.value ?? '',
-            brand: brand.value ?? '',
-            year: year.value.text,
-            condition: condition.value ?? '',
-            bookingId: bookID,
-            clear: clearText,
-          );
+          if (debt > 0) {
+            if (phoneCus2.value.text != '' &&
+                phoneCus3.value.text != '' &&
+                document.value.text != '' &&
+                firstPayDate.value.text != '' &&
+                interest.value.text != '' &&
+                total.value.text != '' &&
+                term.value.text != '' &&
+                platePay.value != null) {
+              await insertFriendCommission(newFriCom);
+              await insertLeasing(
+                newLeasing,
+                newSaleManCom,
+                newMicroCom,
+                newReceivable,
+                model: model.value ?? '',
+                brand: brand.value ?? '',
+                year: year.value.text,
+                condition: condition.value ?? '',
+                bookingId: bookID,
+                debt: debt,
+                clear: clearText,
+              );
+            } else {
+              LoadingWidget.showTextDialog(
+                Get.context!,
+                title: 'Error',
+                content: 'Please input Receivable information.',
+                color: redColor,
+              );
+            }
+          } else {
+            await insertFriendCommission(newFriCom);
+            await insertLeasing(
+              newLeasing,
+              newSaleManCom,
+              newMicroCom,
+              newReceivable,
+              model: model.value ?? '',
+              brand: brand.value ?? '',
+              year: year.value.text,
+              condition: condition.value ?? '',
+              bookingId: bookID,
+              debt: debt,
+              clear: clearText,
+            );
+          }
         } else {
           LoadingWidget.showTextDialog(
             Get.context!,
@@ -215,17 +277,51 @@ class NewLeasingController extends GetxController {
           );
         }
       } else {
-        await insertLeasing(
-          newLeasing,
-          newSaleManCom,
-          newMicroCom,
-          model: model.value ?? '',
-          brand: brand.value ?? '',
-          year: year.value.text,
-          condition: condition.value ?? '',
-          bookingId: bookID,
-          clear: clearText,
-        );
+        if (debt > 0) {
+          if (phoneCus2.value.text != '' &&
+              phoneCus3.value.text != '' &&
+              document.value.text != '' &&
+              firstPayDate.value.text != '' &&
+              interest.value.text != '' &&
+              total.value.text != '' &&
+              term.value.text != '' &&
+              platePay.value != null) {
+            await insertLeasing(
+              newLeasing,
+              newSaleManCom,
+              newMicroCom,
+              newReceivable,
+              model: model.value ?? '',
+              brand: brand.value ?? '',
+              year: year.value.text,
+              condition: condition.value ?? '',
+              bookingId: bookID,
+              debt: debt,
+              clear: clearText,
+            );
+          } else {
+            LoadingWidget.showTextDialog(
+              Get.context!,
+              title: 'Error',
+              content: 'Please input Receivable information.',
+              color: redColor,
+            );
+          }
+        } else {
+          await insertLeasing(
+            newLeasing,
+            newSaleManCom,
+            newMicroCom,
+            newReceivable,
+            model: model.value ?? '',
+            brand: brand.value ?? '',
+            year: year.value.text,
+            condition: condition.value ?? '',
+            bookingId: bookID,
+            debt: debt,
+            clear: clearText,
+          );
+        }
       }
     } else {
       LoadingWidget.showTextDialog(
@@ -298,8 +394,30 @@ class NewLeasingController extends GetxController {
       var app = int.parse(approve.value.text);
       var totDebt = re - app;
       totalOwn.value.text = '$totDebt';
+
+      if (totalOwn.value.text != '') {
+        if (int.parse(totalOwn.value.text) > 0 ||
+            int.parse(totalOwn.value.text) < 0) {
+          isReceivable.value = true;
+        } else {
+          isReceivable.value = false;
+        }
+      } else {
+        isReceivable.value = false;
+      }
     } else {
       totalOwn.value.text = '';
+    }
+  }
+
+  void calculateTotal() {
+    if (totalOwn.value.text != '' && interest.value.text != '') {
+      var own = int.parse(totalOwn.value.text);
+      var inter = int.parse(interest.value.text);
+      var tot = own + inter;
+      total.value.text = '$tot';
+    } else {
+      total.value.text = '';
     }
   }
 
@@ -335,5 +453,14 @@ class NewLeasingController extends GetxController {
     nameIntro.value.text = '';
     phoneIntro.value.text = '';
     commission.value.text = '';
+    phoneCus2.value.text = '';
+    phoneCus3.value.text = '';
+    document.value.text = '';
+    firstPayDate.value.text = '';
+    interest.value.text = '';
+    total.value.text = '';
+    term.value.text = '';
+    platePay.value = null;
+    plateAmount.value.text = '';
   }
 }
