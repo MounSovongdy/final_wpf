@@ -36,9 +36,4 @@ class NewReceivableController extends GetxController {
   var rate = TextEditingController().obs;
   var term = TextEditingController().obs;
 
-
-  var totalAmount = TextEditingController().obs;
-  var paidAmount = TextEditingController().obs;
-  var leftAmount = TextEditingController().obs;
-
 }

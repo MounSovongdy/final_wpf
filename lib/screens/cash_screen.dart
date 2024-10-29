@@ -5,6 +5,7 @@ import 'package:motor/constants/responsive.dart';
 import 'package:motor/controllers/cash_controller.dart';
 import 'package:motor/controllers/main_controller.dart';
 import 'package:motor/controllers/new_cash_controller.dart';
+import 'package:motor/controllers/printer_controller.dart';
 import 'package:motor/screens/components/app_button.dart';
 import 'package:motor/screens/components/app_data_table.dart';
 import 'package:motor/screens/components/under_line.dart';
@@ -143,7 +144,9 @@ class CashDataSource extends DataTableSource {
           btnPrint: true,
           edit: () => debugPrint('Edit $index'),
           delete: () => debugPrint('Delete $index'),
-          print: () {},
+          print: () {
+            printPdf();
+          },
         ),
       ],
     );

@@ -24,7 +24,10 @@ class NewReceivableScreen extends StatelessWidget {
       child: Container(
         margin: EdgeInsets.all(defWebPad.px),
         padding: EdgeInsets.all(defWebPad.px),
-        width: MediaQuery.of(context).size.width,
+        width: MediaQuery
+            .of(context)
+            .size
+            .width,
         decoration: BoxDecoration(
           color: whiteColor,
           borderRadius: BorderRadius.circular(defRadius.px),
@@ -211,60 +214,13 @@ class NewReceivableScreen extends StatelessWidget {
                 AppButton(
                   txt: 'Save',
                   width: Responsive.isDesktop(context) ? 150.px : 100.px,
-                  tap: () {
-                    showDialogPayment(context);
-                  },
+                  tap: () {},
                 ),
               ],
             ),
           ],
         ),
       ),
-    );
-  }
-
-  void showDialogPayment(BuildContext context) {
-    showDialog(
-      context: context,
-      barrierDismissible: false,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(5),
-          ),
-          title: AppText.header(context, txt: 'Table Payment'),
-          content: Column(
-            children: [
-              RowTextField(
-                spacer: spacer(context),
-                widget1: AppTextField(
-                  txt: 'Total Amount',
-                  con: con.totalAmount.value,
-                  readOnly: true,
-                ),
-                widget2: AppTextField(
-                  txt: 'Paid Amount',
-                  con: con.paidAmount.value,
-                  readOnly: true,
-                ),
-                widget3: AppTextField(
-                  txt: 'Left Amount',
-                  con: con.leftAmount.value,
-                  readOnly: true,
-                ),
-              ),
-            ],
-          ),
-          actions: [
-            AppButton(
-              txt: 'Back',
-              width: 100.px,
-              color: secondGreyColor,
-              tap: () => Navigator.of(context).pop(),
-            ),
-          ],
-        );
-      },
     );
   }
 }

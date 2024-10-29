@@ -7,6 +7,7 @@ import 'package:motor/screens/components/app_data_table.dart';
 import 'package:motor/screens/widgets/app_text.dart';
 import 'package:motor/screens/widgets/data_table_widget.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
+import 'package:universal_html/js.dart';
 
 class ReceivableScreen extends StatelessWidget {
   ReceivableScreen({super.key});
@@ -111,10 +112,12 @@ class ReceivableDataSource extends DataTableSource {
           btnEdit: false,
           btnDelete: false,
           btnAddPayment: true,
+          btnViewPayment: true,
           edit: () => debugPrint('Edit $index'),
           delete: () => debugPrint('Delete $index'),
           print: () => debugPrint('Print $index'),
-          addPayment: () => con.showDialogPayment(Get.context!),
+          addPayment: () => con.showDialogAddPayment(Get.context!),
+          viewPayment: () => con.showDialogViewPayment(Get.context!),
         ),
       ],
     );
@@ -122,7 +125,6 @@ class ReceivableDataSource extends DataTableSource {
 
   @override
   int get rowCount => con.filteredRece.length;
-
   @override
   bool get isRowCountApproximate => false;
 
