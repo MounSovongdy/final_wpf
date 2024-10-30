@@ -5,51 +5,55 @@
   <title>Motor Shop</title>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
   <script>
-    // Function to generate and download PDF
-<!--    function downloadPDF() {-->
-<!--      const element = document.getElementById('pdfContent');-->
-<!--      if (!element) {-->
-<!--        console.error("Element with ID 'pdfContent' not found!");-->
-<!--        return;-->
-<!--      }-->
-<!--      const opt = {-->
-<!--        margin:       1,-->
-<!--        filename:     'khmer_text.pdf',-->
-<!--        image:        { type: 'jpeg', quality: 0.98 },-->
-<!--        html2canvas:  { scale: 2 },-->
-<!--        jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' }-->
-<!--      };-->
-<!--      html2pdf().from(element).set(opt).save().then(() => {-->
-<!--        console.log('PDF downloaded successfully!');-->
-<!--      }).catch((err) => {-->
-<!--        console.error('Error downloading PDF:', err);-->
-<!--      });-->
-<!--    }-->
-
-    // Function to print content
+    // Function to print leasing Invoice
     function printContent() {
-    const content = document.getElementById('pdfContent');
-    if (content) {
-      const printWindow = window.open('', '_blank');
-      printWindow.document.open();
-      printWindow.document.write('<html><head><title>Print</title>');
-      printWindow.document.write('<style>@font-face { font-family: "NotoSansKhmer"; src: url("' + content.querySelector("style").innerText + '") format("truetype"); } body { font-family: "NotoSansKhmer", sans-serif; color: #4a4a8c; }</style>');
-      printWindow.document.write('</head><body>');
-      printWindow.document.write(content.innerHTML);
-      printWindow.document.write('</body></html>');
-      printWindow.document.close();
+      const content = document.getElementById('pdfLeasingInvoice');
+      if (content) {
+        const printWindow = window.open('', '_blank');
+        printWindow.document.open();
+        printWindow.document.write('<html><head><title>Print</title>');
+        printWindow.document.write('<style>@font-face { font-family: "NotoSansKhmer"; src: url("' + content.querySelector("style").innerText + '") format("truetype"); } body { font-family: "NotoSansKhmer", sans-serif; color: #4a4a8c; }</style>');
+        printWindow.document.write('</head><body>');
+        printWindow.document.write(content.innerHTML);
+        printWindow.document.write('</body></html>');
+        printWindow.document.close();
 
-      // Wait for the content to fully load, then trigger the print dialog
-      printWindow.onload = function() {
-        printWindow.print();
-        printWindow.onafterprint = function() {
-          printWindow.close(); // Close the window after printing
+        // Wait for the content to fully load, then trigger the print dialog
+        printWindow.onload = function() {
+          printWindow.print();
+          printWindow.onafterprint = function() {
+            printWindow.close(); // Close the window after printing
+          };
         };
-      };
-    } else {
-      console.error("Element with ID 'pdfContent' not found for printing.");
+      } else {
+        console.error("Element with ID 'pdfContent' not found for printing.");
+      }
     }
-  }
+
+    // Function to print Cash Invoice
+    function printContent1() {
+      const content = document.getElementById('pdfCashInvoice');
+      if (content) {
+        const printWindow = window.open('', '_blank');
+        printWindow.document.open();
+        printWindow.document.write('<html><head><title>Print</title>');
+        printWindow.document.write('<style>@font-face { font-family: "NotoSansKhmer"; src: url("' + content.querySelector("style").innerText + '") format("truetype"); } body { font-family: "NotoSansKhmer", sans-serif; color: #4a4a8c; }</style>');
+        printWindow.document.write('</head><body>');
+        printWindow.document.write(content.innerHTML);
+        printWindow.document.write('</body></html>');
+        printWindow.document.close();
+
+        // Wait for the content to fully load, then trigger the print dialog
+        printWindow.onload = function() {
+          printWindow.print();
+          printWindow.onafterprint = function() {
+            printWindow.close(); // Close the window after printing
+          };
+        };
+      } else {
+        console.error("Element with ID 'pdfContent' not found for printing.");
+      }
+    }
   </script>
 </head>
 <body>

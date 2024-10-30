@@ -5,7 +5,7 @@ import 'package:motor/constants/responsive.dart';
 import 'package:motor/controllers/leasing_controller.dart';
 import 'package:motor/controllers/main_controller.dart';
 import 'package:motor/controllers/new_leasing_controller.dart';
-import 'package:motor/controllers/printer_controller.dart';
+import 'package:motor/controllers/print_leasing_invoice_controller.dart';
 import 'package:motor/screens/components/app_button.dart';
 import 'package:motor/screens/components/app_data_table.dart';
 import 'package:motor/screens/components/under_line.dart';
@@ -128,7 +128,7 @@ class LeasingDataSource extends DataTableSource {
           btnPrint: true,
           edit: () => debugPrint('Edit $index'),
           delete: () => debugPrint('Delete $index'),
-          print: () =>  printPdf(),
+          print: () =>  printLeasingInvoice(),
         ),
         DataTableWidget.cell(Get.context!, '${data.id}'),
         DataTableWidget.cell(Get.context!, data.leasingDate),

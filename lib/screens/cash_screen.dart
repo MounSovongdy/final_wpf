@@ -5,7 +5,8 @@ import 'package:motor/constants/responsive.dart';
 import 'package:motor/controllers/cash_controller.dart';
 import 'package:motor/controllers/main_controller.dart';
 import 'package:motor/controllers/new_cash_controller.dart';
-import 'package:motor/controllers/printer_controller.dart';
+import 'package:motor/controllers/print_cash_sale_controller.dart';
+import 'package:motor/controllers/print_leasing_invoice_controller.dart';
 import 'package:motor/screens/components/app_button.dart';
 import 'package:motor/screens/components/app_data_table.dart';
 import 'package:motor/screens/components/under_line.dart';
@@ -122,6 +123,17 @@ class CashDataSource extends DataTableSource {
     return DataRow.byIndex(
       index: index,
       cells: [
+        DataTableWidget.cellBtn(
+          Get.context!,
+          btnEdit: false,
+          btnDelete: false,
+          btnPrint: true,
+          edit: () => debugPrint('Edit $index'),
+          delete: () => debugPrint('Delete $index'),
+          print: () {
+            printCashInvoice();
+          },
+        ),
         DataTableWidget.cell(Get.context!, '${data.id}'),
         DataTableWidget.cell(Get.context!, data.date),
         DataTableWidget.cell(Get.context!, data.idCard),
@@ -137,17 +149,6 @@ class CashDataSource extends DataTableSource {
         DataTableWidget.cell(Get.context!, data.price),
         DataTableWidget.cell(Get.context!, data.saleman),
         DataTableWidget.cell(Get.context!, data.comeBy),
-        DataTableWidget.cellBtn(
-          Get.context!,
-          btnEdit: false,
-          btnDelete: false,
-          btnPrint: true,
-          edit: () => debugPrint('Edit $index'),
-          delete: () => debugPrint('Delete $index'),
-          print: () {
-            printPdf();
-          },
-        ),
       ],
     );
   }
