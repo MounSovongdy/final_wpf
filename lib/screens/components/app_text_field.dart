@@ -59,7 +59,7 @@ class AppTextField extends StatelessWidget {
               keyboardType: isNumber ? TextInputType.number : txtInput,
               inputFormatters: isNumber
                   ? [
-                      FilteringTextInputFormatter.digitsOnly,
+                      FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d*')),
                       LengthLimitingTextInputFormatter(digit),
                     ]
                   : [],
@@ -81,5 +81,3 @@ class AppTextField extends StatelessWidget {
     );
   }
 }
-
-

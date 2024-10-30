@@ -111,14 +111,31 @@ class ReceivableDataSource extends DataTableSource {
           Get.context!,
           btnEdit: false,
           btnDelete: false,
-          btnAddPayment: true,
+          btnAddPayment: conToNum(data.amountLeft) > 0 ? true : false,
           btnViewPayment: true,
           edit: () => debugPrint('Edit $index'),
           delete: () => debugPrint('Delete $index'),
           print: () => debugPrint('Print $index'),
-          addPayment: () => con.showDialogAddPayment(Get.context!),
+          addPayment: () async {
+            byPaymentTable.clear();
+            con.scheduleList.clear();
+            con.clearText();
+            con.totalAmount.value.text = data.total;
+            con.paidAmount.value.text = data.receiveAmount;
+            con.leftAmount.value.text = data.amountLeft;
+
+            await getByPaymentTable(data.id);
+            for (var data in byPaymentTable) {
+              if (data.date != '' && data.paid == '') {
+                con.scheduleList.add(data.date);
+              }
+            }
+
+            con.showDialogAddPayment(Get.context!, data.id);
+          },
           viewPayment: () async {
             byPaymentTable.clear();
+            con.clearText();
             await getByPaymentTable(data.id);
             con.showDialogViewPayment(Get.context!);
           },

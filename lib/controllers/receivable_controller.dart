@@ -4,9 +4,13 @@ import 'package:motor/constants/constants.dart';
 import 'package:motor/constants/firebase.dart';
 import 'package:motor/controllers/new_receivable_controller.dart';
 import 'package:motor/screens/components/app_button.dart';
+import 'package:motor/screens/components/app_date_text_field.dart';
+import 'package:motor/screens/components/app_dropdown_search.dart';
 import 'package:motor/screens/components/app_text_field.dart';
 import 'package:motor/screens/components/row_text_field.dart';
+import 'package:motor/screens/components/title_underline.dart';
 import 'package:motor/screens/widgets/app_text.dart';
+import 'package:motor/screens/widgets/loading_widget.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 class ReceivableController extends GetxController {
@@ -41,22 +45,35 @@ class ReceivableController extends GetxController {
   var totalAmount = TextEditingController().obs;
   var paidAmount = TextEditingController().obs;
   var leftAmount = TextEditingController().obs;
-
+  List<String> scheduleList = [];
+  var no = ''.obs;
+  var schedule = Rxn<String>();
+  var scheduleAmount = TextEditingController().obs;
   var datePayment = TextEditingController().obs;
   var amount = TextEditingController().obs;
   var remark = TextEditingController().obs;
 
-  void showDialogAddPayment(BuildContext context) {
+  void clearText() {
+    totalAmount.value.text = '';
+    paidAmount.value.text = '';
+    leftAmount.value.text = '';
+    schedule.value = null;
+    scheduleAmount.value.text = '';
+    datePayment.value.text = '';
+    amount.value.text = '';
+    remark.value.text = '';
+  }
+
+  void showDialogAddPayment(BuildContext context, int id) {
     showDialog(
       context: context,
       barrierDismissible: false,
       builder: (BuildContext context) {
         return AlertDialog(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(5),
-          ),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
           title: AppText.header(context, txt: 'Add Payment'),
           content: Column(
+            mainAxisSize: MainAxisSize.min,
             children: [
               RowTextField(
                 spacer: spacer(context),
@@ -76,21 +93,58 @@ class ReceivableController extends GetxController {
                   readOnly: true,
                 ),
               ),
+              spacer(context),
+              TitleUnderline(
+                spacer: spacer(context),
+                txt: 'Payment Schedule',
+              ),
               RowTextField(
                 spacer: spacer(context),
-                widget1: AppTextField(
+                widget1: AppDropdownSearch(
+                  txt: 'Date',
+                  value: schedule,
+                  list: scheduleList,
+                  onChanged: (v) {
+                    if (v != null) {
+                      schedule.value = v;
+                      for (var data in byPaymentTable) {
+                        if (v == data.date) {
+                          scheduleAmount.value.text = data.amount;
+                          no.value = '${data.no}';
+                        }
+                      }
+                    }
+                  },
+                ),
+                widget2: AppTextField(
+                  txt: 'Amount',
+                  con: scheduleAmount.value,
+                  readOnly: true,
+                ),
+              ),
+              spacer(context),
+              TitleUnderline(
+                spacer: spacer(context),
+                txt: 'Customer Paid',
+              ),
+              RowTextField(
+                spacer: spacer(context),
+                widget1: AppDateTextField(
                   txt: 'Date',
                   con: datePayment.value,
                 ),
                 widget2: AppTextField(
                   txt: 'Amount',
                   con: amount.value,
+                  isNumber: true,
+                  digit: 7,
                 ),
                 widget3: AppTextField(
                   txt: 'Remark',
                   con: remark.value,
                 ),
               ),
+              spacer(context),
               spacer(context),
             ],
           ),
@@ -105,10 +159,92 @@ class ReceivableController extends GetxController {
                   tap: () => Navigator.of(context).pop(),
                 ),
                 spacer(context),
+                spacer(context),
                 AppButton(
                   txt: 'Save',
                   width: 100.px,
-                  tap: () {},
+                  tap: () async {
+                    if (scheduleList.isNotEmpty) {
+                      if (schedule.value != null &&
+                          amount.value.text != '' &&
+                          datePayment.value.text != '') {
+                        var paidDate = DateTime.parse(datePayment.value.text);
+                        var scheDate = DateTime.parse(schedule.value ?? '');
+
+                        var date1 = DateTime(
+                          paidDate.year,
+                          paidDate.month,
+                          paidDate.day,
+                        );
+                        var date2 = DateTime(
+                          scheDate.year,
+                          scheDate.month,
+                          scheDate.day,
+                        );
+                        Duration diff = date1.difference(date2);
+
+                        LoadingWidget.dialogLoading(duration: 5, isBack: false);
+                        await insertPayment(
+                          id: id,
+                          no: int.parse(no.value),
+                          date: schedule.value ?? '',
+                          paid: amount.value.text,
+                          paidDate: datePayment.value.text,
+                          note: remark.value.text,
+                          late: diff.inDays <= 0 ? '0' : '${diff.inDays}',
+                        );
+                        clearText();
+                        await getAllReceivable();
+                        filteredRece.value = receivable;
+                        search.value.addListener(filterReceivableData);
+                        Get.back();
+
+                        LoadingWidget.showTextDialog(
+                          Get.context!,
+                          title: 'Successfully',
+                          content: 'The Payment is success added.',
+                          color: greenColor,
+                        );
+                      } else {
+                        LoadingWidget.showTextDialog(
+                          context,
+                          title: 'Error',
+                          content: 'Please input all information.',
+                          color: redColor,
+                        );
+                      }
+                    } else {
+                      if (amount.value.text != '' &&
+                          datePayment.value.text != '') {
+                        LoadingWidget.dialogLoading(duration: 5, isBack: false);
+                        await addMorePayment(
+                          id: id,
+                          paid: amount.value.text,
+                          paidDate: datePayment.value.text,
+                          note: remark.value.text,
+                        );
+                        clearText();
+                        await getAllReceivable();
+                        filteredRece.value = receivable;
+                        search.value.addListener(filterReceivableData);
+                        Get.back();
+
+                        LoadingWidget.showTextDialog(
+                          Get.context!,
+                          title: 'Successfully',
+                          content: 'The Payment is success added.',
+                          color: greenColor,
+                        );
+                      } else {
+                        LoadingWidget.showTextDialog(
+                          context,
+                          title: 'Error',
+                          content: 'Please input all information.',
+                          color: redColor,
+                        );
+                      }
+                    }
+                  },
                 ),
               ],
             ),
@@ -127,6 +263,7 @@ class ReceivableController extends GetxController {
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
           title: AppText.header(context, txt: 'View Payment'),
           content: Column(
+            mainAxisSize: MainAxisSize.min,
             children: [
               SizedBox(
                 width: MediaQuery.of(context).size.width * 0.6,

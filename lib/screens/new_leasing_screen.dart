@@ -442,16 +442,6 @@ class NewLeasingScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 AppButton(
-                  txt: 'Generate',
-                  width: Responsive.isDesktop(context) ? 150.px : 100.px,
-                  color: secondGreyColor,
-                  tap: () {
-                    con.generatePaymentTable();
-                  },
-                ),
-                spacer(context),
-                spacer(context),
-                AppButton(
                   txt: 'Cancel',
                   width: Responsive.isDesktop(context) ? 150.px : 100.px,
                   color: secondGreyColor,

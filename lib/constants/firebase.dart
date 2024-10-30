@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:motor/constants/constants.dart';
@@ -62,6 +63,7 @@ var microCom = [].obs;
 var saleManCom = [].obs;
 var friendCom = [].obs;
 var cash = [].obs;
+var byReceivable = [].obs;
 var receivable = [].obs;
 var byPaymentTable = [].obs;
 var paymentTable = [].obs;
@@ -882,10 +884,110 @@ Future<void> insertCash(
 }
 
 Future<void> getByPaymentTable(int id) async {
-  var res = await paymentTableCol
-      .where('id', isEqualTo: id)
-      .where('type', isEqualTo: 'Table')
-      .get();
+  var res = await paymentTableCol.where('id', isEqualTo: id).get();
   byPaymentTable.value =
       res.docs.map((doc) => PaymentTableModel.fromMap(doc.data())).toList();
+}
+
+Future<void> insertPayment({
+  required int id,
+  required int no,
+  required String date,
+  required String paidDate,
+  required String paid,
+  required String note,
+  required String late,
+}) async {
+  try {
+    var docId1 = '';
+    var docId2 = '';
+
+    var res1 = await paymentTableCol
+        .where('id', isEqualTo: id)
+        .where('no', isEqualTo: no)
+        .where('date', isEqualTo: date)
+        .get();
+    var res2 = await receivableCol.where('id', isEqualTo: id).get();
+    byReceivable.value =
+        res2.docs.map((doc) => ReceivableModel.fromMap(doc.data())).toList();
+
+    for (var doc in res1.docs) {
+      docId1 = doc.id;
+    }
+    for (var doc in res2.docs) {
+      docId2 = doc.id;
+    }
+
+    await paymentTableCol.doc(docId1).update({
+      'paid': paid,
+      'paid_date': paidDate,
+      'note': note,
+      'late_date': late,
+    });
+
+    var receive = conToNum(byReceivable[0].receiveAmount) + conToNum(paid);
+    var left = conToNum(byReceivable[0].total) - receive;
+    await receivableCol.doc(docId2).update({
+      'receive_amount': '${receive.toStringAsFixed(2)}',
+      'amount_left': '${left.toStringAsFixed(2)}',
+      'plate_amount': paidDate == 'P' ? paid : '',
+    });
+  } catch (e) {
+    debugPrint('Failed to add insert Payment: $e');
+  }
+}
+
+Future<void> addMorePayment({
+  required int id,
+  required String paidDate,
+  required String paid,
+  required String note,
+}) async {
+  try {
+    var res1 = await paymentTableCol.where('id', isEqualTo: id).get();
+    byPaymentTable.value =
+        res1.docs.map((doc) => PaymentTableModel.fromMap(doc.data())).toList();
+
+    var docId2 = '';
+    var res2 = await receivableCol.where('id', isEqualTo: id).get();
+
+    byReceivable.value =
+        res2.docs.map((doc) => ReceivableModel.fromMap(doc.data())).toList();
+
+    for (var doc in res2.docs) {
+      docId2 = doc.id;
+    }
+
+    await paymentTableCol
+        .doc('$id-${byPaymentTable[byPaymentTable.length - 1].no + 1}')
+        .set({
+      'amount': '',
+      'date': '',
+      'late_date': '',
+      'no': byPaymentTable[byPaymentTable.length - 1].no + 1,
+      'penalty': '0',
+      'type': 'Input',
+      'id': id,
+      'paid': paid,
+      'paid_date': paidDate,
+      'note': note,
+    });
+
+    var receive = conToNum(byReceivable[0].receiveAmount) + conToNum(paid);
+    var left = conToNum(byReceivable[0].total) - receive;
+    await receivableCol.doc(docId2).update({
+      'receive_amount': '${receive.toStringAsFixed(2)}',
+      'amount_left': '${left.toStringAsFixed(2)}',
+    });
+  } catch (e) {
+    debugPrint('Failed to add add more Payment: $e');
+  }
+}
+
+dynamic conToNum(String input) {
+  if (input.contains('.')) {
+    return double.tryParse(input) ?? input;
+  } else {
+    return int.tryParse(input) ?? input;
+  }
 }

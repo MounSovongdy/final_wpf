@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+// ignore: avoid_web_libraries_in_flutter
 import 'dart:html' as html;
+// ignore: avoid_web_libraries_in_flutter
 import 'dart:js' as js;
 
 Future<String> generateHtmlContent({
