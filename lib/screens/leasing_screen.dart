@@ -95,6 +95,7 @@ class LeasingScreen extends StatelessWidget {
                   conNL.clearText();
                   await con.getBookingIDandIDCard();
                   await con.brandName();
+                  await con.colorName();
 
                   conMain.index.value = 22;
                 },
@@ -110,7 +111,6 @@ class LeasingScreen extends StatelessWidget {
 class LeasingDataSource extends DataTableSource {
   final con = Get.put(LeasingController());
 
-
   @override
   DataRow? getRow(int index) {
     assert(index >= 0);
@@ -121,15 +121,6 @@ class LeasingDataSource extends DataTableSource {
     return DataRow.byIndex(
       index: index,
       cells: [
-        DataTableWidget.cellBtn(
-          Get.context!,
-          btnEdit: false,
-          btnDelete: false,
-          btnPrint: true,
-          edit: () => debugPrint('Edit $index'),
-          delete: () => debugPrint('Delete $index'),
-          print: () =>  printLeasingInvoice(),
-        ),
         DataTableWidget.cell(Get.context!, '${data.id}'),
         DataTableWidget.cell(Get.context!, data.leasingDate),
         DataTableWidget.cell(Get.context!, data.idCard),
@@ -149,6 +140,15 @@ class LeasingDataSource extends DataTableSource {
         DataTableWidget.cell(Get.context!, data.totalDebt),
         DataTableWidget.cell(Get.context!, data.saleman),
         DataTableWidget.cell(Get.context!, data.comeBy),
+        DataTableWidget.cellBtn(
+          Get.context!,
+          btnEdit: false,
+          btnDelete: false,
+          btnPrint: true,
+          edit: () => debugPrint('Edit $index'),
+          delete: () => debugPrint('Delete $index'),
+          print: () => printLeasingInvoice(),
+        ),
       ],
     );
   }

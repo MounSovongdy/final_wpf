@@ -96,6 +96,8 @@ class CashScreen extends StatelessWidget {
                   conNC.discount.value.text = '0';
                   await conNC.saleManName();
                   await conNC.brandName();
+                  await conNC.addressName();
+                  await conNC.colorName();
 
                   startInactivityTimer();
                   conMain.index.value = 24;
@@ -122,17 +124,6 @@ class CashDataSource extends DataTableSource {
     return DataRow.byIndex(
       index: index,
       cells: [
-        DataTableWidget.cellBtn(
-          Get.context!,
-          btnEdit: false,
-          btnDelete: false,
-          btnPrint: true,
-          edit: () => debugPrint('Edit $index'),
-          delete: () => debugPrint('Delete $index'),
-          print: () {
-            printCashInvoice();
-          },
-        ),
         DataTableWidget.cell(Get.context!, '${data.id}'),
         DataTableWidget.cell(Get.context!, data.date),
         DataTableWidget.cell(Get.context!, data.idCard),
@@ -148,6 +139,17 @@ class CashDataSource extends DataTableSource {
         DataTableWidget.cell(Get.context!, data.price),
         DataTableWidget.cell(Get.context!, data.saleman),
         DataTableWidget.cell(Get.context!, data.comeBy),
+        DataTableWidget.cellBtn(
+          Get.context!,
+          btnEdit: false,
+          btnDelete: false,
+          btnPrint: true,
+          edit: () => debugPrint('Edit $index'),
+          delete: () => debugPrint('Delete $index'),
+          print: () {
+            printCashInvoice();
+          },
+        ),
       ],
     );
   }

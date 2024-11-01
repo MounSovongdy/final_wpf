@@ -4,10 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:motor/constants/constants.dart';
 import 'package:motor/models/add_stock_model.dart';
+import 'package:motor/models/address_model.dart';
 import 'package:motor/models/booking_micro_model.dart';
 import 'package:motor/models/booking_model.dart';
 import 'package:motor/models/brand_model.dart';
 import 'package:motor/models/cash_model.dart';
+import 'package:motor/models/color_model.dart';
 import 'package:motor/models/friend_commission_model.dart';
 import 'package:motor/models/leasing_model.dart';
 import 'package:motor/models/micro_commission_model.dart';
@@ -26,6 +28,8 @@ final _firebase = FirebaseFirestore.instance;
 final userCol = _firebase.collection('user');
 final saleManCol = _firebase.collection('sale_man');
 final microCol = _firebase.collection('micro');
+final addressCol = _firebase.collection('address');
+final colorCol = _firebase.collection('color');
 final brandCol = _firebase.collection('brand');
 final productCol = _firebase.collection('product');
 final addStockCol = _firebase.collection('add_stock');
@@ -47,6 +51,9 @@ var bySaleMan = [].obs;
 var saleMan = [].obs;
 var byMicro = [].obs;
 var micro = [].obs;
+var address = [].obs;
+var byAddress = [].obs;
+var color = [].obs;
 var brand = [].obs;
 var byProduct = [].obs;
 var product = [].obs;
@@ -918,20 +925,22 @@ Future<void> insertPayment({
       docId2 = doc.id;
     }
 
-    await paymentTableCol.doc(docId1).update({
-      'paid': paid,
-      'paid_date': paidDate,
-      'note': note,
-      'late_date': late,
-    });
-
     var receive = conToNum(byReceivable[0].receiveAmount) + conToNum(paid);
     var left = conToNum(byReceivable[0].total) - receive;
-    await receivableCol.doc(docId2).update({
-      'receive_amount': '${receive.toStringAsFixed(2)}',
-      'amount_left': '${left.toStringAsFixed(2)}',
-      'plate_amount': paidDate == 'P' ? paid : '',
-    });
+
+    if (left >= 0) {
+      await receivableCol.doc(docId2).update({
+        'receive_amount': '${receive.toStringAsFixed(2)}',
+        'amount_left': '${left.toStringAsFixed(2)}',
+        'plate_amount': paidDate == 'P' ? paid : '',
+      });
+      await paymentTableCol.doc(docId1).update({
+        'paid': paid,
+        'paid_date': paidDate,
+        'note': note,
+        'late_date': late,
+      });
+    }
   } catch (e) {
     debugPrint('Failed to add insert Payment: $e');
   }
@@ -958,30 +967,93 @@ Future<void> addMorePayment({
       docId2 = doc.id;
     }
 
-    await paymentTableCol
-        .doc('$id-${byPaymentTable[byPaymentTable.length - 1].no + 1}')
-        .set({
-      'amount': '',
-      'date': '',
-      'late_date': '',
-      'no': byPaymentTable[byPaymentTable.length - 1].no + 1,
-      'penalty': '0',
-      'type': 'Input',
-      'id': id,
-      'paid': paid,
-      'paid_date': paidDate,
-      'note': note,
-    });
-
     var receive = conToNum(byReceivable[0].receiveAmount) + conToNum(paid);
     var left = conToNum(byReceivable[0].total) - receive;
-    await receivableCol.doc(docId2).update({
-      'receive_amount': '${receive.toStringAsFixed(2)}',
-      'amount_left': '${left.toStringAsFixed(2)}',
-    });
+
+    if (left >= 0) {
+      await receivableCol.doc(docId2).update({
+        'receive_amount': '${receive.toStringAsFixed(2)}',
+        'amount_left': '${left.toStringAsFixed(2)}',
+      });
+      await paymentTableCol
+          .doc('$id-${byPaymentTable[byPaymentTable.length - 1].no + 1}')
+          .set({
+        'amount': '',
+        'date': '',
+        'late_date': '',
+        'no': byPaymentTable[byPaymentTable.length - 1].no + 1,
+        'penalty': '0',
+        'type': 'Input',
+        'id': id,
+        'paid': paid,
+        'paid_date': paidDate,
+        'note': note,
+      });
+    }
   } catch (e) {
     debugPrint('Failed to add add more Payment: $e');
   }
+}
+
+Future<void> getAllAddress() async {
+  var res = await addressCol.orderBy('id', descending: true).get();
+  address.value =
+      res.docs.map((doc) => AddressModel.fromMap(doc.data())).toList();
+}
+
+Future<void> getLastAddress() async {
+  var res = await addressCol.orderBy('id', descending: true).limit(1).get();
+  byAddress.value =
+      res.docs.map((doc) => AddressModel.fromMap(doc.data())).toList();
+}
+
+Future<void> getByAddressID(int id) async {
+  var res = await addressCol.where('id', isEqualTo: id).get();
+  byAddress.value =
+      res.docs.map((doc) => AddressModel.fromMap(doc.data())).toList();
+}
+
+Future<void> updateByAddress(int id, AddressModel add) async {
+  try {
+    var docId = '';
+    var result = await addressCol.where('id', isEqualTo: id).get();
+
+    for (var doc in result.docs) {
+      docId = doc.id;
+    }
+
+    await addressCol.doc(docId).update(add.toMap());
+  } catch (e) {
+    debugPrint('Failed to updateByAddress: $e');
+  }
+}
+
+Future<void> deleteAddress(int id) async {
+  try {
+    var docId = '';
+    var result = await addressCol.where('id', isEqualTo: id).get();
+
+    for (var doc in result.docs) {
+      docId = doc.id;
+    }
+
+    await addressCol.doc(docId).delete();
+  } catch (e) {
+    debugPrint('Failed to delete address: $e');
+  }
+}
+
+Future<void> insertAddress(AddressModel addr) async {
+  try {
+    await addressCol.doc('${addr.id}').set(addr.toMap());
+  } catch (e) {
+    debugPrint('Failed to add address: $e');
+  }
+}
+
+Future<void> getAllColor() async {
+  var res = await colorCol.orderBy('id', descending: true).get();
+  color.value = res.docs.map((doc) => ColorModel.fromMap(doc.data())).toList();
 }
 
 dynamic conToNum(String input) {

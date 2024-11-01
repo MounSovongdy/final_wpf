@@ -98,10 +98,10 @@ class NewCashScreen extends StatelessWidget {
               ),
               widget3: AppDropdownSearch(
                 txt: 'Address',
-                value: con.address,
+                value: con.cusAddress,
                 list: con.addressList,
                 onChanged: (v) {
-                  if (v != null) con.address.value = v;
+                  if (v != null) con.cusAddress.value = v;
                 },
               ),
             ),
@@ -146,10 +146,10 @@ class NewCashScreen extends StatelessWidget {
               spacer: spacer(context),
               widget1: AppDropdownSearch(
                 txt: 'Color',
-                value: con.color,
+                value: con.proColor,
                 list: con.colorList,
                 onChanged: (v) {
-                  if (v != null) con.color.value = v;
+                  if (v != null) con.proColor.value = v;
                 },
               ),
               widget2: AppTextField(

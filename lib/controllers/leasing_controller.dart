@@ -53,4 +53,12 @@ class LeasingController extends GetxController {
       con.brandList.add(data.brand);
     }
   }
+
+  Future<void> colorName() async {
+    con.colorList.clear();
+    await getAllColor();
+    for (var data in color) {
+      con.colorList.add(data.color);
+    }
+  }
 }

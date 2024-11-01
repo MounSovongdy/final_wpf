@@ -1,0 +1,155 @@
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:motor/constants/constants.dart';
+import 'package:motor/constants/firebase.dart';
+import 'package:motor/constants/responsive.dart';
+import 'package:motor/controllers/address_controller.dart';
+import 'package:motor/controllers/create_address_controller.dart';
+import 'package:motor/controllers/main_controller.dart';
+import 'package:motor/screens/components/app_button.dart';
+import 'package:motor/screens/components/app_data_table.dart';
+import 'package:motor/screens/components/under_line.dart';
+import 'package:motor/screens/widgets/app_text.dart';
+import 'package:motor/screens/widgets/data_table_widget.dart';
+import 'package:motor/screens/widgets/loading_widget.dart';
+import 'package:responsive_sizer/responsive_sizer.dart';
+
+class AddressScreen extends StatelessWidget {
+  AddressScreen({super.key});
+
+  final con = Get.put(AddressController());
+  final conCA = Get.put(CreateAddressController());
+  final conMain = Get.put(MainController());
+
+  @override
+  Widget build(BuildContext context) {
+    return SingleChildScrollView(
+      child: Container(
+        margin: EdgeInsets.all(defWebPad.px),
+        padding: EdgeInsets.all(defWebPad.px),
+        decoration: BoxDecoration(
+          color: whiteColor,
+          borderRadius: BorderRadius.circular(defRadius.px),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            AppText.header(context, txt: 'Address List'),
+            spacer(context),
+            TextField(
+              controller: con.search.value,
+              decoration: const InputDecoration(
+                labelText: 'Search',
+                hintText: 'Search by any data',
+                prefixIcon: Icon(Icons.search),
+                border: OutlineInputBorder(),
+              ),
+            ),
+            spacer(context),
+            Obx(
+              () => con.filteredAddress.isNotEmpty
+                  ? AppDataTable(
+                      column: [
+                        DataTableWidget.column(context, 'ID'),
+                        DataTableWidget.column(context, 'Address'),
+                        DataTableWidget.column(context, 'Action'),
+                      ],
+                      source: AddressDataSource(),
+                    )
+                  : Container(
+                      width: MediaQuery.of(context).size.width,
+                      margin: EdgeInsets.only(top: defWebPad.px),
+                      alignment: Alignment.center,
+                      child: AppText.title(context, txt: 'No Data'),
+                    ),
+            ),
+            spacer(context),
+            spacer(context),
+            const UnderLine(color: secondGreyColor),
+            spacer(context),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                AppButton(
+                  txt: 'New',
+                  width: Responsive.isDesktop(context) ? 150.px : 100.px,
+                  tap: () {
+                    startInactivityTimer();
+                    conCA.clearText();
+                    con.title.value = 'Create Address';
+
+                    conMain.index.value = 28;
+                  },
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class AddressDataSource extends DataTableSource {
+  final con = Get.put(AddressController());
+  final conA = Get.put(CreateAddressController());
+  final conMain = Get.put(MainController());
+
+  @override
+  DataRow? getRow(int index) {
+    assert(index >= 0);
+    if (index >= con.filteredAddress.length) return null;
+
+    var data = con.filteredAddress[index];
+
+    return DataRow.byIndex(
+      index: index,
+      cells: [
+        DataTableWidget.cell(Get.context!, '${data.id}'),
+        DataTableWidget.cell(Get.context!, data.address),
+        DataTableWidget.cellBtn(
+          Get.context!,
+          edit: () async {
+            startInactivityTimer();
+            conA.clearText();
+            con.title.value = 'Edit Address';
+            await con.editAddress(data.id);
+
+            conMain.index.value = 28;
+          },
+          delete: () {
+            startInactivityTimer();
+            LoadingWidget.showTextDialog(
+              Get.context!,
+              title: 'Warning',
+              content: 'Are you sure to delete?',
+              color: redColor,
+              txtBack: 'Cancel',
+              btnColor: secondGreyColor,
+              widget: TextButton(
+                onPressed: () async {
+                  await deleteAddress(con.filteredAddress[index].id);
+                  con.filteredAddress.clear();
+                  await getAllAddress();
+                  con.filteredAddress.value = address;
+
+                  Get.back();
+                },
+                child: AppText.title(Get.context!, txt: 'Confirm'),
+              ),
+            );
+          },
+        ),
+      ],
+    );
+  }
+
+  @override
+  int get rowCount => con.filteredAddress.length;
+
+  @override
+  bool get isRowCountApproximate => false;
+
+  @override
+  int get selectedRowCount => 0;
+}

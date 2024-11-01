@@ -16,7 +16,7 @@ class NewLeasingController extends GetxController {
   var idCardList = [''].obs;
   var brandList = [''].obs;
   var modelList = [''].obs;
-  var colorList = ['Red', 'Black', 'Blue', 'White', 'Grey'].obs;
+  var colorList = [''].obs;
   var conditionList = ['New', 'Used'].obs;
   var typeList = ['Tax Paper', 'Plate Number'].obs;
   var comeByList = [

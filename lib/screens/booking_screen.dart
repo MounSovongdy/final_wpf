@@ -104,6 +104,8 @@ class BookingScreen extends StatelessWidget {
                   await microName();
                   await saleManName();
                   await brandName();
+                  await addressName();
+                  await colorName();
 
                   startInactivityTimer();
                   conMain.index.value = 2;
@@ -114,6 +116,14 @@ class BookingScreen extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  Future<void> addressName() async {
+    conNewBook.addressList.clear();
+    await getAllAddress();
+    for (var data in address) {
+      conNewBook.addressList.add(data.address);
+    }
   }
 
   Future<void> microName() async {
@@ -137,6 +147,14 @@ class BookingScreen extends StatelessWidget {
     await getAllBrand();
     for (var data in brand) {
       conNewBook.brandList.add(data.brand);
+    }
+  }
+
+  Future<void> colorName() async {
+    conNewBook.colorList.clear();
+    await getAllColor();
+    for (var data in color) {
+      conNewBook.colorList.add(data.color);
     }
   }
 }
@@ -185,6 +203,9 @@ class BookingDataSource extends DataTableSource {
             await microName();
             await saleManName();
             await brandName();
+            await addressName();
+            await colorName();
+
             await con.editBooking(data.id);
 
             conMain.index.value = 2;
@@ -241,6 +262,22 @@ class BookingDataSource extends DataTableSource {
     await getAllBrand();
     for (var data in brand) {
       conNewBook.brandList.add(data.brand);
+    }
+  }
+
+  Future<void> addressName() async {
+    conNewBook.addressList.clear();
+    await getAllAddress();
+    for (var data in address) {
+      conNewBook.addressList.add(data.address);
+    }
+  }
+
+  Future<void> colorName() async {
+    conNewBook.colorList.clear();
+    await getAllColor();
+    for (var data in color) {
+      conNewBook.colorList.add(data.color);
     }
   }
 

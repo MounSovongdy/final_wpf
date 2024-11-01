@@ -34,12 +34,12 @@ class NewCashController extends GetxController {
   var gender = Rxn<String>();
   var age = TextEditingController().obs;
   var phoneCus = TextEditingController().obs;
-  var address = Rxn<String>();
+  var cusAddress = Rxn<String>();
 
   var proBrand = Rxn<String>();
   var model = Rxn<String>();
   var year = TextEditingController().obs;
-  var color = Rxn<String>();
+  var proColor = Rxn<String>();
   var power = TextEditingController().obs;
   var condition = Rxn<String>();
   var engine = TextEditingController().obs;
@@ -64,11 +64,11 @@ class NewCashController extends GetxController {
         gender.value != null &&
         age.value.text != '' &&
         phoneCus.value.text != '' &&
-        address.value != null &&
+        cusAddress.value != null &&
         proBrand.value != null &&
         model.value != null &&
         year.value.text.length == 4 &&
-        color.value != null &&
+        proColor.value != null &&
         power.value.text != '' &&
         condition.value != null &&
         engine.value.text != '' &&
@@ -96,11 +96,11 @@ class NewCashController extends GetxController {
         gender: gender.value ?? '',
         age: age.value.text,
         tel: phoneCus.value.text,
-        address: address.value ?? '',
+        address: cusAddress.value ?? '',
         brand: proBrand.value ?? '',
         model: model.value ?? '',
         year: year.value.text,
-        color: color.value ?? '',
+        color: proColor.value ?? '',
         power: power.value.text,
         condition: condition.value ?? '',
         engineNo: engine.value.text,
@@ -175,11 +175,11 @@ class NewCashController extends GetxController {
     gender.value = null;
     age.value.text = '';
     phoneCus.value.text = '';
-    address.value = null;
+    cusAddress.value = null;
     proBrand.value = null;
     model.value = null;
     year.value.text = '';
-    color.value = null;
+    proColor.value = null;
     power.value.text = '';
     condition.value = null;
     engine.value.text = '';
@@ -219,6 +219,22 @@ class NewCashController extends GetxController {
     await getAllBrand();
     for (var data in brand) {
       brandList.add(data.brand);
+    }
+  }
+
+  Future<void> addressName() async {
+    addressList.clear();
+    await getAllAddress();
+    for (var data in address) {
+      addressList.add(data.address);
+    }
+  }
+
+  Future<void> colorName() async {
+    colorList.clear();
+    await getAllColor();
+    for (var data in color) {
+      colorList.add(data.color);
     }
   }
 }

@@ -4,6 +4,7 @@ import 'package:motor/constants/constants.dart';
 import 'package:motor/constants/firebase.dart';
 import 'package:motor/constants/responsive.dart';
 import 'package:motor/controllers/add_stock_controller.dart';
+import 'package:motor/controllers/address_controller.dart';
 import 'package:motor/controllers/booking_controller.dart';
 import 'package:motor/controllers/cash_controller.dart';
 import 'package:motor/controllers/leasing_controller.dart';
@@ -35,6 +36,7 @@ class DrawerMenu extends StatelessWidget {
   final conLeasing = Get.put(LeasingController());
   final conCash = Get.put(CashController());
   final conRec = Get.put(ReceivableController());
+  final conA = Get.put(AddressController());
 
   @override
   Widget build(BuildContext context) {
@@ -246,6 +248,22 @@ class DrawerMenu extends StatelessWidget {
                           con.index.value = 19;
                         },
                         title: 'Micro',
+                        svgSrc: 'assets/icons/CreateMicro.svg',
+                      ),
+                    ),
+                    Container(
+                      padding: EdgeInsets.only(left: 36.px),
+                      child: DrawerListTile(
+                        tap: () async {
+                          if (Responsive.isMobile(context)) con.controlDrawer();
+                          startInactivityTimer();
+                          await getAllAddress();
+                          conA.filteredAddress.value = address;
+                          conA.search.value.addListener(conA.filterAddressData);
+
+                          con.index.value = 27;
+                        },
+                        title: 'Address',
                         svgSrc: 'assets/icons/CreateMicro.svg',
                       ),
                     ),

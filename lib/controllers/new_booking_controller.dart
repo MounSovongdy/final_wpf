@@ -14,7 +14,7 @@ class NewBookingController extends GetxController {
   var addressList = [''].obs;
   var brandList = [''].obs;
   var modelList = [''].obs;
-  var colorList = ['Red', 'Black', 'Blue', 'White', 'Grey'].obs;
+  var colorList = [''].obs;
   var conditionList = ['New', 'Used'].obs;
   var comeByList = [
     'Walk In',
