@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class DashboardCardController extends GetxController{
@@ -6,6 +7,17 @@ class DashboardCardController extends GetxController{
     {'name': 'Sale Record'},
     {'name': 'Receivable'},
     {'name': 'Total Stock'},
+    {'name': 'Booking'},
+    {'name': 'Sale Record'},
+    {'name': 'Receivable'},
+    {'name': 'Total Stock'},
+  ];
+
+  final icons = [
+    Icon(Icons.access_alarm),
+    Icon(Icons.account_balance),
+    Icon(Icons.ac_unit),
+    Icon(Icons.ad_units),
   ];
 
   final itemListBooking = [

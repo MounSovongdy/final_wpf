@@ -10,13 +10,14 @@ class DashboardCard extends StatelessWidget {
   DashboardCard({super.key});
 
   final con = Get.put(DashboardCardController());
+  final size = 40;
 
   @override
   Widget build(BuildContext context) {
     return GridView.builder(
       shrinkWrap: true,
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: !Responsive.isMobile(context) ? 2 : 2,
+        crossAxisCount: !Responsive.isMobile(context) ? 4 : 2,
         crossAxisSpacing: Responsive.isDesktop(context) ? 20 : 10,
         mainAxisSpacing: Responsive.isDesktop(context) ? 20 : 10,
         childAspectRatio: Responsive.isDesktop(context) ? 2 : 1.5,
@@ -28,35 +29,32 @@ class DashboardCard extends StatelessWidget {
           color: whiteColor,
           shadowColor: whiteColor,
           surfaceTintColor: whiteColor,
-          child: Column(
-            children: [
-              Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(defRadius.px),
-                    topRight: Radius.circular(defRadius.px),
-                  ),
-                  color: bgColor
-                ),
-                padding: EdgeInsets.symmetric(horizontal: defWebPad.px),
-                child: Row(
+          child: Padding(
+            padding: EdgeInsets.all(defWebPad.px),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Column(
+                  
                   children: [
-                    AppText.titleWhite(context,
-                        txt: '${con.itemTitle[index]['name']}'),
-                    const Spacer(),
-                    IconButton(
-                      onPressed: () {},
-                      icon: const Icon(Icons.refresh_rounded),
-                      iconSize: 18,
-                      color: whiteColor,
+                    AppText.title(
+                      context,
+                      txt: '${con.itemTitle[index]['name']}',
+                    ),
+                    spacer(context),
+                    Icon(
+                      con.icons[index % con.icons.length].icon,
+                      size: Responsive.isDesktop(context) ? size.px : size.px - 2,
                     ),
                   ],
                 ),
-              ),
-              Padding(
-                padding: EdgeInsets.all(defWebPad.px),
-              ),
-            ],
+                const Spacer(),
+                AppText.largeHeader(
+                  context,
+                  txt: '90',
+                ),
+              ],
+            ),
           ),
         );
       },
