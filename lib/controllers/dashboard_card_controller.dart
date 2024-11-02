@@ -13,7 +13,7 @@ class DashboardCardController extends GetxController{
     {'name': 'Total Stock'},
   ];
 
-  final icons = [
+  final icons = const [
     Icon(Icons.access_alarm),
     Icon(Icons.account_balance),
     Icon(Icons.ac_unit),

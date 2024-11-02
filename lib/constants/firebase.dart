@@ -767,6 +767,21 @@ Future<void> getLastSaleManCommission() async {
       .toList();
 }
 
+Future<void> getBySaleManNameCom({
+  required String year,
+  required String month,
+  required String name,
+}) async {
+  var res = await saleManComCol
+      .where('year', isEqualTo: year)
+      .where('month', isEqualTo: month)
+      .where('sale_man_name', isEqualTo: name)
+      .get();
+  bySaleManCom.value = res.docs
+      .map((doc) => SaleManCommissionModel.fromMap(doc.data()))
+      .toList();
+}
+
 Future<void> getBySaleManName(String name) async {
   var res = await saleManCol.where('name', isEqualTo: name).get();
   bySaleMan.value =
@@ -790,13 +805,15 @@ Future<void> insertSaleManCommission({
         .map((doc) => SaleManCommissionModel.fromMap(doc.data()))
         .toList();
 
-    if (res.docs.isNotEmpty) {
+    if (bySaleManCom.isNotEmpty) {
       for (var doc in res.docs) {
         docId = doc.id;
       }
-      await saleManComCol.doc(docId).set(saleCom.toMap());
+      await saleManComCol.doc(docId).update(saleCom.toMap());
     } else {
-      await saleManComCol.doc('${saleCom.id}').set(saleCom.toMap());
+      await saleManComCol
+          .doc('$year$month-${saleCom.saleManId}')
+          .set(saleCom.toMap());
     }
   } catch (e) {
     debugPrint('Failed to add insert Saleman Commission: $e');
@@ -806,6 +823,20 @@ Future<void> insertSaleManCommission({
 Future<void> getLastMicroCommission() async {
   var res = await microComCol.orderBy('id', descending: true).limit(1).get();
   microCom.value =
+      res.docs.map((doc) => MicroCommissionModel.fromMap(doc.data())).toList();
+}
+
+Future<void> getByMicroNameCom({
+  required String year,
+  required String month,
+  required String name,
+}) async {
+  var res = await microComCol
+      .where('year', isEqualTo: year)
+      .where('month', isEqualTo: month)
+      .where('micro_name', isEqualTo: name)
+      .get();
+  byMicroCom.value =
       res.docs.map((doc) => MicroCommissionModel.fromMap(doc.data())).toList();
 }
 
@@ -832,13 +863,15 @@ Future<void> insertMicroCommission({
         .map((doc) => MicroCommissionModel.fromMap(doc.data()))
         .toList();
 
-    if (res.docs.isNotEmpty) {
+    if (byMicroCom.isNotEmpty) {
       for (var doc in res.docs) {
         docId = doc.id;
       }
-      await microComCol.doc(docId).set(microCom.toMap());
+      await microComCol.doc(docId).update(microCom.toMap());
     } else {
-      await microComCol.doc('${microCom.id}').set(microCom.toMap());
+      await microComCol
+          .doc('$year$month-${microCom.microId}')
+          .set(microCom.toMap());
     }
   } catch (e) {
     debugPrint('Failed to add insert Micro Commission: $e');

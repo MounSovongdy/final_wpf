@@ -114,32 +114,44 @@ class NewLeasingController extends GetxController {
       var dateNow = dateFormat.format(DateTime.now());
       var timeNow = timeFormat.format(DateTime.now());
 
-      await getLastSaleManCommission();
-      var newSaleComId = 1;
-      if (saleManCom.isNotEmpty) newSaleComId = saleManCom[0].id + 1;
+      await getBySaleManName(salesman.value.text);
+      await getBySaleManNameCom(
+        year: '${DateTime.now().year}',
+        month: '${DateTime.now().month}',
+        name: salesman.value.text,
+      );
+      var unitSale = 0;
+      var newSaleComId = 0;
+      if (bySaleManCom.isNotEmpty) {
+        newSaleComId = bySaleManCom[0].id;
+        unitSale = int.parse(bySaleManCom[0].unitSale) + 1;
+      } else {
+        await getLastSaleManCommission();
+        if (saleManCom.isNotEmpty) newSaleComId = saleManCom[0].id + 1;
+        unitSale = 1;
+      }
+      
+      await getByMicroName(micro.value.text);
+      await getByMicroNameCom(
+        year: '${DateTime.now().year}',
+        month: '${DateTime.now().month}',
+        name: micro.value.text,
+      );
+      var unitMicro = 0;
+      var newMicroComId = 0;
+      if (byMicroCom.isNotEmpty) {
+        newMicroComId = byMicroCom[0].id;
+        unitMicro = int.parse(byMicroCom[0].unitSale) + 1;
+      } else {
+        await getLastMicroCommission();
 
-      await getLastMicroCommission();
-      var newMicroComId = 1;
-      if (microCom.isNotEmpty) newMicroComId = microCom[0].id + 1;
+        if (microCom.isNotEmpty) newMicroComId = microCom[0].id + 1;
+        unitMicro = 1;
+      }
 
       await getLastFriendCommission();
       var newFriendComId = 1;
       if (friendCom.isNotEmpty) newFriendComId = friendCom[0].id + 1;
-
-      await getBySaleManName(salesman.value.text);
-      var unitSale = 0;
-      if (bySaleManCom.isNotEmpty) {
-        unitSale = int.parse(bySaleManCom[0].unitSale) + 1;
-      } else {
-        unitSale = 1;
-      }
-      await getByMicroName(micro.value.text);
-      var unitMicro = 0;
-      if (byMicroCom.isNotEmpty) {
-        unitMicro = int.parse(byMicroCom[0].unitSale) + 1;
-      } else {
-        unitMicro = 1;
-      }
 
       int debt = int.parse(totalOwn.value.text);
       List<PaymentTableModel> dataListTable = [];
@@ -183,9 +195,9 @@ class NewLeasingController extends GetxController {
         id: newSaleComId,
         year: '${DateTime.now().year}',
         month: '${DateTime.now().month}',
-        saleSalary: bySaleMan[0].salary,
         saleManId: bySaleMan[0].id,
         saleManName: bySaleMan[0].name,
+        saleSalary: bySaleMan[0].salary,
         saleBonus: bySaleMan[0].bonus,
         unitSale: '$unitSale',
         totalBonus: '${int.parse(bySaleMan[0].bonus) * unitSale}',
