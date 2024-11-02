@@ -65,12 +65,14 @@ var byBooking = [].obs;
 var booking = [].obs;
 var byBookingMicro = [].obs;
 var bookingMicro = [].obs;
+var byLeasing = [].obs;
 var leasing = [].obs;
 var byMicroCom = [].obs;
 var microCom = [].obs;
 var bySaleManCom = [].obs;
 var saleManCom = [].obs;
 var friendCom = [].obs;
+var byCash = [].obs;
 var cash = [].obs;
 var byReceivable = [].obs;
 var receivable = [].obs;
@@ -646,6 +648,12 @@ Future<void> getAllLeasing() async {
       res.docs.map((doc) => LeasingModel.fromMap(doc.data())).toList();
 }
 
+Future<void> getByLeasing(int id) async {
+  var res = await leasingCol.where('id', isEqualTo: id).get();
+  byLeasing.value =
+      res.docs.map((doc) => LeasingModel.fromMap(doc.data())).toList();
+}
+
 Future<void> insertLeasing(
   LeasingModel leasing,
   SaleManCommissionModel saleCom,
@@ -919,6 +927,12 @@ Future<void> insertPaymentTable(PaymentTableModel payment) async {
 Future<void> getAllCash() async {
   var res = await cashCol.orderBy('id', descending: true).get();
   cash.value = res.docs.map((doc) => CashModel.fromMap(doc.data())).toList();
+}
+
+Future<void> getByCash(int id) async {
+  var res = await cashCol.where('id', isEqualTo: id).get();
+  byCash.value =
+      res.docs.map((doc) => CashModel.fromMap(doc.data())).toList();
 }
 
 Future<void> insertCash(

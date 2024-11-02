@@ -4,13 +4,25 @@ import 'dart:html' as html;
 // ignore: avoid_web_libraries_in_flutter
 import 'dart:js' as js;
 
+import 'package:motor/constants/firebase.dart';
+
 Future<String> generateHtmlContent({
+  required String invoiceNum,
+  required String invoiceDate,
+  required String plateNo,
   required String customerName,
   required String customerAge,
   required String customerId,
   required String customerAddress,
-  required int totalPrice,
-  required int approveAmount,
+  required String totalPrice,
+  required String gender,
+  required String tel,
+  required String model,
+  required String yearProduct,
+  required String power,
+  required String color,
+  required String frameNo,
+  required String machinNo,
 }) async {
   // final fontBytes =
   //     await rootBundle.load('assets/fonts/NotoSansKhmer-Regular.ttf');
@@ -185,91 +197,89 @@ Future<String> generateHtmlContent({
                    
                     </style>
                 </head>
-<body>
+              <body>
 
               <div id="wrapper">
+                    <br><br><br>
                     <div id="receiptData" style="width: auto; max-width: 700px; margin: 0 auto;">                       
                         <div id="receipt-data" style="padding-right:10px;">
                             <div><img src="http://moto.cpos.cc/header.png" alt="" width="100%"></div>
                               <table width="100%">                                 
                                 <tr>
-                      <b><p style="font-size:20px; font-family:Khmer OS Battambang;text-align:center; color:#282D91">ទិញ លក់ និងបង់រំលស់ម៉ូតូគ្រប់ប្រភេទ</p>
-                        <p style="font-size:17px; font-family:Khmer OS Battambang;text-align:center;color:#282D91">ផ្ទះលេខ 268 & 269 ផ្លូវវេងស្រេង ភូមិត្រពាំងថ្លឹង សង្កាត់ចោមចៅ ខណ្ឌពោធ៍សែនជ័យ រាជធានីភ្នំពេញ </p></b>
-                                </tr>                                 
-       
-                                    
-                                </table>
+                                  <br>
+                                  <b>
+                                    <p style="font-size:18px; font-family:Khmer OS Battambang;text-align:center; color:#282D91">ទិញ លក់ និងបង់រំលស់ម៉ូតូគ្រប់ប្រភេទ</p>
+                                    <p style="font-size:18px; font-family:Khmer OS Battambang;text-align:center;color:#282D91">ផ្ទះលេខ 268 & 269 ផ្លូវវេងស្រេង ភូមិត្រពាំងថ្លឹង សង្កាត់ចោមចៅ ខណ្ឌពោធ៍សែនជ័យ រាជធានីភ្នំពេញ </p>
+                                  </b>
+                                </tr>                                
+                              </table>
+                              <br>
+                          <table width="100%" style="font-size:19px; font-family:Khmer OS Battambang;color:#282D91"> 
+                            <tr>
+                            <td rowspan="3" width="70%">
+                              <img src="http://moto.cpos.cc/phone.png" alt="" width="50%">
+                            </td>
+                            <td>វិក្កយបត្រលេខ:&nbsp;&nbsp;&nbsp;$invoiceNum</td>
+                            </tr>
+                            <td>កាលបរិច្ឆេទ:&nbsp;&nbsp;&nbsp;$invoiceDate</td>
+                            </tr>
+                            <td>ពន្ធ  /ស្លាកលេខ:&nbsp;&nbsp;&nbsp;$plateNo</td>
+                            </tr>
+                          </table>
+                          <br><br>
 
-                                 <table width="100%" style="font-size:17px; font-family:Khmer OS Battambang;color:#282D91"> 
-                          <tr>
-                          <td rowspan="3" width="50%"><img src="http://moto.cpos.cc/phone.png" alt="" width="50%"></td>
-                          <td><b>វិក្កយបត្រលេខ</b></td>
-
-                          </tr>
-                          <tr>
-                          <td><b>កាលបរិច្ឆេទ</b></td>
-
-                          </tr>
-                                        <tr>
-
-                          <td><b>ពន្ធ  /ស្លាកលេខ</b></td>
-                          </tr>
-                                  </table>
-
- <table width="100%" style="font-size:17px; font-family:Khmer OS Battambang;color:#282D91"> 
+                                  <table width="100%" style="font-size:19px; font-family:Khmer OS Battambang;color:#282D91"> 
                      
                                     <tr>
-                                        <td width="50%">លក់ជូនអតិថិជន $customerName  
-                                        </td>
-                                        <td> ភេទ​    អាយុ $customerAge   ឆ្នាំ</td>
+                                      <td width="50%">លក់ជូនអតិថិជន:&nbsp;&nbsp;&nbsp;$customerName </td>
+                                      <td>ភេទ:&nbsp;&nbsp;&nbsp;$gender </td>
+                                      <td>អាយុ:&nbsp;&nbsp;&nbsp;$customerAge </td>
                                     </tr>
-                                  <tr>
-                                       <td>  លេខអត្តសញ្ញាណប័ណ្ណ $customerId    </td>
-                                     <td>លេខទូរស័ព្ទ </td>
+                                    <td> លេខអត្តសញ្ញាណប័ណ្ណ:&nbsp;&nbsp;&nbsp;$customerId</td>
+                                    <td>លេខទូរស័ព្ទ:&nbsp;&nbsp;&nbsp;$tel</td>
                                     </tr>
-                                      <tr>
-                                       <td>អាសយដ្ឋាន $customerAddress</td>
-                                    
-                                    </tr>
-                                      <tr>
-                                       <td>ម៉ាក់ម៉ូតូ</td>
-                                    <td>ឆ្នាំផលិត</td>
-                                    </tr>
-                                      <tr>
-                                       <td>កំលាំង     </td>
-                                     <td>ពណ៍</td>
-                                    </tr>
-                                      <tr>
-                                       <td>លេខតួ </td>
-                                     <td>លេខម៉ាស៊ីន</td>
-                                    </tr>
-                                        
-  </table>
-
-  <div style="font-size:14px; font-family:Khmer OS Battambang;color:#282D91">បញ្ជាក់: ទំនីញទិញហើយមិនអាចដូរវិញបានទេ!</div>
-
-<table width="40%" align="right">
-<td style="border: 1px solid black;border-radius: 10px;font-size:17px; font-family:Khmer OS Battambang;color:#282D91" bgcolor="#CEEDFB">
-<b>&nbsp;&nbsp; តម្លៃសរុប $totalPrice</b>
-<hr style="border: 1px solid black">
-<b>&nbsp;&nbsp;  អនុម័ត $approveAmount</b>
-</td>
-</table>
-
-  <table width="100%"  style="font-size:17px; font-family:Khmer OS Battambang;color:#282D91">	
                                     <tr>
-                                        <td style="text-align:center;"><b>ហត្ថលេខាអតិថិជន<br>Customer Signature</b>
-                                         <br><br><br><br><br>
-                                        .....................................
+                                      <td>អាសយដ្ឋាន:&nbsp;&nbsp;&nbsp;$customerAddress</td>
+                                    </tr>
+                                      <tr>
+                                       <td>ម៉ាក់ម៉ូតូ:&nbsp;&nbsp;&nbsp;$model</td>
+                                    <td>ឆ្នាំផលិត:&nbsp;&nbsp;&nbsp;$yearProduct</td>
+                                    </tr>
+                                      <tr>
+                                       <td>កំលាំង:&nbsp;&nbsp;&nbsp;$power </td>
+                                     <td>ពណ៍:&nbsp;&nbsp;&nbsp;$color</td>
+                                    </tr>
+                                      <tr>
+                                       <td>លេខតួ:&nbsp;&nbsp;&nbsp;$frameNo</td>
+                                     <td>លេខម៉ាស៊ីន:&nbsp;&nbsp;&nbsp;$machinNo</td>
+                                    </tr>
                                         
+                                  </table>
+                                  <br>
+
+<div style="font-size:17px; font-family:Khmer OS Battambang;color:#282D91">&nbsp;&nbsp;បញ្ជាក់: ទំនីញទិញហើយមិនអាចដូរវិញបានទេ!</div>
+
+                                    <table width="30%" align="right">
+                                      <td style="border: 1px solid black;border-radius: 10px;font-size:19px; font-family:Khmer OS Battambang;color:#282D91" bgcolor="#CEEDFB">
+                                        <b>&nbsp;&nbsp; តម្លៃសរុប:&nbsp;&nbsp;&nbsp;$totalPrice</b>
+                                        
+                                      </td>
+                                    </table>
+                                    <table width="100%"  style="font-size:19px; font-family:Khmer OS Battambang;color:#282D91">
+                                    <br><br>
+                                    <tr>
+                                      <td style="text-align:center;"><b>ហត្ថលេខាអតិថិជន<br>Customer Signature</b>
+                                         <br><br><br><br><br>
+                                      .....................................
+                          
                                         </td>
-                                        <td style="text-align:center;"><b>ត្រាហាងម៉ូតូ<br>Store Stamp</b>
-                                          <br><br><br><br><br>
-                                        .....................................</td>
-                                    </tr>                                
-                                   
-                                    
-                                </table>
+                                        <br>
+                                          <td style="text-align:center;"><b>ត្រាហាងម៉ូតូ<br>Store Stamp</b>
+                                            <br><br><br><br><br>
+                                          .....................................
+                                        </td>
+                                    </tr>                                   
+                                   </table>
 
 
 
@@ -282,14 +292,26 @@ Future<String> generateHtmlContent({
   ''';
 }
 
-void printCashInvoice() async {
+void printCashInvoice(int id) async {
+  await getByCash(id);
+
   final htmlContent = await generateHtmlContent(
-    customerName: 'Sovongdy',
-    customerAge: '25',
-    customerId: '123456789',
-    customerAddress: 'Phnom Penh, Cambodia',
-    totalPrice: 2000,
-    approveAmount: 1900,
+    invoiceNum: '${byCash[0].id}',
+    invoiceDate: byCash[0].date,
+    plateNo: byCash[0].plateNo,
+    customerName: byCash[0].name,
+    customerAge: byCash[0].age,
+    customerId: byCash[0].idCard,
+    customerAddress: byCash[0].address,
+    totalPrice: byCash[0].price,
+    gender: byCash[0].gender,
+    tel: byCash[0].tel,
+    model: byCash[0].model,
+    yearProduct: byCash[0].year,
+    power: byCash[0].power,
+    color: byCash[0].color,
+    frameNo: byCash[0].frameNo,
+    machinNo: byCash[0].engineNo,
   );
 
   final div = html.DivElement()

@@ -147,7 +147,7 @@ class LeasingDataSource extends DataTableSource {
           btnPrint: true,
           edit: () => debugPrint('Edit $index'),
           delete: () => debugPrint('Delete $index'),
-          print: () => printLeasingInvoice(),
+          print: () => printLeasingInvoice(data.id),
         ),
       ],
     );

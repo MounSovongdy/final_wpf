@@ -45,7 +45,7 @@ class ReceivableController extends GetxController {
   var totalAmount = TextEditingController().obs;
   var paidAmount = TextEditingController().obs;
   var leftAmount = TextEditingController().obs;
-  List<String> scheduleList = [];
+  var scheduleList = [''].obs;
   var no = ''.obs;
   var schedule = Rxn<String>();
   var scheduleAmount = TextEditingController().obs;

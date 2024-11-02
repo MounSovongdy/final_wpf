@@ -1,17 +1,21 @@
 import 'package:flutter/material.dart';
-// import 'package:flutter/services.dart' show rootBundle;
 // ignore: avoid_web_libraries_in_flutter
 import 'dart:html' as html;
 // ignore: avoid_web_libraries_in_flutter
 import 'dart:js' as js;
 
+import 'package:motor/constants/firebase.dart';
+
 Future<String> generateHtmlContent({
+  required String invoiceNum,
+  required String invoiceDate,
+  required String plateNo,
   required String customerName,
   required String customerAge,
   required String customerId,
   required String customerAddress,
-  required int totalPrice,
-  required int approveAmount,
+  required String totalPrice,
+  required String approveAmount,
   required String gender,
   required String tel,
   required String model,
@@ -197,6 +201,7 @@ Future<String> generateHtmlContent({
               <body>
 
               <div id="wrapper">
+                    <br><br><br>
                     <div id="receiptData" style="width: auto; max-width: 700px; margin: 0 auto;">                       
                         <div id="receipt-data" style="padding-right:10px;">
                             <div><img src="http://moto.cpos.cc/header.png" alt="" width="100%"></div>
@@ -215,11 +220,11 @@ Future<String> generateHtmlContent({
                             <td rowspan="3" width="70%">
                               <img src="http://moto.cpos.cc/phone.png" alt="" width="50%">
                             </td>
-                            <td>វិក្កយបត្រលេខ:&nbsp;&nbsp;&nbsp;</td>
+                            <td>វិក្កយបត្រលេខ:&nbsp;&nbsp;&nbsp;$invoiceNum</td>
                             </tr>
-                            <td>កាលបរិច្ឆេទ:&nbsp;&nbsp;&nbsp;</td>
+                            <td>កាលបរិច្ឆេទ:&nbsp;&nbsp;&nbsp;$invoiceDate</td>
                             </tr>
-                            <td>ពន្ធ  /ស្លាកលេខ:&nbsp;&nbsp;&nbsp;</td>
+                            <td>ពន្ធ  /ស្លាកលេខ:&nbsp;&nbsp;&nbsp;$plateNo</td>
                             </tr>
                           </table>
                           <br><br>
@@ -289,22 +294,27 @@ Future<String> generateHtmlContent({
   ''';
 }
 
-void printLeasingInvoice() async {
+void printLeasingInvoice(int id) async {
+  await getByLeasing(id);
+
   final htmlContent = await generateHtmlContent(
-    customerName: 'Sovongdy',
-    customerAge: '25',
-    customerId: '123456789',
-    customerAddress: 'Phnom Penh, Cambodia',
-    totalPrice: 2000,
-    approveAmount: 1900,
-    gender: 'Male',
-    tel: '011425717',
-    model: 'Dream',
-    yearProduct: '2024',
-    power: '125',
-    color: 'white',
-    frameNo: '123456543',
-    machinNo: '9876543tdvvd',
+    invoiceNum: '${byLeasing[0].id}',
+    invoiceDate: byLeasing[0].leasingDate,
+    plateNo: byLeasing[0].plateNo,
+    customerName: byLeasing[0].name,
+    customerAge: byLeasing[0].age,
+    customerId: byLeasing[0].idCard,
+    customerAddress: byLeasing[0].address,
+    totalPrice: byLeasing[0].price,
+    approveAmount: byLeasing[0].approveAmount,
+    gender: byLeasing[0].gender,
+    tel: byLeasing[0].tel,
+    model: byLeasing[0].model,
+    yearProduct: byLeasing[0].year,
+    power: byLeasing[0].power,
+    color: byLeasing[0].color,
+    frameNo: byLeasing[0].frameNo,
+    machinNo: byLeasing[0].engineNo,
   );
 
   final div = html.DivElement()

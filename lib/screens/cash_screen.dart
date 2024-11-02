@@ -146,9 +146,7 @@ class CashDataSource extends DataTableSource {
           btnPrint: true,
           edit: () => debugPrint('Edit $index'),
           delete: () => debugPrint('Delete $index'),
-          print: () {
-            printCashInvoice();
-          },
+          print: () => printCashInvoice(data.id),
         ),
       ],
     );
