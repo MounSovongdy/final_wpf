@@ -66,7 +66,9 @@ var booking = [].obs;
 var byBookingMicro = [].obs;
 var bookingMicro = [].obs;
 var leasing = [].obs;
+var byMicroCom = [].obs;
 var microCom = [].obs;
+var bySaleManCom = [].obs;
 var saleManCom = [].obs;
 var friendCom = [].obs;
 var cash = [].obs;
@@ -651,6 +653,10 @@ Future<void> insertLeasing(
   ReceivableModel receivable,
   PaymentTableModel payment,
   List<PaymentTableModel> paymentList, {
+  required String currYear,
+  required String currMonth,
+  required String saleman,
+  required String micro,
   required String model,
   required String brand,
   required String year,
@@ -687,8 +693,18 @@ Future<void> insertLeasing(
         await totalStockCol.doc(docId).update({'total_qty': '$newQty'});
         await leasingCol.doc('${leasing.id}').set(leasing.toMap());
         await updateStatusbooking(bookingId);
-        await insertSaleManCommission(saleCom);
-        await insertMicroCommission(microCom);
+        await insertSaleManCommission(
+          year: currYear,
+          month: currMonth,
+          name: saleman,
+          saleCom: saleCom,
+        );
+        await insertMicroCommission(
+          year: currYear,
+          month: currMonth,
+          name: micro,
+          microCom: microCom,
+        );
         if (debt > 0) await insertReceivable(receivable);
         if (debt > 0) {
           if (platePaid) {
@@ -757,9 +773,31 @@ Future<void> getBySaleManName(String name) async {
       res.docs.map((doc) => SaleManModel.fromMap(doc.data())).toList();
 }
 
-Future<void> insertSaleManCommission(SaleManCommissionModel saleCom) async {
+Future<void> insertSaleManCommission({
+  required String year,
+  required String month,
+  required String name,
+  required SaleManCommissionModel saleCom,
+}) async {
   try {
-    await saleManComCol.doc('${saleCom.id}').set(saleCom.toMap());
+    var docId = '';
+    var res = await saleManComCol
+        .where('year', isEqualTo: year)
+        .where('month', isEqualTo: month)
+        .where('sale_man_name', isEqualTo: name)
+        .get();
+    bySaleManCom.value = res.docs
+        .map((doc) => SaleManCommissionModel.fromMap(doc.data()))
+        .toList();
+
+    if (res.docs.isNotEmpty) {
+      for (var doc in res.docs) {
+        docId = doc.id;
+      }
+      await saleManComCol.doc(docId).set(saleCom.toMap());
+    } else {
+      await saleManComCol.doc('${saleCom.id}').set(saleCom.toMap());
+    }
   } catch (e) {
     debugPrint('Failed to add insert Saleman Commission: $e');
   }
@@ -777,9 +815,31 @@ Future<void> getByMicroName(String name) async {
       res.docs.map((doc) => MicroModel.fromMap(doc.data())).toList();
 }
 
-Future<void> insertMicroCommission(MicroCommissionModel microCom) async {
+Future<void> insertMicroCommission({
+  required String year,
+  required String month,
+  required String name,
+  required MicroCommissionModel microCom,
+}) async {
   try {
-    await microComCol.doc('${microCom.id}').set(microCom.toMap());
+    var docId = '';
+    var res = await saleManComCol
+        .where('year', isEqualTo: year)
+        .where('month', isEqualTo: month)
+        .where('micro_name', isEqualTo: name)
+        .get();
+    byMicroCom.value = res.docs
+        .map((doc) => MicroCommissionModel.fromMap(doc.data()))
+        .toList();
+
+    if (res.docs.isNotEmpty) {
+      for (var doc in res.docs) {
+        docId = doc.id;
+      }
+      await microComCol.doc(docId).set(microCom.toMap());
+    } else {
+      await microComCol.doc('${microCom.id}').set(microCom.toMap());
+    }
   } catch (e) {
     debugPrint('Failed to add insert Micro Commission: $e');
   }

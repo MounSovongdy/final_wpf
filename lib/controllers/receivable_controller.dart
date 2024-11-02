@@ -100,21 +100,30 @@ class ReceivableController extends GetxController {
               ),
               RowTextField(
                 spacer: spacer(context),
-                widget1: AppDropdownSearch(
-                  txt: 'Date',
-                  value: schedule,
-                  list: scheduleList,
-                  onChanged: (v) {
-                    if (v != null) {
-                      schedule.value = v;
-                      for (var data in byPaymentTable) {
-                        if (v == data.date) {
-                          scheduleAmount.value.text = data.amount;
-                          no.value = '${data.no}';
-                        }
-                      }
-                    }
-                  },
+                widget1: Obx(
+                  () => scheduleList.isNotEmpty
+                      ? AppDropdownSearch(
+                          txt: 'Date',
+                          value: schedule,
+                          list: scheduleList,
+                          onChanged: (v) {
+                            if (v != null) {
+                              schedule.value = v;
+                              for (var data in byPaymentTable) {
+                                if (v == data.date) {
+                                  scheduleAmount.value.text = data.amount;
+                                  no.value = '${data.no}';
+                                }
+                              }
+                            }
+                          },
+                        )
+                      : AppDropdownSearch(
+                          txt: 'Date',
+                          value: schedule,
+                          list: const [''],
+                          onChanged: (v) {},
+                        ),
                 ),
                 widget2: AppTextField(
                   txt: 'Amount',
@@ -168,20 +177,25 @@ class ReceivableController extends GetxController {
                       if (schedule.value != null &&
                           amount.value.text != '' &&
                           datePayment.value.text != '') {
-                        var paidDate = DateTime.parse(datePayment.value.text);
-                        var scheDate = DateTime.parse(schedule.value ?? '');
-
-                        var date1 = DateTime(
-                          paidDate.year,
-                          paidDate.month,
-                          paidDate.day,
-                        );
-                        var date2 = DateTime(
-                          scheDate.year,
-                          scheDate.month,
-                          scheDate.day,
-                        );
-                        Duration diff = date1.difference(date2);
+                        var dayLate = 0;
+                        if (schedule.value != "P") {
+                          var paidDate = DateTime.parse(datePayment.value.text);
+                          var scheDate = DateTime.parse(schedule.value ?? '');
+                          var date1 = DateTime(
+                            paidDate.year,
+                            paidDate.month,
+                            paidDate.day,
+                          );
+                          var date2 = DateTime(
+                            scheDate.year,
+                            scheDate.month,
+                            scheDate.day,
+                          );
+                          Duration diff = date1.difference(date2);
+                          dayLate = diff.inDays;
+                        } else {
+                          dayLate = -1;
+                        }
 
                         LoadingWidget.dialogLoading(duration: 5, isBack: false);
                         await insertPayment(
@@ -191,7 +205,11 @@ class ReceivableController extends GetxController {
                           paid: amount.value.text,
                           paidDate: datePayment.value.text,
                           note: remark.value.text,
-                          late: diff.inDays <= 0 ? '0' : '${diff.inDays}',
+                          late: dayLate <= 0
+                              ? '0'
+                              : dayLate == -1
+                                  ? ''
+                                  : '$dayLate',
                         );
                         clearText();
                         await getAllReceivable();
@@ -227,6 +245,14 @@ class ReceivableController extends GetxController {
                         await getAllReceivable();
                         filteredRece.value = receivable;
                         search.value.addListener(filterReceivableData);
+                        scheduleList.clear();
+                        await getByPaymentTable(id);
+                        for (var data in byPaymentTable) {
+                          if (data.date != '' && data.paid == '') {
+                            scheduleList.add(data.date);
+                          }
+                        }
+
                         Get.back();
 
                         LoadingWidget.showTextDialog(

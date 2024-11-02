@@ -80,8 +80,6 @@ class NewCashController extends GetxController {
         comeBy.value != null) {
       var id = DateFormat('yyMMddkkmmss').format(DateTime.now());
       var cashID = int.parse(id);
-      var dateNow = dateFormat.format(DateTime.now());
-      var timeNow = timeFormat.format(DateTime.now());
 
       await getLastFriendCommission();
       var newFriendComId = 1;
@@ -117,8 +115,8 @@ class NewCashController extends GetxController {
       );
       FriendCommissionModel newFriCom = FriendCommissionModel(
         id: newFriendComId,
-        leasingId: cashID,
-        leasingDate: '$dateNow $timeNow',
+        year: '${DateTime.now().year}',
+        month: '${DateTime.now().month}',
         name: nameIntro.value.text,
         tel: phoneIntro.value.text,
         commission: commission.value.text,

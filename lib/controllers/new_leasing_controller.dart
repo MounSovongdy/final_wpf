@@ -127,7 +127,19 @@ class NewLeasingController extends GetxController {
       if (friendCom.isNotEmpty) newFriendComId = friendCom[0].id + 1;
 
       await getBySaleManName(salesman.value.text);
+      var unitSale = 0;
+      if (bySaleManCom.isNotEmpty) {
+        unitSale = int.parse(bySaleManCom[0].unitSale) + 1;
+      } else {
+        unitSale = 1;
+      }
       await getByMicroName(micro.value.text);
+      var unitMicro = 0;
+      if (byMicroCom.isNotEmpty) {
+        unitMicro = int.parse(byMicroCom[0].unitSale) + 1;
+      } else {
+        unitMicro = 1;
+      }
 
       int debt = int.parse(totalOwn.value.text);
       List<PaymentTableModel> dataListTable = [];
@@ -169,28 +181,29 @@ class NewLeasingController extends GetxController {
       );
       SaleManCommissionModel newSaleManCom = SaleManCommissionModel(
         id: newSaleComId,
-        leasingId: leasingID,
-        leasingDate: '$dateNow $timeNow',
+        year: '${DateTime.now().year}',
+        month: '${DateTime.now().month}',
+        saleSalary: bySaleMan[0].salary,
         saleManId: bySaleMan[0].id,
         saleManName: bySaleMan[0].name,
         saleBonus: bySaleMan[0].bonus,
-        unitSale: '1',
-        totalBonus: bySaleMan[0].bonus,
+        unitSale: '$unitSale',
+        totalBonus: '${int.parse(bySaleMan[0].bonus) * unitSale}',
       );
       MicroCommissionModel newMicroCom = MicroCommissionModel(
         id: newMicroComId,
-        leasingId: leasingID,
-        leasingDate: '$dateNow $timeNow',
+        year: '${DateTime.now().year}',
+        month: '${DateTime.now().month}',
         microId: byMicro[0].id,
         microName: byMicro[0].name,
         tBonus: byMicro[0].tBonus,
-        unitSale: '1',
-        totalBonus: byMicro[0].tBonus,
+        unitSale: '$unitMicro',
+        totalBonus: '${int.parse(byMicro[0].tBonus) * unitMicro}',
       );
       FriendCommissionModel newFriCom = FriendCommissionModel(
         id: newFriendComId,
-        leasingId: leasingID,
-        leasingDate: '$dateNow $timeNow',
+        year: '${DateTime.now().year}',
+        month: '${DateTime.now().month}',
         name: nameIntro.value.text,
         tel: phoneIntro.value.text,
         commission: commission.value.text,
@@ -272,6 +285,10 @@ class NewLeasingController extends GetxController {
                 newReceivable,
                 newPlatePaid,
                 dataListTable,
+                currYear: '${DateTime.now().year}',
+                currMonth: '${DateTime.now().month}',
+                saleman: salesman.value.text,
+                micro: micro.value.text,
                 model: model.value ?? '',
                 brand: brand.value ?? '',
                 year: year.value.text,
@@ -298,6 +315,10 @@ class NewLeasingController extends GetxController {
               newReceivable,
               newPlatePaid,
               dataListTable,
+              currYear: '${DateTime.now().year}',
+              currMonth: '${DateTime.now().month}',
+              saleman: salesman.value.text,
+              micro: micro.value.text,
               model: model.value ?? '',
               brand: brand.value ?? '',
               year: year.value.text,
@@ -349,6 +370,10 @@ class NewLeasingController extends GetxController {
               newReceivable,
               newPlatePaid,
               dataListTable,
+              currYear: '${DateTime.now().year}',
+              currMonth: '${DateTime.now().month}',
+              saleman: salesman.value.text,
+              micro: micro.value.text,
               model: model.value ?? '',
               brand: brand.value ?? '',
               year: year.value.text,
@@ -374,6 +399,10 @@ class NewLeasingController extends GetxController {
             newReceivable,
             newPlatePaid,
             dataListTable,
+            currYear: '${DateTime.now().year}',
+            currMonth: '${DateTime.now().month}',
+            saleman: salesman.value.text,
+            micro: micro.value.text,
             model: model.value ?? '',
             brand: brand.value ?? '',
             year: year.value.text,

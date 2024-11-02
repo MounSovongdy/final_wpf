@@ -2,8 +2,8 @@ import 'dart:convert';
 
 class MicroCommissionModel {
   final int id;
-  final int leasingId;
-  final String leasingDate;
+  final String year;
+  final String month;
   final int microId;
   final String microName;
   final String tBonus;
@@ -12,8 +12,8 @@ class MicroCommissionModel {
 
   MicroCommissionModel({
     this.id = 0,
-    this.leasingId = 0,
-    this.leasingDate = '',
+    this.year = '',
+    this.month = '',
     this.microId = 0,
     this.microName = '',
     this.tBonus = '',
@@ -24,8 +24,8 @@ class MicroCommissionModel {
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
       'id': id,
-      'leasing_id': leasingId,
-      'leasing_date': leasingDate,
+      'year': year,
+      'month': month,
       'micro_id': microId,
       'micro_name': microName,
       'tBonus': tBonus,
@@ -37,8 +37,8 @@ class MicroCommissionModel {
   factory MicroCommissionModel.fromMap(Map<String, dynamic> map) {
     return MicroCommissionModel(
       id: map['id'] as int,
-      leasingId: map['leasing_id'] as int,
-      leasingDate: map['leasing_date'] as String,
+      year: map['year'] as String,
+      month: map['month'] as String,
       microId: map['micro_id'] as int,
       microName: map['micro_name'] as String,
       tBonus: map['tBonus'] as String,

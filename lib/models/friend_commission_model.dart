@@ -2,8 +2,8 @@ import 'dart:convert';
 
 class FriendCommissionModel {
   final int id;
-  final int leasingId;
-  final String leasingDate;
+  final String year;
+  final String month;
   final String name;
   final String tel;
   final String commission;
@@ -12,8 +12,8 @@ class FriendCommissionModel {
 
   FriendCommissionModel({
     this.id = 0,
-    this.leasingId = 0,
-    this.leasingDate = '',
+    this.year = '',
+    this.month = '',
     this.name = '',
     this.tel = '',
     this.commission = '',
@@ -24,8 +24,8 @@ class FriendCommissionModel {
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
       'id': id,
-      'leasing_id': leasingId,
-      'leasing_date': leasingDate,
+      'year': year,
+      'month': month,
       'name': name,
       'tel': tel,
       'commission': commission,
@@ -37,8 +37,8 @@ class FriendCommissionModel {
   factory FriendCommissionModel.fromMap(Map<String, dynamic> map) {
     return FriendCommissionModel(
       id: map['id'] as int,
-      leasingId: map['leasing_id'] as int,
-      leasingDate: map['leasing_date'] as String,
+      year: map['year'] as String,
+      month: map['month'] as String,
       name: map['name'] as String,
       tel: map['tel'] as String,
       commission: map['commission'] as String,
