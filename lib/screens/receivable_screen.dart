@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:motor/constants/constants.dart';
 import 'package:motor/constants/firebase.dart';
 import 'package:motor/controllers/main_controller.dart';
+import 'package:motor/controllers/print_payment_table_controller.dart';
 import 'package:motor/controllers/receivable_controller.dart';
 import 'package:motor/screens/components/app_data_table.dart';
 import 'package:motor/screens/widgets/app_text.dart';
@@ -91,31 +92,16 @@ class ReceivableDataSource extends DataTableSource {
     return DataRow.byIndex(
       index: index,
       cells: [
-        DataTableWidget.cell(Get.context!, '${data.id}'),
-        DataTableWidget.cell(Get.context!, data.saleman),
-        DataTableWidget.cell(Get.context!, data.date),
-        DataTableWidget.cell(Get.context!, data.name),
-        DataTableWidget.cell(Get.context!, data.tel1),
-        DataTableWidget.cell(Get.context!, data.tel2),
-        DataTableWidget.cell(Get.context!, data.tel3),
-        DataTableWidget.cell(Get.context!, data.document),
-        DataTableWidget.cell(Get.context!, data.brand),
-        DataTableWidget.cell(Get.context!, data.model),
-        DataTableWidget.cell(Get.context!, data.color),
-        DataTableWidget.cell(Get.context!, data.year),
-        DataTableWidget.cell(Get.context!, data.condition),
-        DataTableWidget.cell(Get.context!, data.total),
-        DataTableWidget.cell(Get.context!, data.receiveAmount),
-        DataTableWidget.cell(Get.context!, data.amountLeft),
         DataTableWidget.cellBtn(
           Get.context!,
           btnEdit: false,
           btnDelete: false,
+          btnPrint: true,
           btnAddPayment: conToNum(data.amountLeft) > 0 ? true : false,
           btnViewPayment: true,
           edit: () => debugPrint('Edit $index'),
           delete: () => debugPrint('Delete $index'),
-          print: () => debugPrint('Print $index'),
+          print: () => printPaymentTable(),
           addPayment: () async {
             byPaymentTable.clear();
             con.scheduleList.clear();
@@ -140,6 +126,23 @@ class ReceivableDataSource extends DataTableSource {
             con.showDialogViewPayment(Get.context!);
           },
         ),
+        DataTableWidget.cell(Get.context!, '${data.id}'),
+        DataTableWidget.cell(Get.context!, data.saleman),
+        DataTableWidget.cell(Get.context!, data.date),
+        DataTableWidget.cell(Get.context!, data.name),
+        DataTableWidget.cell(Get.context!, data.tel1),
+        DataTableWidget.cell(Get.context!, data.tel2),
+        DataTableWidget.cell(Get.context!, data.tel3),
+        DataTableWidget.cell(Get.context!, data.document),
+        DataTableWidget.cell(Get.context!, data.brand),
+        DataTableWidget.cell(Get.context!, data.model),
+        DataTableWidget.cell(Get.context!, data.color),
+        DataTableWidget.cell(Get.context!, data.year),
+        DataTableWidget.cell(Get.context!, data.condition),
+        DataTableWidget.cell(Get.context!, data.total),
+        DataTableWidget.cell(Get.context!, data.receiveAmount),
+        DataTableWidget.cell(Get.context!, data.amountLeft),
+
       ],
     );
   }

@@ -69,7 +69,6 @@ class DrawerMenu extends StatelessWidget {
                     await getAllBooking();
                     conBook.filteredBooking.value = booking;
                     conBook.search.value.addListener(conBook.filterBookingData);
-
                     con.index.value = 1;
                   },
                   title: 'Booking',
@@ -89,7 +88,6 @@ class DrawerMenu extends StatelessWidget {
                           conLeasing.filteredLeasing.value = leasing;
                           conLeasing.search.value
                               .addListener(conLeasing.filterLeasingData);
-
                           con.index.value = 21;
                         },
                         title: 'Leasing Sale',
@@ -179,9 +177,22 @@ class DrawerMenu extends StatelessWidget {
                           if (Responsive.isMobile(context)) con.controlDrawer();
                           startInactivityTimer();
 
-                          con.index.value = 25;
+                          con.index.value = 13;
                         },
-                        title: 'Expenses',
+                        title: 'Financial Report',
+                        svgSrc: 'assets/icons/FinancialReport.svg',
+                      ),
+                    ),
+                    Container(
+                      padding: EdgeInsets.only(left: 36.px),
+                      child: DrawerListTile(
+                        tap: () {
+                          if (Responsive.isMobile(context)) con.controlDrawer();
+                          startInactivityTimer();
+
+                          con.index.value = 29;
+                        },
+                        title: 'Staff',
                         svgSrc: 'assets/icons/TotalExpenses.svg',
                       ),
                     ),
@@ -192,10 +203,75 @@ class DrawerMenu extends StatelessWidget {
                           if (Responsive.isMobile(context)) con.controlDrawer();
                           startInactivityTimer();
 
-                          con.index.value = 13;
+                          con.index.value = 31;
                         },
-                        title: 'Financial Report',
-                        svgSrc: 'assets/icons/FinancialReport.svg',
+                        title: 'Micro',
+                        svgSrc: 'assets/icons/TotalExpenses.svg',
+                      ),
+                    ),
+                    Container(
+                      padding: EdgeInsets.only(left: 36.px),
+                      child: DrawerListTile(
+                        tap: () {
+                          if (Responsive.isMobile(context)) con.controlDrawer();
+                          startInactivityTimer();
+
+                          con.index.value = 33;
+                        },
+                        title: 'Advertising',
+                        svgSrc: 'assets/icons/TotalExpenses.svg',
+                      ),
+                    ),
+                    Container(
+                      padding: EdgeInsets.only(left: 36.px),
+                      child: DrawerListTile(
+                        tap: () {
+                          if (Responsive.isMobile(context)) con.controlDrawer();
+                          startInactivityTimer();
+
+                          con.index.value = 35;
+                        },
+                        title: 'KOL',
+                        svgSrc: 'assets/icons/TotalExpenses.svg',
+                      ),
+                    ),
+                    Container(
+                      padding: EdgeInsets.only(left: 36.px),
+                      child: DrawerListTile(
+                        tap: () {
+                          if (Responsive.isMobile(context)) con.controlDrawer();
+                          startInactivityTimer();
+
+                          con.index.value = 37;
+                        },
+                        title: 'Gift',
+                        svgSrc: 'assets/icons/TotalExpenses.svg',
+                      ),
+                    ),
+                    Container(
+                      padding: EdgeInsets.only(left: 36.px),
+                      child: DrawerListTile(
+                        tap: () {
+                          if (Responsive.isMobile(context)) con.controlDrawer();
+                          startInactivityTimer();
+
+                          con.index.value = 39;
+                        },
+                        title: 'Commission',
+                        svgSrc: 'assets/icons/TotalExpenses.svg',
+                      ),
+                    ),
+                    Container(
+                      padding: EdgeInsets.only(left: 36.px),
+                      child: DrawerListTile(
+                        tap: () {
+                          if (Responsive.isMobile(context)) con.controlDrawer();
+                          startInactivityTimer();
+
+                          con.index.value = 41;
+                        },
+                        title: 'Rental',
+                        svgSrc: 'assets/icons/TotalExpenses.svg',
                       ),
                     ),
                   ],

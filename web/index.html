@@ -54,6 +54,31 @@
         console.error("Element with ID 'pdfContent' not found for printing.");
       }
     }
+
+    // Function to print payment table
+    function printPaymentTable() {
+      const content = document.getElementById('pdfPaymentTable');
+      if (content) {
+        const printWindow = window.open('', '_blank');
+        printWindow.document.open();
+        printWindow.document.write('<html><head><title>Print</title>');
+        printWindow.document.write('<style>@font-face { font-family: "NotoSansKhmer"; src: url("' + content.querySelector("style").innerText + '") format("truetype"); } body { font-family: "NotoSansKhmer", sans-serif; color: #4a4a8c; }</style>');
+        printWindow.document.write('</head><body>');
+        printWindow.document.write(content.innerHTML);
+        printWindow.document.write('</body></html>');
+        printWindow.document.close();
+
+        // Wait for the content to fully load, then trigger the print dialog
+        printWindow.onload = function() {
+          printWindow.print();
+          printWindow.onafterprint = function() {
+            printWindow.close(); // Close the window after printing
+          };
+        };
+      } else {
+        console.error("Element with ID 'pdfContent' not found for printing.");
+      }
+    }
   </script>
 </head>
 <body>

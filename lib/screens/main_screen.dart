@@ -20,11 +20,12 @@ import 'package:motor/screens/financial_record_screen.dart';
 import 'package:motor/screens/micro_screen.dart';
 import 'package:motor/screens/new_expense_screen.dart';
 import 'package:motor/screens/new_receivable_screen.dart';
+import 'package:motor/screens/new_rental_screen.dart';
 import 'package:motor/screens/product_screen.dart';
 import 'package:motor/screens/receivable_screen.dart';
 import 'package:motor/screens/new_leasing_screen.dart';
+import 'package:motor/screens/rental_screen.dart';
 import 'package:motor/screens/salesman_screen.dart';
-import 'package:motor/screens/expense_screen.dart';
 import 'package:motor/screens/total_stock_screen.dart';
 import 'package:motor/screens/user_screen.dart';
 import 'package:motor/screens/widgets/custom_app_bar.dart';
@@ -119,14 +120,16 @@ class MainScreen extends StatelessWidget {
             return CashScreen();
           case 24:
             return NewCashScreen();
-          case 25:
-            return const TotalExpenseScreen();
           case 26:
             return NewExpenseScreen();
           case 27:
             return AddressScreen();
           case 28:
-            return CreateAddressScreen();  
+            return CreateAddressScreen();
+          case 41:
+            return RentalScreen();
+          case 42:
+            return NewRentalScreen();
           default:
             return DashboardScreen();
         }

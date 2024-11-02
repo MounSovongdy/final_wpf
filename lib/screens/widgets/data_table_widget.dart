@@ -124,7 +124,7 @@ class DataTableWidget {
                         color: bgColor.withOpacity(0.5),
                         child: AppText.subTitle(
                           context,
-                          txt: 'Print Invoice',
+                          txt: 'Print',
                           color: whiteColor,
                         ),
                       ),
@@ -179,7 +179,7 @@ class DataTableWidget {
                         color: bgColor.withOpacity(0.5),
                         child: AppText.subTitle(
                           context,
-                          txt: 'Add Payment',
+                          txt: 'Add',
                           color: whiteColor,
                         ),
                       ),
