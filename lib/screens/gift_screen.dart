@@ -114,6 +114,7 @@ class GiftScreen extends StatelessWidget {
 class GiftDataSource extends DataTableSource {
   final con = Get.put(GiftController());
 
+  @override
   DataRow? getRow(int index) {
     assert(index >= 0);
     if (index >= con.filteredUsers.length) return null;
