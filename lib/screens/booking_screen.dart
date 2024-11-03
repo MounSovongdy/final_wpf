@@ -92,7 +92,7 @@ class BookingScreen extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              AppButton(
+              AppButtonSubmit(
                 txt: 'New',
                 width: Responsive.isDesktop(context) ? 150.px : 100.px,
                 tap: () async {
@@ -355,7 +355,7 @@ class BookingDataSource extends DataTableSource {
             ),
           ),
           actions: [
-            AppButton(
+            AppButtonSubmit(
               txt: 'Back',
               width: 100.px,
               color: secondGreyColor,
@@ -375,7 +375,7 @@ class BookingDataSource extends DataTableSource {
                     res.statusBooking2 == 'Approve' ||
                     res.statusBooking2 == 'Reject'
                 ? Container()
-                : AppButton(
+                : AppButtonSubmit(
                     txt: 'Update',
                     width: 120.px,
                     tap: () async {

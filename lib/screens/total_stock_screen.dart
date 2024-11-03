@@ -84,7 +84,7 @@ class TotalStockScreen extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              AppButton(
+              AppButtonSubmit(
                 txt: 'Download Report',
                 width: Responsive.isDesktop(context) ? 200.px : 150.px,
                 color: secondGreyColor,
@@ -92,7 +92,7 @@ class TotalStockScreen extends StatelessWidget {
               ),
               spacer(context),
               spacer(context),
-              AppButton(
+              AppButtonSubmit(
                 txt: 'Add Stock',
                 width: Responsive.isDesktop(context) ? 150.px : 100.px,
                 tap: () async {

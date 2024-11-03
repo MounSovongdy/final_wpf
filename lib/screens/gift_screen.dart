@@ -1,24 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:motor/constants/constants.dart';
-import 'package:motor/constants/firebase.dart';
 import 'package:motor/constants/responsive.dart';
-import 'package:motor/controllers/address_controller.dart';
-import 'package:motor/controllers/create_address_controller.dart';
+import 'package:motor/controllers/gift_controller.dart';
 import 'package:motor/controllers/main_controller.dart';
 import 'package:motor/screens/components/app_button.dart';
 import 'package:motor/screens/components/app_data_table.dart';
+import 'package:motor/screens/components/app_dropdown_search.dart';
+import 'package:motor/screens/components/app_text_field.dart';
+import 'package:motor/screens/components/row_text_field.dart';
 import 'package:motor/screens/components/under_line.dart';
 import 'package:motor/screens/widgets/app_text.dart';
 import 'package:motor/screens/widgets/data_table_widget.dart';
 import 'package:motor/screens/widgets/loading_widget.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
-class AddressScreen extends StatelessWidget {
-  AddressScreen({super.key});
+class GiftScreen extends StatelessWidget {
+  GiftScreen({super.key});
 
-  final con = Get.put(AddressController());
-  final conCA = Get.put(CreateAddressController());
+  final con = Get.put(GiftController());
   final conMain = Get.put(MainController());
 
   @override
@@ -34,27 +34,51 @@ class AddressScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            AppText.header(context, txt: 'Address List'),
+            AppText.header(context, txt: 'Gift List'),
+            RowTextField(
+              spacer: spacer(context),
+              widget1: AppDropdownSearch(
+                txt: 'Select Month',
+                value: con.selectedMonth,
+                list: con.monthList,
+                onChanged: (v) {
+                  if (v != null) con.selectedMonth.value = v;
+                },
+              ),
+              widget2: AppTextField(
+                txt: 'Total Amount',
+                con: con.amount.value,
+                readOnly: true,
+              ),
+              widget3: AppButtonCalulation(
+                txt: 'Calulation',
+                tap: () {},
+              ),
+            ),
             spacer(context),
-            TextField(
-              controller: con.search.value,
-              decoration: const InputDecoration(
-                labelText: 'Search',
-                hintText: 'Search by any data',
-                prefixIcon: Icon(Icons.search),
-                border: OutlineInputBorder(),
+            Padding(
+              padding: EdgeInsets.all(defWebPad.px),
+              child: TextField(
+                controller: con.search.value,
+                decoration: const InputDecoration(
+                  labelText: 'Search',
+                  hintText: 'Search by any data',
+                  prefixIcon: Icon(Icons.search),
+                  border: OutlineInputBorder(),
+                ),
               ),
             ),
             spacer(context),
             Obx(
-              () => con.filteredAddress.isNotEmpty
+              () => con.filteredUsers.isNotEmpty
                   ? AppDataTable(
                       column: [
                         DataTableWidget.column(context, 'ID'),
-                        DataTableWidget.column(context, 'Address'),
+                        DataTableWidget.column(context, 'Title'),
+                        DataTableWidget.column(context, 'Amount'),
                         DataTableWidget.column(context, 'Action'),
                       ],
-                      source: AddressDataSource(),
+                      source: GiftDataSource(),
                     )
                   : Container(
                       width: MediaQuery.of(context).size.width,
@@ -75,10 +99,7 @@ class AddressScreen extends StatelessWidget {
                   width: Responsive.isDesktop(context) ? 150.px : 100.px,
                   tap: () {
                     startInactivityTimer();
-                    conCA.clearText();
-                    con.title.value = 'Create Address';
-
-                    conMain.index.value = 28;
+                    conMain.index.value = 38;
                   },
                 ),
               ],
@@ -90,32 +111,23 @@ class AddressScreen extends StatelessWidget {
   }
 }
 
-class AddressDataSource extends DataTableSource {
-  final con = Get.put(AddressController());
-  final conA = Get.put(CreateAddressController());
-  final conMain = Get.put(MainController());
+class GiftDataSource extends DataTableSource {
+  final con = Get.put(GiftController());
 
-  @override
   DataRow? getRow(int index) {
     assert(index >= 0);
-    if (index >= con.filteredAddress.length) return null;
-
-    var data = con.filteredAddress[index];
-
+    if (index >= con.filteredUsers.length) return null;
+    var data = con.filteredUsers[index];
     return DataRow.byIndex(
       index: index,
       cells: [
         DataTableWidget.cell(Get.context!, '${data.id}'),
-        DataTableWidget.cell(Get.context!, data.address),
+        DataTableWidget.cell(Get.context!, 'data.name'),
+        DataTableWidget.cell(Get.context!, 'data.dateCreate'),
         DataTableWidget.cellBtn(
           Get.context!,
           edit: () async {
             startInactivityTimer();
-            conA.clearText();
-            con.title.value = 'Edit Address';
-            await con.editAddress(data.id);
-
-            conMain.index.value = 28;
           },
           delete: () {
             startInactivityTimer();
@@ -127,14 +139,7 @@ class AddressDataSource extends DataTableSource {
               txtBack: 'Cancel',
               btnColor: secondGreyColor,
               widget: TextButton(
-                onPressed: () async {
-                  await deleteAddress(con.filteredAddress[index].id);
-                  con.filteredAddress.clear();
-                  await getAllAddress();
-                  con.filteredAddress.value = address;
-
-                  Get.back();
-                },
+                onPressed: () async {},
                 child: AppText.title(Get.context!, txt: 'Confirm'),
               ),
             );
@@ -145,7 +150,7 @@ class AddressDataSource extends DataTableSource {
   }
 
   @override
-  int get rowCount => con.filteredAddress.length;
+  int get rowCount => con.filteredUsers.length;
 
   @override
   bool get isRowCountApproximate => false;

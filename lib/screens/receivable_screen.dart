@@ -92,6 +92,22 @@ class ReceivableDataSource extends DataTableSource {
     return DataRow.byIndex(
       index: index,
       cells: [
+        DataTableWidget.cell(Get.context!, '${data.id}'),
+        DataTableWidget.cell(Get.context!, data.saleman),
+        DataTableWidget.cell(Get.context!, data.date),
+        DataTableWidget.cell(Get.context!, data.name),
+        DataTableWidget.cell(Get.context!, data.tel1),
+        DataTableWidget.cell(Get.context!, data.tel2),
+        DataTableWidget.cell(Get.context!, data.tel3),
+        DataTableWidget.cell(Get.context!, data.document),
+        DataTableWidget.cell(Get.context!, data.brand),
+        DataTableWidget.cell(Get.context!, data.model),
+        DataTableWidget.cell(Get.context!, data.color),
+        DataTableWidget.cell(Get.context!, data.year),
+        DataTableWidget.cell(Get.context!, data.condition),
+        DataTableWidget.cell(Get.context!, data.total),
+        DataTableWidget.cell(Get.context!, data.receiveAmount),
+        DataTableWidget.cell(Get.context!, data.amountLeft),
         DataTableWidget.cellBtn(
           Get.context!,
           btnEdit: false,
@@ -126,23 +142,6 @@ class ReceivableDataSource extends DataTableSource {
             con.showDialogViewPayment(Get.context!);
           },
         ),
-        DataTableWidget.cell(Get.context!, '${data.id}'),
-        DataTableWidget.cell(Get.context!, data.saleman),
-        DataTableWidget.cell(Get.context!, data.date),
-        DataTableWidget.cell(Get.context!, data.name),
-        DataTableWidget.cell(Get.context!, data.tel1),
-        DataTableWidget.cell(Get.context!, data.tel2),
-        DataTableWidget.cell(Get.context!, data.tel3),
-        DataTableWidget.cell(Get.context!, data.document),
-        DataTableWidget.cell(Get.context!, data.brand),
-        DataTableWidget.cell(Get.context!, data.model),
-        DataTableWidget.cell(Get.context!, data.color),
-        DataTableWidget.cell(Get.context!, data.year),
-        DataTableWidget.cell(Get.context!, data.condition),
-        DataTableWidget.cell(Get.context!, data.total),
-        DataTableWidget.cell(Get.context!, data.receiveAmount),
-        DataTableWidget.cell(Get.context!, data.amountLeft),
-
       ],
     );
   }

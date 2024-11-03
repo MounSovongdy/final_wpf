@@ -286,7 +286,7 @@ class NewCashScreen extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                AppButton(
+                AppButtonSubmit(
                   txt: 'Back',
                   width: Responsive.isDesktop(context) ? 150.px : 100.px,
                   color: secondGreyColor,
@@ -302,7 +302,7 @@ class NewCashScreen extends StatelessWidget {
                 ),
                 spacer(context),
                 spacer(context),
-                AppButton(
+                AppButtonSubmit(
                   txt: 'Save',
                   width: Responsive.isDesktop(context) ? 150.px : 100.px,
                   tap: () async {

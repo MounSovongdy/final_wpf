@@ -5,10 +5,17 @@ import 'package:motor/constants/responsive.dart';
 import 'package:motor/controllers/main_controller.dart';
 import 'package:motor/screens/add_stock_screen.dart';
 import 'package:motor/screens/address_screen.dart';
+import 'package:motor/screens/advertising_screen.dart';
 import 'package:motor/screens/booking_screen.dart';
 import 'package:motor/screens/cash_screen.dart';
+import 'package:motor/screens/commission_screen.dart';
 import 'package:motor/screens/create_address_screen.dart';
+import 'package:motor/screens/gift_screen.dart';
+import 'package:motor/screens/koi_screen.dart';
 import 'package:motor/screens/leasing_screen.dart';
+import 'package:motor/screens/new_advertising_screen.dart';
+import 'package:motor/screens/new_koi_screen.dart';
+import 'package:motor/screens/teacher_bonus_screen.dart';
 import 'package:motor/screens/new_booking_screen.dart';
 import 'package:motor/screens/new_cash_screen.dart';
 import 'package:motor/screens/create_micro_screen.dart';
@@ -19,6 +26,7 @@ import 'package:motor/screens/dashboard_screen.dart';
 import 'package:motor/screens/financial_record_screen.dart';
 import 'package:motor/screens/micro_screen.dart';
 import 'package:motor/screens/new_expense_screen.dart';
+import 'package:motor/screens/new_gift_screen.dart';
 import 'package:motor/screens/new_receivable_screen.dart';
 import 'package:motor/screens/new_rental_screen.dart';
 import 'package:motor/screens/product_screen.dart';
@@ -26,6 +34,7 @@ import 'package:motor/screens/receivable_screen.dart';
 import 'package:motor/screens/new_leasing_screen.dart';
 import 'package:motor/screens/rental_screen.dart';
 import 'package:motor/screens/salesman_screen.dart';
+import 'package:motor/screens/staff_screen.dart';
 import 'package:motor/screens/total_stock_screen.dart';
 import 'package:motor/screens/user_screen.dart';
 import 'package:motor/screens/widgets/custom_app_bar.dart';
@@ -126,6 +135,24 @@ class MainScreen extends StatelessWidget {
             return AddressScreen();
           case 28:
             return CreateAddressScreen();
+          case 29:
+            return StaffScreen();
+          case 31:
+            return MicroExpenseScreen();
+          case 33:
+            return AdvertisingScreen();
+          case 34:
+            return NewAdvertisingScreen();
+          case 35:
+            return KoiScreen();
+          case 36:
+            return NewKoiScreen();
+          case 37:
+            return GiftScreen();
+          case 38:
+            return NewGiftScreen();
+          case 39:
+            return CommissionScreen();
           case 41:
             return RentalScreen();
           case 42:

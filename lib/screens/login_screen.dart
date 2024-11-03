@@ -56,7 +56,7 @@ class LoginScreen extends StatelessWidget {
               spacer(context),
               Align(
                 alignment: Alignment.centerRight,
-                child: AppButton(
+                child: AppButtonSubmit(
                   txt: 'Login',
                   tap: () => con.login(context),
                 ),

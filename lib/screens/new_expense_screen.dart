@@ -53,7 +53,7 @@ class NewExpenseScreen extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                AppButton(
+                AppButtonSubmit(
                   txt: 'Cancel',
                   width: Responsive.isDesktop(context) ? 150.px : 100.px,
                   color: secondGreyColor,
@@ -64,7 +64,7 @@ class NewExpenseScreen extends StatelessWidget {
                 ),
                 spacer(context),
                 spacer(context),
-                AppButton(
+                AppButtonSubmit(
                   txt: 'Save',
                   width: Responsive.isDesktop(context) ? 150.px : 100.px,
                   tap: () {},

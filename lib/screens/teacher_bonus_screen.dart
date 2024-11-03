@@ -1,26 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:motor/constants/constants.dart';
-import 'package:motor/constants/firebase.dart';
-import 'package:motor/constants/responsive.dart';
-import 'package:motor/controllers/main_controller.dart';
-import 'package:motor/controllers/rental_controller.dart';
+import 'package:motor/controllers/teacher_bonus_controller.dart';
 import 'package:motor/screens/components/app_button.dart';
 import 'package:motor/screens/components/app_data_table.dart';
 import 'package:motor/screens/components/app_dropdown_search.dart';
 import 'package:motor/screens/components/app_text_field.dart';
 import 'package:motor/screens/components/row_text_field.dart';
-import 'package:motor/screens/components/under_line.dart';
 import 'package:motor/screens/widgets/app_text.dart';
 import 'package:motor/screens/widgets/data_table_widget.dart';
 import 'package:motor/screens/widgets/loading_widget.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
-class RentalScreen extends StatelessWidget {
-  RentalScreen({super.key});
+class MicroExpenseScreen extends StatelessWidget {
+  MicroExpenseScreen({super.key});
 
-  final con = Get.put(RentalController());
-  final conMain = Get.put(MainController());
+  final con = Get.put(MicroExpenseController());
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +30,7 @@ class RentalScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            AppText.header(context, txt: 'Rental List'),
+            AppText.header(context, txt: 'Teacher Bonus List'),
             spacer(context),
             RowTextField(
               spacer: spacer(context),
@@ -76,11 +71,13 @@ class RentalScreen extends StatelessWidget {
                   ? AppDataTable(
                 column: [
                   DataTableWidget.column(context, 'ID'),
-                  DataTableWidget.column(context, 'Title'),
-                  DataTableWidget.column(context, 'Amount'),
+                  DataTableWidget.column(context, 'Name'),
+                  DataTableWidget.column(context, 'Salary'),
+                  DataTableWidget.column(context, 'Bonus'),
+                  DataTableWidget.column(context, 'Sale Unit'),
                   DataTableWidget.column(context, 'Action'),
                 ],
-                source: RentalDataSource(),
+                source: MicroExpenseDataSource(),
               )
                   : Container(
                 width: MediaQuery.of(context).size.width,
@@ -89,23 +86,6 @@ class RentalScreen extends StatelessWidget {
                 child: AppText.title(context, txt: 'No Data'),
               ),
             ),
-            spacer(context),
-            spacer(context),
-            const UnderLine(color: secondGreyColor),
-            spacer(context),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                AppButtonSubmit(
-                  txt: 'New',
-                  width: Responsive.isDesktop(context) ? 150.px : 100.px,
-                  tap: () {
-                    startInactivityTimer();
-                    conMain.index.value = 42;
-                  },
-                ),
-              ],
-            ),
           ],
         ),
       ),
@@ -113,9 +93,8 @@ class RentalScreen extends StatelessWidget {
   }
 }
 
-class RentalDataSource extends DataTableSource{
-  final con = Get.put(RentalController());
-
+class MicroExpenseDataSource extends DataTableSource{
+  final con = Get.put(MicroExpenseController());
   @override
   DataRow? getRow(int index){
     assert(index >= 0);
@@ -143,11 +122,6 @@ class RentalDataSource extends DataTableSource{
               btnColor: secondGreyColor,
               widget: TextButton(
                 onPressed: () async {
-                  await deleteUser(con.filteredUsers[index].id);
-                  con.filteredUsers.clear();
-                  await getAllUser();
-                  con.filteredUsers.value = user;
-                  Get.back();
                 },
                 child: AppText.title(Get.context!, txt: 'Confirm'),
               ),

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class RentalController extends GetxController{
+class KoiController extends GetxController{
   var search = TextEditingController().obs;
   var filteredUsers = [].obs;
-  var title = 'New Rental'.obs;
+  var title = 'New KOI'.obs;
   var selectedMonth = Rxn<String>();
   var monthList = [
     'January',

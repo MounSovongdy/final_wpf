@@ -192,8 +192,8 @@ class DrawerMenu extends StatelessWidget {
 
                           con.index.value = 29;
                         },
-                        title: 'Staff',
-                        svgSrc: 'assets/icons/TotalExpenses.svg',
+                        title: 'Staff Expense',
+                        svgSrc: 'assets/icons/Staff.svg',
                       ),
                     ),
                     Container(
@@ -205,8 +205,8 @@ class DrawerMenu extends StatelessWidget {
 
                           con.index.value = 31;
                         },
-                        title: 'Micro',
-                        svgSrc: 'assets/icons/TotalExpenses.svg',
+                        title: 'Teacher Bonus',
+                        svgSrc: 'assets/icons/Teacher.svg',
                       ),
                     ),
                     Container(
@@ -219,7 +219,7 @@ class DrawerMenu extends StatelessWidget {
                           con.index.value = 33;
                         },
                         title: 'Advertising',
-                        svgSrc: 'assets/icons/TotalExpenses.svg',
+                        svgSrc: 'assets/icons/Adv.svg',
                       ),
                     ),
                     Container(
@@ -231,8 +231,8 @@ class DrawerMenu extends StatelessWidget {
 
                           con.index.value = 35;
                         },
-                        title: 'KOL',
-                        svgSrc: 'assets/icons/TotalExpenses.svg',
+                        title: 'KOI',
+                        svgSrc: 'assets/icons/Koi.svg',
                       ),
                     ),
                     Container(
@@ -245,7 +245,7 @@ class DrawerMenu extends StatelessWidget {
                           con.index.value = 37;
                         },
                         title: 'Gift',
-                        svgSrc: 'assets/icons/TotalExpenses.svg',
+                        svgSrc: 'assets/icons/Gift.svg',
                       ),
                     ),
                     Container(
@@ -271,7 +271,7 @@ class DrawerMenu extends StatelessWidget {
                           con.index.value = 41;
                         },
                         title: 'Rental',
-                        svgSrc: 'assets/icons/TotalExpenses.svg',
+                        svgSrc: 'assets/icons/Rental.svg',
                       ),
                     ),
                   ],
@@ -340,7 +340,7 @@ class DrawerMenu extends StatelessWidget {
                           con.index.value = 27;
                         },
                         title: 'Address',
-                        svgSrc: 'assets/icons/CreateMicro.svg',
+                        svgSrc: 'assets/icons/Address.svg',
                       ),
                     ),
                   ],

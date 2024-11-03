@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class RentalController extends GetxController{
+class CommissionController extends GetxController{
   var search = TextEditingController().obs;
   var filteredUsers = [].obs;
-  var title = 'New Rental'.obs;
   var selectedMonth = Rxn<String>();
   var monthList = [
     'January',
@@ -20,6 +19,5 @@ class RentalController extends GetxController{
     'November',
     'December',
   ].obs;
-
   var amount = TextEditingController().obs;
 }

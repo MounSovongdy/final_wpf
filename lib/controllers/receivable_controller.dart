@@ -161,7 +161,7 @@ class ReceivableController extends GetxController {
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                AppButton(
+                AppButtonSubmit(
                   txt: 'Back',
                   width: 100.px,
                   color: secondGreyColor,
@@ -169,7 +169,7 @@ class ReceivableController extends GetxController {
                 ),
                 spacer(context),
                 spacer(context),
-                AppButton(
+                AppButtonSubmit(
                   txt: 'Save',
                   width: 100.px,
                   tap: () async {
@@ -413,7 +413,7 @@ class ReceivableController extends GetxController {
             ],
           ),
           actions: [
-            AppButton(
+            AppButtonSubmit(
               txt: 'Close',
               width: 100.px,
               color: secondGreyColor,

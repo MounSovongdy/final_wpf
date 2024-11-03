@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:motor/constants/constants.dart';
 import 'package:motor/constants/responsive.dart';
-import 'package:motor/controllers/new_rental_controller.dart';
-import 'package:motor/controllers/rental_controller.dart';
+import 'package:motor/controllers/koi_controller.dart';
+import 'package:motor/controllers/main_controller.dart';
+import 'package:motor/controllers/new_koi_controller.dart';
 import 'package:motor/screens/components/app_button.dart';
 import 'package:motor/screens/components/app_text_field.dart';
 import 'package:motor/screens/components/row_text_field.dart';
@@ -11,11 +12,12 @@ import 'package:motor/screens/components/under_line.dart';
 import 'package:motor/screens/widgets/app_text.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
-class NewRentalScreen extends StatelessWidget {
-  NewRentalScreen({super.key});
+class NewKoiScreen extends StatelessWidget {
+  NewKoiScreen({super.key});
 
-  final con = Get.put(NewRentalController());
-  final conRen = Get.put(RentalController());
+  final con = Get.put(NewKoiController());
+  final conKoi = Get.put(KoiController());
+  final conMain = Get.put(MainController());
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +33,7 @@ class NewRentalScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            AppText.header(context, txt: conRen.title.value),
+            AppText.header(context, txt: conKoi.title.value),
             spacer(context),
             RowTextField(
               spacer: spacer(context),
@@ -72,3 +74,4 @@ class NewRentalScreen extends StatelessWidget {
     );
   }
 }
+
