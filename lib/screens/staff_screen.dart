@@ -4,6 +4,7 @@ import 'package:motor/constants/constants.dart';
 import 'package:motor/constants/firebase.dart';
 import 'package:motor/constants/responsive.dart';
 import 'package:motor/controllers/main_controller.dart';
+import 'package:motor/controllers/new_staff_controller.dart';
 import 'package:motor/controllers/staff_controller.dart';
 import 'package:motor/screens/components/app_button.dart';
 import 'package:motor/screens/components/app_data_table.dart';
@@ -19,6 +20,7 @@ class StaffScreen extends StatelessWidget {
   StaffScreen({super.key});
 
   final con = Get.put(StaffController());
+  final conNewStaff = Get.put(NewStaffController());
   final conMain = Get.put(MainController());
 
   @override
@@ -114,9 +116,16 @@ class StaffScreen extends StatelessWidget {
                 AppButtonSubmit(
                   txt: 'New',
                   width: Responsive.isDesktop(context) ? 150.px : 100.px,
-                  tap: () {
+                  tap: () async {
                     startInactivityTimer();
-                    conMain.index.value = 0;
+                    conNewStaff.nameList.clear();
+                    conNewStaff.clearText();
+                    await getAllSaleMan();
+                    for (var data in saleMan) {
+                      conNewStaff.nameList.add(data.name);
+                    }
+
+                    conMain.index.value = 44;
                   },
                 ),
               ],

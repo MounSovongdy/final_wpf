@@ -15,6 +15,7 @@ import 'package:motor/screens/koi_screen.dart';
 import 'package:motor/screens/leasing_screen.dart';
 import 'package:motor/screens/new_advertising_screen.dart';
 import 'package:motor/screens/new_koi_screen.dart';
+import 'package:motor/screens/new_staff_screen.dart';
 import 'package:motor/screens/teacher_bonus_screen.dart';
 import 'package:motor/screens/new_booking_screen.dart';
 import 'package:motor/screens/new_cash_screen.dart';
@@ -135,8 +136,10 @@ class MainScreen extends StatelessWidget {
             return AddressScreen();
           case 28:
             return CreateAddressScreen();
-          case 29:
+          case 43:
             return StaffScreen();
+          case 44:
+            return NewStaffScreen();
           case 31:
             return MicroExpenseScreen();
           case 33:

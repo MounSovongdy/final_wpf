@@ -51,6 +51,8 @@ class NewAdvertisingScreen extends StatelessWidget {
               widget3: AppTextField(
                 txt: 'Amount',
                 con: con.amount.value,
+                isNumber: true,
+                digit: 6,
               ),
             ),
             spacer(context),

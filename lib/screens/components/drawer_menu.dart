@@ -26,7 +26,6 @@ import 'package:motor/screens/components/drawer_expansion_tile.dart';
 import 'package:motor/screens/components/drawer_list_tile.dart';
 import 'package:motor/screens/components/under_line.dart';
 import 'package:motor/screens/widgets/app_text.dart';
-import 'package:motor/screens/widgets/loading_widget.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:restart_app/restart_app.dart';
 
@@ -204,10 +203,6 @@ class DrawerMenu extends StatelessWidget {
                         tap: () async {
                           if (Responsive.isMobile(context)) con.controlDrawer();
                           startInactivityTimer();
-                          LoadingWidget.dialogLoading(
-                            duration: 5,
-                            isBack: false,
-                          );
                           await getAllSaleManCommission();
                           conStaff.monthList.clear();
                           if (saleManCom.isNotEmpty) {
@@ -228,8 +223,8 @@ class DrawerMenu extends StatelessWidget {
                           conStaff.filteredStaff.value = saleManCom;
                           conStaff.search.value
                               .addListener(conStaff.filterStaffData);
-                          Get.back();
-                          con.index.value = 29;
+
+                          con.index.value = 43;
                         },
                         title: 'Staff Expense',
                         svgSrc: 'assets/icons/Staff.svg',
@@ -241,10 +236,6 @@ class DrawerMenu extends StatelessWidget {
                         tap: () async {
                           if (Responsive.isMobile(context)) con.controlDrawer();
                           startInactivityTimer();
-                          LoadingWidget.dialogLoading(
-                            duration: 5,
-                            isBack: false,
-                          );
                           await getAllMicroCommission();
                           conTeacher.monthList.clear();
                           if (microCom.isNotEmpty) {
@@ -265,7 +256,6 @@ class DrawerMenu extends StatelessWidget {
                           conTeacher.filteredMicro.value = microCom;
                           conTeacher.search.value
                               .addListener(conTeacher.filterMicroData);
-                          Get.back();
 
                           con.index.value = 31;
                         },
@@ -279,10 +269,6 @@ class DrawerMenu extends StatelessWidget {
                         tap: () async {
                           if (Responsive.isMobile(context)) con.controlDrawer();
                           startInactivityTimer();
-                          LoadingWidget.dialogLoading(
-                            duration: 5,
-                            isBack: false,
-                          );
                           await getAllAdvertise();
                           conAdv.monthList.clear();
                           if (advertise.isNotEmpty) {
@@ -301,7 +287,6 @@ class DrawerMenu extends StatelessWidget {
                           }
                           conAdv.filteredAdv.value = advertise;
                           conAdv.search.value.addListener(conAdv.filterAdvData);
-                          Get.back();
 
                           con.index.value = 33;
                         },
@@ -315,10 +300,6 @@ class DrawerMenu extends StatelessWidget {
                         tap: () async {
                           if (Responsive.isMobile(context)) con.controlDrawer();
                           startInactivityTimer();
-                          LoadingWidget.dialogLoading(
-                            duration: 5,
-                            isBack: false,
-                          );
                           await getAllKoi();
                           conKoi.monthList.clear();
                           if (koi.isNotEmpty) {
@@ -337,7 +318,6 @@ class DrawerMenu extends StatelessWidget {
                           }
                           conKoi.filteredKoi.value = koi;
                           conKoi.search.value.addListener(conKoi.filterKoiData);
-                          Get.back();
 
                           con.index.value = 35;
                         },
@@ -351,10 +331,6 @@ class DrawerMenu extends StatelessWidget {
                         tap: () async {
                           if (Responsive.isMobile(context)) con.controlDrawer();
                           startInactivityTimer();
-                          LoadingWidget.dialogLoading(
-                            duration: 5,
-                            isBack: false,
-                          );
                           await getAllGift();
                           conGift.monthList.clear();
                           if (gift.isNotEmpty) {
@@ -374,7 +350,6 @@ class DrawerMenu extends StatelessWidget {
                           conGift.filteredGift.value = gift;
                           conGift.search.value
                               .addListener(conGift.filterGiftData);
-                          Get.back();
 
                           con.index.value = 37;
                         },
@@ -388,10 +363,6 @@ class DrawerMenu extends StatelessWidget {
                         tap: () async {
                           if (Responsive.isMobile(context)) con.controlDrawer();
                           startInactivityTimer();
-                          LoadingWidget.dialogLoading(
-                            duration: 5,
-                            isBack: false,
-                          );
                           await getAllFriendCommission();
                           conFri.monthList.clear();
                           if (friendCom.isNotEmpty) {
@@ -411,7 +382,6 @@ class DrawerMenu extends StatelessWidget {
                           conFri.filteredCommission.value = friendCom;
                           conFri.search.value
                               .addListener(conFri.filterCommissionData);
-                          Get.back();
 
                           con.index.value = 39;
                         },
@@ -425,10 +395,6 @@ class DrawerMenu extends StatelessWidget {
                         tap: () async {
                           if (Responsive.isMobile(context)) con.controlDrawer();
                           startInactivityTimer();
-                          LoadingWidget.dialogLoading(
-                            duration: 5,
-                            isBack: false,
-                          );
                           await getAllRental();
                           conRental.monthList.clear();
                           if (rental.isNotEmpty) {
@@ -449,7 +415,6 @@ class DrawerMenu extends StatelessWidget {
                           conRental.filteredRental.value = rental;
                           conRental.search.value
                               .addListener(conRental.filterRentalData);
-                          Get.back();
 
                           con.index.value = 41;
                         },

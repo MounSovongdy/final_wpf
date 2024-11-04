@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:motor/constants/constants.dart';
@@ -695,10 +694,8 @@ Future<void> insertLeasing(
         .where('condition', isEqualTo: condition)
         .get();
 
-    for (var doc in res.docs) {
-      docId = doc.id;
-    }
-
+    for (var doc in res.docs) docId = doc.id;
+    
     stockByModel.value =
         res.docs.map((doc) => TotalStockModel.fromMap(doc.data())).toList();
 
@@ -736,7 +733,7 @@ Future<void> insertLeasing(
         }
 
         await getBookingApprove();
-        Get.back();
+        Navigator.of(Get.context!).pop();
         clear();
         LoadingWidget.showTextDialog(
           Get.context!,
@@ -795,6 +792,8 @@ Future<void> getByDateSaleManCommission(String year, String month) async {
   saleManCom.value = res.docs
       .map((doc) => SaleManCommissionModel.fromMap(doc.data()))
       .toList();
+
+  saleManCom.sort((a, b) => b.id.compareTo(a.id));
 }
 
 Future<void> getLastSaleManCommission() async {
@@ -854,6 +853,29 @@ Future<void> insertSaleManCommission({
     }
   } catch (e) {
     debugPrint('Failed to add insert Saleman Commission: $e');
+  }
+}
+
+Future<void> insertStaff(
+  SaleManCommissionModel staff, {
+  required String year,
+  required String month,
+  required String name,
+}) async {
+  try {
+    var res = await saleManComCol
+        .where('year', isEqualTo: year)
+        .where('month', isEqualTo: month)
+        .where('sale_man_name', isEqualTo: name)
+        .get();
+
+    if (res.docs.isEmpty) {
+      await saleManComCol
+          .doc('$year$month-${staff.saleManId}')
+          .set(staff.toMap());
+    }
+  } catch (e) {
+    debugPrint('Failed to add insert staff: $e');
   }
 }
 
@@ -1136,7 +1158,7 @@ Future<void> insertCash(
         LoadingWidget.dialogLoading(duration: 5, isBack: false);
         await totalStockCol.doc(docId).update({'total_qty': '$newQty'});
         await cashCol.doc('${cash.id}').set(cash.toMap());
-        Get.back();
+        Navigator.of(Get.context!).pop();
         LoadingWidget.showTextDialog(
           Get.context!,
           title: 'Successfully',

@@ -132,7 +132,7 @@ class NewBookingController extends GetxController {
       LoadingWidget.dialogLoading(duration: 5, isBack: false);
       await insertBooking(newBook, newBookMicro);
       clearText();
-      Get.back();
+      Navigator.of(context).pop();
       LoadingWidget.showTextDialog(
         Get.context!,
         title: 'Successfully',

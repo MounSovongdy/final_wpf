@@ -5,6 +5,7 @@ import 'package:motor/constants/firebase.dart';
 import 'package:motor/constants/responsive.dart';
 import 'package:motor/controllers/gift_controller.dart';
 import 'package:motor/controllers/main_controller.dart';
+import 'package:motor/controllers/new_gift_controller.dart';
 import 'package:motor/screens/components/app_button.dart';
 import 'package:motor/screens/components/app_data_table.dart';
 import 'package:motor/screens/components/app_dropdown_search.dart';
@@ -19,6 +20,7 @@ class GiftScreen extends StatelessWidget {
   GiftScreen({super.key});
 
   final con = Get.put(GiftController());
+  final conNew = Get.put(NewGiftController());
   final conMain = Get.put(MainController());
 
   @override
@@ -112,6 +114,8 @@ class GiftScreen extends StatelessWidget {
                   width: Responsive.isDesktop(context) ? 150.px : 100.px,
                   tap: () {
                     startInactivityTimer();
+                    conNew.clearText();
+
                     conMain.index.value = 38;
                   },
                 ),

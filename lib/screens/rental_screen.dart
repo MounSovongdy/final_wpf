@@ -4,6 +4,7 @@ import 'package:motor/constants/constants.dart';
 import 'package:motor/constants/firebase.dart';
 import 'package:motor/constants/responsive.dart';
 import 'package:motor/controllers/main_controller.dart';
+import 'package:motor/controllers/new_rental_controller.dart';
 import 'package:motor/controllers/rental_controller.dart';
 import 'package:motor/screens/components/app_button.dart';
 import 'package:motor/screens/components/app_data_table.dart';
@@ -19,6 +20,7 @@ class RentalScreen extends StatelessWidget {
   RentalScreen({super.key});
 
   final con = Get.put(RentalController());
+  final conNew = Get.put(NewRentalController());
   final conMain = Get.put(MainController());
 
   @override
@@ -113,6 +115,8 @@ class RentalScreen extends StatelessWidget {
                   width: Responsive.isDesktop(context) ? 150.px : 100.px,
                   tap: () {
                     startInactivityTimer();
+                    conNew.clearText();
+
                     conMain.index.value = 42;
                   },
                 ),

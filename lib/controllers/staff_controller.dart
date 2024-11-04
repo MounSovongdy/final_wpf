@@ -5,6 +5,7 @@ import 'package:motor/constants/firebase.dart';
 class StaffController extends GetxController {
   var search = TextEditingController().obs;
   var filteredStaff = [].obs;
+  var title = 'New Staff'.obs;
 
   var monthList = [''].obs;
   var selectedMonth = Rxn<String>();

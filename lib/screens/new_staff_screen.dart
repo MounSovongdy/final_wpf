@@ -3,11 +3,12 @@ import 'package:get/get.dart';
 import 'package:motor/constants/constants.dart';
 import 'package:motor/constants/firebase.dart';
 import 'package:motor/constants/responsive.dart';
-import 'package:motor/controllers/koi_controller.dart';
 import 'package:motor/controllers/main_controller.dart';
-import 'package:motor/controllers/new_koi_controller.dart';
+import 'package:motor/controllers/new_staff_controller.dart';
+import 'package:motor/controllers/staff_controller.dart';
 import 'package:motor/screens/components/app_button.dart';
 import 'package:motor/screens/components/app_date_text_field.dart';
+import 'package:motor/screens/components/app_dropdown_search.dart';
 import 'package:motor/screens/components/app_text_field.dart';
 import 'package:motor/screens/components/row_text_field.dart';
 import 'package:motor/screens/components/under_line.dart';
@@ -15,11 +16,11 @@ import 'package:motor/screens/widgets/app_text.dart';
 import 'package:motor/screens/widgets/loading_widget.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
-class NewKoiScreen extends StatelessWidget {
-  NewKoiScreen({super.key});
+class NewStaffScreen extends StatelessWidget {
+  NewStaffScreen({super.key});
 
-  final con = Get.put(NewKoiController());
-  final conKoi = Get.put(KoiController());
+  final con = Get.put(NewStaffController());
+  final conStaff = Get.put(StaffController());
   final conMain = Get.put(MainController());
 
   @override
@@ -28,7 +29,6 @@ class NewKoiScreen extends StatelessWidget {
       child: Container(
         margin: EdgeInsets.all(defWebPad.px),
         padding: EdgeInsets.all(defWebPad.px),
-        width: MediaQuery.of(context).size.width,
         decoration: BoxDecoration(
           color: whiteColor,
           borderRadius: BorderRadius.circular(defRadius.px),
@@ -36,7 +36,7 @@ class NewKoiScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            AppText.header(context, txt: conKoi.title.value),
+            AppText.header(context, txt: conStaff.title.value),
             spacer(context),
             RowTextField(
               spacer: spacer(context),
@@ -44,15 +44,41 @@ class NewKoiScreen extends StatelessWidget {
                 txt: 'Date',
                 con: con.date.value,
               ),
-              widget2: AppTextField(
-                txt: 'Name',
-                con: con.name.value,
+              widget2: AppDropdownSearch(
+                txt: 'Staff Name',
+                value: con.saleName,
+                list: con.nameList,
+                onChanged: (v) {
+                  if (v != null) {
+                    con.saleName.value = v;
+                    for (var data in saleMan) {
+                      if (data.name == v) {
+                        con.saleId.value = data.id;
+                        con.salary.value.text = data.salary;
+                        con.bonus.value.text = data.bonus;
+                      }
+                    }
+                  }
+                },
               ),
               widget3: AppTextField(
-                txt: 'Amount',
-                con: con.amount.value,
+                txt: 'Salary',
+                con: con.salary.value,
+                readOnly: true,
+              ),
+            ),
+            RowTextField(
+              spacer: spacer(context),
+              widget1: AppTextField(
+                txt: 'Bonus',
+                con: con.bonus.value,
+                readOnly: true,
+              ),
+              widget2: AppTextField(
+                txt: 'Unit Sale',
+                con: con.unitSale.value,
                 isNumber: true,
-                digit: 6,
+                digit: 3,
               ),
             ),
             spacer(context),
@@ -70,23 +96,23 @@ class NewKoiScreen extends StatelessWidget {
                   tap: () async {
                     startInactivityTimer();
                     LoadingWidget.dialogLoading(duration: 5, isBack: false);
-                    await getAllKoi();
-                    conKoi.monthList.clear();
-                    if (koi.isNotEmpty) {
-                      for (var data in koi) {
-                        conKoi.monthList.add('${data.year}-${data.month}');
+                    await getAllSaleManCommission();
+                    conStaff.monthList.clear();
+                    if (saleManCom.isNotEmpty) {
+                      for (var data in saleManCom) {
+                        conStaff.monthList.add('${data.year}-${data.month}');
                       }
-                      conKoi.monthList.value =
-                          conKoi.monthList.toSet().toList();
-                      conKoi.selectedMonth.value = conKoi.monthList[0];
-                      conKoi.filteredKoi.clear();
-                      await getByDateKoi(
-                        conKoi.selectedMonth.value!.split('-')[0],
-                        conKoi.selectedMonth.value!.split('-')[1],
+                      conStaff.monthList.value =
+                          conStaff.monthList.toSet().toList();
+                      conStaff.selectedMonth.value = conStaff.monthList[0];
+                      conStaff.filteredStaff.clear();
+                      await getByDateSaleManCommission(
+                        conStaff.selectedMonth.value!.split('-')[0],
+                        conStaff.selectedMonth.value!.split('-')[1],
                       );
                     }
-                    conKoi.filteredKoi.value = koi;
-                    conKoi.search.value.addListener(conKoi.filterKoiData);
+                    conStaff.filteredStaff.value = saleManCom;
+                    conStaff.search.value.addListener(conStaff.filterStaffData);
                     Get.back();
 
                     conMain.index.value = conMain.index.value - 1;
@@ -99,7 +125,7 @@ class NewKoiScreen extends StatelessWidget {
                   width: Responsive.isDesktop(context) ? 150.px : 100.px,
                   tap: () {
                     startInactivityTimer();
-                    con.createKoi(context);
+                    con.createStaff(context);
                   },
                 ),
               ],
