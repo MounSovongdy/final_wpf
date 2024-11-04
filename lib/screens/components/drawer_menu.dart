@@ -7,18 +7,22 @@ import 'package:motor/controllers/add_stock_controller.dart';
 import 'package:motor/controllers/address_controller.dart';
 import 'package:motor/controllers/booking_controller.dart';
 import 'package:motor/controllers/cash_controller.dart';
+import 'package:motor/controllers/commission_controller.dart';
 import 'package:motor/controllers/leasing_controller.dart';
 import 'package:motor/controllers/main_controller.dart';
 import 'package:motor/controllers/micro_controller.dart';
 import 'package:motor/controllers/product_controller.dart';
 import 'package:motor/controllers/receivable_controller.dart';
 import 'package:motor/controllers/salesman_controller.dart';
+import 'package:motor/controllers/staff_controller.dart';
+import 'package:motor/controllers/teacher_bonus_controller.dart';
 import 'package:motor/controllers/total_stock_controller.dart';
 import 'package:motor/controllers/user_controller.dart';
 import 'package:motor/screens/components/drawer_expansion_tile.dart';
 import 'package:motor/screens/components/drawer_list_tile.dart';
 import 'package:motor/screens/components/under_line.dart';
 import 'package:motor/screens/widgets/app_text.dart';
+import 'package:motor/screens/widgets/loading_widget.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:restart_app/restart_app.dart';
 
@@ -37,6 +41,9 @@ class DrawerMenu extends StatelessWidget {
   final conCash = Get.put(CashController());
   final conRec = Get.put(ReceivableController());
   final conA = Get.put(AddressController());
+  final conStaff = Get.put(StaffController());
+  final conFri = Get.put(CommissionController());
+  final conTeacher = Get.put(MicroExpenseController());
 
   @override
   Widget build(BuildContext context) {
@@ -186,10 +193,34 @@ class DrawerMenu extends StatelessWidget {
                     Container(
                       padding: EdgeInsets.only(left: 36.px),
                       child: DrawerListTile(
-                        tap: () {
+                        tap: () async {
                           if (Responsive.isMobile(context)) con.controlDrawer();
                           startInactivityTimer();
-
+                          LoadingWidget.dialogLoading(
+                            duration: 5,
+                            isBack: false,
+                          );
+                          await getAllSaleManCommission();
+                          conStaff.monthList.clear();
+                          if (saleManCom.isNotEmpty) {
+                            for (var data in saleManCom) {
+                              conStaff.monthList
+                                  .add('${data.year}-${data.month}');
+                            }
+                            conStaff.monthList.value =
+                                conStaff.monthList.toSet().toList();
+                            conStaff.selectedMonth.value =
+                                conStaff.monthList[0];
+                            conStaff.filteredStaff.clear();
+                            await getByDateSaleManCommission(
+                              conStaff.selectedMonth.value!.split('-')[0],
+                              conStaff.selectedMonth.value!.split('-')[1],
+                            );
+                          }
+                          conStaff.filteredStaff.value = saleManCom;
+                          conStaff.search.value
+                              .addListener(conStaff.filterStaffData);
+                          Get.back();
                           con.index.value = 29;
                         },
                         title: 'Staff Expense',
@@ -199,9 +230,34 @@ class DrawerMenu extends StatelessWidget {
                     Container(
                       padding: EdgeInsets.only(left: 36.px),
                       child: DrawerListTile(
-                        tap: () {
+                        tap: () async {
                           if (Responsive.isMobile(context)) con.controlDrawer();
                           startInactivityTimer();
+                          LoadingWidget.dialogLoading(
+                            duration: 5,
+                            isBack: false,
+                          );
+                          await getAllMicroCommission();
+                          conTeacher.monthList.clear();
+                          if (microCom.isNotEmpty) {
+                            for (var data in microCom) {
+                              conTeacher.monthList
+                                  .add('${data.year}-${data.month}');
+                            }
+                            conTeacher.monthList.value =
+                                conTeacher.monthList.toSet().toList();
+                            conTeacher.selectedMonth.value =
+                                conTeacher.monthList[0];
+                            conTeacher.filteredMicro.clear();
+                            await getByDateMicroCommission(
+                              conTeacher.selectedMonth.value!.split('-')[0],
+                              conTeacher.selectedMonth.value!.split('-')[1],
+                            );
+                          }
+                          conTeacher.filteredMicro.value = microCom;
+                          conTeacher.search.value
+                              .addListener(conTeacher.filterMicroData);
+                          Get.back();
 
                           con.index.value = 31;
                         },
@@ -251,10 +307,33 @@ class DrawerMenu extends StatelessWidget {
                     Container(
                       padding: EdgeInsets.only(left: 36.px),
                       child: DrawerListTile(
-                        tap: () {
+                        tap: () async {
                           if (Responsive.isMobile(context)) con.controlDrawer();
                           startInactivityTimer();
-
+                          LoadingWidget.dialogLoading(
+                            duration: 5,
+                            isBack: false,
+                          );
+                          await getAllFriendCommission();
+                          conFri.monthList.clear();
+                          if (friendCom.isNotEmpty) {
+                            for (var data in friendCom) {
+                              conFri.monthList
+                                  .add('${data.year}-${data.month}');
+                            }
+                            conFri.monthList.value =
+                                conFri.monthList.toSet().toList();
+                            conFri.selectedMonth.value = conFri.monthList[0];
+                            conFri.filteredCommission.clear();
+                            await getByDateFriendCommission(
+                              conFri.selectedMonth.value!.split('-')[0],
+                              conFri.selectedMonth.value!.split('-')[1],
+                            );
+                          }
+                          conFri.filteredCommission.value = friendCom;
+                          conFri.search.value
+                              .addListener(conFri.filterCommissionData);
+                          Get.back();
                           con.index.value = 39;
                         },
                         title: 'Commission',

@@ -262,7 +262,7 @@ class NewBookingController extends GetxController {
     condition.value = null;
     comeBy.value = null;
     address.value = null;
-    date.value.clear();
+    date.value.text = '$dateNow $timeNow';
     idCard.value.clear();
     name.value.clear();
     age.value.clear();

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:motor/constants/constants.dart';
+import 'package:motor/constants/firebase.dart';
 import 'package:motor/controllers/commission_controller.dart';
 import 'package:motor/controllers/main_controller.dart';
 import 'package:motor/screens/components/app_button.dart';
@@ -10,7 +11,6 @@ import 'package:motor/screens/components/app_text_field.dart';
 import 'package:motor/screens/components/row_text_field.dart';
 import 'package:motor/screens/widgets/app_text.dart';
 import 'package:motor/screens/widgets/data_table_widget.dart';
-import 'package:motor/screens/widgets/loading_widget.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 class CommissionScreen extends StatelessWidget {
@@ -40,8 +40,17 @@ class CommissionScreen extends StatelessWidget {
                 txt: 'Select Month',
                 value: con.selectedMonth,
                 list: con.monthList,
-                onChanged: (v) {
-                  if (v != null) con.selectedMonth.value = v;
+                onChanged: (v) async {
+                  if (v != null) {
+                    con.selectedMonth.value = v;
+                    con.filteredCommission.clear();
+                    await getByDateFriendCommission(
+                      con.selectedMonth.value!.split('-')[0],
+                      con.selectedMonth.value!.split('-')[1],
+                    );
+                    con.filteredCommission.value = friendCom;
+                    con.search.value.addListener(con.filterCommissionData);
+                  }
                 },
               ),
               widget2: AppTextField(
@@ -55,8 +64,12 @@ class CommissionScreen extends StatelessWidget {
               ),
             ),
             spacer(context),
-            Padding(
-              padding: EdgeInsets.all(defWebPad.px),
+            spacer(context),
+            Container(
+              padding: EdgeInsets.only(
+                left: defWebPad.px / 2,
+                right: defWebPad.px,
+              ),
               child: TextField(
                 controller: con.search.value,
                 decoration: const InputDecoration(
@@ -69,23 +82,23 @@ class CommissionScreen extends StatelessWidget {
             ),
             spacer(context),
             Obx(
-                  () => con.filteredUsers.isNotEmpty
+              () => con.filteredCommission.isNotEmpty
                   ? AppDataTable(
-                column: [
-                  DataTableWidget.column(context, 'ID'),
-                  DataTableWidget.column(context, 'Name'),
-                  DataTableWidget.column(context, 'Telephone'),
-                  DataTableWidget.column(context, 'Amount'),
-                  DataTableWidget.column(context, 'Action'),
-                ],
-                source: CommissionDataSource(),
-              )
+                      column: [
+                        DataTableWidget.column(context, 'ID'),
+                        DataTableWidget.column(context, 'Date'),
+                        DataTableWidget.column(context, 'Name'),
+                        DataTableWidget.column(context, 'Telephone'),
+                        DataTableWidget.column(context, 'Commission'),
+                      ],
+                      source: CommissionDataSource(),
+                    )
                   : Container(
-                width: MediaQuery.of(context).size.width,
-                margin: EdgeInsets.only(top: defWebPad.px),
-                alignment: Alignment.center,
-                child: AppText.title(context, txt: 'No Data'),
-              ),
+                      width: MediaQuery.of(context).size.width,
+                      margin: EdgeInsets.only(top: defWebPad.px),
+                      alignment: Alignment.center,
+                      child: AppText.title(context, txt: 'No Data'),
+                    ),
             ),
           ],
         ),
@@ -94,47 +107,29 @@ class CommissionScreen extends StatelessWidget {
   }
 }
 
-class CommissionDataSource extends DataTableSource{
+class CommissionDataSource extends DataTableSource {
   final con = Get.put(CommissionController());
+
   @override
-  DataRow? getRow(int index){
+  DataRow? getRow(int index) {
     assert(index >= 0);
-    if (index >= con.filteredUsers.length) return null;
-    var data = con.filteredUsers[index];
+    if (index >= con.filteredCommission.length) return null;
+    var data = con.filteredCommission[index];
+
     return DataRow.byIndex(
       index: index,
       cells: [
         DataTableWidget.cell(Get.context!, '${data.id}'),
-        DataTableWidget.cell(Get.context!, 'data.name'),
-        DataTableWidget.cell(Get.context!, 'data.dateCreate'),
-        DataTableWidget.cellBtn(
-          Get.context!,
-          edit: () async {
-            startInactivityTimer();
-          },
-          delete: () {
-            startInactivityTimer();
-            LoadingWidget.showTextDialog(
-              Get.context!,
-              title: 'Warning',
-              content: 'Are you sure to delete?',
-              color: redColor,
-              txtBack: 'Cancel',
-              btnColor: secondGreyColor,
-              widget: TextButton(
-                onPressed: () async {
-                },
-                child: AppText.title(Get.context!, txt: 'Confirm'),
-              ),
-            );
-          },
-        ),
+        DataTableWidget.cell(Get.context!, '${data.year}-${data.month}'),
+        DataTableWidget.cell(Get.context!, data.name),
+        DataTableWidget.cell(Get.context!, data.tel),
+        DataTableWidget.cell(Get.context!, data.totalCommission),
       ],
     );
   }
 
   @override
-  int get rowCount => con.filteredUsers.length;
+  int get rowCount => con.filteredCommission.length;
 
   @override
   bool get isRowCountApproximate => false;

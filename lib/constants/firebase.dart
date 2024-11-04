@@ -26,23 +26,23 @@ import 'package:motor/screens/widgets/loading_widget.dart';
 final _firebase = FirebaseFirestore.instance;
 
 final userCol = _firebase.collection('user');
-final saleManCol = _firebase.collection('sale_man');
-final microCol = _firebase.collection('micro');
-final addressCol = _firebase.collection('address');
+final saleManCol = _firebase.collection('sale_man_test');
+final microCol = _firebase.collection('micro_test');
+final addressCol = _firebase.collection('address_test');
 final colorCol = _firebase.collection('color');
 final brandCol = _firebase.collection('brand');
-final productCol = _firebase.collection('product');
-final addStockCol = _firebase.collection('add_stock');
-final totalStockCol = _firebase.collection('total_stock');
-final bookingCol = _firebase.collection('booking');
-final bookingMicroCol = _firebase.collection('booking_micro');
-final leasingCol = _firebase.collection('leasing');
-final microComCol = _firebase.collection('micro_commission');
-final saleManComCol = _firebase.collection('sale_man_commission');
-final friendComCol = _firebase.collection('friend_commission');
-final cashCol = _firebase.collection('cash');
-final receivableCol = _firebase.collection('receivable');
-final paymentTableCol = _firebase.collection('payment_table');
+final productCol = _firebase.collection('product_test');
+final addStockCol = _firebase.collection('add_stock_test');
+final totalStockCol = _firebase.collection('total_stock_test');
+final bookingCol = _firebase.collection('booking_test');
+final bookingMicroCol = _firebase.collection('booking_micro_test');
+final leasingCol = _firebase.collection('leasing_test');
+final microComCol = _firebase.collection('micro_commission_test');
+final saleManComCol = _firebase.collection('sale_man_commission_test');
+final friendComCol = _firebase.collection('friend_commission_test');
+final cashCol = _firebase.collection('cash_test');
+final receivableCol = _firebase.collection('receivable_test');
+final paymentTableCol = _firebase.collection('payment_table_test');
 
 var currVersion = '1.0.0'.obs;
 var byUser = [].obs;
@@ -768,6 +768,23 @@ Future<void> updateStatusbooking(int id) async {
   }
 }
 
+Future<void> getAllSaleManCommission() async {
+  var res = await saleManComCol.orderBy('id', descending: true).get();
+  saleManCom.value = res.docs
+      .map((doc) => SaleManCommissionModel.fromMap(doc.data()))
+      .toList();
+}
+
+Future<void> getByDateSaleManCommission(String year, String month) async {
+  var res = await saleManComCol
+      .where('year', isEqualTo: year)
+      .where('month', isEqualTo: month)
+      .get();
+  saleManCom.value = res.docs
+      .map((doc) => SaleManCommissionModel.fromMap(doc.data()))
+      .toList();
+}
+
 Future<void> getLastSaleManCommission() async {
   var res = await saleManComCol.orderBy('id', descending: true).limit(1).get();
   saleManCom.value = res.docs
@@ -828,6 +845,21 @@ Future<void> insertSaleManCommission({
   }
 }
 
+Future<void> getAllMicroCommission() async {
+  var res = await microComCol.orderBy('id', descending: true).get();
+  microCom.value =
+      res.docs.map((doc) => MicroCommissionModel.fromMap(doc.data())).toList();
+}
+
+Future<void> getByDateMicroCommission(String year, String month) async {
+  var res = await microComCol
+      .where('year', isEqualTo: year)
+      .where('month', isEqualTo: month)
+      .get();
+  microCom.value =
+      res.docs.map((doc) => MicroCommissionModel.fromMap(doc.data())).toList();
+}
+
 Future<void> getLastMicroCommission() async {
   var res = await microComCol.orderBy('id', descending: true).limit(1).get();
   microCom.value =
@@ -886,6 +918,21 @@ Future<void> insertMicroCommission({
   }
 }
 
+Future<void> getAllFriendCommission() async {
+  var res = await friendComCol.orderBy('id', descending: true).get();
+  friendCom.value =
+      res.docs.map((doc) => FriendCommissionModel.fromMap(doc.data())).toList();
+}
+
+Future<void> getByDateFriendCommission(String year, String month) async {
+  var res = await friendComCol
+      .where('year', isEqualTo: year)
+      .where('month', isEqualTo: month)
+      .get();
+  friendCom.value =
+      res.docs.map((doc) => FriendCommissionModel.fromMap(doc.data())).toList();
+}
+
 Future<void> getLastFriendCommission() async {
   var res = await friendComCol.orderBy('id', descending: true).limit(1).get();
   friendCom.value =
@@ -931,8 +978,7 @@ Future<void> getAllCash() async {
 
 Future<void> getByCash(int id) async {
   var res = await cashCol.where('id', isEqualTo: id).get();
-  byCash.value =
-      res.docs.map((doc) => CashModel.fromMap(doc.data())).toList();
+  byCash.value = res.docs.map((doc) => CashModel.fromMap(doc.data())).toList();
 }
 
 Future<void> insertCash(

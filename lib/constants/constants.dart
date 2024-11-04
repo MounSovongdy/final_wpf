@@ -24,6 +24,8 @@ var defMobPad = 8.0;
 
 var dateFormat = DateFormat('yyyy-MM-dd');
 var timeFormat = DateFormat.Hm();
+var dateNow = dateFormat.format(DateTime.now());
+var timeNow = timeFormat.format(DateTime.now());
 
 Timer? inactivityTimer;
 

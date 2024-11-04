@@ -121,7 +121,7 @@ class NewLeasingController extends GetxController {
         name: salesman.value.text,
       );
       var unitSale = 0;
-      var newSaleComId = 0;
+      var newSaleComId = 1;
       if (bySaleManCom.isNotEmpty) {
         newSaleComId = bySaleManCom[0].id;
         unitSale = int.parse(bySaleManCom[0].unitSale) + 1;
@@ -130,7 +130,7 @@ class NewLeasingController extends GetxController {
         if (saleManCom.isNotEmpty) newSaleComId = saleManCom[0].id + 1;
         unitSale = 1;
       }
-      
+
       await getByMicroName(micro.value.text);
       await getByMicroNameCom(
         year: '${DateTime.now().year}',
@@ -138,7 +138,7 @@ class NewLeasingController extends GetxController {
         name: micro.value.text,
       );
       var unitMicro = 0;
-      var newMicroComId = 0;
+      var newMicroComId = 1;
       if (byMicroCom.isNotEmpty) {
         newMicroComId = byMicroCom[0].id;
         unitMicro = int.parse(byMicroCom[0].unitSale) + 1;
@@ -200,7 +200,8 @@ class NewLeasingController extends GetxController {
         saleSalary: bySaleMan[0].salary,
         saleBonus: bySaleMan[0].bonus,
         unitSale: '$unitSale',
-        totalBonus: '${int.parse(bySaleMan[0].bonus) * unitSale}',
+        totalBonus:
+            '${int.parse(bySaleMan[0].salary) + (int.parse(bySaleMan[0].bonus) * unitSale)}',
       );
       MicroCommissionModel newMicroCom = MicroCommissionModel(
         id: newMicroComId,
