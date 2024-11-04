@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:motor/constants/constants.dart';
+import 'package:motor/constants/firebase.dart';
 import 'package:motor/constants/responsive.dart';
 import 'package:motor/controllers/koi_controller.dart';
 import 'package:motor/controllers/main_controller.dart';
@@ -12,7 +13,6 @@ import 'package:motor/screens/components/row_text_field.dart';
 import 'package:motor/screens/components/under_line.dart';
 import 'package:motor/screens/widgets/app_text.dart';
 import 'package:motor/screens/widgets/data_table_widget.dart';
-import 'package:motor/screens/widgets/loading_widget.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 class KoiScreen extends StatelessWidget {
@@ -42,8 +42,17 @@ class KoiScreen extends StatelessWidget {
                 txt: 'Select Month',
                 value: con.selectedMonth,
                 list: con.monthList,
-                onChanged: (v) {
-                  if (v != null) con.selectedMonth.value = v;
+                onChanged: (v) async {
+                  if (v != null) {
+                    con.selectedMonth.value = v;
+                    con.filteredKoi.clear();
+                    await getByDateKoi(
+                      con.selectedMonth.value!.split('-')[0],
+                      con.selectedMonth.value!.split('-')[1],
+                    );
+                    con.filteredKoi.value = koi;
+                    con.search.value.addListener(con.filterKoiData);
+                  }
                 },
               ),
               widget2: AppTextField(
@@ -57,8 +66,12 @@ class KoiScreen extends StatelessWidget {
               ),
             ),
             spacer(context),
-            Padding(
-              padding: EdgeInsets.all(defWebPad.px),
+            spacer(context),
+            Container(
+              padding: EdgeInsets.only(
+                left: defWebPad.px / 2,
+                right: defWebPad.px,
+              ),
               child: TextField(
                 controller: con.search.value,
                 decoration: const InputDecoration(
@@ -71,22 +84,22 @@ class KoiScreen extends StatelessWidget {
             ),
             spacer(context),
             Obx(
-                  () => con.filteredUsers.isNotEmpty
+              () => con.filteredKoi.isNotEmpty
                   ? AppDataTable(
-                column: [
-                  DataTableWidget.column(context, 'ID'),
-                  DataTableWidget.column(context, 'Title'),
-                  DataTableWidget.column(context, 'Amount'),
-                  DataTableWidget.column(context, 'Action'),
-                ],
-                source: KoiDataSource(),
-              )
+                      column: [
+                        DataTableWidget.column(context, 'ID'),
+                        DataTableWidget.column(context, 'Date'),
+                        DataTableWidget.column(context, 'Name'),
+                        DataTableWidget.column(context, 'Amount'),
+                      ],
+                      source: KoiDataSource(),
+                    )
                   : Container(
-                width: MediaQuery.of(context).size.width,
-                margin: EdgeInsets.only(top: defWebPad.px),
-                alignment: Alignment.center,
-                child: AppText.title(context, txt: 'No Data'),
-              ),
+                      width: MediaQuery.of(context).size.width,
+                      margin: EdgeInsets.only(top: defWebPad.px),
+                      alignment: Alignment.center,
+                      child: AppText.title(context, txt: 'No Data'),
+                    ),
             ),
             spacer(context),
             spacer(context),
@@ -112,48 +125,28 @@ class KoiScreen extends StatelessWidget {
   }
 }
 
-class KoiDataSource extends DataTableSource{
+class KoiDataSource extends DataTableSource {
   final con = Get.put(KoiController());
+
   @override
-  DataRow? getRow(int index){
+  DataRow? getRow(int index) {
     assert(index >= 0);
-    if (index >= con.filteredUsers.length) return null;
-    var data = con.filteredUsers[index];
+    if (index >= con.filteredKoi.length) return null;
+    var data = con.filteredKoi[index];
+
     return DataRow.byIndex(
       index: index,
       cells: [
         DataTableWidget.cell(Get.context!, '${data.id}'),
-        DataTableWidget.cell(Get.context!, 'data.name'),
-        DataTableWidget.cell(Get.context!, 'data.dateCreate'),
-        DataTableWidget.cellBtn(
-          Get.context!,
-          edit: () async {
-            startInactivityTimer();
-          },
-          delete: () {
-            startInactivityTimer();
-            LoadingWidget.showTextDialog(
-              Get.context!,
-              title: 'Warning',
-              content: 'Are you sure to delete?',
-              color: redColor,
-              txtBack: 'Cancel',
-              btnColor: secondGreyColor,
-              widget: TextButton(
-                onPressed: () async {
-
-                },
-                child: AppText.title(Get.context!, txt: 'Confirm'),
-              ),
-            );
-          },
-        ),
+        DataTableWidget.cell(Get.context!, '${data.year}-${data.month}'),
+        DataTableWidget.cell(Get.context!, data.name),
+        DataTableWidget.cell(Get.context!, data.amount),
       ],
     );
   }
 
   @override
-  int get rowCount => con.filteredUsers.length;
+  int get rowCount => con.filteredKoi.length;
 
   @override
   bool get isRowCountApproximate => false;

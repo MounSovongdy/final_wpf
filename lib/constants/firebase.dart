@@ -5,18 +5,22 @@ import 'package:get/get.dart';
 import 'package:motor/constants/constants.dart';
 import 'package:motor/models/add_stock_model.dart';
 import 'package:motor/models/address_model.dart';
+import 'package:motor/models/advertising_model.dart';
 import 'package:motor/models/booking_micro_model.dart';
 import 'package:motor/models/booking_model.dart';
 import 'package:motor/models/brand_model.dart';
 import 'package:motor/models/cash_model.dart';
 import 'package:motor/models/color_model.dart';
 import 'package:motor/models/friend_commission_model.dart';
+import 'package:motor/models/gift_model.dart';
+import 'package:motor/models/koi_model.dart';
 import 'package:motor/models/leasing_model.dart';
 import 'package:motor/models/micro_commission_model.dart';
 import 'package:motor/models/micro_model.dart';
 import 'package:motor/models/payment_table_model.dart';
 import 'package:motor/models/product_model.dart';
 import 'package:motor/models/receivable_model.dart';
+import 'package:motor/models/rental_model.dart';
 import 'package:motor/models/sale_man_commission_model.dart';
 import 'package:motor/models/sale_man_model.dart';
 import 'package:motor/models/total_stock_model.dart';
@@ -43,6 +47,10 @@ final friendComCol = _firebase.collection('friend_commission_test');
 final cashCol = _firebase.collection('cash_test');
 final receivableCol = _firebase.collection('receivable_test');
 final paymentTableCol = _firebase.collection('payment_table_test');
+final advertisingCol = _firebase.collection('advertising_test');
+final rentalCol = _firebase.collection('rental_test');
+final giftCol = _firebase.collection('gift_test');
+final koiCol = _firebase.collection('koi_test');
 
 var currVersion = '1.0.0'.obs;
 var byUser = [].obs;
@@ -72,6 +80,10 @@ var microCom = [].obs;
 var bySaleManCom = [].obs;
 var saleManCom = [].obs;
 var friendCom = [].obs;
+var advertise = [].obs;
+var rental = [].obs;
+var gift = [].obs;
+var koi = [].obs;
 var byCash = [].obs;
 var cash = [].obs;
 var byReceivable = [].obs;
@@ -944,6 +956,116 @@ Future<void> insertFriendCommission(FriendCommissionModel friCom) async {
     await friendComCol.doc('${friCom.id}').set(friCom.toMap());
   } catch (e) {
     debugPrint('Failed to add insert Friend Commission: $e');
+  }
+}
+
+Future<void> getAllAdvertise() async {
+  var res = await advertisingCol.orderBy('id', descending: true).get();
+  advertise.value =
+      res.docs.map((doc) => AdvertisingModel.fromMap(doc.data())).toList();
+}
+
+Future<void> getByDateAdvertise(String year, String month) async {
+  var res = await advertisingCol
+      .where('year', isEqualTo: year)
+      .where('month', isEqualTo: month)
+      .get();
+  advertise.value =
+      res.docs.map((doc) => AdvertisingModel.fromMap(doc.data())).toList();
+}
+
+Future<void> getLastAdvertise() async {
+  var res = await advertisingCol.orderBy('id', descending: true).limit(1).get();
+  advertise.value =
+      res.docs.map((doc) => AdvertisingModel.fromMap(doc.data())).toList();
+}
+
+Future<void> insertAdvertise(AdvertisingModel adv) async {
+  try {
+    await advertisingCol.doc('${adv.id}').set(adv.toMap());
+  } catch (e) {
+    debugPrint('Failed to add insert advertise: $e');
+  }
+}
+
+Future<void> getAllRental() async {
+  var res = await rentalCol.orderBy('id', descending: true).get();
+  rental.value =
+      res.docs.map((doc) => RentalModel.fromMap(doc.data())).toList();
+}
+
+Future<void> getByDateRental(String year, String month) async {
+  var res = await rentalCol
+      .where('year', isEqualTo: year)
+      .where('month', isEqualTo: month)
+      .get();
+  rental.value =
+      res.docs.map((doc) => RentalModel.fromMap(doc.data())).toList();
+}
+
+Future<void> getLastRental() async {
+  var res = await rentalCol.orderBy('id', descending: true).limit(1).get();
+  rental.value =
+      res.docs.map((doc) => RentalModel.fromMap(doc.data())).toList();
+}
+
+Future<void> insertRental(RentalModel ren) async {
+  try {
+    await rentalCol.doc('${ren.id}').set(ren.toMap());
+  } catch (e) {
+    debugPrint('Failed to add insert rental: $e');
+  }
+}
+
+Future<void> getAllGift() async {
+  var res = await giftCol.orderBy('id', descending: true).get();
+  gift.value = res.docs.map((doc) => GiftModel.fromMap(doc.data())).toList();
+}
+
+Future<void> getByDateGift(String year, String month) async {
+  var res = await giftCol
+      .where('year', isEqualTo: year)
+      .where('month', isEqualTo: month)
+      .get();
+  gift.value = res.docs.map((doc) => GiftModel.fromMap(doc.data())).toList();
+}
+
+Future<void> getLastGift() async {
+  var res = await giftCol.orderBy('id', descending: true).limit(1).get();
+  gift.value = res.docs.map((doc) => GiftModel.fromMap(doc.data())).toList();
+}
+
+Future<void> insertGift(GiftModel gif) async {
+  try {
+    await giftCol.doc('${gif.id}').set(gif.toMap());
+  } catch (e) {
+    debugPrint('Failed to add insert gift: $e');
+  }
+}
+
+Future<void> getAllKoi() async {
+  var res = await koiCol.orderBy('id', descending: true).get();
+  koi.value = res.docs.map((doc) => KoiModel.fromMap(doc.data())).toList();
+}
+
+Future<void> getByDateKoi(String year, String month) async {
+  var res = await koiCol
+      .where('year', isEqualTo: year)
+      .where('month', isEqualTo: month)
+      .get();
+  koi.value = res.docs.map((doc) => KoiModel.fromMap(doc.data())).toList();
+}
+
+Future<void> getLastKoi() async {
+  var res = await koiCol.orderBy('id', descending: true).limit(1).get();
+  koi.value = res.docs.map((doc) => KoiModel.fromMap(doc.data())).toList();
+}
+
+Future<void> insertKoi(KoiModel koi) async {
+  try {
+    await koiCol.doc('${koi.id}').set(koi.toMap());
+  } catch (e) {
+    debugPrint('Failed to add insert Kol: $e');
   }
 }
 

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:motor/constants/constants.dart';
+import 'package:motor/constants/firebase.dart';
 import 'package:motor/constants/responsive.dart';
 import 'package:motor/controllers/gift_controller.dart';
 import 'package:motor/controllers/main_controller.dart';
@@ -12,7 +13,6 @@ import 'package:motor/screens/components/row_text_field.dart';
 import 'package:motor/screens/components/under_line.dart';
 import 'package:motor/screens/widgets/app_text.dart';
 import 'package:motor/screens/widgets/data_table_widget.dart';
-import 'package:motor/screens/widgets/loading_widget.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 class GiftScreen extends StatelessWidget {
@@ -41,8 +41,17 @@ class GiftScreen extends StatelessWidget {
                 txt: 'Select Month',
                 value: con.selectedMonth,
                 list: con.monthList,
-                onChanged: (v) {
-                  if (v != null) con.selectedMonth.value = v;
+                onChanged: (v) async {
+                  if (v != null) {
+                    con.selectedMonth.value = v;
+                    con.filteredGift.clear();
+                    await getByDateGift(
+                      con.selectedMonth.value!.split('-')[0],
+                      con.selectedMonth.value!.split('-')[1],
+                    );
+                    con.filteredGift.value = gift;
+                    con.search.value.addListener(con.filterGiftData);
+                  }
                 },
               ),
               widget2: AppTextField(
@@ -56,8 +65,12 @@ class GiftScreen extends StatelessWidget {
               ),
             ),
             spacer(context),
-            Padding(
-              padding: EdgeInsets.all(defWebPad.px),
+            spacer(context),
+            Container(
+              padding: EdgeInsets.only(
+                left: defWebPad.px / 2,
+                right: defWebPad.px,
+              ),
               child: TextField(
                 controller: con.search.value,
                 decoration: const InputDecoration(
@@ -70,13 +83,13 @@ class GiftScreen extends StatelessWidget {
             ),
             spacer(context),
             Obx(
-              () => con.filteredUsers.isNotEmpty
+              () => con.filteredGift.isNotEmpty
                   ? AppDataTable(
                       column: [
                         DataTableWidget.column(context, 'ID'),
-                        DataTableWidget.column(context, 'Title'),
+                        DataTableWidget.column(context, 'Date'),
+                        DataTableWidget.column(context, 'Item'),
                         DataTableWidget.column(context, 'Amount'),
-                        DataTableWidget.column(context, 'Action'),
                       ],
                       source: GiftDataSource(),
                     )
@@ -117,41 +130,22 @@ class GiftDataSource extends DataTableSource {
   @override
   DataRow? getRow(int index) {
     assert(index >= 0);
-    if (index >= con.filteredUsers.length) return null;
-    var data = con.filteredUsers[index];
+    if (index >= con.filteredGift.length) return null;
+    var data = con.filteredGift[index];
+
     return DataRow.byIndex(
       index: index,
       cells: [
         DataTableWidget.cell(Get.context!, '${data.id}'),
-        DataTableWidget.cell(Get.context!, 'data.name'),
-        DataTableWidget.cell(Get.context!, 'data.dateCreate'),
-        DataTableWidget.cellBtn(
-          Get.context!,
-          edit: () async {
-            startInactivityTimer();
-          },
-          delete: () {
-            startInactivityTimer();
-            LoadingWidget.showTextDialog(
-              Get.context!,
-              title: 'Warning',
-              content: 'Are you sure to delete?',
-              color: redColor,
-              txtBack: 'Cancel',
-              btnColor: secondGreyColor,
-              widget: TextButton(
-                onPressed: () async {},
-                child: AppText.title(Get.context!, txt: 'Confirm'),
-              ),
-            );
-          },
-        ),
+        DataTableWidget.cell(Get.context!, '${data.year}-${data.month}'),
+        DataTableWidget.cell(Get.context!, data.item),
+        DataTableWidget.cell(Get.context!, data.amount),
       ],
     );
   }
 
   @override
-  int get rowCount => con.filteredUsers.length;
+  int get rowCount => con.filteredGift.length;
 
   @override
   bool get isRowCountApproximate => false;

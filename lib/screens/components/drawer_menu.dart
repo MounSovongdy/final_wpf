@@ -5,14 +5,18 @@ import 'package:motor/constants/firebase.dart';
 import 'package:motor/constants/responsive.dart';
 import 'package:motor/controllers/add_stock_controller.dart';
 import 'package:motor/controllers/address_controller.dart';
+import 'package:motor/controllers/advertising_controller.dart';
 import 'package:motor/controllers/booking_controller.dart';
 import 'package:motor/controllers/cash_controller.dart';
 import 'package:motor/controllers/commission_controller.dart';
+import 'package:motor/controllers/gift_controller.dart';
+import 'package:motor/controllers/koi_controller.dart';
 import 'package:motor/controllers/leasing_controller.dart';
 import 'package:motor/controllers/main_controller.dart';
 import 'package:motor/controllers/micro_controller.dart';
 import 'package:motor/controllers/product_controller.dart';
 import 'package:motor/controllers/receivable_controller.dart';
+import 'package:motor/controllers/rental_controller.dart';
 import 'package:motor/controllers/salesman_controller.dart';
 import 'package:motor/controllers/staff_controller.dart';
 import 'package:motor/controllers/teacher_bonus_controller.dart';
@@ -44,6 +48,10 @@ class DrawerMenu extends StatelessWidget {
   final conStaff = Get.put(StaffController());
   final conFri = Get.put(CommissionController());
   final conTeacher = Get.put(MicroExpenseController());
+  final conAdv = Get.put(AdvertisingController());
+  final conRental = Get.put(RentalController());
+  final conGift = Get.put(GiftController());
+  final conKoi = Get.put(KoiController());
 
   @override
   Widget build(BuildContext context) {
@@ -268,9 +276,32 @@ class DrawerMenu extends StatelessWidget {
                     Container(
                       padding: EdgeInsets.only(left: 36.px),
                       child: DrawerListTile(
-                        tap: () {
+                        tap: () async {
                           if (Responsive.isMobile(context)) con.controlDrawer();
                           startInactivityTimer();
+                          LoadingWidget.dialogLoading(
+                            duration: 5,
+                            isBack: false,
+                          );
+                          await getAllAdvertise();
+                          conAdv.monthList.clear();
+                          if (advertise.isNotEmpty) {
+                            for (var data in advertise) {
+                              conAdv.monthList
+                                  .add('${data.year}-${data.month}');
+                            }
+                            conAdv.monthList.value =
+                                conAdv.monthList.toSet().toList();
+                            conAdv.selectedMonth.value = conAdv.monthList[0];
+                            conAdv.filteredAdv.clear();
+                            await getByDateAdvertise(
+                              conAdv.selectedMonth.value!.split('-')[0],
+                              conAdv.selectedMonth.value!.split('-')[1],
+                            );
+                          }
+                          conAdv.filteredAdv.value = advertise;
+                          conAdv.search.value.addListener(conAdv.filterAdvData);
+                          Get.back();
 
                           con.index.value = 33;
                         },
@@ -281,9 +312,32 @@ class DrawerMenu extends StatelessWidget {
                     Container(
                       padding: EdgeInsets.only(left: 36.px),
                       child: DrawerListTile(
-                        tap: () {
+                        tap: () async {
                           if (Responsive.isMobile(context)) con.controlDrawer();
                           startInactivityTimer();
+                          LoadingWidget.dialogLoading(
+                            duration: 5,
+                            isBack: false,
+                          );
+                          await getAllKoi();
+                          conKoi.monthList.clear();
+                          if (koi.isNotEmpty) {
+                            for (var data in koi) {
+                              conKoi.monthList
+                                  .add('${data.year}-${data.month}');
+                            }
+                            conKoi.monthList.value =
+                                conKoi.monthList.toSet().toList();
+                            conKoi.selectedMonth.value = conKoi.monthList[0];
+                            conKoi.filteredKoi.clear();
+                            await getByDateKoi(
+                              conKoi.selectedMonth.value!.split('-')[0],
+                              conKoi.selectedMonth.value!.split('-')[1],
+                            );
+                          }
+                          conKoi.filteredKoi.value = koi;
+                          conKoi.search.value.addListener(conKoi.filterKoiData);
+                          Get.back();
 
                           con.index.value = 35;
                         },
@@ -294,9 +348,33 @@ class DrawerMenu extends StatelessWidget {
                     Container(
                       padding: EdgeInsets.only(left: 36.px),
                       child: DrawerListTile(
-                        tap: () {
+                        tap: () async {
                           if (Responsive.isMobile(context)) con.controlDrawer();
                           startInactivityTimer();
+                          LoadingWidget.dialogLoading(
+                            duration: 5,
+                            isBack: false,
+                          );
+                          await getAllGift();
+                          conGift.monthList.clear();
+                          if (gift.isNotEmpty) {
+                            for (var data in gift) {
+                              conGift.monthList
+                                  .add('${data.year}-${data.month}');
+                            }
+                            conGift.monthList.value =
+                                conGift.monthList.toSet().toList();
+                            conGift.selectedMonth.value = conGift.monthList[0];
+                            conGift.filteredGift.clear();
+                            await getByDateGift(
+                              conGift.selectedMonth.value!.split('-')[0],
+                              conGift.selectedMonth.value!.split('-')[1],
+                            );
+                          }
+                          conGift.filteredGift.value = gift;
+                          conGift.search.value
+                              .addListener(conGift.filterGiftData);
+                          Get.back();
 
                           con.index.value = 37;
                         },
@@ -334,6 +412,7 @@ class DrawerMenu extends StatelessWidget {
                           conFri.search.value
                               .addListener(conFri.filterCommissionData);
                           Get.back();
+
                           con.index.value = 39;
                         },
                         title: 'Commission',
@@ -343,9 +422,34 @@ class DrawerMenu extends StatelessWidget {
                     Container(
                       padding: EdgeInsets.only(left: 36.px),
                       child: DrawerListTile(
-                        tap: () {
+                        tap: () async {
                           if (Responsive.isMobile(context)) con.controlDrawer();
                           startInactivityTimer();
+                          LoadingWidget.dialogLoading(
+                            duration: 5,
+                            isBack: false,
+                          );
+                          await getAllRental();
+                          conRental.monthList.clear();
+                          if (rental.isNotEmpty) {
+                            for (var data in rental) {
+                              conRental.monthList
+                                  .add('${data.year}-${data.month}');
+                            }
+                            conRental.monthList.value =
+                                conRental.monthList.toSet().toList();
+                            conRental.selectedMonth.value =
+                                conRental.monthList[0];
+                            conRental.filteredRental.clear();
+                            await getByDateRental(
+                              conRental.selectedMonth.value!.split('-')[0],
+                              conRental.selectedMonth.value!.split('-')[1],
+                            );
+                          }
+                          conRental.filteredRental.value = rental;
+                          conRental.search.value
+                              .addListener(conRental.filterRentalData);
+                          Get.back();
 
                           con.index.value = 41;
                         },
@@ -430,6 +534,7 @@ class DrawerMenu extends StatelessWidget {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              spacer(context),
               DrawerListTile(
                 tap: () {
                   if (!GetPlatform.isWeb) {
