@@ -16,6 +16,7 @@ import 'package:motor/screens/leasing_screen.dart';
 import 'package:motor/screens/new_advertising_screen.dart';
 import 'package:motor/screens/new_koi_screen.dart';
 import 'package:motor/screens/new_staff_screen.dart';
+import 'package:motor/screens/reset_password_screen.dart';
 import 'package:motor/screens/teacher_bonus_screen.dart';
 import 'package:motor/screens/new_booking_screen.dart';
 import 'package:motor/screens/new_cash_screen.dart';
@@ -160,6 +161,8 @@ class MainScreen extends StatelessWidget {
             return RentalScreen();
           case 42:
             return NewRentalScreen();
+          case 45:
+            return ResetPasswordScreen();
           default:
             return DashboardScreen();
         }

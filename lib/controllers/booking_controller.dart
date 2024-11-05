@@ -58,7 +58,7 @@ class BookingController extends GetxController {
     con.power.value.text = byBooking[0].power;
     con.sell.value.text = byBooking[0].price;
     con.discount.value.text = byBooking[0].discount;
-    con.depo.value.text = byBooking[0].deposit;
+    con.deposit.value.text = byBooking[0].deposit;
     con.remain.value.text = byBooking[0].remain;
     con.nameIntro.value.text = byBooking[0].comeByName;
     con.phoneIntro.value.text = byBooking[0].comeByTel;

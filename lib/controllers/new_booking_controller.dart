@@ -46,7 +46,7 @@ class NewBookingController extends GetxController {
   var power = TextEditingController().obs;
   var sell = TextEditingController().obs;
   var discount = TextEditingController().obs;
-  var depo = TextEditingController().obs;
+  var deposit = TextEditingController().obs;
   var remain = TextEditingController().obs;
   var nameIntro = TextEditingController().obs;
   var phoneIntro = TextEditingController().obs;
@@ -73,7 +73,7 @@ class NewBookingController extends GetxController {
         year.value.text.length == 4 &&
         sell.value.text != '' &&
         discount.value.text != '' &&
-        depo.value.text != '' &&
+        deposit.value.text != '' &&
         newRemain >= 0) {
       await getLastBooking();
       var id = DateFormat('yyMMddkkmmss').format(DateTime.now());
@@ -101,7 +101,7 @@ class NewBookingController extends GetxController {
         condition: condition.value ?? '',
         price: sell.value.text,
         discount: discount.value.text,
-        deposit: depo.value.text,
+        deposit: deposit.value.text,
         remain: remain.value.text,
         comeBy: comeBy.value ?? '',
         comeByName: nameIntro.value.text,
@@ -169,7 +169,7 @@ class NewBookingController extends GetxController {
         year.value.text.length == 4 &&
         sell.value.text != '' &&
         discount.value.text != '' &&
-        depo.value.text != '' &&
+        deposit.value.text != '' &&
         newRemain >= 0) {
       BookingModel newBook = BookingModel(
         bookingDate: date.value.text,
@@ -189,7 +189,7 @@ class NewBookingController extends GetxController {
         condition: condition.value ?? '',
         price: sell.value.text,
         discount: discount.value.text,
-        deposit: depo.value.text,
+        deposit: deposit.value.text,
         remain: remain.value.text,
         comeBy: comeBy.value ?? '',
         comeByName: nameIntro.value.text,
@@ -241,10 +241,10 @@ class NewBookingController extends GetxController {
   void calculateRemain() {
     if (sell.value.text != '' &&
         discount.value.text != '' &&
-        depo.value.text != '') {
+        deposit.value.text != '') {
       var p = int.parse(sell.value.text);
       var di = int.parse(discount.value.text);
-      var de = int.parse(depo.value.text);
+      var de = int.parse(deposit.value.text);
       var re = p - (di + de);
       remain.value.text = '$re';
     } else {
@@ -271,7 +271,7 @@ class NewBookingController extends GetxController {
     power.value.clear();
     sell.value.clear();
     discount.value.clear();
-    depo.value.clear();
+    deposit.value.clear();
     remain.value.clear();
     nameIntro.value.clear();
     phoneIntro.value.clear();

@@ -493,6 +493,28 @@ class DrawerMenu extends StatelessWidget {
                     ),
                   ],
                 ),
+                DrawerExpansionTile(
+                  title: 'Setting',
+                  svgSrc: 'assets/icons/Management.svg',
+                  children: [
+                    Container(
+                      padding: EdgeInsets.only(left: 36.px),
+                      child: DrawerListTile(
+                        tap: () async {
+                          if (Responsive.isMobile(context)) con.controlDrawer();
+                          startInactivityTimer();
+                          await getAllSaleMan();
+                          conSM.filteredSale.value = saleMan;
+                          conSM.search.value.addListener(conSM.filterSaleData);
+
+                          con.index.value = 45;
+                        },
+                        title: 'Reset Password',
+                        svgSrc: 'assets/icons/CreateSalesman.svg',
+                      ),
+                    ),
+                  ],
+                ),
               ],
             ),
           ),

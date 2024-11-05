@@ -198,7 +198,7 @@ class NewBookingScreen extends StatelessWidget {
               ),
               widget3: AppTextField(
                 txt: 'Deposit',
-                con: con.depo.value,
+                con: con.deposit.value,
                 isNumber: true,
                 digit: 5,
                 onChanged: (v) => con.calculateRemain(),
