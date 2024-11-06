@@ -117,7 +117,7 @@ class ReceivableDataSource extends DataTableSource {
           btnViewPayment: true,
           edit: () => debugPrint('Edit $index'),
           delete: () => debugPrint('Delete $index'),
-          print: () => printPaymentTable(),
+          print: () => printPaymentTable(data.id),
           addPayment: () async {
             byPaymentTable.clear();
             con.scheduleList.clear();

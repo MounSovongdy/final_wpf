@@ -91,6 +91,7 @@ var byCash = [].obs;
 var cash = [].obs;
 var byReceivable = [].obs;
 var receivable = [].obs;
+var schedule = [].obs;
 var byPaymentTable = [].obs;
 var paymentTable = [].obs;
 var byResetPassword = [].obs;
@@ -684,6 +685,21 @@ Future<void> getByLeasing(int id) async {
   var res = await leasingCol.where('id', isEqualTo: id).get();
   byLeasing.value =
       res.docs.map((doc) => LeasingModel.fromMap(doc.data())).toList();
+}
+
+Future<void> getByReceivable(int id) async {
+  var res = await receivableCol.where('id', isEqualTo: id).get();
+  byReceivable.value =
+      res.docs.map((doc) => ReceivableModel.fromMap(doc.data())).toList();
+}
+
+Future<void> getByPaymentSchedule(int id) async {
+  var res = await paymentTableCol
+      .where('id', isEqualTo: id)
+      .where('type', isEqualTo: 'Table')
+      .get();
+  schedule.value =
+      res.docs.map((doc) => PaymentTableModel.fromMap(doc.data())).toList();
 }
 
 Future<void> insertLeasing(

@@ -4,7 +4,31 @@ import 'dart:html' as html;
 // ignore: avoid_web_libraries_in_flutter
 import 'dart:js' as js;
 
-Future<String> generateHtmlContent() async {
+import 'package:motor/constants/firebase.dart';
+
+Future<String> generateHtmlContent({
+  required payment,
+  required String leasingYear,
+  required String leasingMonth,
+  required String leasingDay,
+  required String fullName,
+  required String gender,
+  required String age,
+  required String idCard,
+  required String tel1,
+  required String tel2,
+  required String tel3,
+  required String address,
+  required String model,
+  required String year,
+  required String frameNo,
+  required String engineeNo,
+  required String plateNo,
+  required String price,
+  required String approve,
+  required String deposit,
+  required String totalOwn,
+}) async {
   return '''
   <div id="pdfPaymentTable">
     <html>
@@ -186,67 +210,65 @@ Future<String> generateHtmlContent() async {
                               </table>
                              <table width="100%">                                 
                                 <tr>                               
-                                  <td style="font-size:15px; font-family:Khmer OS Battambang; ">អតិថិជនឈ្មោះ                 </td>
-                                  <td style="font-size:15px; font-family:Khmer OS Battambang;">ភេទ                 </td>
-                                  <td style="font-size:15px; font-family:Khmer OS Battambang;">អាយុ                 </td>
-                                  <td style="font-size:15px; font-family:Khmer OS Battambang;">លេខអត្តសញ្ញាណប័ណ្ណ              </td>
+                                  <td style="font-size:15px; font-family:Khmer OS Battambang; ">អតិថិជនឈ្មោះ $fullName                </td>
+                                  <td style="font-size:15px; font-family:Khmer OS Battambang;">ភេទ         $gender        </td>
+                                  <td style="font-size:15px; font-family:Khmer OS Battambang;">អាយុ             $age    </td>
+                                  <td style="font-size:15px; font-family:Khmer OS Battambang;">លេខអត្តសញ្ញាណប័ណ្ណ       $idCard       </td>
                                 </tr>                                
                               </table>
                              <table width="100%" style="border-spacing: 0;border:1px solid;">                                 
                                 <tr>                               
                                   <td style="width: 25%; font-size:15px; font-family:Khmer OS Battambang;border-bottom:1px solid;border-right:1px solid; text-align:center">លេខទូរសព្ទ3ខ្សែ                 </td>
-                                  <td style="width: 25%; font-size:15px; font-family:Khmer OS Battambang;border-bottom:1px solid;border-right:1px solid;">      dd           </td>
-                                  <td style="width: 25%; font-size:15px; font-family:Khmer OS Battambang;border-bottom:1px solid;border-right:1px solid;">             dd    </td>
-                                  <td style="width: 25%; font-size:15px; font-family:Khmer OS Battambang;border-bottom:1px solid; ">       dd       </td>
+                                  <td style="width: 25%; font-size:15px; font-family:Khmer OS Battambang;border-bottom:1px solid;border-right:1px solid;">      $tel1           </td>
+                                  <td style="width: 25%; font-size:15px; font-family:Khmer OS Battambang;border-bottom:1px solid;border-right:1px solid;">             $tel2    </td>
+                                  <td style="width: 25%; font-size:15px; font-family:Khmer OS Battambang;border-bottom:1px solid; ">       $tel3       </td>
                                 </tr>     
                                 <tr>                               
                                   <td style="font-size:15px; font-family:Khmer OS Battambang;text-align:center;border-right:1px solid;">ឈ្មោះ                 </td>
-                                  <td style="width: 25%; font-size:15px; font-family:Khmer OS Battambang;border-right:1px solid;">      dd           </td>
-                                  <td style="width: 25%; font-size:15px; font-family:Khmer OS Battambang;border-right:1px solid;">             dd    </td>
-                                  <td style="width: 25%; font-size:15px; font-family:Khmer OS Battambang;" >       dd       </td>
+                                  <td style="width: 25%; font-size:15px; font-family:Khmer OS Battambang;border-right:1px solid;">                 </td>
+                                  <td style="width: 25%; font-size:15px; font-family:Khmer OS Battambang;border-right:1px solid;">                 </td>
+                                  <td style="width: 25%; font-size:15px; font-family:Khmer OS Battambang;" >              </td>
                                 </tr>                            
                               </table>
                               <table width="100%" style="font-size:15px; font-family:Khmer OS Battambang;">                                 
                                 <tr>                               
-                                  <td>អាសយដ្ឋាន</td>
+                                  <td>អាសយដ្ឋាន $address</td>
                                 </tr>       
                                 <tr>                               
-                                  <td >បានបង់រំលស់ម៉ូតូមួយគ្រឿងម៉ាក</td>
-                                  <td>ឆ្នាំផលិត</td>
+                                  <td >បានបង់រំលស់ម៉ូតូមួយគ្រឿងម៉ាក $model</td>
+                                  <td>ឆ្នាំផលិត $year</td>
                                 </tr>     
                                  <tr>                               
-                                  <td >លេខតួ</td>
-                                  <td>លេខម៉ាស៊ីន</td>
-                                  <td>ពន្ធ/ស្លាកលេខ</td>
+                                  <td >លេខតួ $frameNo</td>
+                                  <td>លេខម៉ាស៊ីន $engineeNo</td>
+                                  <td>ពន្ធ/ស្លាកលេខ $plateNo</td>
                                 </tr>  
                                  <tr>                               
-                                  <td >តម្លៃម៉ូតូ</td>
-                                  <td>ចំនួនទឹកប្រាក់អនុម័ត</td>
-                                  <td>ចំនួនលុយចូលរួម</td>
-                                  <td>ដូចនេះនៅខ្វះ</td>
+                                  <td >តម្លៃម៉ូតូ $price</td>
+                                  <td>ចំនួនទឹកប្រាក់អនុម័ត $approve</td>
+                                  <td>ចំនួនលុយចូលរួម $deposit</td>
+                                  <td>ដូចនេះនៅខ្វះ $totalOwn</td>
                                 </tr>                       
                               </table>
                               <div style="font-size:15px; font-family:Khmer OS Battambang;">ចំនួនលុយដែលនៅខ្វះត្រូវបង់រំសល់ជាមួយហាងម៉ូតូ ហេខ សុខបញ្ញាតាមតារាងបង់ប្រាក់ខាងក្រោម៖</div><br>
-                            <table width="100%" style="font-size:15px; font-family:Khmer OS Battambang;border:1px solid">  
-                               <tr>
-                               <td>ល.រ</td>
-                               <td>កាលបរិច្ឆេទបង់លុយ</td>
-                               <td>ចំនួនលុយត្រូវបង់</td>
-                               <td>កំណត់សំគាល់</td>
-                               </tr>
-
-                            
-                           
-
-
+                              <table width="100%" style="font-size:15px; font-family:Khmer OS Battambang;border:1px solid">  
+                                <thead>
+                                  <tr>
+                                      <th>ល.រ</th>
+                                      <th>កាលបរិច្ឆេទបង់លុយ</th>
+                                      <th>ចំនួនលុយត្រូវបង់</th>
+                                      <th>កំណត់សំគាល់</th>
+                                  </tr> 
+                                </thead>
                               </table>
+
                               <div><img src="http://moto.cpos.cc/payment.png" alt="" width="100%"></div><br>
                                 <div style="font-size:15px; font-family:Khmer OS Battambang;">ក្នុងករណីបង់យឺត អតិថិជនយល់ព្រមបង់ប្រាក់ពិន័យក្នុងថ្ងៃចំនួន</div>
                                  <div style="font-size:15px; font-family:Khmer OS Battambang;">អតិថិជនបានអាន និងស្តាប់ហើយព្រមព្រៀងបង់តាមពេលវេលាដែលបានកំណត់ដូចខាងលើ។</div>
-                                 <div style="font-size:15px; font-family:Khmer OS Battambang;text-align:right">ធ្វើនៅ រាជធានីភ្នំពេញ ថ្ងៃទី ខែ ឆ្នាំ </div>
+                                 <div style="font-size:15px; font-family:Khmer OS Battambang;text-align:right">ធ្វើនៅ រាជធានីភ្នំពេញ ថ្ងៃទី $leasingDay ខែ $leasingMonth ឆ្នាំ $leasingYear </div>
                                   <table width="100%">
                                   <tr>
-                                  <td width="50%">  <div style="font-size:15px; font-family:Khmer OS Battambang;">ឈ្មោះអតិថិជន </div></td>
+                                  <td width="50%">  <div style="font-size:15px; font-family:Khmer OS Battambang;">ឈ្មោះអតិថិជន $fullName</div></td>
                                     <td>  <div style="font-size:15px; font-family:Khmer OS Battambang;">ត្រាហាងម៉ូតូ </div></td>
                                   </tr>
                                   </table>
@@ -263,8 +285,34 @@ Future<String> generateHtmlContent() async {
   ''';
 }
 
-void printPaymentTable() async {
-  final htmlContent = await generateHtmlContent();
+void printPaymentTable(int id) async {
+  await getByLeasing(id);
+  await getByReceivable(id);
+  await getByPaymentSchedule(id);
+
+  final htmlContent = await generateHtmlContent(
+    payment: schedule,
+    leasingYear: byLeasing[0].leasingDate.split(' ')[0].split('-')[0],
+    leasingMonth: byLeasing[0].leasingDate.split(' ')[0].split('-')[1],
+    leasingDay: byLeasing[0].leasingDate.split(' ')[0].split('-')[2],
+    fullName: byLeasing[0].name,
+    gender: byLeasing[0].gender,
+    age: byLeasing[0].age,
+    idCard: byLeasing[0].idCard,
+    tel1: byReceivable[0].tel1,
+    tel2: byReceivable[0].tel2,
+    tel3: byReceivable[0].tel3,
+    address: byLeasing[0].address,
+    model: byLeasing[0].model,
+    year: byLeasing[0].year,
+    frameNo: byLeasing[0].frameNo,
+    engineeNo: byLeasing[0].engineNo,
+    plateNo: byLeasing[0].plateNo,
+    price: byLeasing[0].price,
+    approve: byLeasing[0].approveAmount,
+    deposit: byLeasing[0].deposit,
+    totalOwn: byLeasing[0].totalDebt,
+  );
 
   final div = html.DivElement()
     ..setInnerHtml(htmlContent, treeSanitizer: html.NodeTreeSanitizer.trusted);
