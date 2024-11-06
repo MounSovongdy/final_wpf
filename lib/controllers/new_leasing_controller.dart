@@ -528,11 +528,14 @@ class NewLeasingController extends GetxController {
     if (sell.value.text != '' &&
         discount.value.text != '' &&
         deposit.value.text != '') {
-      var p = int.parse(sell.value.text);
-      var di = int.parse(discount.value.text);
-      var de = int.parse(deposit.value.text);
+      var p = num.parse(sell.value.text);
+      var di = num.parse(discount.value.text);
+      var de = num.parse(deposit.value.text);
       var re = p - (di + de);
-      remain.value.text = '$re';
+      var newRe = num.parse('$re').toString();
+      remain.value.text = newRe.contains('.')
+          ? num.parse(newRe).toStringAsFixed(2)
+          : num.parse(newRe).toString();
     } else {
       remain.value.text = '';
     }
@@ -540,14 +543,17 @@ class NewLeasingController extends GetxController {
 
   void calculateTotalDebt() {
     if (remain.value.text != '' && approve.value.text != '') {
-      var re = int.parse(remain.value.text);
-      var app = int.parse(approve.value.text);
+      var re = num.parse(remain.value.text);
+      var app = num.parse(approve.value.text);
       var totDebt = re - app;
-      totalOwn.value.text = '$totDebt';
+      var newTot = num.parse('$totDebt').toString();
+      totalOwn.value.text = newTot.contains('.')
+          ? num.parse(newTot).toStringAsFixed(2)
+          : num.parse(newTot).toString();
 
       if (totalOwn.value.text != '') {
-        if (int.parse(totalOwn.value.text) > 0 ||
-            int.parse(totalOwn.value.text) < 0) {
+        if (num.parse(totalOwn.value.text) > 0 ||
+            num.parse(totalOwn.value.text) < 0) {
           isReceivable.value = true;
         } else {
           isReceivable.value = false;
@@ -562,10 +568,13 @@ class NewLeasingController extends GetxController {
 
   void calculateTotal() {
     if (totalOwn.value.text != '' && interest.value.text != '') {
-      var own = int.parse(totalOwn.value.text);
-      var inter = (own * int.parse(interest.value.text)) / 100;
-      var tot = own + inter;
-      total.value.text = '$tot';
+      var own = num.parse(totalOwn.value.text);
+      var inter = num.parse(interest.value.text);
+      var tot = own + ((own * inter) / 100);
+      var newTot = num.parse(tot.toStringAsFixed(2)).toString();
+      total.value.text = newTot.contains('.')
+          ? num.parse(newTot).toStringAsFixed(2)
+          : num.parse(newTot).toString();
     } else {
       total.value.text = '';
     }

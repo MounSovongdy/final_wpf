@@ -242,11 +242,14 @@ class NewBookingController extends GetxController {
     if (sell.value.text != '' &&
         discount.value.text != '' &&
         deposit.value.text != '') {
-      var p = int.parse(sell.value.text);
-      var di = int.parse(discount.value.text);
-      var de = int.parse(deposit.value.text);
+      var p = num.parse(sell.value.text);
+      var di = num.parse(discount.value.text);
+      var de = num.parse(deposit.value.text);
       var re = p - (di + de);
-      remain.value.text = '$re';
+      var newRe = num.parse('$re').toString();
+      remain.value.text = newRe.contains('.')
+          ? num.parse(newRe).toStringAsFixed(2)
+          : num.parse(newRe).toString();
     } else {
       remain.value.text = '';
     }

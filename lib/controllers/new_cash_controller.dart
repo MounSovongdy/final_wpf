@@ -195,10 +195,13 @@ class NewCashController extends GetxController {
 
   void calculateRemain() {
     if (sell.value.text != '' && discount.value.text != '') {
-      var p = int.parse(sell.value.text);
-      var di = int.parse(discount.value.text);
+      var p = num.parse(sell.value.text);
+      var di = num.parse(discount.value.text);
       var re = p - di;
-      totalPrice.value.text = '$re';
+      var newRe = num.parse('$re').toString();
+      totalPrice.value.text = newRe.contains('.')
+          ? num.parse(newRe).toStringAsFixed(2)
+          : num.parse(newRe).toString();
     } else {
       totalPrice.value.text = '';
     }

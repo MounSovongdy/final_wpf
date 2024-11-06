@@ -242,7 +242,7 @@ class NewLeasingScreen extends StatelessWidget {
                 txt: 'Sell Price',
                 con: con.sell.value,
                 isNumber: true,
-                digit: 5,
+                digit: 10,
                 onChanged: (v) {
                   con.calculateRemain();
                   con.calculateTotalDebt();
@@ -252,7 +252,7 @@ class NewLeasingScreen extends StatelessWidget {
                 txt: 'Discount',
                 con: con.discount.value,
                 isNumber: true,
-                digit: 5,
+                digit: 10,
                 onChanged: (v) {
                   con.calculateRemain();
                   con.calculateTotalDebt();
@@ -262,7 +262,7 @@ class NewLeasingScreen extends StatelessWidget {
                 txt: 'Deposit',
                 con: con.deposit.value,
                 isNumber: true,
-                digit: 5,
+                digit: 10,
                 onChanged: (v) {
                   con.calculateRemain();
                   con.calculateTotalDebt();
@@ -284,7 +284,7 @@ class NewLeasingScreen extends StatelessWidget {
                 txt: 'Approved',
                 con: con.approve.value,
                 isNumber: true,
-                digit: 5,
+                digit: 10,
                 onChanged: (v) {
                   con.calculateRemain();
                   con.calculateTotalDebt();
@@ -395,7 +395,7 @@ class NewLeasingScreen extends StatelessWidget {
                         txt: 'Interest %',
                         con: con.interest.value,
                         isNumber: true,
-                        digit: 2,
+                        digit: 5,
                         onChanged: (v) => con.calculateTotal(),
                       ),
                     )
