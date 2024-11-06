@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:motor/constants/constants.dart';
+import 'package:motor/constants/firebase.dart';
 import 'package:motor/constants/responsive.dart';
 import 'package:motor/controllers/reset_password_controller.dart';
 import 'package:motor/screens/components/app_button.dart';
@@ -45,12 +46,14 @@ class ResetPasswordScreen extends StatelessWidget {
                 onChanged: (v) {
                   if (v != null) {
                     con.fullName.value = v;
+                    for (var data in user)
+                      if (v == data.name) con.loginName.value.text = data.user;
                   }
                 },
               ),
               widget3: AppTextField(
                 txt: 'Username',
-                con: con.name.value,
+                con: con.loginName.value,
                 readOnly: true,
               ),
             ),
@@ -67,6 +70,7 @@ class ResetPasswordScreen extends StatelessWidget {
                   width: Responsive.isDesktop(context) ? 150.px : 100.px,
                   tap: () {
                     startInactivityTimer();
+                    con.resetPassword(context);
                   },
                 ),
               ],

@@ -17,6 +17,7 @@ import 'package:motor/controllers/micro_controller.dart';
 import 'package:motor/controllers/product_controller.dart';
 import 'package:motor/controllers/receivable_controller.dart';
 import 'package:motor/controllers/rental_controller.dart';
+import 'package:motor/controllers/reset_password_controller.dart';
 import 'package:motor/controllers/salesman_controller.dart';
 import 'package:motor/controllers/staff_controller.dart';
 import 'package:motor/controllers/teacher_bonus_controller.dart';
@@ -51,6 +52,7 @@ class DrawerMenu extends StatelessWidget {
   final conRental = Get.put(RentalController());
   final conGift = Get.put(GiftController());
   final conKoi = Get.put(KoiController());
+  final conReset = Get.put(ResetPasswordController());
 
   @override
   Widget build(BuildContext context) {
@@ -503,9 +505,11 @@ class DrawerMenu extends StatelessWidget {
                         tap: () async {
                           if (Responsive.isMobile(context)) con.controlDrawer();
                           startInactivityTimer();
-                          await getAllSaleMan();
-                          conSM.filteredSale.value = saleMan;
-                          conSM.search.value.addListener(conSM.filterSaleData);
+                          conReset.clearText();
+                          await getAllUser();
+                          conReset.fullNameList.clear();
+                          for (var data in user)
+                            conReset.fullNameList.add(data.name);
 
                           con.index.value = 45;
                         },

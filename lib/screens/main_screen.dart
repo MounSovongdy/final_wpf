@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:motor/constants/constants.dart';
+import 'package:motor/constants/firebase.dart';
 import 'package:motor/constants/responsive.dart';
 import 'package:motor/controllers/main_controller.dart';
 import 'package:motor/screens/add_stock_screen.dart';
@@ -54,7 +55,7 @@ class MainScreen extends StatelessWidget {
     var appBar = CustomAppBar.defAppBar(
       context,
       tap: con.controlMenu,
-      txt: "byUser[0].name",
+      txt: userName.value,
     );
 
     var drawer = Drawer(child: DrawerMenu());

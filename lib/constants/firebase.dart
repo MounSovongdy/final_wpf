@@ -20,6 +20,7 @@ import 'package:motor/models/payment_table_model.dart';
 import 'package:motor/models/product_model.dart';
 import 'package:motor/models/receivable_model.dart';
 import 'package:motor/models/rental_model.dart';
+import 'package:motor/models/reset_password_model.dart';
 import 'package:motor/models/sale_man_commission_model.dart';
 import 'package:motor/models/sale_man_model.dart';
 import 'package:motor/models/total_stock_model.dart';
@@ -50,8 +51,11 @@ final advertisingCol = _firebase.collection('advertising_test');
 final rentalCol = _firebase.collection('rental_test');
 final giftCol = _firebase.collection('gift_test');
 final koiCol = _firebase.collection('koi_test');
+final resetPasswordCol = _firebase.collection('reset_password');
 
 var currVersion = '1.0.0'.obs;
+var userLogin = ''.obs;
+var userName = ''.obs;
 var byUser = [].obs;
 var user = [].obs;
 var bySaleMan = [].obs;
@@ -89,6 +93,8 @@ var byReceivable = [].obs;
 var receivable = [].obs;
 var byPaymentTable = [].obs;
 var paymentTable = [].obs;
+var byResetPassword = [].obs;
+var resetPassword = [].obs;
 
 Future<void> getByUser(String userlogin) async {
   var res = await userCol.where('user', isEqualTo: userlogin).get();
@@ -145,6 +151,21 @@ Future<void> deleteUser(int id) async {
     await userCol.doc(docId).delete();
   } catch (e) {
     debugPrint('Failed to deleteUser: $e');
+  }
+}
+
+Future<void> getLastResetPassword() async {
+  var res =
+      await resetPasswordCol.orderBy('id', descending: true).limit(1).get();
+  byResetPassword.value =
+      res.docs.map((doc) => ResetPasswordModel.fromMap(doc.data())).toList();
+}
+
+Future<void> resetUserPasword(ResetPasswordModel reset) async {
+  try {
+    await resetPasswordCol.doc('${reset.id}').set(reset.toMap());
+  } catch (e) {
+    debugPrint('Failed to reset user password: $e');
   }
 }
 
@@ -695,7 +716,7 @@ Future<void> insertLeasing(
         .get();
 
     for (var doc in res.docs) docId = doc.id;
-    
+
     stockByModel.value =
         res.docs.map((doc) => TotalStockModel.fromMap(doc.data())).toList();
 

@@ -24,6 +24,8 @@ class LoginController extends GetxController {
             changePassword(Get.context!);
           } else {
             startInactivityTimer();
+            userLogin.value = byUser[0].user;
+            userName.value = byUser[0].name;
             pass.value.clear();
             Get.offAll(() => MainScreen());
           }
@@ -129,6 +131,8 @@ class LoginController extends GetxController {
                     startInactivityTimer();
                     pass.value.clear();
                     await updateUserPassword(email.value.text, conPass.text);
+                    userLogin.value = byUser[0].user;
+                    userName.value = byUser[0].name;
                     Get.offAll(() => MainScreen());
                   } else {
                     LoadingWidget.showTextDialog(
