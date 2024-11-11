@@ -60,7 +60,7 @@ class CommissionScreen extends StatelessWidget {
               ),
               widget3: AppButtonCalulation(
                 txt: 'Calulation',
-                tap: () {},
+                tap: () => con.calculateTotal(context),
               ),
             ),
             spacer(context),

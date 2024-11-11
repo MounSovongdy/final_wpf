@@ -1430,19 +1430,16 @@ Future<void> insertTotalExpenseRental({
 
     if (res1.docs.isNotEmpty) {
       num amount = 0;
-      for (var e in res1.docs) amount = amount + num.parse(e['amount']);
+      num oldTotal = 0;
 
+      for (var e in res1.docs) amount = amount + num.parse(e['amount']);
       if (res2.docs.isNotEmpty) {
-        num oldTotal = 0;
-        num oldAmount = 0;
-        for (var e in res2.docs) {
-          oldTotal = num.parse(e['total_expense']);
-          oldAmount = num.parse(e['rental']);
-        }
+        for (var e in res2.docs) oldTotal = num.parse(e['total_expense']);
+
         LoadingWidget.dialogLoading(duration: 3, isBack: false);
         await totalExpenseCol.doc('$year-$month').update({
           'rental': '$amount',
-          'total_expense': '${oldTotal - oldAmount + amount}',
+          'total_expense': '${oldTotal + amount}',
         });
         Get.back();
       } else {
@@ -1478,5 +1475,14 @@ Future<void> insertTotalExpenseRental({
     }
   } catch (e) {
     debugPrint('Failed to total expense rental: $e');
+  }
+}
+
+Future<void> insertTotalExpenseFriend({
+  required String year,
+  required String month,
+}) async {
+  try {} catch (e) {
+    debugPrint('Failed to total expense friend: $e');
   }
 }
