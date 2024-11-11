@@ -6,7 +6,22 @@ import 'dart:js' as js;
 
 import 'package:motor/constants/firebase.dart';
 
+String buildTableRows(List<Map<String, dynamic>> payment) {
+  return payment.map((item) {
+    return '''
+      <tr>
+        <td>${item['no']}</td>
+        <td>${item['date']}</td>
+        <td>${item['amount']}</td>
+        <td>${item['note']}</td>
+      </tr>
+    ''';
+  }).join('');
+}
+
 Future<String> generateHtmlContent({
+
+  required int counter,
   required payment,
   required String leasingYear,
   required String leasingMonth,
@@ -29,7 +44,9 @@ Future<String> generateHtmlContent({
   required String deposit,
   required String totalOwn,
 }) async {
-  return '''
+  final StringBuffer htmlContent = StringBuffer();
+
+  htmlContent.writeln('''
   <div id="pdfPaymentTable">
     <html>
      <head>
@@ -167,6 +184,18 @@ Future<String> generateHtmlContent({
 							filter: alpha(opacity=20);
 							opacity: .2;
 						}
+            .invoice-table {
+                width: 100%;
+                border-collapse: collapse;
+            }
+            .invoice-table, .invoice-table th, .invoice-table td {
+                border: 1px solid black;
+                padding: 8px;
+                text-align: left;
+            }
+            .invoice-table th {
+                background-color: #f2f2f2;
+            }
                         a[href^=tel] {
                             color: inherit;
                             text-decoration: none;
@@ -195,6 +224,9 @@ Future<String> generateHtmlContent({
                                 padding : 10px;
                             }
                         }
+
+
+                    
                    
                     </style>
                 </head>
@@ -205,73 +237,99 @@ Future<String> generateHtmlContent({
                         <div id="receipt-data" style="padding-right:10px;">                         
                               <table width="100%">                                 
                                 <tr>                               
-                                  <b><p style="font-size:30px; font-family:Khmer OS Bokor;text-align:center;">កិច្ចសន្យាបង់ប្រាក់</p></b>
+                                  <b><p style="font-size: 22px; font-family:Khmer OS Bokor;text-align:center;">កិច្ចសន្យាបង់ប្រាក់</p></b>
                                 </tr>                                
                               </table>
                              <table width="100%">                                 
                                 <tr>                               
-                                  <td style="font-size:15px; font-family:Khmer OS Battambang; ">អតិថិជនឈ្មោះ $fullName                </td>
-                                  <td style="font-size:15px; font-family:Khmer OS Battambang;">ភេទ         $gender        </td>
-                                  <td style="font-size:15px; font-family:Khmer OS Battambang;">អាយុ             $age    </td>
-                                  <td style="font-size:15px; font-family:Khmer OS Battambang;">លេខអត្តសញ្ញាណប័ណ្ណ       $idCard       </td>
+                                  <td style="font-size:15px; font-family:Khmer OS Battambang; ">អតិថិជនឈ្មោះ <b>$fullName</td>
+                                  <td style="font-size:15px; font-family:Khmer OS Battambang;">ភេទ <b>$gender</td>
+                                  <td style="font-size:15px; font-family:Khmer OS Battambang;">អាយុ <b>$age</td>
+                                  <td style="font-size:15px; font-family:Khmer OS Battambang;">លេខអត្តសញ្ញាណប័ណ្ណ <b>$idCard</td>
                                 </tr>                                
                               </table>
                              <table width="100%" style="border-spacing: 0;border:1px solid;">                                 
                                 <tr>                               
                                   <td style="width: 25%; font-size:15px; font-family:Khmer OS Battambang;border-bottom:1px solid;border-right:1px solid; text-align:center">លេខទូរសព្ទ3ខ្សែ                 </td>
-                                  <td style="width: 25%; font-size:15px; font-family:Khmer OS Battambang;border-bottom:1px solid;border-right:1px solid;">      $tel1           </td>
-                                  <td style="width: 25%; font-size:15px; font-family:Khmer OS Battambang;border-bottom:1px solid;border-right:1px solid;">             $tel2    </td>
-                                  <td style="width: 25%; font-size:15px; font-family:Khmer OS Battambang;border-bottom:1px solid; ">       $tel3       </td>
+                                  <td style="width: 25%; font-size:15px; font-family:Khmer OS Battambang;border-bottom:1px solid;border-right:1px solid;"> &nbsp;&nbsp;<b>$tel1</td>
+                                  <td style="width: 25%; font-size:15px; font-family:Khmer OS Battambang;border-bottom:1px solid;border-right:1px solid;"> &nbsp;&nbsp;<b>$tel2</td>
+                                  <td style="width: 25%; font-size:15px; font-family:Khmer OS Battambang;border-bottom:1px solid; "> &nbsp;&nbsp;<b>$tel3</td>
                                 </tr>     
                                 <tr>                               
-                                  <td style="font-size:15px; font-family:Khmer OS Battambang;text-align:center;border-right:1px solid;">ឈ្មោះ                 </td>
-                                  <td style="width: 25%; font-size:15px; font-family:Khmer OS Battambang;border-right:1px solid;">                 </td>
-                                  <td style="width: 25%; font-size:15px; font-family:Khmer OS Battambang;border-right:1px solid;">                 </td>
-                                  <td style="width: 25%; font-size:15px; font-family:Khmer OS Battambang;" >              </td>
+                                  <td style="font-size:15px; font-family:Khmer OS Battambang;text-align:center;border-right:1px solid;">ឈ្មោះ </td>
+                                  <td style="width: 25%; font-size:15px; font-family:Khmer OS Battambang;border-right:1px solid;"></td>
+                                  <td style="width: 25%; font-size:15px; font-family:Khmer OS Battambang;border-right:1px solid;"></td>
+                                  <td style="width: 25%; font-size:15px; font-family:Khmer OS Battambang;" ></td>
                                 </tr>                            
                               </table>
                               <table width="100%" style="font-size:15px; font-family:Khmer OS Battambang;">                                 
                                 <tr>                               
-                                  <td>អាសយដ្ឋាន $address</td>
+                                  <td>អាសយដ្ឋាន <b>$address</td>
                                 </tr>       
                                 <tr>                               
-                                  <td >បានបង់រំលស់ម៉ូតូមួយគ្រឿងម៉ាក $model</td>
-                                  <td>ឆ្នាំផលិត $year</td>
+                                  <td >បានបង់រំលស់ម៉ូតូមួយគ្រឿងម៉ាក <b>$model</td>
+                                  <td>ឆ្នាំផលិត <b>$year</td>
                                 </tr>     
                                  <tr>                               
-                                  <td >លេខតួ $frameNo</td>
-                                  <td>លេខម៉ាស៊ីន $engineeNo</td>
-                                  <td>ពន្ធ/ស្លាកលេខ $plateNo</td>
+                                  <td >លេខតួ <b>$frameNo</td>
+                                  <td>លេខម៉ាស៊ីន <b>$engineeNo</td>
+                                  <td>ពន្ធ/ស្លាកលេខ <b>$plateNo</td>
                                 </tr>  
                                  <tr>                               
-                                  <td >តម្លៃម៉ូតូ $price</td>
-                                  <td>ចំនួនទឹកប្រាក់អនុម័ត $approve</td>
-                                  <td>ចំនួនលុយចូលរួម $deposit</td>
-                                  <td>ដូចនេះនៅខ្វះ $totalOwn</td>
+                                  <td >តម្លៃម៉ូតូ <b>$price</td>
+                                  <td>ចំនួនទឹកប្រាក់អនុម័ត <b>$approve</td>
+                                  <td>ចំនួនលុយចូលរួម <b>$deposit</td>
+                                  <td>ដូចនេះនៅខ្វះ <b>$totalOwn</td>
                                 </tr>                       
                               </table>
-                              <div style="font-size:15px; font-family:Khmer OS Battambang;">ចំនួនលុយដែលនៅខ្វះត្រូវបង់រំសល់ជាមួយហាងម៉ូតូ ហេខ សុខបញ្ញាតាមតារាងបង់ប្រាក់ខាងក្រោម៖</div><br>
-                              <table width="100%" style="font-size:15px; font-family:Khmer OS Battambang;border:1px solid">  
+                              <div style="font-size:15px; font-family:Khmer OS Battambang;">ចំនួនលុយដែលនៅខ្វះត្រូវបង់រំសល់ជាមួយហាងម៉ូតូ ហេង សុខបញ្ញាតាមតារាងបង់ប្រាក់ខាងក្រោម៖</div><br>
+                              <table width="100%" style="font-size:15px; font-family:Khmer OS Battambang;border:1px solid" class="invoice-table">  
                                 <thead>
                                   <tr>
                                       <th>ល.រ</th>
                                       <th>កាលបរិច្ឆេទបង់លុយ</th>
                                       <th>ចំនួនលុយត្រូវបង់</th>
                                       <th>កំណត់សំគាល់</th>
-                                  </tr> 
+                                  </tr>
+                                  
                                 </thead>
+       ''');
+  for (int i = counter; i <= payment.length; i++) {
+    htmlContent.writeln('<tr>');
+    for (int j = 0; j < 4; j++) {
+      // Adjusting to 4 columns as per table
+      htmlContent.writeln('<td> $payment[i]["no"]</td>');
+    }
+    htmlContent.writeln('</tr>');
+  }
+  htmlContent.writeln('''
+                                  
                               </table>
 
-                              <div><img src="http://moto.cpos.cc/payment.png" alt="" width="100%"></div><br>
-                                <div style="font-size:15px; font-family:Khmer OS Battambang;">ក្នុងករណីបង់យឺត អតិថិជនយល់ព្រមបង់ប្រាក់ពិន័យក្នុងថ្ងៃចំនួន</div>
-                                 <div style="font-size:15px; font-family:Khmer OS Battambang;">អតិថិជនបានអាន និងស្តាប់ហើយព្រមព្រៀងបង់តាមពេលវេលាដែលបានកំណត់ដូចខាងលើ។</div>
-                                 <div style="font-size:15px; font-family:Khmer OS Battambang;text-align:right">ធ្វើនៅ រាជធានីភ្នំពេញ ថ្ងៃទី $leasingDay ខែ $leasingMonth ឆ្នាំ $leasingYear </div>
-                                  <table width="100%">
-                                  <tr>
-                                  <td width="50%">  <div style="font-size:15px; font-family:Khmer OS Battambang;">ឈ្មោះអតិថិជន $fullName</div></td>
-                                    <td>  <div style="font-size:15px; font-family:Khmer OS Battambang;">ត្រាហាងម៉ូតូ </div></td>
-                                  </tr>
-                                  </table>
+                              <br>
+
+                              <div>
+                                <img src="http://moto.cpos.cc/payment.png" alt="" width="100%">
+                              </div><br>
+                              <div style="font-size:15px; font-family:Khmer OS Battambang;">ក្នុងករណីបង់យឺត អតិថិជនយល់ព្រមបង់ប្រាក់ពិន័យក្នុងថ្ងៃចំនួន</div>
+                              <div style="font-size:15px; font-family:Khmer OS Battambang;">អតិថិជនបានអាន និងស្តាប់ហើយព្រមព្រៀងបង់តាមពេលវេលាដែលបានកំណត់ដូចខាងលើ។</div>
+                              <br>
+                              <div style="font-size:15px; font-family:Khmer OS Battambang;text-align:right">ធ្វើនៅ រាជធានីភ្នំពេញ ថ្ងៃទី <b>$leasingDay ខែ <b>$leasingMonth ឆ្នាំ <b>$leasingYear </div>
+                              <br><br>
+                              <table width="100%">
+                                <tr>
+                                  <td width="50%">
+                                    <div style="font-size:15px; font-family:Khmer OS Battambang;">ឈ្មោះអតិថិជន <b>$fullName</div>
+                                  </td>
+                                  <td>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                  </td>
+                                  <td>
+                                    <div style="font-size:15px; font-family:Khmer OS Battambang;">ត្រាហាងម៉ូតូ</div>
+                                  </td>
+                                </tr>
+                              </table>
                                   
                                 
 
@@ -282,7 +340,9 @@ Future<String> generateHtmlContent({
                     
     </html>
     
-  ''';
+ ''');
+
+  return htmlContent.toString();
 }
 
 void printPaymentTable(int id) async {
@@ -290,7 +350,10 @@ void printPaymentTable(int id) async {
   await getByReceivable(id);
   await getByPaymentSchedule(id);
 
+  int counter = 1;
+
   final htmlContent = await generateHtmlContent(
+    counter: counter,
     payment: schedule,
     leasingYear: byLeasing[0].leasingDate.split(' ')[0].split('-')[0],
     leasingMonth: byLeasing[0].leasingDate.split(' ')[0].split('-')[1],

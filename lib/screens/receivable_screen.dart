@@ -132,7 +132,6 @@ class ReceivableDataSource extends DataTableSource {
                 con.scheduleList.add(data.date);
               }
             }
-
             con.showDialogAddPayment(Get.context!, data.id);
           },
           viewPayment: () async {
