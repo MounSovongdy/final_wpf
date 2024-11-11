@@ -35,7 +35,6 @@ class DashboardCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Column(
-                  
                   children: [
                     AppText.title(
                       context,
