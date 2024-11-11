@@ -6,7 +6,22 @@ import 'dart:js' as js;
 
 import 'package:motor/constants/firebase.dart';
 
+String buildTableRows(List<Map<String, dynamic>> payment) {
+  return payment.map((item) {
+    return '''
+      <tr>
+        <td>${item['no']}</td>
+        <td>${item['date']}</td>
+        <td>${item['amount']}</td>
+        <td>${item['note']}</td>
+      </tr>
+    ''';
+  }).join('');
+}
+
 Future<String> generateHtmlContent({
+
+  required int counter,
   required payment,
   required String leasingYear,
   required String leasingMonth,
@@ -29,7 +44,9 @@ Future<String> generateHtmlContent({
   required String deposit,
   required String totalOwn,
 }) async {
-  return '''
+  final StringBuffer htmlContent = StringBuffer();
+
+  htmlContent.writeln('''
   <div id="pdfPaymentTable">
     <html>
      <head>
@@ -274,46 +291,19 @@ Future<String> generateHtmlContent({
                                       <th>ចំនួនលុយត្រូវបង់</th>
                                       <th>កំណត់សំគាល់</th>
                                   </tr>
-                                </thead>
-                                  <tbody>
-                                    <tr>
-                                        <td>1</td>
-                                        <td> </td>
-                                        <td> </td>
-                                        <td> </td>
-                                    </tr>
-                                    <tr>
-                                        <td>2</td>
-                                        <td> </td>
-                                        <td> </td>
-                                        <td> </td>
-                                    </tr>
-                                    <tr>
-                                        <td>3</td>
-                                        <td> </td>
-                                        <td> </td>
-                                        <td> </td>
-                                    </tr>
-                                    <tr>
-                                        <td>4</td>
-                                        <td> </td>
-                                        <td> </td>
-                                        <td> </td>
-                                    </tr>
-                                    <tr>
-                                        <td>5</td>
-                                        <td> </td>
-                                        <td> </td>
-                                        <td> </td>
-                                    </tr>
-                                    <tr>
-                                        <td>6</td>
-                                        <td> </td>
-                                        <td> </td>
-                                        <td> </td>
-                                    </tr>
                                   
-                                </tbody>
+                                </thead>
+       ''');
+  for (int i = counter; i <= payment.length; i++) {
+    htmlContent.writeln('<tr>');
+    for (int j = 0; j < 4; j++) {
+      // Adjusting to 4 columns as per table
+      htmlContent.writeln('<td> $payment[i]["no"]</td>');
+    }
+    htmlContent.writeln('</tr>');
+  }
+  htmlContent.writeln('''
+                                  
                               </table>
 
                               <br>
@@ -350,7 +340,9 @@ Future<String> generateHtmlContent({
                     
     </html>
     
-  ''';
+ ''');
+
+  return htmlContent.toString();
 }
 
 void printPaymentTable(int id) async {
@@ -358,7 +350,10 @@ void printPaymentTable(int id) async {
   await getByReceivable(id);
   await getByPaymentSchedule(id);
 
+  int counter = 1;
+
   final htmlContent = await generateHtmlContent(
+    counter: counter,
     payment: schedule,
     leasingYear: byLeasing[0].leasingDate.split(' ')[0].split('-')[0],
     leasingMonth: byLeasing[0].leasingDate.split(' ')[0].split('-')[1],
