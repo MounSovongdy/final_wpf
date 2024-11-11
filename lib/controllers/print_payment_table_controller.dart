@@ -20,7 +20,6 @@ String buildTableRows(List<Map<String, dynamic>> payment) {
 }
 
 Future<String> generateHtmlContent({
-
   required int counter,
   required payment,
   required String leasingYear,
@@ -293,17 +292,20 @@ Future<String> generateHtmlContent({
                                   </tr>
                                   
                                 </thead>
-       ''');
-  for (int i = counter; i <= payment.length; i++) {
+                                <tbody>
+                          ''');
+
+  for (int i = counter; i < payment.length; i++) {
     htmlContent.writeln('<tr>');
-    for (int j = 0; j < 4; j++) {
-      // Adjusting to 4 columns as per table
-      htmlContent.writeln('<td> $payment[i]["no"]</td>');
-    }
+    htmlContent.writeln('<td> ${payment[i].no}</td>');
+    htmlContent.writeln('<td> ${payment[i].date}</td>');
+    htmlContent.writeln('<td> ${payment[i].amount}</td>');
+    htmlContent.writeln('<td> ${payment[i].note}</td>');
     htmlContent.writeln('</tr>');
   }
+
   htmlContent.writeln('''
-                                  
+                                  </tbody>
                               </table>
 
                               <br>
@@ -350,7 +352,7 @@ void printPaymentTable(int id) async {
   await getByReceivable(id);
   await getByPaymentSchedule(id);
 
-  int counter = 1;
+  int counter = 0;
 
   final htmlContent = await generateHtmlContent(
     counter: counter,
