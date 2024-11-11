@@ -52,19 +52,27 @@ class RentalScreen extends StatelessWidget {
                       con.selectedMonth.value!.split('-')[0],
                       con.selectedMonth.value!.split('-')[1],
                     );
+                    await getTotalExpense(
+                      year: con.selectedMonth.value!.split('-')[0],
+                      month: con.selectedMonth.value!.split('-')[1],
+                    );
+                    if (totalExpense.isNotEmpty)
+                      con.amount.value.text = totalExpense[0].rental;
                     con.filteredRental.value = rental;
                     con.search.value.addListener(con.filterRentalData);
                   }
                 },
               ),
-              widget2: AppTextField(
-                txt: 'Total Amount',
-                con: con.amount.value,
-                readOnly: true,
+              widget2: Obx(
+                () => AppTextField(
+                  txt: 'Total Amount',
+                  con: con.amount.value,
+                  readOnly: true,
+                ),
               ),
               widget3: AppButtonCalulation(
                 txt: 'Calulation',
-                tap: () {},
+                tap: () => con.calculateTotal(context),
               ),
             ),
             spacer(context),

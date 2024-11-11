@@ -23,6 +23,7 @@ import 'package:motor/models/rental_model.dart';
 import 'package:motor/models/reset_password_model.dart';
 import 'package:motor/models/sale_man_commission_model.dart';
 import 'package:motor/models/sale_man_model.dart';
+import 'package:motor/models/total_expense_model.dart';
 import 'package:motor/models/total_stock_model.dart';
 import 'package:motor/models/user_model.dart';
 import 'package:motor/screens/widgets/loading_widget.dart';
@@ -52,6 +53,7 @@ final rentalCol = _firebase.collection('rental_test');
 final giftCol = _firebase.collection('gift_test');
 final koiCol = _firebase.collection('koi_test');
 final resetPasswordCol = _firebase.collection('reset_password');
+final totalExpenseCol = _firebase.collection('total_expense_test');
 
 var currVersion = '1.0.0'.obs;
 var userLogin = ''.obs;
@@ -96,6 +98,7 @@ var byPaymentTable = [].obs;
 var paymentTable = [].obs;
 var byResetPassword = [].obs;
 var resetPassword = [].obs;
+var totalExpense = [].obs;
 
 Future<void> getByUser(String userlogin) async {
   var res = await userCol.where('user', isEqualTo: userlogin).get();
@@ -1395,5 +1398,85 @@ dynamic conToNum(String input) {
     return double.tryParse(input) ?? input;
   } else {
     return int.tryParse(input) ?? input;
+  }
+}
+
+Future<void> getTotalExpense({
+  required String year,
+  required String month,
+}) async {
+  var res = await totalExpenseCol
+      .where('year', isEqualTo: year)
+      .where('month', isEqualTo: month)
+      .get();
+
+  totalExpense.value =
+      res.docs.map((doc) => TotalExpenseModel.fromMap(doc.data())).toList();
+}
+
+Future<void> insertTotalExpenseRental({
+  required String year,
+  required String month,
+}) async {
+  try {
+    var res1 = await rentalCol
+        .where('year', isEqualTo: year)
+        .where('month', isEqualTo: month)
+        .get();
+    var res2 = await totalExpenseCol
+        .where('year', isEqualTo: year)
+        .where('month', isEqualTo: month)
+        .get();
+
+    if (res1.docs.isNotEmpty) {
+      num amount = 0;
+      for (var e in res1.docs) amount = amount + num.parse(e['amount']);
+
+      if (res2.docs.isNotEmpty) {
+        num oldTotal = 0;
+        num oldAmount = 0;
+        for (var e in res2.docs) {
+          oldTotal = num.parse(e['total_expense']);
+          oldAmount = num.parse(e['rental']);
+        }
+        LoadingWidget.dialogLoading(duration: 3, isBack: false);
+        await totalExpenseCol.doc('$year-$month').update({
+          'rental': '$amount',
+          'total_expense': '${oldTotal - oldAmount + amount}',
+        });
+        Get.back();
+      } else {
+        LoadingWidget.dialogLoading(duration: 3, isBack: false);
+        await totalExpenseCol.doc('$year-$month').set({
+          'id': num.parse('$year$month'),
+          'year': year,
+          'month': month,
+          'rental': '$amount',
+          'salaryE': '',
+          'bonusE': '',
+          'bonusT': '',
+          'advertise': '',
+          'koi': '',
+          'gift': '',
+          'commission': '',
+          'total_expense': '$amount',
+          'net_sale': '',
+          'sale_revenue': '',
+          'total_sale': '',
+          'avg_sale_revenue': '',
+          'avg_profit': '',
+        });
+        Get.back();
+      }
+    } else {
+      LoadingWidget.showTextDialog(
+        Get.context!,
+        title: 'Error',
+        content: 'Please insert rental before calculate.',
+        color: redColor,
+      );
+    }
+  } catch (e) {
+    debugPrint('Failed to total expense rental: $e');
   }
 }

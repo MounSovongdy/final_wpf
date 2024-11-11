@@ -405,12 +405,7 @@ class NewLeasingScreen extends StatelessWidget {
               () => con.isReceivable.value
                   ? RowTextField(
                       spacer: spacer(context),
-                      widget1: AppTextField(
-                        txt: 'Total',
-                        con: con.total.value,
-                        readOnly: true,
-                      ),
-                      widget2: AppDropdownSearch(
+                      widget1: AppDropdownSearch(
                         txt: 'Plate Payment',
                         value: con.platePay,
                         list: con.platePayList,
@@ -418,10 +413,11 @@ class NewLeasingScreen extends StatelessWidget {
                           if (v != null) {
                             con.platePay.value = v;
                             con.plateAmount.value.text = '';
+                            con.calculateTotal();
                           }
                         },
                       ),
-                      widget3: Obx(
+                      widget2: Obx(
                         () => AppTextField(
                           txt: 'Plate Amount',
                           con: con.plateAmount.value,
@@ -429,7 +425,13 @@ class NewLeasingScreen extends StatelessWidget {
                               con.platePay.value == "Not Yet" ? false : true,
                           isNumber: true,
                           digit: 4,
+                          onChanged: (v) => con.calculateTotal(),
                         ),
+                      ),
+                      widget3: AppTextField(
+                        txt: 'Total',
+                        con: con.total.value,
+                        readOnly: true,
                       ),
                     )
                   : Container(),

@@ -4,7 +4,7 @@ class TotalExpenseModel {
   final int id;
   final String year;
   final String month;
-  final String retal;
+  final String rental;
   final String salaryE;
   final String bonusE;
   final String bonusT;
@@ -23,7 +23,7 @@ class TotalExpenseModel {
     this.id = 0,
     this.year = '',
     this.month = '',
-    this.retal = '',
+    this.rental = '',
     this.salaryE = '',
     this.bonusE = '',
     this.bonusT = '',
@@ -44,7 +44,7 @@ class TotalExpenseModel {
       'id': id,
       'year': year,
       'month': month,
-      'retal': retal,
+      'rental': rental,
       'salaryE': salaryE,
       'bonusE': bonusE,
       'bonusT': bonusT,
@@ -66,7 +66,7 @@ class TotalExpenseModel {
       id: map['id'] as int,
       year: map['year'] as String,
       month: map['month'] as String,
-      retal: map['retal'] as String,
+      rental: map['rental'] as String,
       salaryE: map['salaryE'] as String,
       bonusE: map['bonusE'] as String,
       bonusT: map['bonusT'] as String,

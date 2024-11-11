@@ -87,6 +87,12 @@ class NewRentalScreen extends StatelessWidget {
                         conRen.selectedMonth.value!.split('-')[0],
                         conRen.selectedMonth.value!.split('-')[1],
                       );
+                      await getTotalExpense(
+                      year: conRen.selectedMonth.value!.split('-')[0],
+                      month: conRen.selectedMonth.value!.split('-')[1],
+                    );
+                    if (totalExpense.isNotEmpty)
+                      conRen.amount.value.text = totalExpense[0].rental;
                     }
                     conRen.filteredRental.value = rental;
                     conRen.search.value.addListener(conRen.filterRentalData);

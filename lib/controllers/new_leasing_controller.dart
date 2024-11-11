@@ -441,9 +441,8 @@ class NewLeasingController extends GetxController {
     var date = DateTime.parse(firstPayDate.value.text);
     var startDate = DateTime(date.year, date.month, date.day);
     var x = int.parse(total.value.text);
-    var y = int.tryParse(plateAmount.value.text) ?? 0;
     var z = int.parse(term.value.text);
-    var temp = (x - y) / z;
+    var temp = x / z;
     var perAmount = double.parse(temp.toStringAsFixed(2));
 
     scheduleList.value = [dateFormat.format(startDate)];
@@ -457,7 +456,7 @@ class NewLeasingController extends GetxController {
       noList.add('${i + 2}');
 
       if (i + 1 == (int.parse(term.value.text) - 1)) {
-        var newA = (x - y) - (perAmount * (i + 1));
+        var newA = x  - (perAmount * (i + 1));
         var newB = double.parse(newA.toStringAsFixed(2));
         amountList.add('$newB');
       } else {
@@ -568,9 +567,12 @@ class NewLeasingController extends GetxController {
 
   void calculateTotal() {
     if (totalOwn.value.text != '' && interest.value.text != '') {
+      num p = 0;
+      if (plateAmount.value.text != '') p = num.parse(plateAmount.value.text);
       var own = num.parse(totalOwn.value.text);
       var inter = num.parse(interest.value.text);
-      var tot = own + ((own * inter) / 100);
+      var t = num.parse(term.value.text);
+      var tot = (own - p) * (((t * inter) / 100) + 1);
       var newTot = num.parse(tot.toStringAsFixed(2)).toString();
       total.value.text = newTot.contains('.')
           ? num.parse(newTot).toStringAsFixed(2)

@@ -47,7 +47,7 @@ class NewBookingScreen extends StatelessWidget {
               widget1: AppTextField(
                 txt: 'Date',
                 con: con.date.value,
-                readOnly: con.isRead.value,
+                readOnly: true,
               ),
               widget2: AppDropdownSearch(
                 txt: 'Micro',

@@ -413,6 +413,15 @@ class DrawerMenu extends StatelessWidget {
                               conRental.selectedMonth.value!.split('-')[0],
                               conRental.selectedMonth.value!.split('-')[1],
                             );
+                            await getTotalExpense(
+                              year:
+                                  conRental.selectedMonth.value!.split('-')[0],
+                              month:
+                                  conRental.selectedMonth.value!.split('-')[1],
+                            );
+                            if (totalExpense.isNotEmpty)
+                              conRental.amount.value.text =
+                                  totalExpense[0].rental;
                           }
                           conRental.filteredRental.value = rental;
                           conRental.search.value
