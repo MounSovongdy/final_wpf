@@ -48,6 +48,12 @@ class CommissionScreen extends StatelessWidget {
                       con.selectedMonth.value!.split('-')[0],
                       con.selectedMonth.value!.split('-')[1],
                     );
+                    await getTotalExpense(
+                      year: con.selectedMonth.value!.split('-')[0],
+                      month: con.selectedMonth.value!.split('-')[1],
+                    );
+                    if (totalExpense.isNotEmpty)
+                      con.amount.value.text = totalExpense[0].commission;
                     con.filteredCommission.value = friendCom;
                     con.search.value.addListener(con.filterCommissionData);
                   }
@@ -123,7 +129,7 @@ class CommissionDataSource extends DataTableSource {
         DataTableWidget.cell(Get.context!, '${data.year}-${data.month}'),
         DataTableWidget.cell(Get.context!, data.name),
         DataTableWidget.cell(Get.context!, data.tel),
-        DataTableWidget.cell(Get.context!, data.totalCommission),
+        DataTableWidget.cell(Get.context!, data.commission),
       ],
     );
   }

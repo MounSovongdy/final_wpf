@@ -380,6 +380,15 @@ class DrawerMenu extends StatelessWidget {
                               conFri.selectedMonth.value!.split('-')[0],
                               conFri.selectedMonth.value!.split('-')[1],
                             );
+                            await getTotalExpense(
+                              year: conFri.selectedMonth.value!.split('-')[0],
+                              month: conFri.selectedMonth.value!.split('-')[1],
+                            );
+                            if (totalExpense.isNotEmpty)
+                              conFri.amount.value.text =
+                                  totalExpense[0].commission;
+                            else
+                              conFri.amount.value.text = '';
                           }
                           conFri.filteredCommission.value = friendCom;
                           conFri.search.value
@@ -422,6 +431,8 @@ class DrawerMenu extends StatelessWidget {
                             if (totalExpense.isNotEmpty)
                               conRental.amount.value.text =
                                   totalExpense[0].rental;
+                            else
+                              conRental.amount.value.text = '';
                           }
                           conRental.filteredRental.value = rental;
                           conRental.search.value
