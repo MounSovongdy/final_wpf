@@ -25,7 +25,6 @@ Future<String> generateHtmlContent({
   required String frameNo,
   required String machinNo,
 }) async {
-  
   return '''
   <div id="pdfLeasingInvoice">
 <html lang="en">
@@ -111,70 +110,57 @@ Future<String> generateHtmlContent({
           <div id="receiptData" style="margin: 0 auto; text-align: center;">
               <!-- Header Image -->
               <div><img src="http://moto.cpos.cc/header.png" alt="Header Image" style="width: 100%;"></div>
+              <br>
+            <table width="100%" border-spacing: 0; >                                 
+                                <tr>
+                      <b><p style="font-size:20px; font-family:Khmer OS Battambang;text-align:center; color:#282D91">ទិញ លក់ និងបង់រំលស់ម៉ូតូគ្រប់ប្រភេទ</p>
+                        <p style="font-size:17px; font-family:Khmer OS Battambang;text-align:center;color:#282D91">ផ្ទះលេខ 268 & 269 ផ្លូវវេងស្រេង ភូមិត្រពាំងថ្លឹង សង្កាត់ចោមចៅ ខណ្ឌពោធិ៍សែនជ័យ រាជធានីភ្នំពេញ </p></b>
+                                </tr>                                 
+                                </table>
 
-              <!-- Title and Address -->
-              <br>
-              <p class="header-text text-center"><b>ទិញ លក់ និងបង់រំលស់ម៉ូតូគ្រប់ប្រភេទ</p>
-              <p class="sub-header-text text-center"><b>ផ្ទះលេខ 268 & 269 ផ្លូវវេងស្រេង ភូមិត្រពាំងថ្លឹង សង្កាត់ចោមចៅ ខណ្ឌពោធិ៍សែនជ័យ រាជធានីភ្នំពេញ</p>
-            
-              <!-- Invoice Details -->
-              <br>
-              <table class="table">
-                <tr>
-                    <td>Tel: 096 888 3369</td>
-                    <td>
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    </td>
-                    <td>វិក្កយបត្រលេខ: <b>$invoiceNum</td>
-                </tr>
-                <tr>
-                    <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;097 888 3369</td>
-                    <td>
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    </td>
-                    <td>កាលបរិច្ឆេទ: <b>$invoiceDate</td>
-                </tr>
-                <tr>
-                    <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;012 888 795</td>
-                    <td>
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    </td>
-                    <td>ពន្ធ / ស្លាកលេខ: <b>$plateNo</td>
-                </tr>
-              </table>
+                                <br>
+
+                                 <table width="100%" style="font-size:17px; font-family:Khmer OS Battambang;color:#282D91"> 
+                                    <tr>
+                                    <td rowspan="3" width="65%"><img src="http://moto.cpos.cc/phone.png" alt="" width="50%"></td>
+                                    <td>វិក្កយបត្រលេខ :  <b>$invoiceNum</b></td>
+                                    </tr>
+                                    <tr>
+                                    <td>កាលបរិច្ឆេទ :  <b>$invoiceDate</b></td>
+                                    </tr>
+                                    <tr>
+                                    <td>ពន្ធ/ស្លាកលេខ : <b>$plateNo</b></td>
+                                    </tr>
+                                  </table>
+
+                                  <br>
 
               <!-- Customer Information -->
               <br>
-              <table class="table">
+              <table class="table" border-spacing: 0;>
                   <tr>
-                      <td>លក់ជូនអតិថិជន: <b>$customerName</td>
-                      <td>ភេទ: <b>$gender</td>
-                      <td>អាយុ: <b>$customerAge</td>
+                      <td>លក់ជូនអតិថិជន : <b>$customerName</td>
+                      <td>ភេទ : <b>$gender</td>
+                      <td>អាយុ : <b>$customerAge</td>
                   </tr>
                   <tr>
-                      <td>លេខអត្តសញ្ញាណប័ណ្ណ: <b>$customerId</td>
-                      <td>លេខទូរស័ព្ទ: <b>$tel</td>
+                      <td>លេខអត្តសញ្ញាណប័ណ្ណ : <b>$customerId</td>
+                      <td>លេខទូរស័ព្ទ : <b>$tel</td>
                   </tr>
                   <tr>
-                      <td colspan="3">អាសយដ្ឋាន: <b>$customerAddress</td>
+                      <td colspan="3">អាសយដ្ឋាន : <b>$customerAddress</td>
                   </tr>
                   <tr>
-                      <td>ម៉ាកម៉ូតូ: <b>$model</td>
-                      <td>ឆ្នាំផលិត: <b>$yearProduct</td>
+                      <td>ម៉ាកម៉ូតូ : <b>$model</td>
+                      <td>ឆ្នាំផលិត : <b>$yearProduct</td>
                   </tr>
                   <tr>
-                      <td>កំលាំង: <b>$power</td>
-                      <td>ពណ៍: <b>$color</td>
+                      <td>កំលាំង : <b>$power</td>
+                      <td>ពណ៍ : <b>$color</td>
                   </tr>
                   <tr>
-                      <td>លេខតួ: <b>$frameNo</td>
-                      <td>លេខម៉ាស៊ីន: <b>$machinNo</td>
+                      <td>លេខតួ : <b>$frameNo</td>
+                      <td>លេខម៉ាស៊ីន : <b>$machinNo</td>
                   </tr>
               </table>
 
@@ -187,9 +173,9 @@ Future<String> generateHtmlContent({
 
               <table width="30%" align="right">
                     <td style="border: 0.5px solid black;border-radius: 10px;font-size:17px; font-family:Khmer OS Battambang;color:#282D91" bgcolor="#CEEDFB">
-                        <b>&nbsp;&nbsp; តម្លៃសរុប:&nbsp;&nbsp;&nbsp;$totalPrice</b>
+                        <b>&nbsp;&nbsp; តម្លៃសរុប :&nbsp;&nbsp;&nbsp;$totalPrice</b>
                         <hr style="border: 0.1px solid black">
-                        <b>&nbsp;&nbsp;  អនុម័ត:&nbsp;&nbsp;&nbsp;$approveAmount</b>
+                        <b>&nbsp;&nbsp;  អនុម័ត :&nbsp;&nbsp;&nbsp;$approveAmount</b>
                     </td>
                 </table>
 

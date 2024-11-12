@@ -111,43 +111,30 @@ Future<String> generateHtmlContent({
               <!-- Header Image -->
               <div><img src="http://moto.cpos.cc/header.png" alt="Header Image" style="width: 100%;"></div>
 
-              <!-- Title and Address -->
               <br>
-              <p class="header-text text-center"><b>ទិញ លក់ និងបង់រំលស់ម៉ូតូគ្រប់ប្រភេទ</p>
-              <p class="sub-header-text text-center"><b>ផ្ទះលេខ 268 & 269 ផ្លូវវេងស្រេង ភូមិត្រពាំងថ្លឹង សង្កាត់ចោមចៅ ខណ្ឌពោធិ៍សែនជ័យ រាជធានីភ្នំពេញ</p>
-            
-              <!-- Invoice Details -->
-              <br>
-              <table class="table">
-                <tr>
-                    <td>Tel: 096 888 3369</td>
-                    <td>
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    </td>
-                    <td>វិក្កយបត្រលេខ: <b>$invoiceNum</td>
-                </tr>
-                <tr>
-                    <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;097 888 3369</td>
-                    <td>
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    </td>
-                    <td>កាលបរិច្ឆេទ: <b>$invoiceDate</td>
-                </tr>
-                <tr>
-                    <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;012 888 795</td>
-                    <td>
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    </td>
-                    <td>ពន្ធ / ស្លាកលេខ: <b>$plateNo</td>
-                </tr>
-              </table>
+            <table width="100%" border-spacing: 0; >                                 
+                                <tr>
+                      <b><p style="font-size:20px; font-family:Khmer OS Battambang;text-align:center; color:#282D91">ទិញ លក់ និងបង់រំលស់ម៉ូតូគ្រប់ប្រភេទ</p>
+                        <p style="font-size:17px; font-family:Khmer OS Battambang;text-align:center;color:#282D91">ផ្ទះលេខ 268 & 269 ផ្លូវវេងស្រេង ភូមិត្រពាំងថ្លឹង សង្កាត់ចោមចៅ ខណ្ឌពោធិ៍សែនជ័យ រាជធានីភ្នំពេញ </p></b>
+                                </tr>                                 
+                                </table>
 
+                                <br>
+
+                                 <table width="100%" style="font-size:17px; font-family:Khmer OS Battambang;color:#282D91"> 
+                                    <tr>
+                                    <td rowspan="3" width="65%"><img src="http://moto.cpos.cc/phone.png" alt="" width="50%"></td>
+                                    <td>វិក្កយបត្រលេខ :  <b>$invoiceNum</b></td>
+                                    </tr>
+                                    <tr>
+                                    <td>កាលបរិច្ឆេទ :  <b>$invoiceDate</b></td>
+                                    </tr>
+                                    <tr>
+                                    <td>ពន្ធ/ស្លាកលេខ : <b>$plateNo</b></td>
+                                    </tr>
+                                  </table>
+
+                                  <br>
               <!-- Customer Information -->
               <br>
               <table class="table">
