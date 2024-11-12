@@ -563,10 +563,20 @@ class DrawerMenu extends StatelessWidget {
               const UnderLine(),
               Padding(
                 padding: EdgeInsets.all(13.px),
-                child: AppText.subTitle(
-                  context,
-                  txt: '© 2024 Admin Dashboard',
-                  color: whiteColor,
+                child: Row(
+                  children: [
+                    AppText.subTitle(
+                      context,
+                      txt: '© 2024 Admin Dashboard',
+                      color: whiteColor,
+                    ),
+                    const Spacer(),
+                    AppText.subTitle(
+                      context,
+                      txt: 'v0.1.0',
+                      color: whiteColor,
+                    ),
+                  ],
                 ),
               ),
             ],

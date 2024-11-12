@@ -436,6 +436,17 @@ class NewLeasingScreen extends StatelessWidget {
                     )
                   : Container(),
             ),
+            Obx(
+                  () => con.isReceivable.value
+                  ? RowTextField(
+                spacer: spacer(context),
+                widget1: AppTextField(
+                  txt: 'Penalty Per Days',
+                  con: con.penalty.value,
+                ),
+              )
+                  : Container(),
+            ),
             spacer(context),
             spacer(context),
             const UnderLine(color: secondGreyColor),
