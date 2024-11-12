@@ -517,7 +517,7 @@ class DrawerMenu extends StatelessWidget {
                 ),
                 DrawerExpansionTile(
                   title: 'Setting',
-                  svgSrc: 'assets/icons/Management.svg',
+                  svgSrc: 'assets/icons/Setting.svg',
                   children: [
                     Container(
                       padding: EdgeInsets.only(left: 36.px),
@@ -534,7 +534,7 @@ class DrawerMenu extends StatelessWidget {
                           con.index.value = 45;
                         },
                         title: 'Reset Password',
-                        svgSrc: 'assets/icons/CreateSalesman.svg',
+                        svgSrc: 'assets/icons/ResetPassword.svg',
                       ),
                     ),
                   ],
@@ -573,7 +573,7 @@ class DrawerMenu extends StatelessWidget {
                     const Spacer(),
                     AppText.subTitle(
                       context,
-                      txt: 'v0.1.0',
+                      txt: 'v1.0.1',
                       color: whiteColor,
                     ),
                   ],
