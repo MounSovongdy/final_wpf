@@ -1591,11 +1591,485 @@ Future<void> insertTotalExpenseFriend({
       LoadingWidget.showTextDialog(
         Get.context!,
         title: 'Error',
-        content: 'Please friend rental before calculate.',
+        content: 'Please insert friend before calculate.',
         color: redColor,
       );
     }
   } catch (e) {
     debugPrint('Failed to total expense friend: $e');
+  }
+}
+
+Future<void> insertTotalExpenseGift({
+  required String year,
+  required String month,
+}) async {
+  try {
+    var res1 = await giftCol
+        .where('year', isEqualTo: year)
+        .where('month', isEqualTo: month)
+        .get();
+    var res2 = await totalExpenseCol
+        .where('year', isEqualTo: year)
+        .where('month', isEqualTo: month)
+        .get();
+
+    if (res1.docs.isNotEmpty) {
+      num amount = 0;
+      for (var e in res1.docs) amount = amount + num.parse(e['amount']);
+
+      if (res2.docs.isNotEmpty) {
+        num oldTotal = 0;
+        num rental = 0;
+        num salaryE = 0;
+        num bonusE = 0;
+        num bonusT = 0;
+        num advertise = 0;
+        num koi = 0;
+        num commission = 0;
+
+        for (var e in res2.docs) {
+          rental = num.parse(e['rental']);
+          salaryE = num.parse(e['salaryE']);
+          bonusE = num.parse(e['bonusE']);
+          bonusT = num.parse(e['bonusT']);
+          advertise = num.parse(e['advertise']);
+          koi = num.parse(e['koi']);
+          commission = num.parse(e['commission']);
+        }
+
+        oldTotal = rental +
+            salaryE +
+            bonusE +
+            bonusT +
+            advertise +
+            koi +
+            commission +
+            amount;
+
+        var tempNewTotal = '$oldTotal'.contains('.')
+            ? num.parse('$oldTotal').toStringAsFixed(2)
+            : num.parse('$oldTotal').toString();
+
+        LoadingWidget.dialogLoading(duration: 3, isBack: false);
+        await totalExpenseCol.doc('$year-$month').update({
+          'gift': '$amount',
+          'total_expense': tempNewTotal,
+        });
+        Get.back();
+      } else {
+        LoadingWidget.dialogLoading(duration: 3, isBack: false);
+        await totalExpenseCol.doc('$year-$month').set({
+          'id': num.parse('$year$month'),
+          'year': year,
+          'month': month,
+          'rental': '0',
+          'salaryE': '0',
+          'bonusE': '0',
+          'bonusT': '0',
+          'advertise': '0',
+          'koi': '0',
+          'gift': '$amount',
+          'commission': '0',
+          'total_expense': '$amount',
+          'net_sale': '0',
+          'sale_revenue': '0',
+          'total_sale': '0',
+          'avg_sale_revenue': '0',
+          'avg_profit': '0',
+        });
+        Get.back();
+      }
+    } else {
+      LoadingWidget.showTextDialog(
+        Get.context!,
+        title: 'Error',
+        content: 'Please insert gift before calculate.',
+        color: redColor,
+      );
+    }
+  } catch (e) {
+    debugPrint('Failed to total expense gift: $e');
+  }
+}
+
+Future<void> insertTotalExpenseKoi({
+  required String year,
+  required String month,
+}) async {
+  try {
+    var res1 = await koiCol
+        .where('year', isEqualTo: year)
+        .where('month', isEqualTo: month)
+        .get();
+    var res2 = await totalExpenseCol
+        .where('year', isEqualTo: year)
+        .where('month', isEqualTo: month)
+        .get();
+
+    if (res1.docs.isNotEmpty) {
+      num amount = 0;
+      for (var e in res1.docs) amount = amount + num.parse(e['amount']);
+
+      if (res2.docs.isNotEmpty) {
+        num oldTotal = 0;
+        num rental = 0;
+        num salaryE = 0;
+        num bonusE = 0;
+        num bonusT = 0;
+        num advertise = 0;
+        num gift = 0;
+        num commission = 0;
+
+        for (var e in res2.docs) {
+          rental = num.parse(e['rental']);
+          salaryE = num.parse(e['salaryE']);
+          bonusE = num.parse(e['bonusE']);
+          bonusT = num.parse(e['bonusT']);
+          advertise = num.parse(e['advertise']);
+          gift = num.parse(e['gift']);
+          commission = num.parse(e['commission']);
+        }
+
+        oldTotal = rental +
+            salaryE +
+            bonusE +
+            bonusT +
+            advertise +
+            gift +
+            commission +
+            amount;
+
+        var tempNewTotal = '$oldTotal'.contains('.')
+            ? num.parse('$oldTotal').toStringAsFixed(2)
+            : num.parse('$oldTotal').toString();
+
+        LoadingWidget.dialogLoading(duration: 3, isBack: false);
+        await totalExpenseCol.doc('$year-$month').update({
+          'koi': '$amount',
+          'total_expense': tempNewTotal,
+        });
+        Get.back();
+      } else {
+        LoadingWidget.dialogLoading(duration: 3, isBack: false);
+        await totalExpenseCol.doc('$year-$month').set({
+          'id': num.parse('$year$month'),
+          'year': year,
+          'month': month,
+          'rental': '0',
+          'salaryE': '0',
+          'bonusE': '0',
+          'bonusT': '0',
+          'advertise': '0',
+          'koi': '$amount',
+          'gift': '0',
+          'commission': '0',
+          'total_expense': '$amount',
+          'net_sale': '0',
+          'sale_revenue': '0',
+          'total_sale': '0',
+          'avg_sale_revenue': '0',
+          'avg_profit': '0',
+        });
+        Get.back();
+      }
+    } else {
+      LoadingWidget.showTextDialog(
+        Get.context!,
+        title: 'Error',
+        content: 'Please insert koi before calculate.',
+        color: redColor,
+      );
+    }
+  } catch (e) {
+    debugPrint('Failed to total expense koi: $e');
+  }
+}
+
+Future<void> insertTotalExpenseAdv({
+  required String year,
+  required String month,
+}) async {
+  try {
+    var res1 = await advertisingCol
+        .where('year', isEqualTo: year)
+        .where('month', isEqualTo: month)
+        .get();
+    var res2 = await totalExpenseCol
+        .where('year', isEqualTo: year)
+        .where('month', isEqualTo: month)
+        .get();
+
+    if (res1.docs.isNotEmpty) {
+      num amount = 0;
+      for (var e in res1.docs) amount = amount + num.parse(e['amount']);
+
+      if (res2.docs.isNotEmpty) {
+        num oldTotal = 0;
+        num rental = 0;
+        num salaryE = 0;
+        num bonusE = 0;
+        num bonusT = 0;
+        num koi = 0;
+        num gift = 0;
+        num commission = 0;
+
+        for (var e in res2.docs) {
+          rental = num.parse(e['rental']);
+          salaryE = num.parse(e['salaryE']);
+          bonusE = num.parse(e['bonusE']);
+          bonusT = num.parse(e['bonusT']);
+          koi = num.parse(e['koi']);
+          gift = num.parse(e['gift']);
+          commission = num.parse(e['commission']);
+        }
+
+        oldTotal = rental +
+            salaryE +
+            bonusE +
+            bonusT +
+            koi +
+            gift +
+            commission +
+            amount;
+
+        var tempNewTotal = '$oldTotal'.contains('.')
+            ? num.parse('$oldTotal').toStringAsFixed(2)
+            : num.parse('$oldTotal').toString();
+
+        LoadingWidget.dialogLoading(duration: 3, isBack: false);
+        await totalExpenseCol.doc('$year-$month').update({
+          'advertise': '$amount',
+          'total_expense': tempNewTotal,
+        });
+        Get.back();
+      } else {
+        LoadingWidget.dialogLoading(duration: 3, isBack: false);
+        await totalExpenseCol.doc('$year-$month').set({
+          'id': num.parse('$year$month'),
+          'year': year,
+          'month': month,
+          'rental': '0',
+          'salaryE': '0',
+          'bonusE': '0',
+          'bonusT': '0',
+          'advertise': '$amount',
+          'koi': '0',
+          'gift': '0',
+          'commission': '0',
+          'total_expense': '$amount',
+          'net_sale': '0',
+          'sale_revenue': '0',
+          'total_sale': '0',
+          'avg_sale_revenue': '0',
+          'avg_profit': '0',
+        });
+        Get.back();
+      }
+    } else {
+      LoadingWidget.showTextDialog(
+        Get.context!,
+        title: 'Error',
+        content: 'Please insert advertise before calculate.',
+        color: redColor,
+      );
+    }
+  } catch (e) {
+    debugPrint('Failed to total expense advertise: $e');
+  }
+}
+
+Future<void> insertTotalExpenseBonusT({
+  required String year,
+  required String month,
+}) async {
+  try {
+    var res1 = await microComCol
+        .where('year', isEqualTo: year)
+        .where('month', isEqualTo: month)
+        .get();
+    var res2 = await totalExpenseCol
+        .where('year', isEqualTo: year)
+        .where('month', isEqualTo: month)
+        .get();
+
+    if (res1.docs.isNotEmpty) {
+      num amount = 0;
+      for (var e in res1.docs) amount = amount + num.parse(e['total_bonus']);
+
+      if (res2.docs.isNotEmpty) {
+        num oldTotal = 0;
+        num rental = 0;
+        num salaryE = 0;
+        num bonusE = 0;
+        num advertise = 0;
+        num koi = 0;
+        num gift = 0;
+        num commission = 0;
+
+        for (var e in res2.docs) {
+          rental = num.parse(e['rental']);
+          salaryE = num.parse(e['salaryE']);
+          bonusE = num.parse(e['bonusE']);
+          advertise = num.parse(e['advertise']);
+          koi = num.parse(e['koi']);
+          gift = num.parse(e['gift']);
+          commission = num.parse(e['commission']);
+        }
+
+        oldTotal = rental +
+            salaryE +
+            bonusE +
+            advertise +
+            koi +
+            gift +
+            commission +
+            amount;
+
+        var tempNewTotal = '$oldTotal'.contains('.')
+            ? num.parse('$oldTotal').toStringAsFixed(2)
+            : num.parse('$oldTotal').toString();
+
+        LoadingWidget.dialogLoading(duration: 3, isBack: false);
+        await totalExpenseCol.doc('$year-$month').update({
+          'bonusT': '$amount',
+          'total_expense': tempNewTotal,
+        });
+        Get.back();
+      } else {
+        LoadingWidget.dialogLoading(duration: 3, isBack: false);
+        await totalExpenseCol.doc('$year-$month').set({
+          'id': num.parse('$year$month'),
+          'year': year,
+          'month': month,
+          'rental': '0',
+          'salaryE': '0',
+          'bonusE': '0',
+          'bonusT': '$amount',
+          'advertise': '0',
+          'koi': '0',
+          'gift': '0',
+          'commission': '0',
+          'total_expense': '$amount',
+          'net_sale': '0',
+          'sale_revenue': '0',
+          'total_sale': '0',
+          'avg_sale_revenue': '0',
+          'avg_profit': '0',
+        });
+        Get.back();
+      }
+    } else {
+      LoadingWidget.showTextDialog(
+        Get.context!,
+        title: 'Error',
+        content: 'Please insert advertise before calculate.',
+        color: redColor,
+      );
+    }
+  } catch (e) {
+    debugPrint('Failed to total expense advertise: $e');
+  }
+}
+
+Future<void> insertTotalExpenseStaff({
+  required String year,
+  required String month,
+}) async {
+  try {
+    var res1 = await saleManComCol
+        .where('year', isEqualTo: year)
+        .where('month', isEqualTo: month)
+        .get();
+    var res2 = await totalExpenseCol
+        .where('year', isEqualTo: year)
+        .where('month', isEqualTo: month)
+        .get();
+
+    if (res1.docs.isNotEmpty) {
+      num salary = 0;
+      num bonus = 0;
+      for (var e in res1.docs) {
+        salary = salary + num.parse(e['sale_salary']);
+        bonus =
+            bonus + (num.parse(e['total_bonus']) - num.parse(e['sale_salary']));
+      }
+
+      if (res2.docs.isNotEmpty) {
+        num oldTotal = 0;
+        num rental = 0;
+        num bonusT = 0;
+        num advertise = 0;
+        num koi = 0;
+        num gift = 0;
+        num commission = 0;
+
+        for (var e in res2.docs) {
+          rental = num.parse(e['rental']);
+          bonusT = num.parse(e['bonusT']);
+          advertise = num.parse(e['advertise']);
+          koi = num.parse(e['koi']);
+          gift = num.parse(e['gift']);
+          commission = num.parse(e['commission']);
+        }
+
+        oldTotal = rental +
+            bonusT +
+            advertise +
+            koi +
+            gift +
+            commission +
+            salary +
+            bonus;
+
+        var tempNewTotal = '$oldTotal'.contains('.')
+            ? num.parse('$oldTotal').toStringAsFixed(2)
+            : num.parse('$oldTotal').toString();
+
+        LoadingWidget.dialogLoading(duration: 3, isBack: false);
+        await totalExpenseCol.doc('$year-$month').update({
+          'salaryE': '$salary',
+          'bonusE': '$bonus',
+          'total_expense': tempNewTotal,
+        });
+        Get.back();
+      } else {
+        var tot = salary + bonus;
+        var tempNewTotal = '$tot'.contains('.')
+            ? num.parse('$tot').toStringAsFixed(2)
+            : num.parse('$tot').toString();
+
+        LoadingWidget.dialogLoading(duration: 3, isBack: false);
+        await totalExpenseCol.doc('$year-$month').set({
+          'id': num.parse('$year$month'),
+          'year': year,
+          'month': month,
+          'rental': '0',
+          'salaryE': '$salary',
+          'bonusE': '$bonus',
+          'bonusT': '0',
+          'advertise': '0',
+          'koi': '0',
+          'gift': '0',
+          'commission': '0',
+          'total_expense': tempNewTotal,
+          'net_sale': '0',
+          'sale_revenue': '0',
+          'total_sale': '0',
+          'avg_sale_revenue': '0',
+          'avg_profit': '0',
+        });
+        Get.back();
+      }
+    } else {
+      LoadingWidget.showTextDialog(
+        Get.context!,
+        title: 'Error',
+        content: 'Please insert advertise before calculate.',
+        color: redColor,
+      );
+    }
+  } catch (e) {
+    debugPrint('Failed to total expense advertise: $e');
   }
 }

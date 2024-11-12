@@ -51,6 +51,12 @@ class GiftScreen extends StatelessWidget {
                       con.selectedMonth.value!.split('-')[0],
                       con.selectedMonth.value!.split('-')[1],
                     );
+                    await getTotalExpense(
+                      year: con.selectedMonth.value!.split('-')[0],
+                      month: con.selectedMonth.value!.split('-')[1],
+                    );
+                    if (totalExpense.isNotEmpty)
+                      con.amount.value.text = totalExpense[0].gift;
                     con.filteredGift.value = gift;
                     con.search.value.addListener(con.filterGiftData);
                   }
@@ -63,7 +69,7 @@ class GiftScreen extends StatelessWidget {
               ),
               widget3: AppButtonCalulation(
                 txt: 'Calulation',
-                tap: () {},
+                tap: () => con.calculateTotal(context),
               ),
             ),
             spacer(context),

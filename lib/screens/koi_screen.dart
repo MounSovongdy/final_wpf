@@ -52,6 +52,12 @@ class KoiScreen extends StatelessWidget {
                       con.selectedMonth.value!.split('-')[0],
                       con.selectedMonth.value!.split('-')[1],
                     );
+                    await getTotalExpense(
+                      year: con.selectedMonth.value!.split('-')[0],
+                      month: con.selectedMonth.value!.split('-')[1],
+                    );
+                    if (totalExpense.isNotEmpty)
+                      con.amount.value.text = totalExpense[0].koi;
                     con.filteredKoi.value = koi;
                     con.search.value.addListener(con.filterKoiData);
                   }
@@ -64,7 +70,7 @@ class KoiScreen extends StatelessWidget {
               ),
               widget3: AppButtonCalulation(
                 txt: 'Calulation',
-                tap: () {},
+                tap: () => con.calculateTotal(context),
               ),
             ),
             spacer(context),
@@ -116,7 +122,7 @@ class KoiScreen extends StatelessWidget {
                   tap: () {
                     startInactivityTimer();
                     conNew.clearText();
-                    
+
                     conMain.index.value = 36;
                   },
                 ),

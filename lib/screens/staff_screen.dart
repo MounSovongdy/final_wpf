@@ -52,6 +52,18 @@ class StaffScreen extends StatelessWidget {
                       con.selectedMonth.value!.split('-')[0],
                       con.selectedMonth.value!.split('-')[1],
                     );
+                    await getTotalExpense(
+                      year: con.selectedMonth.value!.split('-')[0],
+                      month: con.selectedMonth.value!.split('-')[1],
+                    );
+                    if (totalExpense.isNotEmpty) {
+                      var temp = num.parse(totalExpense[0].salaryE) +
+                          num.parse(totalExpense[0].bonusE);
+                      con.amount.value.text = '$temp'.contains('.')
+                          ? num.parse('$temp').toStringAsFixed(2)
+                          : num.parse('$temp').toString();
+                    }
+
                     con.filteredStaff.value = saleManCom;
                     con.search.value.addListener(con.filterStaffData);
                   }
@@ -64,7 +76,7 @@ class StaffScreen extends StatelessWidget {
               ),
               widget3: AppButtonCalulation(
                 txt: 'Calulation',
-                tap: () {},
+                tap: () => con.calculateTotal(context),
               ),
             ),
             spacer(context),

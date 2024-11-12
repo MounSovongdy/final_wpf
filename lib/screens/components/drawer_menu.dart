@@ -221,6 +221,18 @@ class DrawerMenu extends StatelessWidget {
                               conStaff.selectedMonth.value!.split('-')[0],
                               conStaff.selectedMonth.value!.split('-')[1],
                             );
+                            await getTotalExpense(
+                              year: conStaff.selectedMonth.value!.split('-')[0],
+                              month:
+                                  conStaff.selectedMonth.value!.split('-')[1],
+                            );
+                            if (totalExpense.isNotEmpty) {
+                              var temp = num.parse(totalExpense[0].salaryE) +
+                                  num.parse(totalExpense[0].bonusE);
+                              conStaff.amount.value.text = '$temp'.contains('.')
+                                  ? num.parse('$temp').toStringAsFixed(2)
+                                  : num.parse('$temp').toString();
+                            }
                           }
                           conStaff.filteredStaff.value = saleManCom;
                           conStaff.search.value
@@ -254,6 +266,17 @@ class DrawerMenu extends StatelessWidget {
                               conTeacher.selectedMonth.value!.split('-')[0],
                               conTeacher.selectedMonth.value!.split('-')[1],
                             );
+                            await getTotalExpense(
+                              year:
+                                  conTeacher.selectedMonth.value!.split('-')[0],
+                              month:
+                                  conTeacher.selectedMonth.value!.split('-')[1],
+                            );
+                            if (totalExpense.isNotEmpty)
+                              conTeacher.amount.value.text =
+                                  totalExpense[0].bonusT;
+                            else
+                              conTeacher.amount.value.text = '';
                           }
                           conTeacher.filteredMicro.value = microCom;
                           conTeacher.search.value
@@ -286,6 +309,15 @@ class DrawerMenu extends StatelessWidget {
                               conAdv.selectedMonth.value!.split('-')[0],
                               conAdv.selectedMonth.value!.split('-')[1],
                             );
+                            await getTotalExpense(
+                              year: conAdv.selectedMonth.value!.split('-')[0],
+                              month: conAdv.selectedMonth.value!.split('-')[1],
+                            );
+                            if (totalExpense.isNotEmpty)
+                              conAdv.amount.value.text =
+                                  totalExpense[0].advertise;
+                            else
+                              conAdv.amount.value.text = '';
                           }
                           conAdv.filteredAdv.value = advertise;
                           conAdv.search.value.addListener(conAdv.filterAdvData);
@@ -317,6 +349,14 @@ class DrawerMenu extends StatelessWidget {
                               conKoi.selectedMonth.value!.split('-')[0],
                               conKoi.selectedMonth.value!.split('-')[1],
                             );
+                            await getTotalExpense(
+                              year: conKoi.selectedMonth.value!.split('-')[0],
+                              month: conKoi.selectedMonth.value!.split('-')[1],
+                            );
+                            if (totalExpense.isNotEmpty)
+                              conKoi.amount.value.text = totalExpense[0].koi;
+                            else
+                              conKoi.amount.value.text = '';
                           }
                           conKoi.filteredKoi.value = koi;
                           conKoi.search.value.addListener(conKoi.filterKoiData);
@@ -348,6 +388,14 @@ class DrawerMenu extends StatelessWidget {
                               conGift.selectedMonth.value!.split('-')[0],
                               conGift.selectedMonth.value!.split('-')[1],
                             );
+                            await getTotalExpense(
+                              year: conGift.selectedMonth.value!.split('-')[0],
+                              month: conGift.selectedMonth.value!.split('-')[1],
+                            );
+                            if (totalExpense.isNotEmpty)
+                              conGift.amount.value.text = totalExpense[0].gift;
+                            else
+                              conGift.amount.value.text = '';
                           }
                           conGift.filteredGift.value = gift;
                           conGift.search.value

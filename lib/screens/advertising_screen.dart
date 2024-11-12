@@ -52,6 +52,12 @@ class AdvertisingScreen extends StatelessWidget {
                       con.selectedMonth.value!.split('-')[0],
                       con.selectedMonth.value!.split('-')[1],
                     );
+                     await getTotalExpense(
+                      year: con.selectedMonth.value!.split('-')[0],
+                      month: con.selectedMonth.value!.split('-')[1],
+                    );
+                    if (totalExpense.isNotEmpty)
+                      con.amount.value.text = totalExpense[0].advertise;
                     con.filteredAdv.value = advertise;
                     con.search.value.addListener(con.filterAdvData);
                   }
@@ -64,7 +70,7 @@ class AdvertisingScreen extends StatelessWidget {
               ),
               widget3: AppButtonCalulation(
                 txt: 'Calulation',
-                tap: () {},
+                tap: () => con.calculateTotal(context),
               ),
             ),
             spacer(context),
