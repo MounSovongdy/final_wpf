@@ -297,12 +297,13 @@ Future<String> generateHtmlContent({
                           ''');
 
   for (int i = counter; i < payment.length; i++) {
+    var amount = num.parse(payment[i].amount).toStringAsFixed(2);
+
     htmlContent.writeln('<tr>');
     htmlContent.writeln('<td style="text-align:center"> ${payment[i].no}</td>');
     htmlContent
         .writeln('<td style="text-align:center"> ${payment[i].date}</td>');
-    htmlContent
-        .writeln('<td style="text-align:center"> ${payment[i].amount}</td>');
+    htmlContent.writeln('<td style="text-align:center"> $amount \$</td>');
     htmlContent.writeln('<td> ${payment[i].note}</td>');
     htmlContent.writeln('</tr>');
   }
@@ -316,7 +317,7 @@ Future<String> generateHtmlContent({
                               <div>
                                 <img src="http://moto.cpos.cc/payment.png" alt="" width="100%">
                               </div><br>
-                              <div style="font-size:15px; font-family:Khmer OS Battambang;">ក្នុងករណីបង់យឺត អតិថិជនយល់ព្រមបង់ប្រាក់ពិន័យក្នុងថ្ងៃចំនួន <b>$penalty</div>
+                              <div style="font-size:15px; font-family:Khmer OS Battambang;">ក្នុងករណីបង់យឺត អតិថិជនយល់ព្រមបង់ប្រាក់ពិន័យក្នុងថ្ងៃចំនួន <b>$penalty \$</div>
                               <div style="font-size:15px; font-family:Khmer OS Battambang;">អតិថិជនបានអាន និងស្តាប់ហើយព្រមព្រៀងបង់តាមពេលវេលាដែលបានកំណត់ដូចខាងលើ។</div>
                               <br>
                               <div style="font-size:15px; font-family:Khmer OS Battambang;text-align:right">ធ្វើនៅ រាជធានីភ្នំពេញ ថ្ងៃទី <b>$leasingDay ខែ <b>$leasingMonth ឆ្នាំ <b>$leasingYear </div>
@@ -358,7 +359,7 @@ void printPaymentTable(int id) async {
   int counter = 0;
 
   final htmlContent = await generateHtmlContent(
-    penalty: '2.00',
+    penalty: byReceivable[0].penalty,
     counter: counter,
     payment: schedule,
     leasingYear: byLeasing[0].leasingDate.split(' ')[0].split('-')[0],

@@ -23,6 +23,7 @@ class ReceivableModel {
   final String plateAmount;
   final String receiveAmount;
   final String amountLeft;
+  final String penalty;
 
   ReceivableModel({
     required this.id,
@@ -47,6 +48,7 @@ class ReceivableModel {
     required this.plateAmount,
     required this.receiveAmount,
     required this.amountLeft,
+    required this.penalty,
   });
 
   Map<String, dynamic> toMap() {
@@ -73,6 +75,7 @@ class ReceivableModel {
       'plate_amount': plateAmount,
       'receive_amount': receiveAmount,
       'amount_left': amountLeft,
+      'penalty': penalty,
     };
   }
 
@@ -100,6 +103,7 @@ class ReceivableModel {
       plateAmount: map['plate_amount'] as String,
       receiveAmount: map['receive_amount'] as String,
       amountLeft: map['amount_left'] as String,
+      penalty: map['penalty'] as String,
     );
   }
 

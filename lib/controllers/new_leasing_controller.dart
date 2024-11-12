@@ -157,6 +157,15 @@ class NewLeasingController extends GetxController {
       int debt = int.parse(totalOwn.value.text);
       List<PaymentTableModel> dataListTable = [];
 
+      var tempTot = total.value.text;
+      var newTot = tempTot;
+      if (plateAmount.value.text != '') {
+        tempTot = '${num.parse(tempTot) + num.parse(plateAmount.value.text)}';
+        newTot = tempTot.contains('.')
+            ? num.parse(tempTot).toStringAsFixed(2)
+            : num.parse(tempTot).toString();
+      }
+
       LeasingModel newLeasing = LeasingModel(
         id: leasingID,
         leasingDate: '$dateNow $timeNow',
@@ -241,12 +250,13 @@ class NewLeasingController extends GetxController {
         condition: condition.value ?? '',
         firstPayment: firstPayDate.value.text,
         interest: interest.value.text,
-        total: total.value.text,
+        total: newTot,
         term: term.value.text,
         platePayment: platePay.value ?? '',
         plateAmount: plateAmount.value.text,
         receiveAmount: '0',
-        amountLeft: total.value.text,
+        amountLeft: newTot,
+        penalty: penalty.value.text,
       );
       PaymentTableModel newPlatePaid = PaymentTableModel(
         id: leasingID,
@@ -441,10 +451,10 @@ class NewLeasingController extends GetxController {
   Future<void> generatePaymentTable() async {
     var date = DateTime.parse(firstPayDate.value.text);
     var startDate = DateTime(date.year, date.month, date.day);
-    var x = int.parse(total.value.text);
-    var z = int.parse(term.value.text);
+    var x = num.parse(total.value.text);
+    var z = num.parse(term.value.text);
     var temp = x / z;
-    var perAmount = double.parse(temp.toStringAsFixed(2));
+    var perAmount = num.parse(temp.toStringAsFixed(2));
 
     scheduleList.value = [dateFormat.format(startDate)];
     noList.value = ['1'];
@@ -457,8 +467,8 @@ class NewLeasingController extends GetxController {
       noList.add('${i + 2}');
 
       if (i + 1 == (int.parse(term.value.text) - 1)) {
-        var newA = x  - (perAmount * (i + 1));
-        var newB = double.parse(newA.toStringAsFixed(2));
+        var newA = x - (perAmount * (i + 1));
+        var newB = num.parse(newA.toStringAsFixed(2));
         amountList.add('$newB');
       } else {
         amountList.add('$perAmount');
@@ -624,5 +634,6 @@ class NewLeasingController extends GetxController {
     term.value.text = '';
     platePay.value = null;
     plateAmount.value.text = '';
+    penalty.value.text = '';
   }
 }
