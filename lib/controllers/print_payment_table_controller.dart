@@ -20,6 +20,7 @@ String buildTableRows(List<Map<String, dynamic>> payment) {
 }
 
 Future<String> generateHtmlContent({
+  required String penalty,
   required int counter,
   required payment,
   required String leasingYear,
@@ -263,32 +264,32 @@ Future<String> generateHtmlContent({
                               </table>
                               <table width="100%" style="font-size:15px; font-family:Khmer OS Battambang;">                                 
                                 <tr>                               
-                                  <td>អាសយដ្ឋាន <b>$address</td>
+                                  <td colspan="4">អាសយដ្ឋាន <b>$address</td>
                                 </tr>       
                                 <tr>                               
-                                  <td >បានបង់រំលស់ម៉ូតូមួយគ្រឿងម៉ាក <b>$model</td>
-                                  <td>ឆ្នាំផលិត <b>$year</td>
+                                  <td colspan="2" width="75%">បានបង់រំលស់ម៉ូតូមួយគ្រឿងម៉ាក <b>$model</td>
+                                  <td colspan="2">ឆ្នាំផលិត <b>$year</td>
                                 </tr>     
                                  <tr>                               
-                                  <td >លេខតួ <b>$frameNo</td>
+                                  <td>លេខតួ <b>$frameNo</td>
                                   <td>លេខម៉ាស៊ីន <b>$engineeNo</td>
                                   <td>ពន្ធ/ស្លាកលេខ <b>$plateNo</td>
                                 </tr>  
                                  <tr>                               
-                                  <td >តម្លៃម៉ូតូ <b>$price</td>
-                                  <td>ចំនួនទឹកប្រាក់អនុម័ត <b>$approve</td>
-                                  <td>ចំនួនលុយចូលរួម <b>$deposit</td>
-                                  <td>ដូចនេះនៅខ្វះ <b>$totalOwn</td>
+                                  <td width="25%">តម្លៃម៉ូតូ <b>$price</td>
+                                  <td width="25%">ចំនួនទឹកប្រាក់អនុម័ត <b>$approve</td>
+                                  <td width="25%">ចំនួនលុយចូលរួម <b>$deposit</td>
+                                  <td width="25%">ដូចនេះនៅខ្វះ <b>$totalOwn</td>
                                 </tr>                       
                               </table>
                               <div style="font-size:15px; font-family:Khmer OS Battambang;">ចំនួនលុយដែលនៅខ្វះត្រូវបង់រំសល់ជាមួយហាងម៉ូតូ ហេង សុខបញ្ញាតាមតារាងបង់ប្រាក់ខាងក្រោម៖</div><br>
                               <table width="100%" style="font-size:15px; font-family:Khmer OS Battambang;border:1px solid" class="invoice-table">  
                                 <thead>
-                                  <tr>
-                                      <th>ល.រ</th>
-                                      <th>កាលបរិច្ឆេទបង់លុយ</th>
-                                      <th>ចំនួនលុយត្រូវបង់</th>
-                                      <th>កំណត់សំគាល់</th>
+                                  <tr >
+                                      <th style="text-align:center">ល.រ</th>
+                                      <th style="text-align:center">កាលបរិច្ឆេទបង់លុយ</th>
+                                      <th style="text-align:center">ចំនួនលុយត្រូវបង់</th>
+                                      <th style="text-align:center">កំណត់សំគាល់</th>
                                   </tr>
                                   
                                 </thead>
@@ -297,9 +298,11 @@ Future<String> generateHtmlContent({
 
   for (int i = counter; i < payment.length; i++) {
     htmlContent.writeln('<tr>');
-    htmlContent.writeln('<td> ${payment[i].no}</td>');
-    htmlContent.writeln('<td> ${payment[i].date}</td>');
-    htmlContent.writeln('<td> ${payment[i].amount}</td>');
+    htmlContent.writeln('<td style="text-align:center"> ${payment[i].no}</td>');
+    htmlContent
+        .writeln('<td style="text-align:center"> ${payment[i].date}</td>');
+    htmlContent
+        .writeln('<td style="text-align:center"> ${payment[i].amount}</td>');
     htmlContent.writeln('<td> ${payment[i].note}</td>');
     htmlContent.writeln('</tr>');
   }
@@ -313,11 +316,11 @@ Future<String> generateHtmlContent({
                               <div>
                                 <img src="http://moto.cpos.cc/payment.png" alt="" width="100%">
                               </div><br>
-                              <div style="font-size:15px; font-family:Khmer OS Battambang;">ក្នុងករណីបង់យឺត អតិថិជនយល់ព្រមបង់ប្រាក់ពិន័យក្នុងថ្ងៃចំនួន</div>
+                              <div style="font-size:15px; font-family:Khmer OS Battambang;">ក្នុងករណីបង់យឺត អតិថិជនយល់ព្រមបង់ប្រាក់ពិន័យក្នុងថ្ងៃចំនួន <b>$penalty</div>
                               <div style="font-size:15px; font-family:Khmer OS Battambang;">អតិថិជនបានអាន និងស្តាប់ហើយព្រមព្រៀងបង់តាមពេលវេលាដែលបានកំណត់ដូចខាងលើ។</div>
                               <br>
                               <div style="font-size:15px; font-family:Khmer OS Battambang;text-align:right">ធ្វើនៅ រាជធានីភ្នំពេញ ថ្ងៃទី <b>$leasingDay ខែ <b>$leasingMonth ឆ្នាំ <b>$leasingYear </div>
-                              <br><br>
+                              <br>
                               <table width="100%">
                                 <tr>
                                   <td width="50%">
@@ -355,6 +358,7 @@ void printPaymentTable(int id) async {
   int counter = 0;
 
   final htmlContent = await generateHtmlContent(
+    penalty: '2.00',
     counter: counter,
     payment: schedule,
     leasingYear: byLeasing[0].leasingDate.split(' ')[0].split('-')[0],
