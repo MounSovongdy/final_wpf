@@ -33,8 +33,8 @@ class StaffController extends GetxController {
       var month = selectedMonth.split('-')?[1];
       await insertTotalExpenseStaff(year: year ?? '', month: month ?? '');
       await getTotalExpense(year: year ?? '', month: month ?? '');
-      var temp = num.parse(totalExpense[0].salaryE) +
-          num.parse(totalExpense[0].bonusE);
+      var temp = num.parse(byTotalExpense[0].salaryE) +
+          num.parse(byTotalExpense[0].bonusE);
       amount.value.text = '$temp'.contains('.')
           ? num.parse('$temp').toStringAsFixed(2)
           : num.parse('$temp').toString();

@@ -52,8 +52,8 @@ class CommissionScreen extends StatelessWidget {
                       year: con.selectedMonth.value!.split('-')[0],
                       month: con.selectedMonth.value!.split('-')[1],
                     );
-                    if (totalExpense.isNotEmpty)
-                      con.amount.value.text = totalExpense[0].commission;
+                    if (byTotalExpense.isNotEmpty)
+                      con.amount.value.text = byTotalExpense[0].commission;
                     con.filteredCommission.value = friendCom;
                     con.search.value.addListener(con.filterCommissionData);
                   }

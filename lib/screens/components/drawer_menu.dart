@@ -9,6 +9,8 @@ import 'package:motor/controllers/advertising_controller.dart';
 import 'package:motor/controllers/booking_controller.dart';
 import 'package:motor/controllers/cash_controller.dart';
 import 'package:motor/controllers/commission_controller.dart';
+import 'package:motor/controllers/finance_card_controller.dart';
+import 'package:motor/controllers/finance_record_controller.dart';
 import 'package:motor/controllers/gift_controller.dart';
 import 'package:motor/controllers/koi_controller.dart';
 import 'package:motor/controllers/leasing_controller.dart';
@@ -53,6 +55,8 @@ class DrawerMenu extends StatelessWidget {
   final conGift = Get.put(GiftController());
   final conKoi = Get.put(KoiController());
   final conReset = Get.put(ResetPasswordController());
+  final conFR = Get.put(FinanceRecordController());
+  final conFC = Get.put(FinanceCardController());
 
   @override
   Widget build(BuildContext context) {
@@ -189,9 +193,87 @@ class DrawerMenu extends StatelessWidget {
                     Container(
                       padding: EdgeInsets.only(left: 36.px),
                       child: DrawerListTile(
-                        tap: () {
+                        tap: () async {
                           if (Responsive.isMobile(context)) con.controlDrawer();
                           startInactivityTimer();
+                          await getAllTotalExpense();
+                          conFR.monthList.clear();
+                          if (totalExpense.isNotEmpty) {
+                            for (var data in totalExpense) {
+                              conFR.monthList.add('${data.year}-${data.month}');
+                            }
+                            conFR.monthList.value =
+                                conFR.monthList.toSet().toList();
+                            conFR.selectedMonth.value = conFR.monthList[0];
+
+                            await getTotalExpense(
+                              year: conFR.selectedMonth.value!.split('-')[0],
+                              month: conFR.selectedMonth.value!.split('-')[1],
+                            );
+                            if (byTotalExpense.isNotEmpty) {
+                              var tempA =
+                                  num.parse(byTotalExpense[0].advertise);
+                              var tempS = num.parse(byTotalExpense[0].salaryE);
+                              var tempr = num.parse(byTotalExpense[0].rental);
+                              var tempk = num.parse(byTotalExpense[0].koi);
+                              var tempg = num.parse(byTotalExpense[0].gift);
+                              var tempe = num.parse(byTotalExpense[0].bonusE);
+                              var tempt = num.parse(byTotalExpense[0].bonusT);
+                              var tempc =
+                                  num.parse(byTotalExpense[0].commission);
+                              var tempte =
+                                  num.parse(byTotalExpense[0].totalExpense);
+
+                              conFC.adv.value = '$tempA'.contains('.')
+                                  ? num.parse('$tempA').toStringAsFixed(2)
+                                  : num.parse('$tempA').toString();
+                              conFC.salary.value = '$tempS'.contains('.')
+                                  ? num.parse('$tempS').toStringAsFixed(2)
+                                  : num.parse('$tempS').toString();
+                              conFC.rent.value = '$tempr'.contains('.')
+                                  ? num.parse('$tempr').toStringAsFixed(2)
+                                  : num.parse('$tempr').toString();
+                              conFC.koi.value = '$tempk'.contains('.')
+                                  ? num.parse('$tempk').toStringAsFixed(2)
+                                  : num.parse('$tempk').toString();
+                              conFC.gift.value = '$tempg'.contains('.')
+                                  ? num.parse('$tempg').toStringAsFixed(2)
+                                  : num.parse('$tempg').toString();
+                              conFC.bonusE.value = '$tempe'.contains('.')
+                                  ? num.parse('$tempe').toStringAsFixed(2)
+                                  : num.parse('$tempe').toString();
+                              conFC.bonusT.value = '$tempt'.contains('.')
+                                  ? num.parse('$tempt').toStringAsFixed(2)
+                                  : num.parse('$tempt').toString();
+                              conFC.comm.value = '$tempc'.contains('.')
+                                  ? num.parse('$tempc').toStringAsFixed(2)
+                                  : num.parse('$tempc').toString();
+
+                              conFR.totalExpense.value.text = '$tempte'
+                                      .contains('.')
+                                  ? '${num.parse('$tempte').toStringAsFixed(2)} \$'
+                                  : '${num.parse('$tempte')} \$';
+
+                              conFC.itemValue.value = [
+                                {'value': '${conFC.adv.value} \$'},
+                                {'value': '${conFC.rent.value} \$'},
+                                {'value': '${conFC.salary.value} \$'},
+                                {'value': '${conFC.koi.value} \$'},
+                                {'value': '${conFC.gift.value} \$'},
+                                {'value': '${conFC.bonusE.value} \$'},
+                                {'value': '${conFC.bonusT.value} \$'},
+                                {'value': '${conFC.comm.value} \$'},
+                              ];
+
+                              conFC.financeValue.value = [
+                                {'value': '${conFC.netsale.value} \$'},
+                                {'value': '${conFC.saleRevenue.value} \$'},
+                                {'value': '${conFC.totalUnitSale.value} \$'},
+                                {'value': '${conFC.avgSaleRevenue.value} \$'},
+                                {'value': '${conFC.avgProfit.value} \$'},
+                              ];
+                            }
+                          }
 
                           con.index.value = 13;
                         },
@@ -226,9 +308,9 @@ class DrawerMenu extends StatelessWidget {
                               month:
                                   conStaff.selectedMonth.value!.split('-')[1],
                             );
-                            if (totalExpense.isNotEmpty) {
-                              var temp = num.parse(totalExpense[0].salaryE) +
-                                  num.parse(totalExpense[0].bonusE);
+                            if (byTotalExpense.isNotEmpty) {
+                              var temp = num.parse(byTotalExpense[0].salaryE) +
+                                  num.parse(byTotalExpense[0].bonusE);
                               conStaff.amount.value.text = '$temp'.contains('.')
                                   ? num.parse('$temp').toStringAsFixed(2)
                                   : num.parse('$temp').toString();
@@ -272,9 +354,9 @@ class DrawerMenu extends StatelessWidget {
                               month:
                                   conTeacher.selectedMonth.value!.split('-')[1],
                             );
-                            if (totalExpense.isNotEmpty)
+                            if (byTotalExpense.isNotEmpty)
                               conTeacher.amount.value.text =
-                                  totalExpense[0].bonusT;
+                                  byTotalExpense[0].bonusT;
                             else
                               conTeacher.amount.value.text = '';
                           }
@@ -313,9 +395,9 @@ class DrawerMenu extends StatelessWidget {
                               year: conAdv.selectedMonth.value!.split('-')[0],
                               month: conAdv.selectedMonth.value!.split('-')[1],
                             );
-                            if (totalExpense.isNotEmpty)
+                            if (byTotalExpense.isNotEmpty)
                               conAdv.amount.value.text =
-                                  totalExpense[0].advertise;
+                                  byTotalExpense[0].advertise;
                             else
                               conAdv.amount.value.text = '';
                           }
@@ -353,8 +435,8 @@ class DrawerMenu extends StatelessWidget {
                               year: conKoi.selectedMonth.value!.split('-')[0],
                               month: conKoi.selectedMonth.value!.split('-')[1],
                             );
-                            if (totalExpense.isNotEmpty)
-                              conKoi.amount.value.text = totalExpense[0].koi;
+                            if (byTotalExpense.isNotEmpty)
+                              conKoi.amount.value.text = byTotalExpense[0].koi;
                             else
                               conKoi.amount.value.text = '';
                           }
@@ -392,8 +474,9 @@ class DrawerMenu extends StatelessWidget {
                               year: conGift.selectedMonth.value!.split('-')[0],
                               month: conGift.selectedMonth.value!.split('-')[1],
                             );
-                            if (totalExpense.isNotEmpty)
-                              conGift.amount.value.text = totalExpense[0].gift;
+                            if (byTotalExpense.isNotEmpty)
+                              conGift.amount.value.text =
+                                  byTotalExpense[0].gift;
                             else
                               conGift.amount.value.text = '';
                           }
@@ -432,9 +515,9 @@ class DrawerMenu extends StatelessWidget {
                               year: conFri.selectedMonth.value!.split('-')[0],
                               month: conFri.selectedMonth.value!.split('-')[1],
                             );
-                            if (totalExpense.isNotEmpty)
+                            if (byTotalExpense.isNotEmpty)
                               conFri.amount.value.text =
-                                  totalExpense[0].commission;
+                                  byTotalExpense[0].commission;
                             else
                               conFri.amount.value.text = '';
                           }
@@ -476,9 +559,9 @@ class DrawerMenu extends StatelessWidget {
                               month:
                                   conRental.selectedMonth.value!.split('-')[1],
                             );
-                            if (totalExpense.isNotEmpty)
+                            if (byTotalExpense.isNotEmpty)
                               conRental.amount.value.text =
-                                  totalExpense[0].rental;
+                                  byTotalExpense[0].rental;
                             else
                               conRental.amount.value.text = '';
                           }

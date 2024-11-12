@@ -99,6 +99,7 @@ var paymentTable = [].obs;
 var byResetPassword = [].obs;
 var resetPassword = [].obs;
 var totalExpense = [].obs;
+var byTotalExpense = [].obs;
 
 Future<void> getByUser(String userlogin) async {
   var res = await userCol.where('user', isEqualTo: userlogin).get();
@@ -1401,6 +1402,13 @@ dynamic conToNum(String input) {
   }
 }
 
+Future<void> getAllTotalExpense() async {
+  var res = await totalExpenseCol.orderBy('id', descending: true).get();
+
+  totalExpense.value =
+      res.docs.map((doc) => TotalExpenseModel.fromMap(doc.data())).toList();
+}
+
 Future<void> getTotalExpense({
   required String year,
   required String month,
@@ -1410,7 +1418,7 @@ Future<void> getTotalExpense({
       .where('month', isEqualTo: month)
       .get();
 
-  totalExpense.value =
+  byTotalExpense.value =
       res.docs.map((doc) => TotalExpenseModel.fromMap(doc.data())).toList();
 }
 

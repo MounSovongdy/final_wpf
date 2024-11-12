@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:motor/constants/constants.dart';
+import 'package:motor/constants/firebase.dart';
+import 'package:motor/controllers/finance_card_controller.dart';
 import 'package:motor/controllers/finance_record_controller.dart';
 import 'package:motor/screens/components/app_dropdown_search.dart';
+import 'package:motor/screens/components/app_text_field.dart';
 import 'package:motor/screens/components/finance_card.dart';
 import 'package:motor/screens/components/row_text_field.dart';
 import 'package:motor/screens/widgets/app_text.dart';
@@ -12,6 +15,7 @@ class FinancialRecordScreen extends StatelessWidget {
   FinancialRecordScreen({super.key});
 
   final con = Get.put(FinanceRecordController());
+  final conFC = Get.put(FinanceCardController());
 
   @override
   Widget build(BuildContext context) {
@@ -28,20 +32,100 @@ class FinancialRecordScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             AppText.header(context, txt: 'Financial Record'),
-            RowTextField(
+            spacer(context),
+            RowTextField2(
               spacer: spacer(context),
-              widget3: AppDropdownSearch(
+              widget1: AppTextField(
+                txt: 'Total Expense',
+                con: con.totalExpense.value,
+                readOnly: true,
+              ),
+              widget2: AppDropdownSearch(
                 txt: 'Select Month',
                 value: con.selectedMonth,
                 list: con.monthList,
-                onChanged: (v) {
-                  if (v != null) con.selectedMonth.value = v;
+                onChanged: (v) async {
+                  if (v != null) {
+                    con.selectedMonth.value = v;
+                    await getTotalExpense(
+                      year: con.selectedMonth.value!.split('-')[0],
+                      month: con.selectedMonth.value!.split('-')[1],
+                    );
+                    if (byTotalExpense.isNotEmpty) {
+                      var tempA = num.parse(byTotalExpense[0].advertise);
+                      var tempS = num.parse(byTotalExpense[0].salaryE);
+                      var tempr = num.parse(byTotalExpense[0].rental);
+                      var tempk = num.parse(byTotalExpense[0].koi);
+                      var tempg = num.parse(byTotalExpense[0].gift);
+                      var tempe = num.parse(byTotalExpense[0].bonusE);
+                      var tempt = num.parse(byTotalExpense[0].bonusT);
+                      var tempc = num.parse(byTotalExpense[0].commission);
+                      var tempte = num.parse(byTotalExpense[0].totalExpense);
+
+                      conFC.adv.value = '$tempA'.contains('.')
+                          ? num.parse('$tempA').toStringAsFixed(2)
+                          : num.parse('$tempA').toString();
+                      conFC.salary.value = '$tempS'.contains('.')
+                          ? num.parse('$tempS').toStringAsFixed(2)
+                          : num.parse('$tempS').toString();
+                      conFC.rent.value = '$tempr'.contains('.')
+                          ? num.parse('$tempr').toStringAsFixed(2)
+                          : num.parse('$tempr').toString();
+                      conFC.koi.value = '$tempk'.contains('.')
+                          ? num.parse('$tempk').toStringAsFixed(2)
+                          : num.parse('$tempk').toString();
+                      conFC.gift.value = '$tempg'.contains('.')
+                          ? num.parse('$tempg').toStringAsFixed(2)
+                          : num.parse('$tempg').toString();
+                      conFC.bonusE.value = '$tempe'.contains('.')
+                          ? num.parse('$tempe').toStringAsFixed(2)
+                          : num.parse('$tempe').toString();
+                      conFC.bonusT.value = '$tempt'.contains('.')
+                          ? num.parse('$tempt').toStringAsFixed(2)
+                          : num.parse('$tempt').toString();
+                      conFC.comm.value = '$tempc'.contains('.')
+                          ? num.parse('$tempc').toStringAsFixed(2)
+                          : num.parse('$tempc').toString();
+
+                      con.totalExpense.value.text = '$tempte'.contains('.')
+                          ? '${num.parse('$tempte').toStringAsFixed(2)} \$'
+                          : '${num.parse('$tempte')} \$';
+
+                      conFC.itemValue.value = [
+                        {'value': '${conFC.adv.value} \$'},
+                        {'value': '${conFC.rent.value} \$'},
+                        {'value': '${conFC.salary.value} \$'},
+                        {'value': '${conFC.koi.value} \$'},
+                        {'value': '${conFC.gift.value} \$'},
+                        {'value': '${conFC.bonusE.value} \$'},
+                        {'value': '${conFC.bonusT.value} \$'},
+                        {'value': '${conFC.comm.value} \$'},
+                      ];
+
+                      conFC.financeValue.value = [
+                        {'value': '${conFC.netsale.value} \$'},
+                        {'value': '${conFC.saleRevenue.value} \$'},
+                        {'value': '${conFC.totalUnitSale.value} \$'},
+                        {'value': '${conFC.avgSaleRevenue.value} \$'},
+                        {'value': '${conFC.avgProfit.value} \$'},
+                      ];
+                    }
+                  }
                 },
               ),
             ),
             spacer(context),
             spacer(context),
-            FinanceCard(),
+            FinanceCard(
+              title: conFC.itemTitle,
+              value: conFC.itemValue,
+            ),
+            spacer(context),
+            spacer(context),
+            FinanceCard(
+              title: conFC.financeTitle,
+              value: conFC.financeValue,
+            ),
           ],
         ),
       ),

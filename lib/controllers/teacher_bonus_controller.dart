@@ -31,7 +31,7 @@ class MicroExpenseController extends GetxController {
       var month = selectedMonth.split('-')?[1];
       await insertTotalExpenseBonusT(year: year ?? '', month: month ?? '');
       await getTotalExpense(year: year ?? '', month: month ?? '');
-      amount.value.text = totalExpense[0].bonusT;
+      amount.value.text = byTotalExpense[0].bonusT;
       LoadingWidget.showTextDialog(
         context,
         title: 'Successfully',

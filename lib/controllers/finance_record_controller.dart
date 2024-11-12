@@ -1,19 +1,10 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class FinanceRecordController extends GetxController{
+class FinanceRecordController extends GetxController {
+  var monthList = [''].obs;
+
+  var totalExpense = TextEditingController().obs;
   var selectedMonth = Rxn<String>();
-  var monthList = [
-    'January',
-    'February',
-    'March',
-    'April',
-    'May',
-    'June',
-    'July',
-    'August',
-    'September',
-    'October',
-    'November',
-    'December',
-  ].obs;
+  var amount = TextEditingController().obs;
 }

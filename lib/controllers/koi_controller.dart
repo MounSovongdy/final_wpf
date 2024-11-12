@@ -30,7 +30,7 @@ class KoiController extends GetxController {
       var month = selectedMonth.split('-')?[1];
       await insertTotalExpenseKoi(year: year ?? '', month: month ?? '');
       await getTotalExpense(year: year ?? '', month: month ?? '');
-      amount.value.text = totalExpense[0].koi;
+      amount.value.text = byTotalExpense[0].koi;
       LoadingWidget.showTextDialog(
         context,
         title: 'Successfully',

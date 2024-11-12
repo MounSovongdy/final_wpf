@@ -50,8 +50,8 @@ class MicroExpenseScreen extends StatelessWidget {
                       year: con.selectedMonth.value!.split('-')[0],
                       month: con.selectedMonth.value!.split('-')[1],
                     );
-                    if (totalExpense.isNotEmpty)
-                      con.amount.value.text = totalExpense[0].microCom;
+                    if (byTotalExpense.isNotEmpty)
+                      con.amount.value.text = byTotalExpense[0].microCom;
 
                     con.filteredMicro.value = microCom;
                     con.search.value.addListener(con.filterMicroData);

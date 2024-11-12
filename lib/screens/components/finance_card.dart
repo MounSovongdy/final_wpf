@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:motor/constants/constants.dart';
 import 'package:motor/constants/responsive.dart';
-import 'package:motor/controllers/finance_card_controller.dart';
 import 'package:motor/screens/widgets/app_text.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 class FinanceCard extends StatelessWidget {
-  FinanceCard({super.key});
+  final List title;
+  final List value;
 
-  final con = Get.put(FinanceCardController());
+  const FinanceCard({super.key, required this.title, required this.value});
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +21,7 @@ class FinanceCard extends StatelessWidget {
         mainAxisSpacing: Responsive.isDesktop(context) ? 20 : 10,
         childAspectRatio: Responsive.isDesktop(context) ? 2 : 1.5,
       ),
-      itemCount: con.itemTitle.length,
+      itemCount: title.length,
       itemBuilder: (context, index) {
         return Card(
           elevation: 4,
@@ -35,18 +35,17 @@ class FinanceCard extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                AppText.title(
-                  context,
-                  txt: '${con.itemTitle[index]['name']}',
-                ),
+                AppText.title(context, txt: '${title[index]['name']}'),
                 const Spacer(),
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    const Spacer(),
-                    AppText.header(
-                      context,
-                      txt: '${con.itemValue[index]['value']}',
-                      color: bgColor,
+                    Obx(
+                      () => AppText.header(
+                        context,
+                        txt: '${value[index]['value']}',
+                        color: bgColor,
+                      ),
                     ),
                   ],
                 ),

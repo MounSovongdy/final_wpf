@@ -55,8 +55,8 @@ class GiftScreen extends StatelessWidget {
                       year: con.selectedMonth.value!.split('-')[0],
                       month: con.selectedMonth.value!.split('-')[1],
                     );
-                    if (totalExpense.isNotEmpty)
-                      con.amount.value.text = totalExpense[0].gift;
+                    if (byTotalExpense.isNotEmpty)
+                      con.amount.value.text = byTotalExpense[0].gift;
                     con.filteredGift.value = gift;
                     con.search.value.addListener(con.filterGiftData);
                   }

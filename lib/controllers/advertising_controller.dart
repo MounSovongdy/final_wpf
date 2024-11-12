@@ -24,13 +24,13 @@ class AdvertisingController extends GetxController {
     }).toList();
   }
 
-    void calculateTotal(BuildContext context) async {
+  void calculateTotal(BuildContext context) async {
     if (selectedMonth.value != null) {
       var year = selectedMonth.split('-')?[0];
       var month = selectedMonth.split('-')?[1];
       await insertTotalExpenseAdv(year: year ?? '', month: month ?? '');
       await getTotalExpense(year: year ?? '', month: month ?? '');
-      amount.value.text = totalExpense[0].advertise;
+      amount.value.text = byTotalExpense[0].advertise;
       LoadingWidget.showTextDialog(
         context,
         title: 'Successfully',
@@ -46,5 +46,4 @@ class AdvertisingController extends GetxController {
       );
     }
   }
-
 }

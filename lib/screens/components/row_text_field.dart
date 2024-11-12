@@ -7,7 +7,6 @@ class RowTextField extends StatelessWidget {
   final SizedBox spacer;
   final Widget? widget1, widget2, widget3;
 
-
   const RowTextField({
     super.key,
     required this.spacer,
@@ -50,9 +49,49 @@ class RowTextField extends StatelessWidget {
   }
 }
 
+class RowTextField2 extends StatelessWidget {
+  final SizedBox spacer;
+  final Widget? widget1, widget2;
+
+  const RowTextField2({
+    super.key,
+    required this.spacer,
+    this.widget1,
+    this.widget2,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Responsive.isDesktop(context) ? spacer : Container(),
+        Container(
+          margin: EdgeInsets.only(right: defWebPad.px),
+          child: Responsive.isDesktop(context)
+              ? Row(
+                  children: [
+                    Expanded(flex: 4, child: widget1 ?? Container()),
+                    Expanded(flex: 1, child: Container()),
+                    Expanded(flex: 4, child: widget2 ?? Container()),
+                  ],
+                )
+              : Column(
+                  children: [
+                    spacer,
+                    widget1 ?? Container(),
+                    spacer,
+                    widget2 ?? Container(),
+                  ],
+                ),
+        ),
+      ],
+    );
+  }
+}
+
 class RowTextField6 extends StatelessWidget {
   final SizedBox spacer;
-  final Widget? widget1, widget2, widget3,widget4, widget5, widget6;
+  final Widget? widget1, widget2, widget3, widget4, widget5, widget6;
 
   const RowTextField6({
     super.key,
@@ -74,37 +113,37 @@ class RowTextField6 extends StatelessWidget {
           margin: EdgeInsets.only(right: defWebPad.px),
           child: Responsive.isDesktop(context)
               ? Row(
-            children: [
-              Expanded(flex: 4, child: widget1 ?? Container()),
-              Expanded(flex: 1, child: Container()),
-              Expanded(flex: 4, child: widget2 ?? Container()),
-              Expanded(flex: 1, child: Container()),
-              Expanded(flex: 4, child: widget3 ?? Container()),
-              Expanded(flex: 1, child: Container()),
-              Expanded(flex: 4, child: widget4 ?? Container()),
-              Expanded(flex: 1, child: Container()),
-              Expanded(flex: 4, child: widget5 ?? Container()),
-              Expanded(flex: 1, child: Container()),
-              Expanded(flex: 4, child: widget6 ?? Container()),
-            ],
-          )
+                  children: [
+                    Expanded(flex: 4, child: widget1 ?? Container()),
+                    Expanded(flex: 1, child: Container()),
+                    Expanded(flex: 4, child: widget2 ?? Container()),
+                    Expanded(flex: 1, child: Container()),
+                    Expanded(flex: 4, child: widget3 ?? Container()),
+                    Expanded(flex: 1, child: Container()),
+                    Expanded(flex: 4, child: widget4 ?? Container()),
+                    Expanded(flex: 1, child: Container()),
+                    Expanded(flex: 4, child: widget5 ?? Container()),
+                    Expanded(flex: 1, child: Container()),
+                    Expanded(flex: 4, child: widget6 ?? Container()),
+                  ],
+                )
               : Column(
-            children: [
-              spacer,
-              widget1 ?? Container(),
-              spacer,
-              widget2 ?? Container(),
-              spacer,
-              widget3 ?? Container(),
-              spacer,
-              widget4 ?? Container(),
-              spacer,
-              widget5 ?? Container(),
-              spacer,
-              widget6 ?? Container(),
-              if (widget6 != null) spacer,
-            ],
-          ),
+                  children: [
+                    spacer,
+                    widget1 ?? Container(),
+                    spacer,
+                    widget2 ?? Container(),
+                    spacer,
+                    widget3 ?? Container(),
+                    spacer,
+                    widget4 ?? Container(),
+                    spacer,
+                    widget5 ?? Container(),
+                    spacer,
+                    widget6 ?? Container(),
+                    if (widget6 != null) spacer,
+                  ],
+                ),
         ),
       ],
     );

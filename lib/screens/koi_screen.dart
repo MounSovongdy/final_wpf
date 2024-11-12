@@ -56,8 +56,8 @@ class KoiScreen extends StatelessWidget {
                       year: con.selectedMonth.value!.split('-')[0],
                       month: con.selectedMonth.value!.split('-')[1],
                     );
-                    if (totalExpense.isNotEmpty)
-                      con.amount.value.text = totalExpense[0].koi;
+                    if (byTotalExpense.isNotEmpty)
+                      con.amount.value.text = byTotalExpense[0].koi;
                     con.filteredKoi.value = koi;
                     con.search.value.addListener(con.filterKoiData);
                   }

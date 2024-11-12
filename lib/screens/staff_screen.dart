@@ -56,9 +56,9 @@ class StaffScreen extends StatelessWidget {
                       year: con.selectedMonth.value!.split('-')[0],
                       month: con.selectedMonth.value!.split('-')[1],
                     );
-                    if (totalExpense.isNotEmpty) {
-                      var temp = num.parse(totalExpense[0].salaryE) +
-                          num.parse(totalExpense[0].bonusE);
+                    if (byTotalExpense.isNotEmpty) {
+                      var temp = num.parse(byTotalExpense[0].salaryE) +
+                          num.parse(byTotalExpense[0].bonusE);
                       con.amount.value.text = '$temp'.contains('.')
                           ? num.parse('$temp').toStringAsFixed(2)
                           : num.parse('$temp').toString();

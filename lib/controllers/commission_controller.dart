@@ -29,9 +29,9 @@ class CommissionController extends GetxController {
       var year = selectedMonth.split('-')?[0];
       var month = selectedMonth.split('-')?[1];
       await insertTotalExpenseFriend(year: year ?? '', month: month ?? '');
-      
+
       await getTotalExpense(year: year ?? '', month: month ?? '');
-      amount.value.text = totalExpense[0].commission;
+      amount.value.text = byTotalExpense[0].commission;
       LoadingWidget.showTextDialog(
         context,
         title: 'Successfully',
