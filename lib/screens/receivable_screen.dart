@@ -5,7 +5,7 @@ import 'package:motor/constants/firebase.dart';
 import 'package:motor/controllers/main_controller.dart';
 import 'package:motor/controllers/print_payment_table_controller.dart';
 import 'package:motor/controllers/receivable_controller.dart';
-import 'package:motor/screens/components/app_data_table1.dart';
+import 'package:motor/screens/components/app_data_table.dart';
 import 'package:motor/screens/widgets/app_text.dart';
 import 'package:motor/screens/widgets/data_table_widget.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
