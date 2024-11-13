@@ -4,7 +4,7 @@ import 'package:motor/constants/constants.dart';
 import 'package:motor/constants/firebase.dart';
 import 'package:motor/controllers/teacher_bonus_controller.dart';
 import 'package:motor/screens/components/app_button.dart';
-import 'package:motor/screens/components/app_data_table.dart';
+import 'package:motor/screens/components/app_data_table1.dart';
 import 'package:motor/screens/components/app_dropdown_search.dart';
 import 'package:motor/screens/components/app_text_field.dart';
 import 'package:motor/screens/components/row_text_field.dart';
@@ -88,17 +88,7 @@ class MicroExpenseScreen extends StatelessWidget {
             spacer(context),
             Obx(
               () => con.filteredMicro.isNotEmpty
-                  ? AppDataTableOld(
-                      column: [
-                        DataTableWidget.column(context, 'ID'),
-                        DataTableWidget.column(context, 'Date'),
-                        DataTableWidget.column(context, 'Name'),
-                        DataTableWidget.column(context, 'Bonus'),
-                        DataTableWidget.column(context, 'Sale Unit'),
-                        DataTableWidget.column(context, 'Amount'),
-                      ],
-                      source: MicroExpenseDataSource(),
-                    )
+                  ? teacherDataTable(context)
                   : Container(
                       width: MediaQuery.of(context).size.width,
                       margin: EdgeInsets.only(top: defWebPad.px),
@@ -111,6 +101,34 @@ class MicroExpenseScreen extends StatelessWidget {
       ),
     );
   }
+}
+
+Widget teacherDataTable(BuildContext context) {
+  final con = Get.put(MicroExpenseController());
+  return AppDataTable(
+    columnHeaders: [
+      DataTableWidget.column(context, 'ID'),
+      DataTableWidget.column(context, 'Date'),
+      DataTableWidget.column(context, 'Name'),
+      DataTableWidget.column(context, 'Bonus'),
+      DataTableWidget.column(context, 'Sale Unit'),
+      DataTableWidget.column(context, 'Amount'),
+    ],
+    rowData: List.generate(
+      con.filteredMicro.length,
+      (index) {
+        var data = con.filteredMicro[index];
+        return [
+          DataTableWidget.cell(Get.context!, '${data.id}'),
+          DataTableWidget.cell(Get.context!, '${data.year}-${data.month}'),
+          DataTableWidget.cell(Get.context!, data.microName),
+          DataTableWidget.cell(Get.context!, data.tBonus),
+          DataTableWidget.cell(Get.context!, data.unitSale),
+          DataTableWidget.cell(Get.context!, data.totalBonus),
+        ];
+      },
+    ),
+  );
 }
 
 class MicroExpenseDataSource extends DataTableSource {

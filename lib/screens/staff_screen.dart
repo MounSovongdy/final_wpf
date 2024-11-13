@@ -7,7 +7,7 @@ import 'package:motor/controllers/main_controller.dart';
 import 'package:motor/controllers/new_staff_controller.dart';
 import 'package:motor/controllers/staff_controller.dart';
 import 'package:motor/screens/components/app_button.dart';
-import 'package:motor/screens/components/app_data_table.dart';
+import 'package:motor/screens/components/app_data_table1.dart';
 import 'package:motor/screens/components/app_dropdown_search.dart';
 import 'package:motor/screens/components/app_text_field.dart';
 import 'package:motor/screens/components/row_text_field.dart';
@@ -99,18 +99,7 @@ class StaffScreen extends StatelessWidget {
             spacer(context),
             Obx(
               () => con.filteredStaff.isNotEmpty
-                  ? AppDataTableOld(
-                      column: [
-                        DataTableWidget.column(context, 'ID'),
-                        DataTableWidget.column(context, 'Date'),
-                        DataTableWidget.column(context, 'Name'),
-                        DataTableWidget.column(context, 'Salary'),
-                        DataTableWidget.column(context, 'Bonus'),
-                        DataTableWidget.column(context, 'Sale Unit'),
-                        DataTableWidget.column(context, 'Amount'),
-                      ],
-                      source: StaffDataSource(),
-                    )
+                  ? staffDataTable(context)
                   : Container(
                       width: MediaQuery.of(context).size.width,
                       margin: EdgeInsets.only(top: defWebPad.px),
@@ -149,35 +138,32 @@ class StaffScreen extends StatelessWidget {
   }
 }
 
-class StaffDataSource extends DataTableSource {
+Widget staffDataTable(BuildContext context) {
   final con = Get.put(StaffController());
-
-  @override
-  DataRow? getRow(int index) {
-    assert(index >= 0);
-    if (index >= con.filteredStaff.length) return null;
-    var data = con.filteredStaff[index];
-
-    return DataRow.byIndex(
-      index: index,
-      cells: [
-        DataTableWidget.cell(Get.context!, '${data.id}'),
-        DataTableWidget.cell(Get.context!, '${data.year}-${data.month}'),
-        DataTableWidget.cell(Get.context!, data.saleManName),
-        DataTableWidget.cell(Get.context!, data.saleSalary),
-        DataTableWidget.cell(Get.context!, data.saleBonus),
-        DataTableWidget.cell(Get.context!, data.unitSale),
-        DataTableWidget.cell(Get.context!, data.totalBonus),
-      ],
-    );
-  }
-
-  @override
-  int get rowCount => con.filteredStaff.length;
-
-  @override
-  bool get isRowCountApproximate => false;
-
-  @override
-  int get selectedRowCount => 0;
+  return AppDataTable(
+    columnHeaders: [
+      DataTableWidget.column(context, 'ID'),
+      DataTableWidget.column(context, 'Date'),
+      DataTableWidget.column(context, 'Name'),
+      DataTableWidget.column(context, 'Salary'),
+      DataTableWidget.column(context, 'Bonus'),
+      DataTableWidget.column(context, 'Sale Unit'),
+      DataTableWidget.column(context, 'Amount'),
+    ],
+    rowData: List.generate(
+      con.filteredStaff.length,
+      (index) {
+        var data = con.filteredStaff[index];
+        return [
+          DataTableWidget.cell(Get.context!, '${data.id}'),
+          DataTableWidget.cell(Get.context!, '${data.year}-${data.month}'),
+          DataTableWidget.cell(Get.context!, data.saleManName),
+          DataTableWidget.cell(Get.context!, data.saleSalary),
+          DataTableWidget.cell(Get.context!, data.saleBonus),
+          DataTableWidget.cell(Get.context!, data.unitSale),
+          DataTableWidget.cell(Get.context!, data.totalBonus),
+        ];
+      },
+    ),
+  );
 }

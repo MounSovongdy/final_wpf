@@ -7,7 +7,7 @@ import 'package:motor/controllers/gift_controller.dart';
 import 'package:motor/controllers/main_controller.dart';
 import 'package:motor/controllers/new_gift_controller.dart';
 import 'package:motor/screens/components/app_button.dart';
-import 'package:motor/screens/components/app_data_table.dart';
+import 'package:motor/screens/components/app_data_table1.dart';
 import 'package:motor/screens/components/app_dropdown_search.dart';
 import 'package:motor/screens/components/app_text_field.dart';
 import 'package:motor/screens/components/row_text_field.dart';
@@ -92,15 +92,7 @@ class GiftScreen extends StatelessWidget {
             spacer(context),
             Obx(
               () => con.filteredGift.isNotEmpty
-                  ? AppDataTableOld(
-                      column: [
-                        DataTableWidget.column(context, 'ID'),
-                        DataTableWidget.column(context, 'Date'),
-                        DataTableWidget.column(context, 'Item'),
-                        DataTableWidget.column(context, 'Amount'),
-                      ],
-                      source: GiftDataSource(),
-                    )
+                  ? giftDataTable(context)
                   : Container(
                       width: MediaQuery.of(context).size.width,
                       margin: EdgeInsets.only(top: defWebPad.px),
@@ -134,32 +126,27 @@ class GiftScreen extends StatelessWidget {
   }
 }
 
-class GiftDataSource extends DataTableSource {
+Widget giftDataTable(BuildContext context) {
   final con = Get.put(GiftController());
 
-  @override
-  DataRow? getRow(int index) {
-    assert(index >= 0);
-    if (index >= con.filteredGift.length) return null;
-    var data = con.filteredGift[index];
-
-    return DataRow.byIndex(
-      index: index,
-      cells: [
-        DataTableWidget.cell(Get.context!, '${data.id}'),
-        DataTableWidget.cell(Get.context!, '${data.year}-${data.month}'),
-        DataTableWidget.cell(Get.context!, data.item),
-        DataTableWidget.cell(Get.context!, data.amount),
-      ],
-    );
-  }
-
-  @override
-  int get rowCount => con.filteredGift.length;
-
-  @override
-  bool get isRowCountApproximate => false;
-
-  @override
-  int get selectedRowCount => 0;
+  return AppDataTable(
+    columnHeaders: [
+      DataTableWidget.column(context, 'ID'),
+      DataTableWidget.column(context, 'Date'),
+      DataTableWidget.column(context, 'Item'),
+      DataTableWidget.column(context, 'Amount'),
+    ],
+    rowData: List.generate(
+      con.filteredGift.length,
+      (index) {
+        var data = con.filteredGift[index];
+        return [
+          DataTableWidget.cell(Get.context!, '${data.id}'),
+          DataTableWidget.cell(Get.context!, '${data.year}-${data.month}'),
+          DataTableWidget.cell(Get.context!, data.name),
+          DataTableWidget.cell(Get.context!, data.amount),
+        ];
+      },
+    ),
+  );
 }

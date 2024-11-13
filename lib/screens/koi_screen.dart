@@ -7,7 +7,7 @@ import 'package:motor/controllers/koi_controller.dart';
 import 'package:motor/controllers/main_controller.dart';
 import 'package:motor/controllers/new_koi_controller.dart';
 import 'package:motor/screens/components/app_button.dart';
-import 'package:motor/screens/components/app_data_table.dart';
+import 'package:motor/screens/components/app_data_table1.dart';
 import 'package:motor/screens/components/app_dropdown_search.dart';
 import 'package:motor/screens/components/app_text_field.dart';
 import 'package:motor/screens/components/row_text_field.dart';
@@ -93,15 +93,7 @@ class KoiScreen extends StatelessWidget {
             spacer(context),
             Obx(
               () => con.filteredKoi.isNotEmpty
-                  ? AppDataTableOld(
-                      column: [
-                        DataTableWidget.column(context, 'ID'),
-                        DataTableWidget.column(context, 'Date'),
-                        DataTableWidget.column(context, 'Name'),
-                        DataTableWidget.column(context, 'Amount'),
-                      ],
-                      source: KoiDataSource(),
-                    )
+                  ? koiDataTable(context)
                   : Container(
                       width: MediaQuery.of(context).size.width,
                       margin: EdgeInsets.only(top: defWebPad.px),
@@ -135,32 +127,26 @@ class KoiScreen extends StatelessWidget {
   }
 }
 
-class KoiDataSource extends DataTableSource {
+Widget koiDataTable(BuildContext context) {
   final con = Get.put(KoiController());
-
-  @override
-  DataRow? getRow(int index) {
-    assert(index >= 0);
-    if (index >= con.filteredKoi.length) return null;
-    var data = con.filteredKoi[index];
-
-    return DataRow.byIndex(
-      index: index,
-      cells: [
-        DataTableWidget.cell(Get.context!, '${data.id}'),
-        DataTableWidget.cell(Get.context!, '${data.year}-${data.month}'),
-        DataTableWidget.cell(Get.context!, data.name),
-        DataTableWidget.cell(Get.context!, data.amount),
-      ],
-    );
-  }
-
-  @override
-  int get rowCount => con.filteredKoi.length;
-
-  @override
-  bool get isRowCountApproximate => false;
-
-  @override
-  int get selectedRowCount => 0;
+  return AppDataTable(
+    columnHeaders: [
+      DataTableWidget.column(context, 'ID'),
+      DataTableWidget.column(context, 'Date'),
+      DataTableWidget.column(context, 'Name'),
+      DataTableWidget.column(context, 'Amount'),
+    ],
+    rowData: List.generate(
+      con.filteredKoi.length,
+      (index) {
+        var data = con.filteredKoi[index];
+        return [
+          DataTableWidget.cell(Get.context!, '${data.id}'),
+          DataTableWidget.cell(Get.context!, '${data.year}-${data.month}'),
+          DataTableWidget.cell(Get.context!, data.name),
+          DataTableWidget.cell(Get.context!, data.amount),
+        ];
+      },
+    ),
+  );
 }

@@ -7,7 +7,7 @@ import 'package:motor/controllers/main_controller.dart';
 import 'package:motor/controllers/new_rental_controller.dart';
 import 'package:motor/controllers/rental_controller.dart';
 import 'package:motor/screens/components/app_button.dart';
-import 'package:motor/screens/components/app_data_table.dart';
+import 'package:motor/screens/components/app_data_table1.dart';
 import 'package:motor/screens/components/app_dropdown_search.dart';
 import 'package:motor/screens/components/app_text_field.dart';
 import 'package:motor/screens/components/row_text_field.dart';
@@ -95,15 +95,7 @@ class RentalScreen extends StatelessWidget {
             spacer(context),
             Obx(
               () => con.filteredRental.isNotEmpty
-                  ? AppDataTableOld(
-                      column: [
-                        DataTableWidget.column(context, 'ID'),
-                        DataTableWidget.column(context, 'Date'),
-                        DataTableWidget.column(context, 'Detail'),
-                        DataTableWidget.column(context, 'Amount'),
-                      ],
-                      source: RentalDataSource(),
-                    )
+                  ? rentalDataTable(context)
                   : Container(
                       width: MediaQuery.of(context).size.width,
                       margin: EdgeInsets.only(top: defWebPad.px),
@@ -137,32 +129,26 @@ class RentalScreen extends StatelessWidget {
   }
 }
 
-class RentalDataSource extends DataTableSource {
+Widget rentalDataTable(BuildContext context) {
   final con = Get.put(RentalController());
-
-  @override
-  DataRow? getRow(int index) {
-    assert(index >= 0);
-    if (index >= con.filteredRental.length) return null;
-    var data = con.filteredRental[index];
-
-    return DataRow.byIndex(
-      index: index,
-      cells: [
-        DataTableWidget.cell(Get.context!, '${data.id}'),
-        DataTableWidget.cell(Get.context!, '${data.year}-${data.month}'),
-        DataTableWidget.cell(Get.context!, data.detail),
-        DataTableWidget.cell(Get.context!, data.amount),
-      ],
-    );
-  }
-
-  @override
-  int get rowCount => con.filteredRental.length;
-
-  @override
-  bool get isRowCountApproximate => false;
-
-  @override
-  int get selectedRowCount => 0;
+  return AppDataTable(
+    columnHeaders: [
+      DataTableWidget.column(context, 'ID'),
+      DataTableWidget.column(context, 'Date'),
+      DataTableWidget.column(context, 'Detail'),
+      DataTableWidget.column(context, 'Amount'),
+    ],
+    rowData: List.generate(
+      con.filteredRental.length,
+      (index) {
+        var data = con.filteredRental[index];
+        return [
+          DataTableWidget.cell(Get.context!, '${data.id}'),
+          DataTableWidget.cell(Get.context!, '${data.year}-${data.month}'),
+          DataTableWidget.cell(Get.context!, data.name),
+          DataTableWidget.cell(Get.context!, data.amount),
+        ];
+      },
+    ),
+  );
 }
