@@ -38,7 +38,7 @@ SizedBox spacer(BuildContext context) {
 
 void startInactivityTimer() {
   inactivityTimer?.cancel();
-  inactivityTimer = Timer(const Duration(minutes: 30), reload);
+  inactivityTimer = Timer(const Duration(minutes: 45), reload);
 }
 
 void reload() {

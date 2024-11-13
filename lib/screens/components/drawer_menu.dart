@@ -253,27 +253,27 @@ class DrawerMenu extends StatelessWidget {
                                       .contains('.')
                                   ? '${num.parse('$tempte').toStringAsFixed(2)} \$'
                                   : '${num.parse('$tempte')} \$';
-
-                              conFC.itemValue.value = [
-                                {'value': '${conFC.adv.value} \$'},
-                                {'value': '${conFC.rent.value} \$'},
-                                {'value': '${conFC.salary.value} \$'},
-                                {'value': '${conFC.koi.value} \$'},
-                                {'value': '${conFC.gift.value} \$'},
-                                {'value': '${conFC.bonusE.value} \$'},
-                                {'value': '${conFC.bonusT.value} \$'},
-                                {'value': '${conFC.comm.value} \$'},
-                              ];
-
-                              conFC.financeValue.value = [
-                                {'value': '${conFC.netsale.value} \$'},
-                                {'value': '${conFC.saleRevenue.value} \$'},
-                                {'value': '${conFC.totalUnitSale.value} \$'},
-                                {'value': '${conFC.avgSaleRevenue.value} \$'},
-                                {'value': '${conFC.avgProfit.value} \$'},
-                              ];
                             }
                           }
+
+                          conFC.itemValue.value = [
+                            {'value': '${conFC.adv.value} \$'},
+                            {'value': '${conFC.rent.value} \$'},
+                            {'value': '${conFC.salary.value} \$'},
+                            {'value': '${conFC.koi.value} \$'},
+                            {'value': '${conFC.gift.value} \$'},
+                            {'value': '${conFC.bonusE.value} \$'},
+                            {'value': '${conFC.bonusT.value} \$'},
+                            {'value': '${conFC.comm.value} \$'},
+                          ];
+
+                          conFC.financeValue.value = [
+                            {'value': '${conFC.netsale.value} \$'},
+                            {'value': '${conFC.saleRevenue.value} \$'},
+                            {'value': '${conFC.totalUnitSale.value} \$'},
+                            {'value': '${conFC.avgSaleRevenue.value} \$'},
+                            {'value': '${conFC.avgProfit.value} \$'},
+                          ];
 
                           con.index.value = 13;
                         },
