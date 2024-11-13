@@ -7,7 +7,7 @@ import 'package:motor/controllers/address_controller.dart';
 import 'package:motor/controllers/create_address_controller.dart';
 import 'package:motor/controllers/main_controller.dart';
 import 'package:motor/screens/components/app_button.dart';
-import 'package:motor/screens/components/app_data_table.dart';
+import 'package:motor/screens/components/app_data_table1.dart';
 import 'package:motor/screens/components/under_line.dart';
 import 'package:motor/screens/widgets/app_text.dart';
 import 'package:motor/screens/widgets/data_table_widget.dart';
@@ -48,14 +48,7 @@ class AddressScreen extends StatelessWidget {
             spacer(context),
             Obx(
               () => con.filteredAddress.isNotEmpty
-                  ? AppDataTable(
-                      column: [
-                        DataTableWidget.column(context, 'ID'),
-                        DataTableWidget.column(context, 'Address'),
-                        DataTableWidget.column(context, 'Action'),
-                      ],
-                      source: AddressDataSource(),
-                    )
+                  ? addressDataTable(context)
                   : Container(
                       width: MediaQuery.of(context).size.width,
                       margin: EdgeInsets.only(top: defWebPad.px),
@@ -90,66 +83,59 @@ class AddressScreen extends StatelessWidget {
   }
 }
 
-class AddressDataSource extends DataTableSource {
+Widget addressDataTable(BuildContext context) {
   final con = Get.put(AddressController());
   final conA = Get.put(CreateAddressController());
   final conMain = Get.put(MainController());
 
-  @override
-  DataRow? getRow(int index) {
-    assert(index >= 0);
-    if (index >= con.filteredAddress.length) return null;
+  return AppDataTable(
+    columnHeaders: [
+      DataTableWidget.column(context, 'ID'),
+      DataTableWidget.column(context, 'Address'),
+      DataTableWidget.column(context, 'Action'),
+    ],
+    rowData: List.generate(
+      con.filteredAddress.length,
+      (index) {
+        var data = con.filteredAddress[index];
+        return [
+          DataTableWidget.cell(Get.context!, '${data.id}'),
+          DataTableWidget.cell(Get.context!, data.address),
+          DataTableWidget.cellBtn(
+            Get.context!,
+            edit: () async {
+              startInactivityTimer();
+              conA.clearText();
+              con.title.value = 'Edit Address';
+              await con.editAddress(data.id);
 
-    var data = con.filteredAddress[index];
+              conMain.index.value = 28;
+            },
+            delete: () {
+              startInactivityTimer();
+              LoadingWidget.showTextDialog(
+                Get.context!,
+                title: 'Warning',
+                content: 'Are you sure to delete?',
+                color: redColor,
+                txtBack: 'Cancel',
+                btnColor: secondGreyColor,
+                widget: TextButton(
+                  onPressed: () async {
+                    await deleteAddress(con.filteredAddress[index].id);
+                    con.filteredAddress.clear();
+                    await getAllAddress();
+                    con.filteredAddress.value = address;
 
-    return DataRow.byIndex(
-      index: index,
-      cells: [
-        DataTableWidget.cell(Get.context!, '${data.id}'),
-        DataTableWidget.cell(Get.context!, data.address),
-        DataTableWidget.cellBtn(
-          Get.context!,
-          edit: () async {
-            startInactivityTimer();
-            conA.clearText();
-            con.title.value = 'Edit Address';
-            await con.editAddress(data.id);
-
-            conMain.index.value = 28;
-          },
-          delete: () {
-            startInactivityTimer();
-            LoadingWidget.showTextDialog(
-              Get.context!,
-              title: 'Warning',
-              content: 'Are you sure to delete?',
-              color: redColor,
-              txtBack: 'Cancel',
-              btnColor: secondGreyColor,
-              widget: TextButton(
-                onPressed: () async {
-                  await deleteAddress(con.filteredAddress[index].id);
-                  con.filteredAddress.clear();
-                  await getAllAddress();
-                  con.filteredAddress.value = address;
-
-                  Get.back();
-                },
-                child: AppText.title(Get.context!, txt: 'Confirm'),
-              ),
-            );
-          },
-        ),
-      ],
-    );
-  }
-
-  @override
-  int get rowCount => con.filteredAddress.length;
-
-  @override
-  bool get isRowCountApproximate => false;
-
-  @override
-  int get selectedRowCount => 0;
+                    Get.back();
+                  },
+                  child: AppText.title(Get.context!, txt: 'Confirm'),
+                ),
+              );
+            },
+          ),
+        ];
+      },
+    ),
+  );
 }

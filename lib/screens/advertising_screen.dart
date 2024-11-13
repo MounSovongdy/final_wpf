@@ -93,7 +93,7 @@ class AdvertisingScreen extends StatelessWidget {
             spacer(context),
             Obx(
               () => con.filteredAdv.isNotEmpty
-                  ? AppDataTable(
+                  ? AppDataTableOld(
                       column: [
                         DataTableWidget.column(context, 'ID'),
                         DataTableWidget.column(context, 'Date'),

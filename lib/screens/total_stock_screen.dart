@@ -7,7 +7,7 @@ import 'package:motor/controllers/add_stock_controller.dart';
 import 'package:motor/controllers/main_controller.dart';
 import 'package:motor/controllers/total_stock_controller.dart';
 import 'package:motor/screens/components/app_button.dart';
-import 'package:motor/screens/components/app_data_table.dart';
+import 'package:motor/screens/components/app_data_table1.dart';
 import 'package:motor/screens/components/under_line.dart';
 import 'package:motor/screens/widgets/app_text.dart';
 import 'package:motor/screens/widgets/data_table_widget.dart';
@@ -49,27 +49,7 @@ class TotalStockScreen extends StatelessWidget {
           spacer(context),
           Obx(
             () => con.filteredTotalStock.isNotEmpty
-                ? AppDataTable(
-                    column: [
-                      DataTableWidget.column(context, 'ID'),
-                      DataTableWidget.column(context, 'Date In'),
-                      DataTableWidget.column(context, 'Model'),
-                      DataTableWidget.column(context, 'Brand'),
-                      DataTableWidget.column(context, 'Year'),
-                      DataTableWidget.column(context, 'Condition'),
-                      DataTableWidget.column(context, 'QTY Begin'),
-                      DataTableWidget.column(context, 'QTY Today'),
-                      DataTableWidget.column(context, 'Total QTY'),
-                      DataTableWidget.column(context, 'Price in QTY Begin'),
-                      DataTableWidget.column(context, 'Price in QTY Today'),
-                      DataTableWidget.column(
-                          context, 'Total Price in QTY Begin'),
-                      DataTableWidget.column(
-                          context, 'Total Price in QTY Today'),
-                      DataTableWidget.column(context, 'Actions'),
-                    ],
-                    source: TotalStockDataSource(),
-                  )
+                ? totalStockDataTable(context)
                 : Container(
                     width: MediaQuery.of(context).size.width,
                     margin: EdgeInsets.only(top: defWebPad.px),
@@ -115,61 +95,65 @@ class TotalStockScreen extends StatelessWidget {
     );
   }
 }
-
-class TotalStockDataSource extends DataTableSource {
+Widget totalStockDataTable(BuildContext context){
   final con = Get.put(TotalStockController());
   final conAS = Get.put(AddStockController());
   final conMain = Get.put(MainController());
-
-  @override
-  DataRow? getRow(int index) {
-    assert(index >= 0);
-    if (index >= con.filteredTotalStock.length) return null;
-
-    var data = con.filteredTotalStock[index];
-
-    return DataRow.byIndex(
-      index: index,
-      cells: [
-        DataTableWidget.cell(Get.context!, '${data.id}'),
-        DataTableWidget.cell(Get.context!, data.newDateIn),
-        DataTableWidget.cell(Get.context!, data.model),
-        DataTableWidget.cell(Get.context!, data.brand),
-        DataTableWidget.cell(Get.context!, data.year),
-        DataTableWidget.cell(Get.context!, data.condition),
-        DataTableWidget.cell(Get.context!, data.oldQty),
-        DataTableWidget.cell(Get.context!, data.newQty),
-        DataTableWidget.cell(Get.context!, data.totalQty),
-        DataTableWidget.cell(Get.context!, data.oldPrice),
-        DataTableWidget.cell(Get.context!, data.newPrice),
-        DataTableWidget.cell(Get.context!, data.oldTotalPrice),
-        DataTableWidget.cell(Get.context!, data.newTotalPrice),
-        DataTableWidget.cellBtn(
-          Get.context!,
-          btnDelete: false,
-          edit: () async {
-            startInactivityTimer();
-            con.title.value = 'Edit Stock';
-            conAS.clearText();
-            conAS.listModel.clear();
-            await getAllProduct();
-            for (var pro in product) {
-              conAS.listModel.add(pro.model);
-            }
-            await con.editTotalStock(data.id);
-            conMain.index.value = 10;
-          },
-        ),
-      ],
-    );
-  }
-
-  @override
-  int get rowCount => con.filteredTotalStock.length;
-
-  @override
-  bool get isRowCountApproximate => false;
-
-  @override
-  int get selectedRowCount => 0;
+  
+  return AppDataTable(
+      columnHeaders: [
+        DataTableWidget.column(context, 'ID'),
+        DataTableWidget.column(context, 'Date In'),
+        DataTableWidget.column(context, 'Model'),
+        DataTableWidget.column(context, 'Brand'),
+        DataTableWidget.column(context, 'Year'),
+        DataTableWidget.column(context, 'Condition'),
+        DataTableWidget.column(context, 'QTY Begin'),
+        DataTableWidget.column(context, 'QTY Today'),
+        DataTableWidget.column(context, 'Total QTY'),
+        DataTableWidget.column(context, 'Price in QTY Begin'),
+        DataTableWidget.column(context, 'Price in QTY Today'),
+        DataTableWidget.column(
+            context, 'Total Price in QTY Begin'),
+        DataTableWidget.column(
+            context, 'Total Price in QTY Today'),
+        DataTableWidget.column(context, 'Actions'),],
+      rowData: List.generate(
+        con.filteredTotalStock.length,
+            (index) {
+          var data = con.filteredTotalStock[index];
+          return [
+            DataTableWidget.cell(Get.context!, '${data.id}'),
+            DataTableWidget.cell(Get.context!, data.newDateIn),
+            DataTableWidget.cell(Get.context!, data.model),
+            DataTableWidget.cell(Get.context!, data.brand),
+            DataTableWidget.cell(Get.context!, data.year),
+            DataTableWidget.cell(Get.context!, data.condition),
+            DataTableWidget.cell(Get.context!, data.oldQty),
+            DataTableWidget.cell(Get.context!, data.newQty),
+            DataTableWidget.cell(Get.context!, data.totalQty),
+            DataTableWidget.cell(Get.context!, data.oldPrice),
+            DataTableWidget.cell(Get.context!, data.newPrice),
+            DataTableWidget.cell(Get.context!, data.oldTotalPrice),
+            DataTableWidget.cell(Get.context!, data.newTotalPrice),
+            DataTableWidget.cellBtn(
+              Get.context!,
+              btnDelete: false,
+              edit: () async {
+                startInactivityTimer();
+                con.title.value = 'Edit Stock';
+                conAS.clearText();
+                conAS.listModel.clear();
+                await getAllProduct();
+                for (var pro in product) {
+                  conAS.listModel.add(pro.model);
+                }
+                await con.editTotalStock(data.id);
+                conMain.index.value = 10;
+              },
+            ),
+          ];
+        },
+      ),
+  );
 }

@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:motor/constants/constants.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
-class AppDataTable extends StatelessWidget {
+class AppDataTableOld extends StatelessWidget {
   final List<DataColumn> column;
   final DataTableSource source;
-  AppDataTable({super.key, required this.column, required this.source});
+  AppDataTableOld({super.key, required this.column, required this.source});
 
   final scroll = ScrollController();
 

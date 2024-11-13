@@ -7,7 +7,7 @@ import 'package:motor/controllers/create_micro_controller.dart';
 import 'package:motor/controllers/main_controller.dart';
 import 'package:motor/controllers/micro_controller.dart';
 import 'package:motor/screens/components/app_button.dart';
-import 'package:motor/screens/components/app_data_table.dart';
+import 'package:motor/screens/components/app_data_table1.dart';
 import 'package:motor/screens/components/under_line.dart';
 import 'package:motor/screens/widgets/app_text.dart';
 import 'package:motor/screens/widgets/data_table_widget.dart';
@@ -50,21 +50,7 @@ class MicroScreen extends StatelessWidget {
           spacer(context),
           Obx(
             () => con.filteredMicro.isNotEmpty
-                ? AppDataTable(
-                    column: [
-                      DataTableWidget.column(context, 'ID'),
-                      DataTableWidget.column(context, 'Micro Name'),
-                      DataTableWidget.column(context, 'Tel'),
-                      DataTableWidget.column(context, 'Email'),
-                      DataTableWidget.column(context, 'Teacher Name'),
-                      DataTableWidget.column(context, 'Teacher Tel'),
-                      DataTableWidget.column(context, 'Teacher Email'),
-                      DataTableWidget.column(context, 'Position'),
-                      DataTableWidget.column(context, 'Bonus'),
-                      DataTableWidget.column(context, 'Actions'),
-                    ],
-                    source: MicroDataSource(),
-                  )
+                ? microDataTable(context)
                 : Container(
                     width: 100.px,
                     alignment: Alignment.center,
@@ -96,71 +82,71 @@ class MicroScreen extends StatelessWidget {
   }
 }
 
-class MicroDataSource extends DataTableSource {
+Widget microDataTable(BuildContext context) {
   final con = Get.put(MicroController());
   final conCM = Get.put(CreateMicroController());
   final conMain = Get.put(MainController());
 
-  @override
-  DataRow? getRow(int index) {
-    assert(index >= 0);
-    if (index >= con.filteredMicro.length) return null;
-
-    var data = con.filteredMicro[index];
-
-    return DataRow.byIndex(
-      index: index,
-      cells: [
-        DataTableWidget.cell(Get.context!, '${data.id}'),
-        DataTableWidget.cell(Get.context!, data.name),
-        DataTableWidget.cell(Get.context!, data.tel),
-        DataTableWidget.cell(Get.context!, data.email),
-        DataTableWidget.cell(Get.context!, data.contactName),
-        DataTableWidget.cell(Get.context!, data.contactTel),
-        DataTableWidget.cell(Get.context!, data.contactEmail),
-        DataTableWidget.cell(Get.context!, data.contactPosition),
-        DataTableWidget.cell(Get.context!, data.tBonus),
-        DataTableWidget.cellBtn(
-          Get.context!,
-          edit: () async {
-            startInactivityTimer();
-            conCM.clearText();
-            con.title.value = 'Edit Micro';
-            await con.editMicro(data.id);
-            conMain.index.value = 20;
-          },
-          delete: () {
-            startInactivityTimer();
-            LoadingWidget.showTextDialog(
-              Get.context!,
-              title: 'Warning',
-              content: 'Are you sure to delete?',
-              color: redColor,
-              txtBack: 'Cancel',
-              btnColor: secondGreyColor,
-              widget: TextButton(
-                onPressed: () async {
-                  await deleteMicro(con.filteredMicro[index].id);
-                  con.filteredMicro.clear();
-                  await getAllMicro();
-                  con.filteredMicro.value = micro;
-                  Get.back();
-                },
-                child: AppText.title(Get.context!, txt: 'Confirm'),
-              ),
-            );
-          },
-        ),
-      ],
-    );
-  }
-
-  @override
-  int get rowCount => con.filteredMicro.length;
-
-  @override
-  bool get isRowCountApproximate => false;
-
-  @override
-  int get selectedRowCount => 0;
+  return AppDataTable(
+    columnHeaders: [
+      DataTableWidget.column(context, 'ID'),
+      DataTableWidget.column(context, 'Micro Name'),
+      DataTableWidget.column(context, 'Tel'),
+      DataTableWidget.column(context, 'Email'),
+      DataTableWidget.column(context, 'Teacher Name'),
+      DataTableWidget.column(context, 'Teacher Tel'),
+      DataTableWidget.column(context, 'Teacher Email'),
+      DataTableWidget.column(context, 'Position'),
+      DataTableWidget.column(context, 'Bonus'),
+      DataTableWidget.column(context, 'Actions'),
+    ],
+    rowData: List.generate(
+      con.filteredMicro.length,
+      (index) {
+        var data = con.filteredMicro[index];
+        return [
+          DataTableWidget.cell(Get.context!, '${data.id}'),
+          DataTableWidget.cell(Get.context!, data.name),
+          DataTableWidget.cell(Get.context!, data.tel),
+          DataTableWidget.cell(Get.context!, data.email),
+          DataTableWidget.cell(Get.context!, data.contactName),
+          DataTableWidget.cell(Get.context!, data.contactTel),
+          DataTableWidget.cell(Get.context!, data.contactEmail),
+          DataTableWidget.cell(Get.context!, data.contactPosition),
+          DataTableWidget.cell(Get.context!, data.tBonus),
+          DataTableWidget.cellBtn(
+            Get.context!,
+            edit: () async {
+              startInactivityTimer();
+              conCM.clearText();
+              con.title.value = 'Edit Micro';
+              await con.editMicro(data.id);
+              conMain.index.value = 20;
+            },
+            delete: () {
+              startInactivityTimer();
+              LoadingWidget.showTextDialog(
+                Get.context!,
+                title: 'Warning',
+                content: 'Are you sure to delete?',
+                color: redColor,
+                txtBack: 'Cancel',
+                btnColor: secondGreyColor,
+                widget: TextButton(
+                  onPressed: () async {
+                    await deleteMicro(con.filteredMicro[index].id);
+                    con.filteredMicro.clear();
+                    await getAllMicro();
+                    con.filteredMicro.value = micro;
+                    Get.back();
+                  },
+                  child: AppText.title(Get.context!, txt: 'Confirm'),
+                ),
+              );
+            },
+          ),
+        ];
+      },
+    ),
+  );
 }

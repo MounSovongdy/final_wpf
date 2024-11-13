@@ -95,7 +95,7 @@ class RentalScreen extends StatelessWidget {
             spacer(context),
             Obx(
               () => con.filteredRental.isNotEmpty
-                  ? AppDataTable(
+                  ? AppDataTableOld(
                       column: [
                         DataTableWidget.column(context, 'ID'),
                         DataTableWidget.column(context, 'Date'),

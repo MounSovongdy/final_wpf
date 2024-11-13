@@ -7,7 +7,7 @@ import 'package:motor/controllers/main_controller.dart';
 import 'package:motor/controllers/new_cash_controller.dart';
 import 'package:motor/controllers/print_cash_sale_controller.dart';
 import 'package:motor/screens/components/app_button.dart';
-import 'package:motor/screens/components/app_data_table.dart';
+import 'package:motor/screens/components/app_data_table1.dart';
 import 'package:motor/screens/components/under_line.dart';
 import 'package:motor/screens/widgets/app_text.dart';
 import 'package:motor/screens/widgets/data_table_widget.dart';
@@ -52,27 +52,7 @@ class CashScreen extends StatelessWidget {
           spacer(context),
           Obx(
             () => con.filteredCash.isNotEmpty
-                ? AppDataTable(
-                    column: [
-                      DataTableWidget.column(context, 'ID'),
-                      DataTableWidget.column(context, 'Sale Date'),
-                      DataTableWidget.column(context, 'ID Card'),
-                      DataTableWidget.column(context, 'Name'),
-                      DataTableWidget.column(context, 'Age'),
-                      DataTableWidget.column(context, 'Telephone'),
-                      DataTableWidget.column(context, 'Address'),
-                      DataTableWidget.column(context, 'Brand'),
-                      DataTableWidget.column(context, 'Model'),
-                      DataTableWidget.column(context, 'Color'),
-                      DataTableWidget.column(context, 'Year'),
-                      DataTableWidget.column(context, 'Condition'),
-                      DataTableWidget.column(context, 'Price'),
-                      DataTableWidget.column(context, 'Saleman'),
-                      DataTableWidget.column(context, 'Come by'),
-                      DataTableWidget.column(context, 'Action'),
-                    ],
-                    source: CashDataSource(),
-                  )
+                ? cashDataTable(context)
                 : Container(
                     width: MediaQuery.of(context).size.width,
                     margin: EdgeInsets.only(top: defWebPad.px),
@@ -111,53 +91,59 @@ class CashScreen extends StatelessWidget {
   }
 }
 
-class CashDataSource extends DataTableSource {
+Widget cashDataTable(BuildContext context) {
   final con = Get.put(CashController());
+  return AppDataTable(
+    columnHeaders: [
+      DataTableWidget.column(context, 'ID'),
+      DataTableWidget.column(context, 'Sale Date'),
+      DataTableWidget.column(context, 'ID Card'),
+      DataTableWidget.column(context, 'Name'),
+      DataTableWidget.column(context, 'Age'),
+      DataTableWidget.column(context, 'Telephone'),
+      DataTableWidget.column(context, 'Address'),
+      DataTableWidget.column(context, 'Brand'),
+      DataTableWidget.column(context, 'Model'),
+      DataTableWidget.column(context, 'Color'),
+      DataTableWidget.column(context, 'Year'),
+      DataTableWidget.column(context, 'Condition'),
+      DataTableWidget.column(context, 'Price'),
+      DataTableWidget.column(context, 'Saleman'),
+      DataTableWidget.column(context, 'Come by'),
+      DataTableWidget.column(context, 'Action'),
+    ],
+    rowData: List.generate(
+      con.filteredCash.length,
+      (index) {
+        var data = con.filteredCash[index];
 
-  @override
-  DataRow? getRow(int index) {
-    assert(index >= 0);
-    if (index >= con.filteredCash.length) return null;
-
-    var data = con.filteredCash[index];
-
-    return DataRow.byIndex(
-      index: index,
-      cells: [
-        DataTableWidget.cell(Get.context!, '${data.id}'),
-        DataTableWidget.cell(Get.context!, data.date),
-        DataTableWidget.cell(Get.context!, data.idCard),
-        DataTableWidget.cell(Get.context!, data.name),
-        DataTableWidget.cell(Get.context!, data.age),
-        DataTableWidget.cell(Get.context!, data.tel),
-        DataTableWidget.cell(Get.context!, data.address),
-        DataTableWidget.cell(Get.context!, data.brand),
-        DataTableWidget.cell(Get.context!, data.model),
-        DataTableWidget.cell(Get.context!, data.color),
-        DataTableWidget.cell(Get.context!, data.year),
-        DataTableWidget.cell(Get.context!, data.condition),
-        DataTableWidget.cell(Get.context!, data.price),
-        DataTableWidget.cell(Get.context!, data.saleman),
-        DataTableWidget.cell(Get.context!, data.comeBy),
-        DataTableWidget.cellBtn(
-          Get.context!,
-          btnEdit: false,
-          btnDelete: false,
-          btnPrint: true,
-          edit: () => debugPrint('Edit $index'),
-          delete: () => debugPrint('Delete $index'),
-          print: () => printCashInvoice(data.id),
-        ),
-      ],
-    );
-  }
-
-  @override
-  int get rowCount => con.filteredCash.length;
-
-  @override
-  bool get isRowCountApproximate => false;
-
-  @override
-  int get selectedRowCount => 0;
+        return [
+          DataTableWidget.cell(Get.context!, '${data.id}'),
+          DataTableWidget.cell(Get.context!, data.date),
+          DataTableWidget.cell(Get.context!, data.idCard),
+          DataTableWidget.cell(Get.context!, data.name),
+          DataTableWidget.cell(Get.context!, data.age),
+          DataTableWidget.cell(Get.context!, data.tel),
+          DataTableWidget.cell(Get.context!, data.address),
+          DataTableWidget.cell(Get.context!, data.brand),
+          DataTableWidget.cell(Get.context!, data.model),
+          DataTableWidget.cell(Get.context!, data.color),
+          DataTableWidget.cell(Get.context!, data.year),
+          DataTableWidget.cell(Get.context!, data.condition),
+          DataTableWidget.cell(Get.context!, data.price),
+          DataTableWidget.cell(Get.context!, data.saleman),
+          DataTableWidget.cell(Get.context!, data.comeBy),
+          DataTableWidget.cellBtn(
+            Get.context!,
+            btnEdit: false,
+            btnDelete: false,
+            btnPrint: true,
+            edit: () => debugPrint('Edit $index'),
+            delete: () => debugPrint('Delete $index'),
+            print: () => printCashInvoice(data.id),
+          ),
+        ];
+      },
+    ),
+  );
 }

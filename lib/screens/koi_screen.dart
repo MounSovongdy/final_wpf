@@ -93,7 +93,7 @@ class KoiScreen extends StatelessWidget {
             spacer(context),
             Obx(
               () => con.filteredKoi.isNotEmpty
-                  ? AppDataTable(
+                  ? AppDataTableOld(
                       column: [
                         DataTableWidget.column(context, 'ID'),
                         DataTableWidget.column(context, 'Date'),

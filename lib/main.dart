@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:motor/controllers/main_controller.dart';
 import 'package:motor/firebase_options.dart';
 import 'package:motor/screens/login_screen.dart';
+import 'package:motor/screens/main_screen.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -22,7 +23,8 @@ class MyApp extends StatelessWidget {
       title: 'Motor Shop',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(fontFamily: 'Inter'),
-      home: LoginScreen(),
+      //home: LoginScreen(),
+      home:  MainScreen(),
     );
   }
 }

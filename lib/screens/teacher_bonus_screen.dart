@@ -88,7 +88,7 @@ class MicroExpenseScreen extends StatelessWidget {
             spacer(context),
             Obx(
               () => con.filteredMicro.isNotEmpty
-                  ? AppDataTable(
+                  ? AppDataTableOld(
                       column: [
                         DataTableWidget.column(context, 'ID'),
                         DataTableWidget.column(context, 'Date'),

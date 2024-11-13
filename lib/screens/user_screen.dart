@@ -7,7 +7,7 @@ import 'package:motor/controllers/create_user_controller.dart';
 import 'package:motor/controllers/main_controller.dart';
 import 'package:motor/controllers/user_controller.dart';
 import 'package:motor/screens/components/app_button.dart';
-import 'package:motor/screens/components/app_data_table.dart';
+import 'package:motor/screens/components/app_data_table1.dart';
 import 'package:motor/screens/components/under_line.dart';
 import 'package:motor/screens/widgets/app_text.dart';
 import 'package:motor/screens/widgets/data_table_widget.dart';
@@ -49,17 +49,7 @@ class UserScreen extends StatelessWidget {
             spacer(context),
             Obx(
               () => con.filteredUsers.isNotEmpty
-                  ? AppDataTable(
-                      column: [
-                        DataTableWidget.column(context, 'ID'),
-                        DataTableWidget.column(context, 'Full Name'),
-                        DataTableWidget.column(context, 'Role level'),
-                        DataTableWidget.column(context, 'User Login'),
-                        DataTableWidget.column(context, 'Date Create'),
-                        DataTableWidget.column(context, 'Action'),
-                      ],
-                      source: UserDataSource(),
-                    )
+                  ? userDataTable(context)
                   : Container(
                       width: MediaQuery.of(context).size.width,
                       margin: EdgeInsets.only(top: defWebPad.px),
@@ -93,67 +83,65 @@ class UserScreen extends StatelessWidget {
   }
 }
 
-class UserDataSource extends DataTableSource {
+Widget userDataTable(BuildContext context) {
   final con = Get.put(UserController());
   final conCU = Get.put(CreateUserController());
   final conMain = Get.put(MainController());
+  
+  return AppDataTable(
+    columnHeaders: [
+      DataTableWidget.column(context, 'ID'),
+      DataTableWidget.column(context, 'Full Name'),
+      DataTableWidget.column(context, 'Role level'),
+      DataTableWidget.column(context, 'User Login'),
+      DataTableWidget.column(context, 'Date Create'),
+      DataTableWidget.column(context, 'Action'),
+    ],
+    rowData: List.generate(
+      con.filteredUsers.length,
+      (index) {
+        var data = con.filteredUsers[index];
 
-  @override
-  DataRow? getRow(int index) {
-    assert(index >= 0);
-    if (index >= con.filteredUsers.length) return null;
-
-    var data = con.filteredUsers[index];
-
-    return DataRow.byIndex(
-      index: index,
-      cells: [
-        DataTableWidget.cell(Get.context!, '${data.id}'),
-        DataTableWidget.cell(Get.context!, data.name),
-        DataTableWidget.cell(Get.context!, data.role),
-        DataTableWidget.cell(Get.context!, data.user),
-        DataTableWidget.cell(Get.context!, data.dateCreate),
-        DataTableWidget.cellBtn(
-          Get.context!,
-          edit: () async {
-            startInactivityTimer();
-            conCU.clearText();
-            con.title.value = 'Edit User';
-            await con.editUser(data.id);
-            conMain.index.value = 16;
-          },
-          delete: () {
-            startInactivityTimer();
-            LoadingWidget.showTextDialog(
-              Get.context!,
-              title: 'Warning',
-              content: 'Are you sure to delete?',
-              color: redColor,
-              txtBack: 'Cancel',
-              btnColor: secondGreyColor,
-              widget: TextButton(
-                onPressed: () async {
-                  await deleteUser(con.filteredUsers[index].id);
-                  con.filteredUsers.clear();
-                  await getAllUser();
-                  con.filteredUsers.value = user;
-                  Get.back();
-                },
-                child: AppText.title(Get.context!, txt: 'Confirm'),
-              ),
-            );
-          },
-        ),
-      ],
-    );
-  }
-
-  @override
-  int get rowCount => con.filteredUsers.length;
-
-  @override
-  bool get isRowCountApproximate => false;
-
-  @override
-  int get selectedRowCount => 0;
+        return [
+          DataTableWidget.cell(Get.context!, '${data.id}'),
+          DataTableWidget.cell(Get.context!, data.name),
+          DataTableWidget.cell(Get.context!, data.role),
+          DataTableWidget.cell(Get.context!, data.user),
+          DataTableWidget.cell(Get.context!, data.dateCreate),
+          DataTableWidget.cellBtn(
+            Get.context!,
+            edit: () async {
+              startInactivityTimer();
+              conCU.clearText();
+              con.title.value = 'Edit User';
+              await con.editUser(data.id);
+              conMain.index.value = 16;
+            },
+            delete: () {
+              startInactivityTimer();
+              LoadingWidget.showTextDialog(
+                Get.context!,
+                title: 'Warning',
+                content: 'Are you sure to delete?',
+                color: redColor,
+                txtBack: 'Cancel',
+                btnColor: secondGreyColor,
+                widget: TextButton(
+                  onPressed: () async {
+                    await deleteUser(con.filteredUsers[index].id);
+                    con.filteredUsers.clear();
+                    await getAllUser();
+                    con.filteredUsers.value = user;
+                    Get.back();
+                  },
+                  child: AppText.title(Get.context!, txt: 'Confirm'),
+                ),
+              );
+            },
+          ),
+        ];
+      },
+    ),
+  );
 }
+

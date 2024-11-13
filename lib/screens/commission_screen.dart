@@ -89,7 +89,7 @@ class CommissionScreen extends StatelessWidget {
             spacer(context),
             Obx(
               () => con.filteredCommission.isNotEmpty
-                  ? AppDataTable(
+                  ? AppDataTableOld(
                       column: [
                         DataTableWidget.column(context, 'ID'),
                         DataTableWidget.column(context, 'Date'),

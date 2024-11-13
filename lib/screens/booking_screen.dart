@@ -7,7 +7,7 @@ import 'package:motor/controllers/booking_controller.dart';
 import 'package:motor/controllers/main_controller.dart';
 import 'package:motor/controllers/new_booking_controller.dart';
 import 'package:motor/screens/components/app_button.dart';
-import 'package:motor/screens/components/app_data_table.dart';
+import 'package:motor/screens/components/app_data_table1.dart';
 import 'package:motor/screens/components/app_dropdown_search.dart';
 import 'package:motor/screens/components/under_line.dart';
 import 'package:motor/screens/widgets/app_text.dart';
@@ -54,30 +54,7 @@ class BookingScreen extends StatelessWidget {
           spacer(context),
           Obx(
             () => con.filteredBooking.isNotEmpty
-                ? AppDataTable(
-                    column: [
-                      DataTableWidget.column(context, 'ID'),
-                      DataTableWidget.column(context, 'Saleman'),
-                      DataTableWidget.column(context, 'Date'),
-                      DataTableWidget.column(context, 'ID Card'),
-                      DataTableWidget.column(context, 'Name'),
-                      DataTableWidget.column(context, 'Tel'),
-                      DataTableWidget.column(context, 'Brand'),
-                      DataTableWidget.column(context, 'Model'),
-                      DataTableWidget.column(context, 'Color'),
-                      DataTableWidget.column(context, 'Year'),
-                      DataTableWidget.column(context, 'Power'),
-                      DataTableWidget.column(context, 'Condition'),
-                      DataTableWidget.column(context, 'Price'),
-                      DataTableWidget.column(context, 'Remain'),
-                      DataTableWidget.column(context, 'Micro'),
-                      DataTableWidget.column(context, 'Status Booking'),
-                      DataTableWidget.column(context, 'Status Done'),
-                      DataTableWidget.column(context, 'Working Hours'),
-                      DataTableWidget.column(context, 'Action'),
-                    ],
-                    source: BookingDataSource(),
-                  )
+                ? bookingDataTable(context)
                 : Container(
                     width: MediaQuery.of(context).size.width,
                     margin: EdgeInsets.only(top: defWebPad.px),
@@ -159,87 +136,11 @@ class BookingScreen extends StatelessWidget {
   }
 }
 
-class BookingDataSource extends DataTableSource {
+Widget bookingDataTable(BuildContext context) {
+
   final con = Get.put(BookingController());
   final conNewBook = Get.put(NewBookingController());
   final conMain = Get.put(MainController());
-
-  @override
-  DataRow? getRow(int index) {
-    assert(index >= 0);
-    if (index >= con.filteredBooking.length) return null;
-
-    var data = con.filteredBooking[index];
-
-    return DataRow.byIndex(
-      index: index,
-      cells: [
-        DataTableWidget.cell(Get.context!, '${data.id}'),
-        DataTableWidget.cell(Get.context!, data.saleman),
-        DataTableWidget.cell(Get.context!, data.bookingDate),
-        DataTableWidget.cell(Get.context!, data.idCard),
-        DataTableWidget.cell(Get.context!, data.name),
-        DataTableWidget.cell(Get.context!, data.tel),
-        DataTableWidget.cell(Get.context!, data.brand),
-        DataTableWidget.cell(Get.context!, data.model),
-        DataTableWidget.cell(Get.context!, data.color),
-        DataTableWidget.cell(Get.context!, data.year),
-        DataTableWidget.cell(Get.context!, data.power),
-        DataTableWidget.cell(Get.context!, data.condition),
-        DataTableWidget.cell(Get.context!, data.price),
-        DataTableWidget.cell(Get.context!, data.remain),
-        DataTableWidget.cell(Get.context!, data.micro),
-        DataTableWidget.cell(Get.context!, data.statusBooking),
-        DataTableWidget.cell(Get.context!, data.statusDone),
-        DataTableWidget.cell(Get.context!, data.workingHours),
-        DataTableWidget.cellBtn(
-          Get.context!,
-          btnDelete: false,
-          btnUpdate: true,
-          edit: () async {
-            startInactivityTimer();
-            conNewBook.clearText();
-            con.title.value = 'Edit Booking';
-            await microName();
-            await saleManName();
-            await brandName();
-            await addressName();
-            await colorName();
-
-            await con.editBooking(data.id);
-
-            conMain.index.value = 2;
-          },
-          update: () async {
-            startInactivityTimer();
-            await microName();
-            await getByBookingMicro(data.id);
-
-            con.clearDialog();
-            con.status.value = byBookingMicro[0].statusBooking1;
-            con.newStatus.value = byBookingMicro[0].statusBooking2;
-            con.oldMicro.value = byBookingMicro[0].micro1;
-            con.newMicro.value = byBookingMicro[0].micro2;
-
-            showDialogStatus(
-              Get.context!,
-              bookingId: data.id,
-              bookingDate: data.bookingDate,
-            );
-          },
-        ),
-      ],
-    );
-  }
-
-  @override
-  int get rowCount => con.filteredBooking.length;
-
-  @override
-  bool get isRowCountApproximate => false;
-
-  @override
-  int get selectedRowCount => 0;
 
   Future<void> microName() async {
     conNewBook.microList.clear();
@@ -282,10 +183,10 @@ class BookingDataSource extends DataTableSource {
   }
 
   void showDialogStatus(
-    BuildContext context, {
-    required int bookingId,
-    required String bookingDate,
-  }) {
+      BuildContext context, {
+        required int bookingId,
+        required String bookingDate,
+      }) {
     var res = byBookingMicro[0];
 
     showDialog(
@@ -342,8 +243,8 @@ class BookingDataSource extends DataTableSource {
                   value: con.newStatus,
                   list: con.statusList,
                   enable: res.statusBooking1 == "Reject" &&
-                          res.statusBooking2 == "New" &&
-                          res.micro2 != ''
+                      res.statusBooking2 == "New" &&
+                      res.micro2 != ''
                       ? true
                       : false,
                   onChanged: (v) async {
@@ -362,36 +263,122 @@ class BookingDataSource extends DataTableSource {
               tap: () => Navigator.of(context).pop(),
             ),
             res.statusBooking1 == 'Approve' ||
-                    res.statusBooking2 == 'Approve' ||
-                    res.statusBooking2 == 'Reject'
+                res.statusBooking2 == 'Approve' ||
+                res.statusBooking2 == 'Reject'
                 ? Container()
                 : spacer(context),
             res.statusBooking1 == 'Approve' ||
-                    res.statusBooking2 == 'Approve' ||
-                    res.statusBooking2 == 'Reject'
+                res.statusBooking2 == 'Approve' ||
+                res.statusBooking2 == 'Reject'
                 ? Container()
                 : spacer(context),
             res.statusBooking1 == 'Approve' ||
-                    res.statusBooking2 == 'Approve' ||
-                    res.statusBooking2 == 'Reject'
+                res.statusBooking2 == 'Approve' ||
+                res.statusBooking2 == 'Reject'
                 ? Container()
                 : AppButtonSubmit(
-                    txt: 'Update',
-                    width: 120.px,
-                    tap: () async {
-                      startInactivityTimer();
-                      await con.updateStaus(bookingId, bookingDate);
+              txt: 'Update',
+              width: 120.px,
+              tap: () async {
+                startInactivityTimer();
+                await con.updateStaus(bookingId, bookingDate);
 
-                      await getAllBooking();
-                      con.filteredBooking.value = booking;
-                      con.search.value.addListener(con.filterBookingData);
+                await getAllBooking();
+                con.filteredBooking.value = booking;
+                con.search.value.addListener(con.filterBookingData);
 
-                      Get.back();
-                    },
-                  ),
+                Get.back();
+              },
+            ),
           ],
         );
       },
     );
   }
+
+  return AppDataTable(
+    columnHeaders: [
+      DataTableWidget.column(context, 'ID'),
+      DataTableWidget.column(context, 'Saleman'),
+      DataTableWidget.column(context, 'Date'),
+      DataTableWidget.column(context, 'ID Card'),
+      DataTableWidget.column(context, 'Name'),
+      DataTableWidget.column(context, 'Tel'),
+      DataTableWidget.column(context, 'Brand'),
+      DataTableWidget.column(context, 'Model'),
+      DataTableWidget.column(context, 'Color'),
+      DataTableWidget.column(context, 'Year'),
+      DataTableWidget.column(context, 'Power'),
+      DataTableWidget.column(context, 'Condition'),
+      DataTableWidget.column(context, 'Price'),
+      DataTableWidget.column(context, 'Remain'),
+      DataTableWidget.column(context, 'Micro'),
+      DataTableWidget.column(context, 'Status Booking'),
+      DataTableWidget.column(context, 'Status Done'),
+      DataTableWidget.column(context, 'Working Hours'),
+      DataTableWidget.column(context, 'Action'),
+    ],
+    rowData: List.generate(
+      con.filteredBooking.length,
+      (index) {
+        var data = con.filteredBooking[index];
+        return [
+          DataTableWidget.cell(Get.context!, '${data.id}'),
+          DataTableWidget.cell(Get.context!, data.saleman),
+          DataTableWidget.cell(Get.context!, data.bookingDate),
+          DataTableWidget.cell(Get.context!, data.idCard),
+          DataTableWidget.cell(Get.context!, data.name),
+          DataTableWidget.cell(Get.context!, data.tel),
+          DataTableWidget.cell(Get.context!, data.brand),
+          DataTableWidget.cell(Get.context!, data.model),
+          DataTableWidget.cell(Get.context!, data.color),
+          DataTableWidget.cell(Get.context!, data.year),
+          DataTableWidget.cell(Get.context!, data.power),
+          DataTableWidget.cell(Get.context!, data.condition),
+          DataTableWidget.cell(Get.context!, data.price),
+          DataTableWidget.cell(Get.context!, data.remain),
+          DataTableWidget.cell(Get.context!, data.micro),
+          DataTableWidget.cell(Get.context!, data.statusBooking),
+          DataTableWidget.cell(Get.context!, data.statusDone),
+          DataTableWidget.cell(Get.context!, data.workingHours),
+          DataTableWidget.cellBtn(
+            Get.context!,
+            btnDelete: false,
+            btnUpdate: true,
+            edit: () async {
+              startInactivityTimer();
+              conNewBook.clearText();
+              con.title.value = 'Edit Booking';
+              await microName();
+              await saleManName();
+              await brandName();
+              await addressName();
+              await colorName();
+
+              await con.editBooking(data.id);
+
+              conMain.index.value = 2;
+            },
+            update: () async {
+              startInactivityTimer();
+              await microName();
+              await getByBookingMicro(data.id);
+
+              con.clearDialog();
+              con.status.value = byBookingMicro[0].statusBooking1;
+              con.newStatus.value = byBookingMicro[0].statusBooking2;
+              con.oldMicro.value = byBookingMicro[0].micro1;
+              con.newMicro.value = byBookingMicro[0].micro2;
+
+              showDialogStatus(
+                Get.context!,
+                bookingId: data.id,
+                bookingDate: data.bookingDate,
+              );
+            },
+          ),
+        ];
+      },
+    ),
+  );
 }

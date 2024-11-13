@@ -7,7 +7,7 @@ import 'package:motor/controllers/create_product_controller.dart';
 import 'package:motor/controllers/main_controller.dart';
 import 'package:motor/controllers/product_controller.dart';
 import 'package:motor/screens/components/app_button.dart';
-import 'package:motor/screens/components/app_data_table.dart';
+import 'package:motor/screens/components/app_data_table1.dart';
 import 'package:motor/screens/components/under_line.dart';
 import 'package:motor/screens/widgets/app_text.dart';
 import 'package:motor/screens/widgets/data_table_widget.dart';
@@ -50,15 +50,7 @@ class ProductScreen extends StatelessWidget {
             spacer(context),
             Obx(
               () => con.filteredProduct.isNotEmpty
-                  ? AppDataTable(
-                      column: [
-                        DataTableWidget.column(context, 'ID'),
-                        DataTableWidget.column(context, 'Brand'),
-                        DataTableWidget.column(context, 'Model'),
-                        DataTableWidget.column(context, 'Action'),
-                      ],
-                      source: ProductDataSource(),
-                    )
+                  ? productDataTable(context)
                   : Container(
                       width: MediaQuery.of(context).size.width,
                       margin: EdgeInsets.only(top: defWebPad.px),
@@ -99,70 +91,65 @@ class ProductScreen extends StatelessWidget {
   }
 }
 
-class ProductDataSource extends DataTableSource {
+Widget productDataTable(BuildContext context){
   final con = Get.put(ProductController());
   final conCP = Get.put(CreateProductController());
   final conMain = Get.put(MainController());
 
-  @override
-  DataRow? getRow(int index) {
-    assert(index >= 0);
-    if (index >= con.filteredProduct.length) return null;
-
-    var data = con.filteredProduct[index];
-
-    return DataRow.byIndex(
-      index: index,
-      cells: [
-        DataTableWidget.cell(Get.context!, '${data.id}'),
-        DataTableWidget.cell(Get.context!, data.brand),
-        DataTableWidget.cell(Get.context!, data.model),
-        DataTableWidget.cellBtn(
-          Get.context!,
-          edit: () async {
-            startInactivityTimer();
-            conCP.clearText();
-            con.title.value = 'Edit Product';
-            conCP.brandList.clear();
-            await getAllBrand();
-            for (var data in brand) {
-              conCP.brandList.add(data.brand);
-            }
-            await con.editProduct(data.id);
-            conMain.index.value = 12;
-          },
-          delete: () {
-            startInactivityTimer();
-            LoadingWidget.showTextDialog(
-              Get.context!,
-              title: 'Warning',
-              content: 'Are you sure to delete?',
-              color: redColor,
-              txtBack: 'Cancel',
-              btnColor: secondGreyColor,
-              widget: TextButton(
-                onPressed: () async {
-                  await deleteProduct(con.filteredProduct[index].id);
-                  con.filteredProduct.clear();
-                  await getAllProduct();
-                  con.filteredProduct.value = product;
-                  Get.back();
-                },
-                child: AppText.title(Get.context!, txt: 'Confirm'),
-              ),
-            );
-          },
-        ),
+  return AppDataTable(
+      columnHeaders: [
+        DataTableWidget.column(context, 'ID'),
+        DataTableWidget.column(context, 'Brand'),
+        DataTableWidget.column(context, 'Model'),
+        DataTableWidget.column(context, 'Action'),
       ],
-    );
-  }
-
-  @override
-  int get rowCount => con.filteredProduct.length;
-
-  @override
-  bool get isRowCountApproximate => false;
-
-  @override
-  int get selectedRowCount => 0;
+      rowData: List.generate(
+        con.filteredProduct.length,
+            (index) {
+          var data = con.filteredProduct[index];
+          return [
+            DataTableWidget.cell(Get.context!, '${data.id}'),
+            DataTableWidget.cell(Get.context!, data.brand),
+            DataTableWidget.cell(Get.context!, data.model),
+            DataTableWidget.cellBtn(
+              Get.context!,
+              edit: () async {
+                startInactivityTimer();
+                conCP.clearText();
+                con.title.value = 'Edit Product';
+                conCP.brandList.clear();
+                await getAllBrand();
+                for (var data in brand) {
+                  conCP.brandList.add(data.brand);
+                }
+                await con.editProduct(data.id);
+                conMain.index.value = 12;
+              },
+              delete: () {
+                startInactivityTimer();
+                LoadingWidget.showTextDialog(
+                  Get.context!,
+                  title: 'Warning',
+                  content: 'Are you sure to delete?',
+                  color: redColor,
+                  txtBack: 'Cancel',
+                  btnColor: secondGreyColor,
+                  widget: TextButton(
+                    onPressed: () async {
+                      await deleteProduct(con.filteredProduct[index].id);
+                      con.filteredProduct.clear();
+                      await getAllProduct();
+                      con.filteredProduct.value = product;
+                      Get.back();
+                    },
+                    child: AppText.title(Get.context!, txt: 'Confirm'),
+                  ),
+                );
+              },
+            ),
+          ];
+        },
+      ),
+  );
 }
+

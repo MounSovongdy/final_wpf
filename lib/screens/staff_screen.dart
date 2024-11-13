@@ -99,7 +99,7 @@ class StaffScreen extends StatelessWidget {
             spacer(context),
             Obx(
               () => con.filteredStaff.isNotEmpty
-                  ? AppDataTable(
+                  ? AppDataTableOld(
                       column: [
                         DataTableWidget.column(context, 'ID'),
                         DataTableWidget.column(context, 'Date'),

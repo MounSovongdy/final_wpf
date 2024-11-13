@@ -92,7 +92,7 @@ class GiftScreen extends StatelessWidget {
             spacer(context),
             Obx(
               () => con.filteredGift.isNotEmpty
-                  ? AppDataTable(
+                  ? AppDataTableOld(
                       column: [
                         DataTableWidget.column(context, 'ID'),
                         DataTableWidget.column(context, 'Date'),
