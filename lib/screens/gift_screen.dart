@@ -143,7 +143,7 @@ Widget giftDataTable(BuildContext context) {
         return [
           DataTableWidget.cell(Get.context!, '${data.id}'),
           DataTableWidget.cell(Get.context!, '${data.year}-${data.month}'),
-          DataTableWidget.cell(Get.context!, data.name),
+          DataTableWidget.cell(Get.context!, data.item),
           DataTableWidget.cell(Get.context!, data.amount),
         ];
       },
