@@ -7,7 +7,7 @@ import 'package:motor/screens/widgets/loading_widget.dart';
 class KoiController extends GetxController {
   var search = TextEditingController().obs;
   var filteredKoi = [].obs;
-  var title = 'New KOI'.obs;
+  var title = 'New KOL'.obs;
 
   var monthList = [''].obs;
   var selectedMonth = Rxn<String>();

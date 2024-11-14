@@ -122,7 +122,8 @@ Widget commissionDataTable(BuildContext context) {
           DataTableWidget.cell(Get.context!, '${data.id}'),
           DataTableWidget.cell(Get.context!, '${data.year}-${data.month}'),
           DataTableWidget.cell(Get.context!, data.name),
-          DataTableWidget.cell(Get.context!, data.amount),
+          DataTableWidget.cell(Get.context!, data.tel),
+          DataTableWidget.cell(Get.context!, data.totalCommission),
         ];
       },
     ),

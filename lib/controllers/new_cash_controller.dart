@@ -9,11 +9,11 @@ import 'package:motor/screens/widgets/loading_widget.dart';
 
 class NewCashController extends GetxController {
   var saleManList = [''].obs;
-  var genderList = ['Male', 'Female'].obs;
+  var genderList = ['ប្រុស', 'ស្រី'].obs;
   var addressList = [''].obs;
   var brandList = [''].obs;
   var modelList = [''].obs;
-  var colorList = ['Red', 'Black', 'Blue', 'White', 'Grey'].obs;
+  var colorList = [''].obs;
   var conditionList = ['New', 'Used'].obs;
   var typeList = ['Tax Paper', 'Plate Number'].obs;
   var comeByList = [

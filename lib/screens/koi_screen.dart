@@ -36,7 +36,7 @@ class KoiScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            AppText.header(context, txt: 'KOI List'),
+            AppText.header(context, txt: 'KOL List'),
             spacer(context),
             RowTextField(
               spacer: spacer(context),

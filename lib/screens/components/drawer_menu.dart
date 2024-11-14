@@ -445,7 +445,7 @@ class DrawerMenu extends StatelessWidget {
 
                           con.index.value = 35;
                         },
-                        title: 'KOI',
+                        title: 'KOL',
                         svgSrc: 'assets/icons/Koi.svg',
                       ),
                     ),

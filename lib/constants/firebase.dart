@@ -698,12 +698,11 @@ Future<void> getByReceivable(int id) async {
 }
 
 Future<void> getByPaymentSchedule(int id) async {
-  var res = await paymentTableCol
-      .where('id', isEqualTo: id)
-      .where('type', isEqualTo: 'Table')
-      .get();
+  var res = await paymentTableCol.where('id', isEqualTo: id).get();
   schedule.value =
       res.docs.map((doc) => PaymentTableModel.fromMap(doc.data())).toList();
+
+  schedule.sort((a, b) => a.date.compareTo(b.date));
 }
 
 Future<void> insertLeasing(
@@ -1232,6 +1231,8 @@ Future<void> getByPaymentTable(int id) async {
   var res = await paymentTableCol.where('id', isEqualTo: id).get();
   byPaymentTable.value =
       res.docs.map((doc) => PaymentTableModel.fromMap(doc.data())).toList();
+
+  byPaymentTable.sort((a, b) => a.date.compareTo(b.date));
 }
 
 Future<void> insertPayment({
@@ -1785,7 +1786,7 @@ Future<void> insertTotalExpenseKoi({
       LoadingWidget.showTextDialog(
         Get.context!,
         title: 'Error',
-        content: 'Please insert koi before calculate.',
+        content: 'Please insert KOL before calculate.',
         color: redColor,
       );
     }

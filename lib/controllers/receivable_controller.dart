@@ -288,129 +288,132 @@ class ReceivableController extends GetxController {
         return AlertDialog(
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
           title: AppText.header(context, txt: 'View Payment'),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              SizedBox(
-                width: MediaQuery.of(context).size.width * 0.6,
-                child: SingleChildScrollView(
-                  child: Table(
-                    border: TableBorder.all(),
-                    columnWidths: const {
-                      0: FractionColumnWidth(0.1),
-                      1: FractionColumnWidth(0.2),
-                      2: FractionColumnWidth(0.15),
-                      3: FractionColumnWidth(0.15),
-                      4: FractionColumnWidth(0.2),
-                      5: FractionColumnWidth(0.2),
-                    },
-                    children: [
-                      TableRow(
-                        decoration: const BoxDecoration(color: secondGreyColor),
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: AppText.title(
-                              context,
-                              txt: 'No',
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: AppText.title(
-                              context,
-                              txt: 'Date',
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: AppText.title(
-                              context,
-                              txt: 'Amount',
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: AppText.title(
-                              context,
-                              txt: 'Paid',
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: AppText.title(
-                              context,
-                              txt: 'Paid Date',
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: AppText.title(
-                              context,
-                              txt: 'Day Late',
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ],
-                      ),
-                      ...byPaymentTable.map((data) {
-                        return TableRow(
+          content: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                SizedBox(
+                  width: MediaQuery.of(context).size.width * 0.6,
+                  child: SingleChildScrollView(
+                    child: Table(
+                      border: TableBorder.all(),
+                      columnWidths: const {
+                        0: FractionColumnWidth(0.1),
+                        1: FractionColumnWidth(0.2),
+                        2: FractionColumnWidth(0.15),
+                        3: FractionColumnWidth(0.15),
+                        4: FractionColumnWidth(0.2),
+                        5: FractionColumnWidth(0.2),
+                      },
+                      children: [
+                        TableRow(
+                          decoration:
+                              const BoxDecoration(color: secondGreyColor),
                           children: [
                             Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: AppText.title(
                                 context,
-                                txt: '${data.no}',
+                                txt: 'No',
+                                fontWeight: FontWeight.bold,
                               ),
                             ),
                             Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: AppText.title(
                                 context,
-                                txt: data.date,
+                                txt: 'Date',
+                                fontWeight: FontWeight.bold,
                               ),
                             ),
                             Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: AppText.title(
                                 context,
-                                txt: data.amount,
+                                txt: 'Amount',
+                                fontWeight: FontWeight.bold,
                               ),
                             ),
                             Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: AppText.title(
                                 context,
-                                txt: data.paid,
+                                txt: 'Paid',
+                                fontWeight: FontWeight.bold,
                               ),
                             ),
                             Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: AppText.title(
                                 context,
-                                txt: data.paidDate,
+                                txt: 'Paid Date',
+                                fontWeight: FontWeight.bold,
                               ),
                             ),
                             Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: AppText.title(
                                 context,
-                                txt: data.lateDate,
+                                txt: 'Day Late',
+                                fontWeight: FontWeight.bold,
                               ),
                             ),
                           ],
-                        );
-                      }),
-                    ],
+                        ),
+                        ...byPaymentTable.map((data) {
+                          return TableRow(
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: AppText.title(
+                                  context,
+                                  txt: '${data.no}',
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: AppText.title(
+                                  context,
+                                  txt: data.date,
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: AppText.title(
+                                  context,
+                                  txt: data.amount,
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: AppText.title(
+                                  context,
+                                  txt: data.paid,
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: AppText.title(
+                                  context,
+                                  txt: data.paidDate,
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: AppText.title(
+                                  context,
+                                  txt: data.lateDate,
+                                ),
+                              ),
+                            ],
+                          );
+                        }),
+                      ],
+                    ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
           actions: [
             AppButtonSubmit(

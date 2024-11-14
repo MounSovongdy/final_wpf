@@ -31,7 +31,7 @@ class NewKoiController extends GetxController {
       LoadingWidget.showTextDialog(
         Get.context!,
         title: 'Successfully',
-        content: 'The Koi already created.',
+        content: 'The KoL already created.',
         color: greenColor,
       );
     } else {

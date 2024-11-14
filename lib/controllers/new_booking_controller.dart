@@ -10,7 +10,7 @@ import 'package:motor/screens/widgets/loading_widget.dart';
 class NewBookingController extends GetxController {
   var microList = [''].obs;
   var saleManList = [''].obs;
-  var genderList = ['Male', 'Female'].obs;
+  var genderList = ['ប្រុស', 'ស្រី'].obs;
   var addressList = [''].obs;
   var brandList = [''].obs;
   var modelList = [''].obs;
