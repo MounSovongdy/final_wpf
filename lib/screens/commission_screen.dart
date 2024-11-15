@@ -5,7 +5,7 @@ import 'package:motor/constants/firebase.dart';
 import 'package:motor/controllers/commission_controller.dart';
 import 'package:motor/controllers/main_controller.dart';
 import 'package:motor/screens/components/app_button.dart';
-import 'package:motor/screens/components/app_data_table.dart';
+import 'package:motor/screens/components/app_data_table_second.dart';
 import 'package:motor/screens/components/app_dropdown_search.dart';
 import 'package:motor/screens/components/app_text_field.dart';
 import 'package:motor/screens/components/row_text_field.dart';
@@ -106,7 +106,7 @@ class CommissionScreen extends StatelessWidget {
 
 Widget commissionDataTable(BuildContext context) {
   final con = Get.put(CommissionController());
-  return AppDataTable(
+  return AppDataTableSecond(
     columnHeaders: [
       DataTableWidget.column(context, 'ID'),
       DataTableWidget.column(context, 'Date'),

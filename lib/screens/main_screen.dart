@@ -12,13 +12,13 @@ import 'package:motor/screens/cash_screen.dart';
 import 'package:motor/screens/commission_screen.dart';
 import 'package:motor/screens/create_address_screen.dart';
 import 'package:motor/screens/gift_screen.dart';
-import 'package:motor/screens/koi_screen.dart';
+import 'package:motor/screens/kol_screen.dart';
 import 'package:motor/screens/leasing_screen.dart';
 import 'package:motor/screens/new_advertising_screen.dart';
 import 'package:motor/screens/new_koi_screen.dart';
 import 'package:motor/screens/new_staff_screen.dart';
 import 'package:motor/screens/reset_password_screen.dart';
-import 'package:motor/screens/micro_expense_screen.dart';
+import 'package:motor/screens/teacher_screen.dart';
 import 'package:motor/screens/new_booking_screen.dart';
 import 'package:motor/screens/new_cash_screen.dart';
 import 'package:motor/screens/create_micro_screen.dart';
@@ -149,7 +149,7 @@ class MainScreen extends StatelessWidget {
           case 34:
             return NewAdvertisingScreen();
           case 35:
-            return KoiScreen();
+            return KolScreen();
           case 36:
             return NewKoiScreen();
           case 37:

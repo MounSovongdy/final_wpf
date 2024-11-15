@@ -7,7 +7,7 @@ import 'package:motor/controllers/koi_controller.dart';
 import 'package:motor/controllers/main_controller.dart';
 import 'package:motor/controllers/new_koi_controller.dart';
 import 'package:motor/screens/components/app_button.dart';
-import 'package:motor/screens/components/app_data_table.dart';
+import 'package:motor/screens/components/app_data_table_second.dart';
 import 'package:motor/screens/components/app_dropdown_search.dart';
 import 'package:motor/screens/components/app_text_field.dart';
 import 'package:motor/screens/components/row_text_field.dart';
@@ -16,8 +16,8 @@ import 'package:motor/screens/widgets/app_text.dart';
 import 'package:motor/screens/widgets/data_table_widget.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
-class KoiScreen extends StatelessWidget {
-  KoiScreen({super.key});
+class KolScreen extends StatelessWidget {
+  KolScreen({super.key});
 
   final con = Get.put(KoiController());
   final conNew = Get.put(NewKoiController());
@@ -129,7 +129,7 @@ class KoiScreen extends StatelessWidget {
 
 Widget koiDataTable(BuildContext context) {
   final con = Get.put(KoiController());
-  return AppDataTable(
+  return AppDataTableSecond(
     columnHeaders: [
       DataTableWidget.column(context, 'ID'),
       DataTableWidget.column(context, 'Date'),

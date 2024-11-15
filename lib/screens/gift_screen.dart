@@ -7,7 +7,7 @@ import 'package:motor/controllers/gift_controller.dart';
 import 'package:motor/controllers/main_controller.dart';
 import 'package:motor/controllers/new_gift_controller.dart';
 import 'package:motor/screens/components/app_button.dart';
-import 'package:motor/screens/components/app_data_table.dart';
+import 'package:motor/screens/components/app_data_table_second.dart';
 import 'package:motor/screens/components/app_dropdown_search.dart';
 import 'package:motor/screens/components/app_text_field.dart';
 import 'package:motor/screens/components/row_text_field.dart';
@@ -129,7 +129,7 @@ class GiftScreen extends StatelessWidget {
 Widget giftDataTable(BuildContext context) {
   final con = Get.put(GiftController());
 
-  return AppDataTable(
+  return AppDataTableSecond(
     columnHeaders: [
       DataTableWidget.column(context, 'ID'),
       DataTableWidget.column(context, 'Date'),

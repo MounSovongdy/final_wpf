@@ -8,6 +8,7 @@ import 'package:motor/controllers/main_controller.dart';
 import 'package:motor/controllers/salesman_controller.dart';
 import 'package:motor/screens/components/app_button.dart';
 import 'package:motor/screens/components/app_data_table.dart';
+import 'package:motor/screens/components/app_data_table_second.dart';
 import 'package:motor/screens/components/under_line.dart';
 import 'package:motor/screens/widgets/app_text.dart';
 import 'package:motor/screens/widgets/data_table_widget.dart';
@@ -88,7 +89,7 @@ Widget salesmanDataTable(BuildContext context) {
   final conCS = Get.put(CreateSalesmanController());
   final conMain = Get.put(MainController());
 
-  return AppDataTable(
+  return AppDataTableSecond(
     columnHeaders: [
       DataTableWidget.column(context, 'ID'),
       DataTableWidget.column(context, 'Full Name'),

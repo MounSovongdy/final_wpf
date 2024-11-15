@@ -27,7 +27,7 @@ Future<String> generateHtmlContent({
   
   return '''
   <div id="pdfCashInvoice">
-    <html lang="en">
+  <html lang="en">
   <head>
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -110,7 +110,6 @@ Future<String> generateHtmlContent({
           <div id="receiptData" style="margin: 0 auto; text-align: center;">
               <!-- Header Image -->
               <div><img src="http://moto.cpos.cc/header.png" alt="Header Image" style="width: 100%;"></div>
-
               <br>
             <table width="100%" border-spacing: 0; >                                 
                                 <tr>
@@ -135,32 +134,33 @@ Future<String> generateHtmlContent({
                                   </table>
 
                                   <br>
+
               <!-- Customer Information -->
               <br>
-              <table class="table">
+              <table class="table" border-spacing: 0;>
                   <tr>
-                      <td>លក់ជូនអតិថិជន: <b>$customerName</td>
-                      <td>ភេទ: <b>$gender</td>
-                      <td>អាយុ: <b>$customerAge</td>
+                      <td>លក់ជូនអតិថិជន : <b>$customerName</td>
+                      <td>ភេទ : <b>$gender</td>
+                      <td>អាយុ : <b>$customerAge</td>
                   </tr>
                   <tr>
-                      <td>លេខអត្តសញ្ញាណប័ណ្ណ: <b>$customerId</td>
-                      <td>លេខទូរស័ព្ទ: <b>$tel</td>
+                      <td>លេខអត្តសញ្ញាណប័ណ្ណ : <b>$customerId</td>
+                      <td>លេខទូរស័ព្ទ : <b>$tel</td>
                   </tr>
                   <tr>
-                      <td colspan="3">អាសយដ្ឋាន: <b>$customerAddress</td>
+                      <td colspan="3">អាសយដ្ឋាន : <b>$customerAddress</td>
                   </tr>
                   <tr>
-                      <td>ម៉ាកម៉ូតូ: <b>$model</td>
-                      <td>ឆ្នាំផលិត: <b>$yearProduct</td>
+                      <td>ម៉ាកម៉ូតូ : <b>$model</td>
+                      <td>ឆ្នាំផលិត : <b>$yearProduct</td>
                   </tr>
                   <tr>
-                      <td>កំលាំង: <b>$power</td>
-                      <td>ពណ៍: <b>$color</td>
+                      <td>កំលាំង : <b>$power</td>
+                      <td>ពណ៍ : <b>$color</td>
                   </tr>
                   <tr>
-                      <td>លេខតួ: <b>$frameNo</td>
-                      <td>លេខម៉ាស៊ីន: <b>$machinNo</td>
+                      <td>លេខតួ : <b>$frameNo</td>
+                      <td>លេខម៉ាស៊ីន : <b>$machinNo</td>
                   </tr>
               </table>
 
@@ -172,10 +172,10 @@ Future<String> generateHtmlContent({
               </table>
 
               <table width="30%" align="right">
-                <td style="border: 0.5px solid black;border-radius: 10px;font-size:17px; font-family:Khmer OS Battambang;color:#282D91" bgcolor="#CEEDFB">
-                  <b>&nbsp;&nbsp; តម្លៃសរុប:&nbsp;&nbsp;&nbsp;$totalPrice</b>
-                </td>
-              </table>
+                    <td style="border: 0.5px solid black;border-radius: 10px;font-size:17px; font-family:Khmer OS Battambang;color:#282D91" bgcolor="#CEEDFB">
+                        <b>&nbsp;&nbsp; តម្លៃសរុប :&nbsp;&nbsp;&nbsp;$totalPrice</b>
+                    </td>
+                </table>
 
               <!-- Signatures -->
               <table width="100%" class="table">

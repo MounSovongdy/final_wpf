@@ -1391,7 +1391,7 @@ Future<void> insertAddress(AddressModel addr) async {
 }
 
 Future<void> getAllColor() async {
-  var res = await colorCol.orderBy('id', descending: true).get();
+  var res = await colorCol.orderBy('id', descending: false).get();
   color.value = res.docs.map((doc) => ColorModel.fromMap(doc.data())).toList();
 }
 
