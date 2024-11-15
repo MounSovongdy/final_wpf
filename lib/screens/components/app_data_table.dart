@@ -73,30 +73,33 @@ class _AppDataTableState extends State<AppDataTable> {
           children: [
             Scrollbar(
               controller: scroll,
-              interactive: true,
+              thumbVisibility: true,
               child: SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
                 controller: scroll,
                 child: Container(
+                  width: widget.columnHeaders.length * 180.0,
                   decoration: BoxDecoration(
                     border: Border.all(
-                        width: widget.borderWidth, color: widget.borderColor),
+                      width: widget.borderWidth,
+                      color: widget.borderColor,
+                    ),
                   ),
                   padding: EdgeInsets.all(widget.borderWidth),
                   child: GetBuilder<DataTableController>(
                     builder: (_) {
                       final start = _con.currentPage * widget.rowsPerPage;
-                      final end =
-                      (start + widget.rowsPerPage).clamp(0, totalRows);
+                      final end = (start + widget.rowsPerPage).clamp(0, totalRows);
                       final displayedRows = widget.rowData.sublist(start, end);
 
+                      // Fill empty rows if needed
                       int emptyRowsNeeded =
                           widget.rowsPerPage - displayedRows.length;
                       for (int i = 0; i < emptyRowsNeeded; i++) {
                         displayedRows.add(
                           List<DataCell>.generate(
                             widget.columnHeaders.length,
-                                (_) => const DataCell(Text("")),
+                                (_) => DataCell(Text("")),
                           ),
                         );
                       }
@@ -129,7 +132,7 @@ class _AppDataTableState extends State<AppDataTable> {
                 ),
               ),
             ),
-            spacer(context),
+            SizedBox(height: 2.h), // Spacer
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [

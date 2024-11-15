@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:motor/controllers/main_controller.dart';
 import 'package:motor/firebase_options.dart';
 import 'package:motor/screens/login_screen.dart';
+import 'package:responsive_sizer/responsive_sizer.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -18,11 +19,15 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetMaterialApp(
-      title: 'Motor Shop',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(fontFamily: 'Inter'),
-      home: LoginScreen(),
+    return ResponsiveSizer(
+      builder: (context, orientation, screenType) {
+        return GetMaterialApp(
+          title: 'Motor Shop',
+          debugShowCheckedModeBanner: false,
+          theme: ThemeData(fontFamily: 'Inter'),
+          home: LoginScreen(),
+        );
+      },
     );
   }
 }
