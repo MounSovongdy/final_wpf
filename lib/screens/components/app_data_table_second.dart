@@ -49,19 +49,18 @@ class AppDataTableSecond extends StatefulWidget {
   State<AppDataTableSecond> createState() => _AppDataTableState();
 }
 
-  class _AppDataTableState extends State<AppDataTableSecond> {
-    final DataTableController _con = Get.put(DataTableController());
+class _AppDataTableState extends State<AppDataTableSecond> {
+  final DataTableController _con = Get.put(DataTableController());
 
-    @override
-    void didUpdateWidget(covariant AppDataTableSecond oldWidget) {
-      super.didUpdateWidget(oldWidget);
-      if (oldWidget.rowData != widget.rowData) {
-        _con.resetPage();
-      }
+  @override
+  void didUpdateWidget(covariant AppDataTableSecond oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.rowData != widget.rowData) {
+      _con.resetPage();
     }
+  }
 
-    @override
-    @override
+  @override
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (context, constraints) {
@@ -85,7 +84,8 @@ class AppDataTableSecond extends StatefulWidget {
                   final end = (start + widget.rowsPerPage).clamp(0, totalRows);
                   final displayedRows = widget.rowData.sublist(start, end);
 
-                  int emptyRowsNeeded = widget.rowsPerPage - displayedRows.length;
+                  int emptyRowsNeeded =
+                      widget.rowsPerPage - displayedRows.length;
                   for (int i = 0; i < emptyRowsNeeded; i++) {
                     displayedRows.add(
                       List<DataCell>.generate(
@@ -100,7 +100,7 @@ class AppDataTableSecond extends StatefulWidget {
                     dataRowMaxHeight: widget.dataRowHeight.px,
                     headingRowHeight: widget.headingRowHeight.px,
                     dividerThickness: widget.dividerThickness.px,
-                    headingRowColor: MaterialStateProperty.all(
+                    headingRowColor: WidgetStatePropertyAll(
                       widget.headerColor,
                     ),
                     columns: widget.columnHeaders,
@@ -109,7 +109,7 @@ class AppDataTableSecond extends StatefulWidget {
                       List<DataCell> row = entry.value;
                       bool isEvenRow = index % 2 == 0;
                       return DataRow(
-                        color: MaterialStateProperty.all(
+                        color: WidgetStatePropertyAll(
                           isEvenRow ? widget.evenRowColor : widget.oddRowColor,
                         ),
                         cells: row.map((cell) => cell).toList(),

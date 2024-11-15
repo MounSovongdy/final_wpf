@@ -47,6 +47,7 @@ class NewCashScreen extends StatelessWidget {
               widget1: AppTextField(
                 txt: 'Date',
                 con: con.dateBooking.value,
+                readOnly: true,
               ),
               widget2: AppDropdownSearch(
                 txt: 'Salesman',
