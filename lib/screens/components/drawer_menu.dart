@@ -704,7 +704,7 @@ class DrawerMenu extends StatelessWidget {
                     const Spacer(),
                     AppText.subTitle(
                       context,
-                      txt: 'v1.0.1',
+                      txt: 'v1.1.1',
                       color: whiteColor,
                     ),
                   ],
