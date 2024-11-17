@@ -141,7 +141,7 @@ Future<String> generateHtmlContent({
                   <tr>
                       <td>លក់ជូនអតិថិជន : <b>$customerName</td>
                       <td>ភេទ : <b>$gender</td>
-                      <td>អាយុ : <b>$customerAge</td>
+                      <td>អាយុ : <b>$customerAge,</b> ឆ្នាំ</td>
                   </tr>
                   <tr>
                       <td>លេខអត្តសញ្ញាណប័ណ្ណ : <b>$customerId</td>
@@ -155,7 +155,7 @@ Future<String> generateHtmlContent({
                       <td>ឆ្នាំផលិត : <b>$yearProduct</td>
                   </tr>
                   <tr>
-                      <td>កំលាំង : <b>$power</td>
+                      <td>កំលាំង : <b>$power cc</td>
                       <td>ពណ៍ : <b>$color</td>
                   </tr>
                   <tr>
@@ -171,27 +171,25 @@ Future<String> generateHtmlContent({
                 </tr>
               </table>
 
-              <table width="30%" align="right">
-                    <td style="border: 0.5px solid black;border-radius: 10px;font-size:17px; font-family:Khmer OS Battambang;color:#282D91" bgcolor="#CEEDFB">
-                        <b>&nbsp;&nbsp; តម្លៃសរុប :&nbsp;&nbsp;&nbsp;$totalPrice</b>
-                        <hr style="border: 0.1px solid black">
-                        <b>&nbsp;&nbsp;  អនុម័ត :&nbsp;&nbsp;&nbsp;$approveAmount</b>
-                    </td>
-                </table>
 
+              <table width="100%"; margin: auto;">
+                <tr>
+                  <td width = "70%"></td>
+                  <td width="30%"; style="border: 0.5px solid black; border-radius: 10px; font-size: 17px; font-family: Khmer OS Battambang; color: #282D91; background-color: #CEEDFB; text-align: center; vertical-align: middle; height: 40px;">
+                    តម្លៃសរុប : <b>&nbsp;&nbsp;&nbsp$totalPrice\$ </b> <hr style="border: 0.1px solid black"> អនុម័ត : <b>&nbsp;&nbsp;&nbsp;$approveAmount\$</b>
+                  </td>
+                </tr>
+              </table>
+              <br><br><br><br><br><br><br><br><br><br><br>
               <!-- Signatures -->
               <table width="100%" class="table">
                   <tr>
-                      <td class="text-center">ហត្ថលេខាអតិថិជន<br>Customer Signature</b>
-                          <br><br><br><br><br>.....................................
-                      </td>
+                      <td class="text-center">ហត្ថលេខាអតិថិជន<br>Customer Signature</td>
                       <td>
                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                       </td>
-                      <td class="text-center">ត្រាហាងម៉ូតូ<br>Store Stamp</b>
-                          <br><br><br><br><br>.....................................
-                      </td>
+                      <td class="text-center">ត្រាហាងម៉ូតូ<br>Store Stamp</td>
                   </tr>
               </table>
           </div>
@@ -208,7 +206,7 @@ void printLeasingInvoice(int id) async {
   final htmlContent = await generateHtmlContent(
     invoiceNum: '${byLeasing[0].id}',
     invoiceDate: byLeasing[0].leasingDate,
-    plateNo: byLeasing[0].plateNo,
+    plateNo: byLeasing[0].plateNo == '' ? 'ក្រដាសពន្ធ' : byLeasing[0].plateNo,
     customerName: byLeasing[0].name,
     customerAge: byLeasing[0].age,
     customerId: byLeasing[0].idCard,

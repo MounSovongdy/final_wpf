@@ -250,7 +250,7 @@ Future<String> generateHtmlContent({
                               </table>
                              <table width="100%" style="border-spacing: 0;border:1px solid;">                                 
                                 <tr>                               
-                                  <td style="width: 25%; font-size:14px; font-family:Khmer OS Battambang;border-bottom:1px solid;border-right:1px solid; text-align:center">លេខទូរសព្ទ3ខ្សែ                 </td>
+                                  <td style="width: 25%; font-size:14px; font-family:Khmer OS Battambang;border-bottom:1px solid;border-right:1px solid; text-align:center">លេខទូរស័ព្ទ 3 ខ្សែ</td>
                                   <td style="width: 25%; font-size:14px; font-family:Khmer OS Battambang;border-bottom:1px solid;border-right:1px solid;"> &nbsp;&nbsp;<b>$tel1</td>
                                   <td style="width: 25%; font-size:14px; font-family:Khmer OS Battambang;border-bottom:1px solid;border-right:1px solid;"> &nbsp;&nbsp;<b>$tel2</td>
                                   <td style="width: 25%; font-size:14px; font-family:Khmer OS Battambang;border-bottom:1px solid; "> &nbsp;&nbsp;<b>$tel3</td>
@@ -276,13 +276,13 @@ Future<String> generateHtmlContent({
                                   <td>ពន្ធ/ស្លាកលេខ <b>$plateNo</td>
                                 </tr>  
                                  <tr>                               
-                                  <td width="25%">តម្លៃម៉ូតូ <b>$price</td>
-                                  <td width="25%">ចំនួនទឹកប្រាក់អនុម័ត <b>$approve</td>
-                                  <td width="25%">ចំនួនលុយចូលរួម <b>$deposit</td>
-                                  <td width="25%">ដូចនេះនៅខ្វះ <b>$totalOwn</td>
+                                  <td width="25%">តម្លៃម៉ូតូ <b>$price\$</td>
+                                  <td width="25%">ចំនួនទឹកប្រាក់អនុម័ត <b>$approve\$</td>
+                                  <td width="25%">ចំនួនលុយចូលរួម <b>$deposit\$</td>
+                                  <td width="25%">ដូចនេះនៅខ្វះ <b>$totalOwn\$</td>
                                 </tr>                       
                               </table>
-                              <div style="font-size:12px; font-family:Khmer OS Battambang;">ចំនួនលុយដែលនៅខ្វះត្រូវបង់រំសល់ជាមួយហាងម៉ូតូ ហេង សុខបញ្ញាតាមតារាងបង់ប្រាក់ខាងក្រោម៖</div><br>
+                              <div style="font-size:12px; font-family:Khmer OS Battambang;">ចំនួនលុយដែលនៅខ្វះត្រូវបង់រំលស់ជាមួយហាងម៉ូតូ ហេង សុខបញ្ញាតាមតារាងបង់ប្រាក់ខាងក្រោម៖</div><br>
                               <table width="100%" style="font-size:12px; font-family:Khmer OS Battambang;border:1px solid" class="invoice-table">  
                                 <thead>
                                   <tr >
@@ -317,7 +317,7 @@ Future<String> generateHtmlContent({
                               <div>
                                 <img src="http://moto.cpos.cc/payment.png" alt="" width="100%">
                               </div><br>
-                              <div style="font-size:12px; font-family:Khmer OS Battambang;">ក្នុងករណីបង់យឺត អតិថិជនយល់ព្រមបង់ប្រាក់ពិន័យក្នុងថ្ងៃចំនួន <b>$penalty \$</div>
+                              <div style="font-size:12px; font-family:Khmer OS Battambang;">ក្នុងករណីបង់យឺត អតិថិជនយល់ព្រមបង់ប្រាក់ពិន័យក្នុងមួយថ្ងៃចំនួន <b>$penalty \$</div>
                               <div style="font-size:12px; font-family:Khmer OS Battambang;">អតិថិជនបានអាន និងស្តាប់ហើយព្រមព្រៀងបង់តាមពេលវេលាដែលបានកំណត់ដូចខាងលើ។</div>
                               <br>
                               <div style="font-size:12px; font-family:Khmer OS Battambang;text-align:right">ធ្វើនៅ រាជធានីភ្នំពេញ ថ្ងៃទី <b>$leasingDay ខែ <b>$leasingMonth ឆ្នាំ <b>$leasingYear </div>
