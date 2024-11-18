@@ -299,14 +299,12 @@ Future<String> generateHtmlContent({
   for (int i = counter; i < payment.length; i++) {
     var amount = num.parse(payment[i].amount).toStringAsFixed(2);
 
-    htmlContent.writeln('<tr style="height: 1px;">');
-    htmlContent.writeln('<td style="text-align:center"> ${payment[i].no}</td>');
-    htmlContent
-        .writeln('<td style="text-align:center"> ${payment[i].date}</td>');
-    htmlContent.writeln('<td style="text-align:center"> $amount \$</td>');
-    htmlContent.writeln('<td> ${payment[i].note}</td>');
-    htmlContent.writeln('</tr>');
-  }
+    htmlContent.writeln('<tr style="height: 10px;">');
+    htmlContent.writeln('<td style="text-align:center; line-height: 10px;"> ${payment[i].no}</td>');
+    htmlContent.writeln('<td style="text-align:center; line-height: 10px;"> ${payment[i].date}</td>');
+    htmlContent.writeln('<td style="text-align:center; line-height: 10px;"> $amount \$</td>');
+    htmlContent.writeln('<td style="line-height: 10px;"> ${payment[i].note}</td>');
+  } 
 
   htmlContent.writeln('''
                                   </tbody>
