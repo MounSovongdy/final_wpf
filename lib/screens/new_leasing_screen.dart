@@ -297,55 +297,6 @@ class NewLeasingScreen extends StatelessWidget {
                 onChanged: (v) => con.calculateTotal(),
               ),
             ),
-            TitleUnderline(
-              spacer: spacer(context),
-              txt: 'Introduced Information',
-            ),
-            RowTextField(
-              spacer: spacer(context),
-              widget1: AppDropdownSearch(
-                txt: 'Come By',
-                value: con.comeBy,
-                list: con.comeByList,
-                onChanged: (v) {
-                  if (v != null) {
-                    con.comeBy.value = v;
-                    if (con.comeBy.value != 'Friend') {
-                      con.nameIntro.value.text = '';
-                      con.phoneIntro.value.text = '';
-                    }
-                  }
-                },
-              ),
-              widget2: Obx(
-                () => AppTextField(
-                  txt: 'Name',
-                  con: con.nameIntro.value,
-                  readOnly: con.comeBy.value == 'Friend' ? false : true,
-                ),
-              ),
-              widget3: Obx(
-                () => AppTextField(
-                  txt: 'Tel',
-                  con: con.phoneIntro.value,
-                  readOnly: con.comeBy.value == 'Friend' ? false : true,
-                  isNumber: true,
-                  digit: 10,
-                ),
-              ),
-            ),
-            RowTextField(
-              spacer: spacer(context),
-              widget1: Obx(
-                () => AppTextField(
-                  txt: 'Commission',
-                  con: con.commission.value,
-                  readOnly: con.comeBy.value == 'Friend' ? false : true,
-                  isNumber: true,
-                  digit: 3,
-                ),
-              ),
-            ),
             Obx(
               () => con.isReceivable.value
                   ? TitleUnderline(
@@ -359,23 +310,44 @@ class NewLeasingScreen extends StatelessWidget {
                   ? RowTextField(
                       spacer: spacer(context),
                       widget1: AppTextField(
-                        txt: 'Tel 2',
+                        txt: 'Tel 2nd',
                         con: con.phoneCus2.value,
                         isNumber: true,
                         digit: 10,
                       ),
                       widget2: AppTextField(
-                        txt: 'Tel 3',
+                        txt: 'Name 2nd',
+                        con: con.nameCus2.value
+                      ),
+                      widget3: AppTextField(
+                        txt: 'Tel 3rd',
                         con: con.phoneCus3.value,
                         isNumber: true,
                         digit: 10,
                       ),
-                      widget3: AppTextField(
+                    )
+                  : Container(),
+            ),
+            Obx(
+              () => con.isReceivable.value
+                  ? RowTextField(
+                      spacer: spacer(context),
+                      widget1: AppTextField(
+                        txt: 'Name 3rd',
+                        con: con.nameCus3.value,
+                      ),
+                      widget2: AppTextField(
                         txt: 'Document',
                         con: con.document.value,
                       ),
-                    )
-                  : Container(),
+                      widget3: AppTextField(
+                        txt: 'Penalty',
+                        con: con.penalty.value,
+                        isNumber: true,
+                        digit: 10,
+                      ),
+                    ) 
+                  : Container()
             ),
             Obx(
               () => con.isReceivable.value
@@ -436,18 +408,54 @@ class NewLeasingScreen extends StatelessWidget {
                     )
                   : Container(),
             ),
-            Obx(
-              () => con.isReceivable.value
-                  ? RowTextField(
-                      spacer: spacer(context),
-                      widget1: AppTextField(
-                        txt: 'Penalty',
-                        con: con.penalty.value,
-                        isNumber: true,
-                        digit: 10,
-                      ),
-                    )
-                  : Container(),
+            TitleUnderline(
+              spacer: spacer(context),
+              txt: 'Introduced Information',
+            ),
+            RowTextField(
+              spacer: spacer(context),
+              widget1: AppDropdownSearch(
+                txt: 'Come By',
+                value: con.comeBy,
+                list: con.comeByList,
+                onChanged: (v) {
+                  if (v != null) {
+                    con.comeBy.value = v;
+                    if (con.comeBy.value != 'Friend') {
+                      con.nameIntro.value.text = '';
+                      con.phoneIntro.value.text = '';
+                    }
+                  }
+                },
+              ),
+              widget2: Obx(
+                () => AppTextField(
+                  txt: 'Name',
+                  con: con.nameIntro.value,
+                  readOnly: con.comeBy.value == 'Friend' ? false : true,
+                ),
+              ),
+              widget3: Obx(
+                () => AppTextField(
+                  txt: 'Tel',
+                  con: con.phoneIntro.value,
+                  readOnly: con.comeBy.value == 'Friend' ? false : true,
+                  isNumber: true,
+                  digit: 10,
+                ),
+              ),
+            ),
+            RowTextField(
+              spacer: spacer(context),
+              widget1: Obx(
+                () => AppTextField(
+                  txt: 'Commission',
+                  con: con.commission.value,
+                  readOnly: con.comeBy.value == 'Friend' ? false : true,
+                  isNumber: true,
+                  digit: 3,
+                ),
+              ),
             ),
             spacer(context),
             spacer(context),

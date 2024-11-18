@@ -92,14 +92,13 @@ class _AppDataTableState extends State<AppDataTable> {
                       final end = (start + widget.rowsPerPage).clamp(0, totalRows);
                       final displayedRows = widget.rowData.sublist(start, end);
 
-                      // Fill empty rows if needed
                       int emptyRowsNeeded =
                           widget.rowsPerPage - displayedRows.length;
                       for (int i = 0; i < emptyRowsNeeded; i++) {
                         displayedRows.add(
                           List<DataCell>.generate(
                             widget.columnHeaders.length,
-                                (_) => DataCell(Text("")),
+                                (_) => const DataCell(Text("")),
                           ),
                         );
                       }

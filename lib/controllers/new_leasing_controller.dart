@@ -69,6 +69,8 @@ class NewLeasingController extends GetxController {
 
   var phoneCus2 = TextEditingController().obs;
   var phoneCus3 = TextEditingController().obs;
+  var nameCus2 = TextEditingController().obs;
+  var nameCus3 = TextEditingController().obs;
   var document = TextEditingController().obs;
   var firstPayDate = TextEditingController().obs;
   var penalty = TextEditingController().obs;

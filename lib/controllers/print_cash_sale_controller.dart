@@ -113,14 +113,14 @@ Future<String> generateHtmlContent({
               <br>
             <table width="100%" border-spacing: 0; >                                 
                                 <tr>
-                      <b><p style="font-size:20px; font-family:Khmer OS Battambang;text-align:center; color:#282D91">ទិញ លក់ និងបង់រំលស់ម៉ូតូគ្រប់ប្រភេទ</p>
-                        <p style="font-size:17px; font-family:Khmer OS Battambang;text-align:center;color:#282D91">ផ្ទះលេខ 268 & 269 ផ្លូវវេងស្រេង ភូមិត្រពាំងថ្លឹង សង្កាត់ចោមចៅ ខណ្ឌពោធិ៍សែនជ័យ រាជធានីភ្នំពេញ </p></b>
+                      <b><p style="font-size:23px;text-align:center; color:#282D91">ទិញ លក់ និងបង់រំលស់ម៉ូតូគ្រប់ប្រភេទ</p>
+                        <p style="font-size:19px;text-align:center;color:#282D91">ផ្ទះលេខ 268 & 269 ផ្លូវវេងស្រេង ភូមិត្រពាំងថ្លឹង សង្កាត់ចោមចៅ ខណ្ឌពោធិ៍សែនជ័យ រាជធានីភ្នំពេញ </p></b>
                                 </tr>                                 
                                 </table>
 
                                 <br>
 
-                                 <table width="100%" style="font-size:17px; font-family:Khmer OS Battambang;color:#282D91"> 
+                                 <table width="100%" style="font-size:17px;color:#282D91"> 
                                     <tr>
                                     <td rowspan="3" width="65%"><img src="http://moto.cpos.cc/phone.png" alt="" width="50%"></td>
                                     <td>វិក្កយបត្រលេខ :  <b>$invoiceNum</b></td>
@@ -141,7 +141,7 @@ Future<String> generateHtmlContent({
                   <tr>
                       <td>លក់ជូនអតិថិជន : <b>$customerName</td>
                       <td>ភេទ : <b>$gender</td>
-                      <td>អាយុ : <b>$customerAge,</b> ឆ្នាំ</td>
+                      <td>អាយុ : <b>$customerAge</b> ឆ្នាំ</td>
                   </tr>
                   <tr>
                       <td>លេខអត្តសញ្ញាណប័ណ្ណ : <b>$customerId</td>
@@ -164,17 +164,16 @@ Future<String> generateHtmlContent({
                   </tr>
               </table>
 
-              <!-- Note and Total Price -->
               <table class="table">
                 <tr>
-                    <td><b>បញ្ជាក់: ទំនិញទិញហើយមិនអាចដូរវិញបានទេ! </td>
+                    <td><b>បញ្ជាក់:</b> ទំនិញទិញហើយមិនអាចដូរវិញបានទេ! </td>
                 </tr>
               </table>
 
               <table width="100%"; margin: auto;">
                 <tr>
                   <td width = "70%"></td>
-                  <td width="30%"; style="border: 0.5px solid black; border-radius: 10px; font-size: 17px; font-family: Khmer OS Battambang; color: #282D91; background-color: #CEEDFB; text-align: center; vertical-align: middle; height: 40px;"> តម្លៃសរុប : <b>&nbsp;&nbsp;&nbsp;$totalPrice\$</b></td>
+                  <td width="30%"; style="border: 0.5px solid black; border-radius: 10px; font-size: 17px;color: #282D91; background-color: #CEEDFB; text-align: center; vertical-align: middle; height: 40px;"> តម្លៃសរុប : <b>&nbsp;&nbsp;&nbsp;$totalPrice\$</b></td>
                 </tr>
               </table>
 
