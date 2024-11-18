@@ -28,7 +28,7 @@ class AppDataTableSecond extends StatefulWidget {
     required this.rowData,
     this.dividerThickness = 0.0,
     this.columnSpacing = 10.0,
-    this.dataRowHeight = 35.0,
+    this.dataRowHeight = 40.0,
     this.headingRowHeight = 40.0,
     this.maxRows = 10,
     this.rowsPerPage = 10,
@@ -84,16 +84,16 @@ class _AppDataTableState extends State<AppDataTableSecond> {
                   final end = (start + widget.rowsPerPage).clamp(0, totalRows);
                   final displayedRows = widget.rowData.sublist(start, end);
 
-                  int emptyRowsNeeded =
-                      widget.rowsPerPage - displayedRows.length;
-                  for (int i = 0; i < emptyRowsNeeded; i++) {
-                    displayedRows.add(
-                      List<DataCell>.generate(
-                        widget.columnHeaders.length,
-                        (_) => const DataCell(Text("")),
-                      ),
-                    );
-                  }
+                  // int emptyRowsNeeded =
+                  //     widget.rowsPerPage - displayedRows.length;
+                  // for (int i = 0; i < emptyRowsNeeded; i++) {
+                  //   displayedRows.add(
+                  //     List<DataCell>.generate(
+                  //       widget.columnHeaders.length,
+                  //       (_) => const DataCell(Text("")),
+                  //     ),
+                  //   );
+                  // }
 
                   return DataTable(
                     dataRowMinHeight: widget.columnSpacing.px,
