@@ -149,3 +149,87 @@ class RowTextField6 extends StatelessWidget {
     );
   }
 }
+
+class RowCardDashboard3Row extends StatelessWidget {
+  final SizedBox spacer;
+  final Widget? widget1, widget2, widget3;
+
+  const RowCardDashboard3Row({
+    super.key,
+    required this.spacer,
+    this.widget1,
+    this.widget2,
+    this.widget3,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Responsive.isDesktop(context) ? spacer : Container(),
+        Container(
+          child: Responsive.isDesktop(context)
+              ? Row(
+                  children: [
+                    Expanded(flex: 4, child: widget1 ?? Container()),
+                    spacer,
+                    Expanded(flex: 4, child: widget2 ?? Container()),
+                    spacer,
+                    Expanded(flex: 4, child: widget3 ?? Container()),
+                  ],
+                )
+              : Column(
+                  children: [
+                    spacer,
+                    widget1 ?? Container(),
+                    spacer,
+                    widget2 ?? Container(),
+                    spacer,
+                    widget3 ?? Container(),
+                    if (widget3 != null) spacer,
+                  ],
+                ),
+        ),
+      ],
+    );
+  }
+}
+
+class RowCardDashboard2Row extends StatelessWidget {
+  final SizedBox spacer;
+  final Widget? widget1, widget2;
+
+  const RowCardDashboard2Row({
+    super.key,
+    required this.spacer,
+    this.widget1,
+    this.widget2,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Responsive.isDesktop(context) ? spacer : Container(),
+        Container(
+          child: Responsive.isDesktop(context)
+              ? Row(
+                  children: [
+                    Expanded(flex: 4, child: widget1 ?? Container()),
+                    spacer,
+                    Expanded(flex: 4, child: widget2 ?? Container()),
+                  ],
+                )
+              : Column(
+                  children: [
+                    spacer,
+                    widget1 ?? Container(),
+                    spacer,
+                    widget2 ?? Container(),
+                  ],
+                ),
+        ),
+      ],
+    );
+  }
+}

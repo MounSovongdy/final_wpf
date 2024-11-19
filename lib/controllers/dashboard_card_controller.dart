@@ -1,16 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:motor/constants/constants.dart';
 
 class DashboardCardController extends GetxController{
+  
   final itemTitle = [
-    {'name': 'Booking'},
-    {'name': 'Sale Record'},
-    {'name': 'Receivable'},
-    {'name': 'Total Stock'},
-    {'name': 'Booking'},
-    {'name': 'Sale Record'},
-    {'name': 'Receivable'},
-    {'name': 'Total Stock'},
+    {'name': 'Leasing'},
+    {'name': 'Cash'},
+    {'name': 'Active'},
+    {'name': 'Close'}
   ];
 
   final icons = const [
@@ -20,11 +18,18 @@ class DashboardCardController extends GetxController{
     Icon(Icons.ad_units),
   ];
 
-  final itemListBooking = [
-    {'name': '2','name2':'Rejected','name3': 'Canceled','name4': 'Completed'},
-    {'name': '1','name2':'8','name3': 'Canceled','name4': 'Completed'},
-    {'name': '6','name2':'Rejected','name3': 'Canceled','name4': 'Completed'},
-    {'name': '9','name2':'9','name3': 'Canceled','name4': '7'},
+  final itemValue = [
+    {'value': 2},
+    {'value': 5},
+    {'value': 12},
+    {'value': 27},
+  ];
+
+  final cardColor = [
+    {'color': greenColor.withOpacity(0.5)},
+    {'color': updateColor.withOpacity(0.7)},
+    {'color': bgColor.withOpacity(0.3)},
+    {'color': redColor.withOpacity(0.8)},
   ];
 
   var bookingApproved = '--'.obs;

@@ -107,4 +107,24 @@ class AppText {
           overflow: overflow,
         ),
       );
+
+  static Widget subTitleBold(
+    BuildContext context, {
+    required String txt,
+    double size = 14,
+    double? space,
+    Color color = blackColor,
+    FontWeight fontWeight = FontWeight.bold,
+    TextOverflow overflow = TextOverflow.ellipsis,
+  }) =>
+      Text(
+        txt,
+        style: TextStyle(
+          color: color,
+          letterSpacing: space,
+          fontSize: Responsive.isDesktop(context) ? size.px : size.px - 2,
+          fontWeight: fontWeight,
+          overflow: overflow,
+        ),
+      );
 }
