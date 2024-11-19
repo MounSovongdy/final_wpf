@@ -21,3 +21,24 @@ class UnderLine extends StatelessWidget {
     );
   }
 }
+
+class UnderLineSecond extends StatelessWidget {
+  final Color color;
+  final double height, width;
+
+  const UnderLineSecond({
+    super.key,
+    this.color = secondGreyColor,
+    this.height = 1,
+    this.width = double.infinity,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      color: color,
+      height: height,
+      width: width,
+    );
+  }
+}
