@@ -38,6 +38,7 @@ class ResetPasswordScreen extends StatelessWidget {
               widget1: AppDateTextField(
                 txt: 'Date',
                 con: con.date.value,
+                readOnly: true,
               ),
               widget2: AppDropdownSearch(
                 txt: 'Full Name',

@@ -53,11 +53,10 @@ class _AppDataTableState extends State<AppDataTable> {
   final DataTableController _con = Get.put(DataTableController());
 
   @override
-  void didUpdateWidget(covariant AppDataTable oldWidget) {
-    super.didUpdateWidget(oldWidget);
-    if (oldWidget.rowData != widget.rowData) {
-      _con.resetPage();
-    }
+  void initState() {
+    _con.resetPage();
+    
+    super.initState();
   }
 
   @override
@@ -89,7 +88,8 @@ class _AppDataTableState extends State<AppDataTable> {
                   child: GetBuilder<DataTableController>(
                     builder: (_) {
                       final start = _con.currentPage * widget.rowsPerPage;
-                      final end = (start + widget.rowsPerPage).clamp(0, totalRows);
+                      final end =
+                          (start + widget.rowsPerPage).clamp(0, totalRows);
                       final displayedRows = widget.rowData.sublist(start, end);
 
                       // int emptyRowsNeeded =

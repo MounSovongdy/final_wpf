@@ -53,11 +53,10 @@ class _AppDataTableState extends State<AppDataTableSecond> {
   final DataTableController _con = Get.put(DataTableController());
 
   @override
-  void didUpdateWidget(covariant AppDataTableSecond oldWidget) {
-    super.didUpdateWidget(oldWidget);
-    if (oldWidget.rowData != widget.rowData) {
-      _con.resetPage();
-    }
+  void initState() {
+    _con.resetPage();
+
+    super.initState();
   }
 
   @override

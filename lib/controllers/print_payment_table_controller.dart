@@ -31,7 +31,9 @@ Future<String> generateHtmlContent({
   required String age,
   required String idCard,
   required String tel1,
+  required String name2,
   required String tel2,
+  required String name3,
   required String tel3,
   required String address,
   required String model,
@@ -257,9 +259,9 @@ Future<String> generateHtmlContent({
                                 </tr>     
                                 <tr>                               
                                   <td style="font-size:12px; font-family:Khmer OS Battambang;text-align:center;border-right:1px solid;">ឈ្មោះ </td>
-                                  <td style="width: 25%; font-size:14px; font-family:Khmer OS Battambang;border-right:1px solid;"></td>
-                                  <td style="width: 25%; font-size:14px; font-family:Khmer OS Battambang;border-right:1px solid;"></td>
-                                  <td style="width: 25%; font-size:14px; font-family:Khmer OS Battambang;" ></td>
+                                  <td style="width: 25%; font-size:14px; font-family:Khmer OS Battambang;border-right:1px solid;"> &nbsp;&nbsp; $fullName</td>
+                                  <td style="width: 25%; font-size:14px; font-family:Khmer OS Battambang;border-right:1px solid;"> &nbsp;&nbsp; $name2</td>
+                                  <td style="width: 25%; font-size:14px; font-family:Khmer OS Battambang;border-right:1px solid;"> &nbsp;&nbsp; $name3</td>
                                 </tr>                            
                               </table>
                               <table width="100%" style="font-size:12px; font-family:Khmer OS Battambang;">                                 
@@ -300,11 +302,15 @@ Future<String> generateHtmlContent({
     var amount = num.parse(payment[i].amount).toStringAsFixed(2);
 
     htmlContent.writeln('<tr style="height: 10px;">');
-    htmlContent.writeln('<td style="text-align:center; line-height: 10px;"> ${payment[i].no}</td>');
-    htmlContent.writeln('<td style="text-align:center; line-height: 10px;"> ${payment[i].date}</td>');
-    htmlContent.writeln('<td style="text-align:center; line-height: 10px;"> $amount \$</td>');
-    htmlContent.writeln('<td style="line-height: 10px;"> ${payment[i].note}</td>');
-  } 
+    htmlContent.writeln(
+        '<td style="text-align:center; line-height: 10px;"> ${payment[i].no}</td>');
+    htmlContent.writeln(
+        '<td style="text-align:center; line-height: 10px;"> ${payment[i].date}</td>');
+    htmlContent.writeln(
+        '<td style="text-align:center; line-height: 10px;"> $amount \$</td>');
+    htmlContent
+        .writeln('<td style="line-height: 10px;"> ${payment[i].note}</td>');
+  }
 
   htmlContent.writeln('''
                                   </tbody>
@@ -368,7 +374,9 @@ void printPaymentTable(int id) async {
     age: byLeasing[0].age,
     idCard: byLeasing[0].idCard,
     tel1: byReceivable[0].tel1,
+    name2: byReceivable[0].name2,
     tel2: byReceivable[0].tel2,
+    name3: byReceivable[0].name3,
     tel3: byReceivable[0].tel3,
     address: byLeasing[0].address,
     model: byLeasing[0].model,

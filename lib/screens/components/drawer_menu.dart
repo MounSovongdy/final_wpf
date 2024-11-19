@@ -29,6 +29,7 @@ import 'package:motor/screens/components/drawer_expansion_tile.dart';
 import 'package:motor/screens/components/drawer_list_tile.dart';
 import 'package:motor/screens/components/under_line.dart';
 import 'package:motor/screens/widgets/app_text.dart';
+import 'package:motor/screens/widgets/loading_widget.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:restart_app/restart_app.dart';
 
@@ -195,6 +196,8 @@ class DrawerMenu extends StatelessWidget {
                       child: DrawerListTile(
                         tap: () async {
                           if (Responsive.isMobile(context)) con.controlDrawer();
+                          LoadingWidget.dialogLoading(
+                              duration: 3, isBack: false);
                           startInactivityTimer();
                           await getAllTotalExpense();
                           conFR.monthList.clear();
@@ -223,6 +226,15 @@ class DrawerMenu extends StatelessWidget {
                                   num.parse(byTotalExpense[0].commission);
                               var tempte =
                                   num.parse(byTotalExpense[0].totalExpense);
+                              var tempNS = num.parse(byTotalExpense[0].netSale);
+                              var tempSR =
+                                  num.parse(byTotalExpense[0].saleRevenue);
+                              var tempTS =
+                                  num.parse(byTotalExpense[0].totalSale);
+                              var tempASR =
+                                  num.parse(byTotalExpense[0].avgSaleRevenue);
+                              var tempAP =
+                                  num.parse(byTotalExpense[0].avgProfit);
 
                               conFC.adv.value = '$tempA'.contains('.')
                                   ? num.parse('$tempA').toStringAsFixed(2)
@@ -248,6 +260,25 @@ class DrawerMenu extends StatelessWidget {
                               conFC.comm.value = '$tempc'.contains('.')
                                   ? num.parse('$tempc').toStringAsFixed(2)
                                   : num.parse('$tempc').toString();
+                              conFC.netsale.value = '$tempNS'.contains('.')
+                                  ? num.parse('$tempNS').toStringAsFixed(2)
+                                  : num.parse('$tempNS').toString();
+                              conFC.saleRevenue.value =
+                                  '$tempSR'.contains('.')
+                                      ? num.parse('$tempSR').toStringAsFixed(2)
+                                      : num.parse('$tempSR').toString();
+                              conFC.totalUnitSale.value =
+                                  '$tempTS'.contains('.')
+                                      ? num.parse('$tempTS').toStringAsFixed(2)
+                                      : num.parse('$tempTS').toString();
+                              conFC.avgSaleRevenue.value =
+                                  '$tempASR'.contains('.')
+                                      ? num.parse('$tempASR').toStringAsFixed(2)
+                                      : num.parse('$tempASR').toString();
+                              conFC.avgProfit.value =
+                                  '$tempAP'.contains('.')
+                                      ? num.parse('$tempAP').toStringAsFixed(2)
+                                      : num.parse('$tempAP').toString();
 
                               conFR.totalExpense.value.text = '$tempte'
                                       .contains('.')
@@ -270,11 +301,12 @@ class DrawerMenu extends StatelessWidget {
                           conFC.financeValue.value = [
                             {'value': '${conFC.netsale.value} \$'},
                             {'value': '${conFC.saleRevenue.value} \$'},
-                            {'value': '${conFC.totalUnitSale.value} \$'},
+                            {'value': '${conFC.totalUnitSale.value} '},
                             {'value': '${conFC.avgSaleRevenue.value} \$'},
                             {'value': '${conFC.avgProfit.value} \$'},
                           ];
 
+                          Get.back();
                           con.index.value = 13;
                         },
                         title: 'Financial Report',

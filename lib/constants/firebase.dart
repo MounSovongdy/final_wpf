@@ -37,23 +37,23 @@ final addressCol = _firebase.collection('address');
 final colorCol = _firebase.collection('color');
 final brandCol = _firebase.collection('brand');
 final productCol = _firebase.collection('product');
-final addStockCol = _firebase.collection('add_stock');
-final totalStockCol = _firebase.collection('total_stock');
-final bookingCol = _firebase.collection('booking');
-final bookingMicroCol = _firebase.collection('booking_micro');
-final leasingCol = _firebase.collection('leasing');
-final microComCol = _firebase.collection('micro_commission');
-final saleManComCol = _firebase.collection('sale_man_commission');
-final friendComCol = _firebase.collection('friend_commission');
-final cashCol = _firebase.collection('cash');
-final receivableCol = _firebase.collection('receivable');
-final paymentTableCol = _firebase.collection('payment_table');
-final advertisingCol = _firebase.collection('advertising');
-final rentalCol = _firebase.collection('rental');
-final giftCol = _firebase.collection('gift');
-final koiCol = _firebase.collection('koi');
+final addStockCol = _firebase.collection('add_stock_test');
+final totalStockCol = _firebase.collection('total_stock_test');
+final bookingCol = _firebase.collection('booking_test');
+final bookingMicroCol = _firebase.collection('booking_micro_test');
+final leasingCol = _firebase.collection('leasing_test');
+final microComCol = _firebase.collection('micro_commission_test');
+final saleManComCol = _firebase.collection('sale_man_commission_test');
+final friendComCol = _firebase.collection('friend_commission_test');
+final cashCol = _firebase.collection('cash_test');
+final receivableCol = _firebase.collection('receivable_test');
+final paymentTableCol = _firebase.collection('payment_table_test');
+final advertisingCol = _firebase.collection('advertising_test');
+final rentalCol = _firebase.collection('rental_test');
+final giftCol = _firebase.collection('gift_test');
+final koiCol = _firebase.collection('koi_test');
 final resetPasswordCol = _firebase.collection('reset_password');
-final totalExpenseCol = _firebase.collection('total_expense');
+final totalExpenseCol = _firebase.collection('total_expense_test');
 
 var currVersion = '1.0.0'.obs;
 var userLogin = ''.obs;
@@ -712,6 +712,7 @@ Future<void> insertLeasing(
   ReceivableModel receivable,
   PaymentTableModel payment,
   List<PaymentTableModel> paymentList, {
+  required String sellPrice,
   required String currYear,
   required String currMonth,
   required String saleman,
@@ -727,14 +728,20 @@ Future<void> insertLeasing(
 }) async {
   try {
     var docId = '';
+    var list = [];
+    var costPrice = '0';
     var res = await totalStockCol
         .where('model', isEqualTo: model)
         .where('brand', isEqualTo: brand)
         .where('year', isEqualTo: year)
         .where('condition', isEqualTo: condition)
         .get();
+    list = res.docs.map((doc) => TotalStockModel.fromMap(doc.data())).toList();
 
-    for (var doc in res.docs) docId = doc.id;
+    for (var doc in res.docs) {
+      docId = doc.id;
+      costPrice = list[0].newPrice;
+    }
 
     stockByModel.value =
         res.docs.map((doc) => TotalStockModel.fromMap(doc.data())).toList();
@@ -749,6 +756,12 @@ Future<void> insertLeasing(
 
         await totalStockCol.doc(docId).update({'total_qty': '$newQty'});
         await leasingCol.doc('${leasing.id}').set(leasing.toMap());
+        await insertFinancial(
+          year: currYear,
+          month: currMonth,
+          sell: sellPrice,
+          cost: costPrice,
+        );
         await updateStatusbooking(bookingId);
         await insertSaleManCommission(
           year: currYear,
@@ -1167,6 +1180,9 @@ Future<void> getByCash(int id) async {
 
 Future<void> insertCash(
   CashModel cash, {
+  required String sellPrice,
+  required String currYear,
+  required String currMonth,
   required String model,
   required String brand,
   required String year,
@@ -1175,15 +1191,19 @@ Future<void> insertCash(
 }) async {
   try {
     var docId = '';
+    var costPrice = '0';
+    var list = [];
     var res = await totalStockCol
         .where('model', isEqualTo: model)
         .where('brand', isEqualTo: brand)
         .where('year', isEqualTo: year)
         .where('condition', isEqualTo: condition)
         .get();
+    list = res.docs.map((doc) => TotalStockModel.fromMap(doc.data())).toList();
 
     for (var doc in res.docs) {
       docId = doc.id;
+      costPrice = list[0].newPrice;
     }
 
     stockByModel.value =
@@ -1198,6 +1218,12 @@ Future<void> insertCash(
         LoadingWidget.dialogLoading(duration: 5, isBack: false);
         await totalStockCol.doc(docId).update({'total_qty': '$newQty'});
         await cashCol.doc('${cash.id}').set(cash.toMap());
+        await insertFinancial(
+          year: currYear,
+          month: currMonth,
+          sell: sellPrice,
+          cost: costPrice,
+        );
         Navigator.of(Get.context!).pop();
         LoadingWidget.showTextDialog(
           Get.context!,
@@ -1421,6 +1447,108 @@ Future<void> getTotalExpense({
 
   byTotalExpense.value =
       res.docs.map((doc) => TotalExpenseModel.fromMap(doc.data())).toList();
+}
+
+Future<void> insertFinancial({
+  required String year,
+  required String month,
+  required String sell,
+  required String cost,
+}) async {
+  try {
+    var res = await totalExpenseCol
+        .where('year', isEqualTo: year)
+        .where('month', isEqualTo: month)
+        .get();
+
+    if (res.docs.isNotEmpty) {
+      num netSale = 0;
+      num saleRevenue = 0;
+      num totalSale = 0;
+      num avgSaleRevenue = 0;
+      num avgProfit = 0;
+      for (var e in res.docs) {
+        netSale = num.parse(e['net_sale']);
+        saleRevenue = num.parse(e['sale_revenue']);
+        totalSale = num.parse(e['total_sale']);
+        avgSaleRevenue = num.parse(e['avg_sale_revenue']);
+        avgProfit = num.parse(e['avg_profit']);
+      }
+      netSale = netSale + num.parse(sell);
+      saleRevenue = num.parse(sell) - num.parse(cost);
+      totalSale = totalSale + 1;
+      avgSaleRevenue = saleRevenue / totalSale;
+      avgProfit = netSale / totalSale;
+
+      var tempNetSale = '$netSale'.contains('.')
+          ? num.parse('$netSale').toStringAsFixed(2)
+          : num.parse('$netSale').toString();
+      var tempSaleRevenue = '$saleRevenue'.contains('.')
+          ? num.parse('$saleRevenue').toStringAsFixed(2)
+          : num.parse('$saleRevenue').toString();
+      var tempTotalSale = '$totalSale'.contains('.')
+          ? num.parse('$totalSale').toStringAsFixed(2)
+          : num.parse('$totalSale').toString();
+      var tempAvgSaleRevenue = '$avgSaleRevenue'.contains('.')
+          ? num.parse('$avgSaleRevenue').toStringAsFixed(2)
+          : num.parse('$avgSaleRevenue').toString();
+      var tempAvgProfit = '$avgProfit'.contains('.')
+          ? num.parse('$avgProfit').toStringAsFixed(2)
+          : num.parse('$avgProfit').toString();
+
+      await totalExpenseCol.doc('$year-$month').update({
+        'net_sale': tempNetSale,
+        'sale_revenue': tempSaleRevenue,
+        'total_sale': tempTotalSale,
+        'avg_sale_revenue': tempAvgSaleRevenue,
+        'avg_profit': tempAvgProfit,
+      });
+    } else {
+      num netSale = num.parse(sell);
+      num saleRevenue = num.parse(sell) - num.parse(cost);
+      num totalSale = 1;
+      num avgSaleRevenue = saleRevenue / totalSale;
+      num avgProfit = netSale / totalSale;
+
+      var newNetSale = '$netSale'.contains('.')
+          ? num.parse('$netSale').toStringAsFixed(2)
+          : num.parse('$netSale').toString();
+      var newSaleRevenue = '$saleRevenue'.contains('.')
+          ? num.parse('$saleRevenue').toStringAsFixed(2)
+          : num.parse('$saleRevenue').toString();
+      var newTotalSale = '$totalSale'.contains('.')
+          ? num.parse('$totalSale').toStringAsFixed(2)
+          : num.parse('$totalSale').toString();
+      var newAvgSaleRevenue = '$avgSaleRevenue'.contains('.')
+          ? num.parse('$avgSaleRevenue').toStringAsFixed(2)
+          : num.parse('$avgSaleRevenue').toString();
+      var newAvgProfit = '$avgProfit'.contains('.')
+          ? num.parse('$avgProfit').toStringAsFixed(2)
+          : num.parse('$avgProfit').toString();
+
+      await totalExpenseCol.doc('$year-$month').set({
+        'id': num.parse('$year$month'),
+        'year': year,
+        'month': month,
+        'rental': '0',
+        'salaryE': '0',
+        'bonusE': '0',
+        'bonusT': '0',
+        'advertise': '0',
+        'koi': '0',
+        'gift': '0',
+        'commission': '0',
+        'total_expense': '0',
+        'net_sale': newNetSale,
+        'sale_revenue': newSaleRevenue,
+        'total_sale': newTotalSale,
+        'avg_sale_revenue': newAvgSaleRevenue,
+        'avg_profit': newAvgProfit,
+      });
+    }
+  } catch (e) {
+    debugPrint('Failed to insert sale total expense: $e');
+  }
 }
 
 Future<void> insertTotalExpenseRental({

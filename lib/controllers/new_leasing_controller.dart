@@ -50,6 +50,7 @@ class NewLeasingController extends GetxController {
   var power = TextEditingController().obs;
   var year = TextEditingController().obs;
   var condition = Rxn<String>();
+  var costPrice = ''.obs;
   var engine = TextEditingController().obs;
   var frame = TextEditingController().obs;
   var type = Rxn<String>();
@@ -241,7 +242,9 @@ class NewLeasingController extends GetxController {
         date: '$dateNow $timeNow',
         name: name.value.text,
         tel1: phoneCus.value.text,
+        name2: nameCus2.value.text,
         tel2: phoneCus2.value.text,
+        name3: nameCus3.value.text,
         tel3: phoneCus3.value.text,
         document: document.value.text,
         brand: brand.value ?? '',
@@ -321,6 +324,7 @@ class NewLeasingController extends GetxController {
                 condition: condition.value ?? '',
                 bookingId: bookID,
                 debt: debt,
+                sellPrice: sell.value.text,
                 platePaid: platePay.value == 'Not Yet' ? true : false,
                 clear: clearText,
               );
@@ -351,6 +355,7 @@ class NewLeasingController extends GetxController {
               condition: condition.value ?? '',
               bookingId: bookID,
               debt: debt,
+              sellPrice: sell.value.text,
               platePaid: platePay.value == 'Not Yet' ? true : false,
               clear: clearText,
             );
@@ -406,6 +411,7 @@ class NewLeasingController extends GetxController {
               condition: condition.value ?? '',
               bookingId: bookID,
               debt: debt,
+              sellPrice: sell.value.text,
               platePaid: platePay.value == 'Not Yet' ? true : false,
               clear: clearText,
             );
@@ -435,6 +441,7 @@ class NewLeasingController extends GetxController {
             condition: condition.value ?? '',
             bookingId: bookID,
             debt: debt,
+            sellPrice: sell.value.text,
             platePaid: platePay.value == 'Not Yet' ? true : false,
             clear: clearText,
           );
@@ -628,7 +635,9 @@ class NewLeasingController extends GetxController {
     phoneIntro.value.text = '';
     commission.value.text = '';
     phoneCus2.value.text = '';
+    nameCus2.value.text = '';
     phoneCus3.value.text = '';
+    nameCus3.value.text = '';
     document.value.text = '';
     firstPayDate.value.text = '';
     interest.value.text = '';

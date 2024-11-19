@@ -131,6 +131,9 @@ class NewCashController extends GetxController {
           await insertFriendCommission(newFriCom);
           await insertCash(
             newCash,
+            currYear: '${DateTime.now().year}',
+            currMonth: '${DateTime.now().month}',
+            sellPrice: sell.value.text,
             brand: proBrand.value ?? '',
             model: model.value ?? '',
             year: year.value.text,
@@ -148,6 +151,9 @@ class NewCashController extends GetxController {
       } else {
         await insertCash(
           newCash,
+          currYear: '${DateTime.now().year}',
+          currMonth: '${DateTime.now().month}',
+          sellPrice: sell.value.text,
           brand: proBrand.value ?? '',
           model: model.value ?? '',
           year: year.value.text,

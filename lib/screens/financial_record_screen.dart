@@ -9,6 +9,7 @@ import 'package:motor/screens/components/app_text_field.dart';
 import 'package:motor/screens/components/finance_card.dart';
 import 'package:motor/screens/components/row_text_field.dart';
 import 'package:motor/screens/widgets/app_text.dart';
+import 'package:motor/screens/widgets/loading_widget.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 class FinancialRecordScreen extends StatelessWidget {
@@ -46,6 +47,7 @@ class FinancialRecordScreen extends StatelessWidget {
                 list: con.monthList,
                 onChanged: (v) async {
                   if (v != null) {
+                    LoadingWidget.dialogLoading(duration: 1, isBack: false);
                     con.selectedMonth.value = v;
                     await getTotalExpense(
                       year: con.selectedMonth.value!.split('-')[0],
@@ -61,6 +63,11 @@ class FinancialRecordScreen extends StatelessWidget {
                       var tempt = num.parse(byTotalExpense[0].bonusT);
                       var tempc = num.parse(byTotalExpense[0].commission);
                       var tempte = num.parse(byTotalExpense[0].totalExpense);
+                      var tempNS = num.parse(byTotalExpense[0].netSale);
+                      var tempSR = num.parse(byTotalExpense[0].saleRevenue);
+                      var tempTS = num.parse(byTotalExpense[0].totalSale);
+                      var tempASR = num.parse(byTotalExpense[0].avgSaleRevenue);
+                      var tempAP = num.parse(byTotalExpense[0].avgProfit);
 
                       conFC.adv.value = '$tempA'.contains('.')
                           ? num.parse('$tempA').toStringAsFixed(2)
@@ -86,6 +93,21 @@ class FinancialRecordScreen extends StatelessWidget {
                       conFC.comm.value = '$tempc'.contains('.')
                           ? num.parse('$tempc').toStringAsFixed(2)
                           : num.parse('$tempc').toString();
+                      conFC.netsale.value = '$tempNS'.contains('.')
+                          ? num.parse('$tempNS').toStringAsFixed(2)
+                          : num.parse('$tempNS').toString();
+                      conFC.saleRevenue.value = '$tempSR'.contains('.')
+                          ? num.parse('$tempSR').toStringAsFixed(2)
+                          : num.parse('$tempSR').toString();
+                      conFC.totalUnitSale.value = '$tempTS'.contains('.')
+                          ? num.parse('$tempTS').toStringAsFixed(2)
+                          : num.parse('$tempTS').toString();
+                      conFC.avgSaleRevenue.value = '$tempASR'.contains('.')
+                          ? num.parse('$tempASR').toStringAsFixed(2)
+                          : num.parse('$tempASR').toString();
+                      conFC.avgProfit.value = '$tempAP'.contains('.')
+                          ? num.parse('$tempAP').toStringAsFixed(2)
+                          : num.parse('$tempAP').toString();
 
                       con.totalExpense.value.text = '$tempte'.contains('.')
                           ? '${num.parse('$tempte').toStringAsFixed(2)} \$'
@@ -105,10 +127,11 @@ class FinancialRecordScreen extends StatelessWidget {
                       conFC.financeValue.value = [
                         {'value': '${conFC.netsale.value} \$'},
                         {'value': '${conFC.saleRevenue.value} \$'},
-                        {'value': '${conFC.totalUnitSale.value} \$'},
+                        {'value': '${conFC.totalUnitSale.value} '},
                         {'value': '${conFC.avgSaleRevenue.value} \$'},
                         {'value': '${conFC.avgProfit.value} \$'},
                       ];
+                      Get.back();
                     }
                   }
                 },

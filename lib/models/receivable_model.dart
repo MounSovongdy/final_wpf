@@ -6,7 +6,9 @@ class ReceivableModel {
   final String date;
   final String name;
   final String tel1;
+  final String name2;
   final String tel2;
+  final String name3;
   final String tel3;
   final String document;
   final String brand;
@@ -31,7 +33,9 @@ class ReceivableModel {
     required this.date,
     required this.name,
     required this.tel1,
+    required this.name2,
     required this.tel2,
+    required this.name3,
     required this.tel3,
     required this.document,
     required this.brand,
@@ -58,7 +62,9 @@ class ReceivableModel {
       'date': date,
       'name': name,
       'tel1': tel1,
+      'name2': name2,
       'tel2': tel2,
+      'name3': name3,
       'tel3': tel3,
       'document': document,
       'brand': brand,
@@ -86,7 +92,9 @@ class ReceivableModel {
       date: map['date'] as String,
       name: map['name'] as String,
       tel1: map['tel1'] as String,
+      name2: map['name2'] as String,
       tel2: map['tel2'] as String,
+      name3: map['name3'] as String,
       tel3: map['tel3'] as String,
       document: map['document'] as String,
       brand: map['brand'] as String,
