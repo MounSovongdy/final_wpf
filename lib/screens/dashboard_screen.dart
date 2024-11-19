@@ -1,10 +1,10 @@
+import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:motor/constants/constants.dart';
+import 'package:motor/controllers/dashboard_card_controller.dart';
 import 'package:motor/controllers/main_controller.dart';
 import 'package:motor/screens/components/dashboard_card.dart';
-import 'package:motor/screens/components/dashboard_receivable_chart.dart';
-import 'package:motor/screens/components/dashboard_sale_chart.dart';
 import 'package:motor/screens/components/row_text_field.dart';
 import 'package:motor/screens/components/under_line.dart';
 import 'package:motor/screens/widgets/app_text.dart';
@@ -14,9 +14,12 @@ class DashboardScreen extends StatelessWidget {
   DashboardScreen({super.key});
 
   final con = Get.put(MainController());
+  final conDash = Get.put(DashboardCardController());
 
   @override
   Widget build(BuildContext context) {
+    var total = conDash.leasingSale + conDash.cashSale;
+    var totalReceivable = conDash.activeCon + conDash.closeCon;
     return SingleChildScrollView(
       child: Container(
         margin: EdgeInsets.all(defWebPad.px),
@@ -218,8 +221,72 @@ class DashboardScreen extends StatelessWidget {
             spacer(context),
             RowCardDashboard2Row(
               spacer: spacer(context),
-              widget1: const SaleChart(),
-              widget2: const ReceivableChart(),
+              widget1: DashboardCard(
+                cardTitle: 'Sales',
+                widgetBody: Padding(
+                  padding: EdgeInsets.all(defMobPad.px * 4),
+                  child: PieChart(
+                    PieChartData(
+                      sections: [
+                        PieChartSectionData(
+                          value: conDash.leasingSale,
+                          color: bgColor,
+                          title:
+                              'Leasing\n${((conDash.leasingSale / total) * 100).toStringAsFixed(1)}%',
+                          radius: 50,
+                          titleStyle: const TextStyle(
+                              fontSize: 12,
+                              fontWeight: FontWeight.bold,
+                              color: whiteColor),
+                        ),
+                        PieChartSectionData(
+                          value: conDash.cashSale,
+                          color: Colors.green,
+                          title:
+                              'Cash\n${((conDash.cashSale / total) * 100).toStringAsFixed(1)}%',
+                          radius: 50,
+                          titleStyle: const TextStyle(
+                              fontSize: 12,
+                              fontWeight: FontWeight.bold,
+                              color: whiteColor),
+                        ),
+                      ],
+                      sectionsSpace: 3,
+                      centerSpaceRadius: 40,
+                      borderData: FlBorderData(show: false),
+                    ),
+                  ),
+                ),
+              ),
+              widget2: DashboardCard(
+                cardTitle: 'Receivable',
+                widgetBody: Padding(
+                  padding: EdgeInsets.all(defMobPad.px * 4),
+                  child: PieChart(
+                    PieChartData(
+                      sections: [
+                        PieChartSectionData(
+                          value: conDash.activeCon,
+                          color: bgColor,
+                          title: 'Active\n${((conDash.activeCon / totalReceivable) * 100).toStringAsFixed(1)}%',
+                          radius: 50,
+                          titleStyle: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold,color: whiteColor),
+                        ),
+                        PieChartSectionData(
+                          value: conDash.closeCon,
+                          color: Colors.green,
+                          title: 'Close\n${((conDash.closeCon / totalReceivable) * 100).toStringAsFixed(1)}%',
+                          radius: 50,
+                          titleStyle: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold,color: whiteColor),
+                        ),
+                      ],
+                      sectionsSpace: 3,
+                      centerSpaceRadius: 40,
+                      borderData: FlBorderData(show: false),
+                    ),
+                  ),
+                ),
+              ),
             ),
           ],
         ),
