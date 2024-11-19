@@ -100,6 +100,7 @@ var byResetPassword = [].obs;
 var resetPassword = [].obs;
 var totalExpense = [].obs;
 var byTotalExpense = [].obs;
+var listIndex = [].obs;
 
 Future<void> getByUser(String userlogin) async {
   var res = await userCol.where('user', isEqualTo: userlogin).get();
@@ -752,8 +753,6 @@ Future<void> insertLeasing(
       var newQty = oldQty - currQty;
 
       if (oldQty > 0) {
-        LoadingWidget.dialogLoading(duration: 5, isBack: false);
-
         await totalStockCol.doc(docId).update({'total_qty': '$newQty'});
         await leasingCol.doc('${leasing.id}').set(leasing.toMap());
         await insertFinancial(
@@ -1215,7 +1214,6 @@ Future<void> insertCash(
       var newQty = oldQty - currQty;
 
       if (oldQty > 0) {
-        LoadingWidget.dialogLoading(duration: 5, isBack: false);
         await totalStockCol.doc(docId).update({'total_qty': '$newQty'});
         await cashCol.doc('${cash.id}').set(cash.toMap());
         await insertFinancial(
@@ -2208,5 +2206,21 @@ Future<void> insertTotalExpenseStaff({
     }
   } catch (e) {
     debugPrint('Failed to total expense advertise: $e');
+  }
+}
+
+Future<void> getIndexOfTotalSale({
+  required String currYear,
+  required String currMonth,
+}) async {
+  try {
+    var res = await totalExpenseCol
+        .where('year', isEqualTo: currYear)
+        .where('month', isEqualTo: currMonth)
+        .get();
+    listIndex.value =
+        res.docs.map((doc) => TotalExpenseModel.fromMap(doc.data())).toList();
+  } catch (e) {
+    debugPrint('Failed to get index of total sale.');
   }
 }

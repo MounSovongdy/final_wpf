@@ -78,8 +78,17 @@ class NewCashController extends GetxController {
         discount.value.text != '' &&
         totalPrice.value.text != '' &&
         comeBy.value != null) {
-      var id = DateFormat('yyMMddkkmmss').format(DateTime.now());
-      var cashID = int.parse(id);
+      LoadingWidget.dialogLoading(duration: 5, isBack: false);
+      var currYear = dateNow.split('-')[0];
+      var currMonth = dateNow.split('-')[1];
+
+      var index = 1;
+      await getIndexOfTotalSale(currYear: currYear, currMonth: currMonth);
+      if (listIndex.isNotEmpty) index = int.parse(listIndex[0].totalSale) + 1;
+
+      var id = DateFormat('yyMM').format(DateTime.now());
+      var cashID = int.parse('${id}0000');
+      cashID = cashID + index;
 
       await getLastFriendCommission();
       var newFriendComId = 1;

@@ -75,6 +75,8 @@ class NewBookingController extends GetxController {
         discount.value.text != '' &&
         deposit.value.text != '' &&
         newRemain >= 0) {
+      LoadingWidget.dialogLoading(duration: 5, isBack: false);
+
       await getLastBooking();
       var id = DateFormat('yyMMddkkmmss').format(DateTime.now());
       int newBookID = int.parse(id);
@@ -129,7 +131,6 @@ class NewBookingController extends GetxController {
         workingHours2: '',
       );
 
-      LoadingWidget.dialogLoading(duration: 5, isBack: false);
       await insertBooking(newBook, newBookMicro);
       clearText();
       Navigator.of(context).pop();

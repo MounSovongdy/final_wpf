@@ -112,11 +112,18 @@ class NewLeasingController extends GetxController {
         approve.value.text != '' &&
         totalOwn.value.text != '' &&
         comeBy.value != null) {
-      var id = DateFormat('yyMMddkkmmss').format(DateTime.now());
-      var leasingID = int.parse(id);
+      LoadingWidget.dialogLoading(duration: 5, isBack: false);
+      var currYear = dateNow.split('-')[0];
+      var currMonth = dateNow.split('-')[1];
+
+      var index = 1;
+      await getIndexOfTotalSale(currYear: currYear, currMonth: currMonth);
+      if (listIndex.isNotEmpty) index = int.parse(listIndex[0].totalSale) + 1;
+
+      var id = DateFormat('yyMM').format(DateTime.now());
+      var leasingID = int.parse('${id}0000');
+      leasingID = leasingID + index;
       var bookID = int.parse(bookingId.value ?? '0');
-      var dateNow = dateFormat.format(DateTime.now());
-      var timeNow = timeFormat.format(DateTime.now());
 
       await getBySaleManName(salesman.value.text);
       await getBySaleManNameCom(
