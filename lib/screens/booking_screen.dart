@@ -12,6 +12,7 @@ import 'package:motor/screens/components/app_dropdown_search.dart';
 import 'package:motor/screens/components/under_line.dart';
 import 'package:motor/screens/widgets/app_text.dart';
 import 'package:motor/screens/widgets/data_table_widget.dart';
+import 'package:motor/screens/widgets/loading_widget.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 class BookingScreen extends StatelessWidget {
@@ -137,7 +138,6 @@ class BookingScreen extends StatelessWidget {
 }
 
 Widget bookingDataTable(BuildContext context) {
-
   final con = Get.put(BookingController());
   final conNewBook = Get.put(NewBookingController());
   final conMain = Get.put(MainController());
@@ -183,10 +183,10 @@ Widget bookingDataTable(BuildContext context) {
   }
 
   void showDialogStatus(
-      BuildContext context, {
-        required int bookingId,
-        required String bookingDate,
-      }) {
+    BuildContext context, {
+    required int bookingId,
+    required String bookingDate,
+  }) {
     var res = byBookingMicro[0];
 
     showDialog(
@@ -243,8 +243,8 @@ Widget bookingDataTable(BuildContext context) {
                   value: con.newStatus,
                   list: con.statusList,
                   enable: res.statusBooking1 == "Reject" &&
-                      res.statusBooking2 == "New" &&
-                      res.micro2 != ''
+                          res.statusBooking2 == "New" &&
+                          res.micro2 != ''
                       ? true
                       : false,
                   onChanged: (v) async {
@@ -263,33 +263,33 @@ Widget bookingDataTable(BuildContext context) {
               tap: () => Navigator.of(context).pop(),
             ),
             res.statusBooking1 == 'Approve' ||
-                res.statusBooking2 == 'Approve' ||
-                res.statusBooking2 == 'Reject'
+                    res.statusBooking2 == 'Approve' ||
+                    res.statusBooking2 == 'Reject'
                 ? Container()
                 : spacer(context),
             res.statusBooking1 == 'Approve' ||
-                res.statusBooking2 == 'Approve' ||
-                res.statusBooking2 == 'Reject'
+                    res.statusBooking2 == 'Approve' ||
+                    res.statusBooking2 == 'Reject'
                 ? Container()
                 : spacer(context),
             res.statusBooking1 == 'Approve' ||
-                res.statusBooking2 == 'Approve' ||
-                res.statusBooking2 == 'Reject'
+                    res.statusBooking2 == 'Approve' ||
+                    res.statusBooking2 == 'Reject'
                 ? Container()
                 : AppButtonSubmit(
-              txt: 'Update',
-              width: 120.px,
-              tap: () async {
-                startInactivityTimer();
-                await con.updateStaus(bookingId, bookingDate);
+                    txt: 'Update',
+                    width: 120.px,
+                    tap: () async {
+                      startInactivityTimer();
+                      await con.updateStaus(bookingId, bookingDate);
 
-                await getAllBooking();
-                con.filteredBooking.value = booking;
-                con.search.value.addListener(con.filterBookingData);
+                      await getAllBooking();
+                      con.filteredBooking.value = booking;
+                      con.search.value.addListener(con.filterBookingData);
 
-                Get.back();
-              },
-            ),
+                      Get.back();
+                    },
+                  ),
           ],
         );
       },
@@ -347,17 +347,26 @@ Widget bookingDataTable(BuildContext context) {
             btnUpdate: true,
             edit: () async {
               startInactivityTimer();
-              conNewBook.clearText();
-              con.title.value = 'Edit Booking';
-              await microName();
-              await saleManName();
-              await brandName();
-              await addressName();
-              await colorName();
+              if (data.statusBooking == "New") {
+                conNewBook.clearText();
+                con.title.value = 'Edit Booking';
+                await microName();
+                await saleManName();
+                await brandName();
+                await addressName();
+                await colorName();
 
-              await con.editBooking(data.id);
-
-              conMain.index.value = 2;
+                await con.editBooking(data.id);
+                conMain.index.value = 2;
+              } else {
+                LoadingWidget.showTextDialog(
+                  context,
+                  color: redColor,
+                  title: "Warning",
+                  content:
+                      'Can not update because the booking status not "NEW"',
+                );
+              }
             },
             update: () async {
               startInactivityTimer();

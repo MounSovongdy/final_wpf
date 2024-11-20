@@ -9,6 +9,7 @@ import 'package:motor/controllers/advertising_controller.dart';
 import 'package:motor/controllers/booking_controller.dart';
 import 'package:motor/controllers/cash_controller.dart';
 import 'package:motor/controllers/commission_controller.dart';
+import 'package:motor/controllers/dashboard_card_controller.dart';
 import 'package:motor/controllers/finance_card_controller.dart';
 import 'package:motor/controllers/finance_record_controller.dart';
 import 'package:motor/controllers/gift_controller.dart';
@@ -58,6 +59,7 @@ class DrawerMenu extends StatelessWidget {
   final conReset = Get.put(ResetPasswordController());
   final conFR = Get.put(FinanceRecordController());
   final conFC = Get.put(FinanceCardController());
+  final conDash = Get.put(DashboardCardController());
 
   @override
   Widget build(BuildContext context) {
@@ -74,11 +76,18 @@ class DrawerMenu extends StatelessWidget {
               padding: EdgeInsets.zero,
               children: [
                 DrawerListTile(
-                  tap: () {
+                  tap: () async {
                     if (Responsive.isMobile(context)) con.controlDrawer();
                     startInactivityTimer();
-
                     con.index.value = 0;
+
+                    conDash.loading.value = true;
+                    await conDash.loadDataBooking();
+                    await conDash.loadDataStock();
+                    await conDash.loadDataManagement();
+                    await conDash.loadDataSale();
+                    await conDash.loadDataReceivable();
+                    conDash.loading.value = false;
                   },
                   title: 'Dashboard',
                   svgSrc: 'assets/icons/Dashboard.svg',
@@ -263,10 +272,9 @@ class DrawerMenu extends StatelessWidget {
                               conFC.netsale.value = '$tempNS'.contains('.')
                                   ? num.parse('$tempNS').toStringAsFixed(2)
                                   : num.parse('$tempNS').toString();
-                              conFC.saleRevenue.value =
-                                  '$tempSR'.contains('.')
-                                      ? num.parse('$tempSR').toStringAsFixed(2)
-                                      : num.parse('$tempSR').toString();
+                              conFC.saleRevenue.value = '$tempSR'.contains('.')
+                                  ? num.parse('$tempSR').toStringAsFixed(2)
+                                  : num.parse('$tempSR').toString();
                               conFC.totalUnitSale.value =
                                   '$tempTS'.contains('.')
                                       ? num.parse('$tempTS').toStringAsFixed(2)
@@ -275,10 +283,9 @@ class DrawerMenu extends StatelessWidget {
                                   '$tempASR'.contains('.')
                                       ? num.parse('$tempASR').toStringAsFixed(2)
                                       : num.parse('$tempASR').toString();
-                              conFC.avgProfit.value =
-                                  '$tempAP'.contains('.')
-                                      ? num.parse('$tempAP').toStringAsFixed(2)
-                                      : num.parse('$tempAP').toString();
+                              conFC.avgProfit.value = '$tempAP'.contains('.')
+                                  ? num.parse('$tempAP').toStringAsFixed(2)
+                                  : num.parse('$tempAP').toString();
 
                               conFR.totalExpense.value.text = '$tempte'
                                       .contains('.')

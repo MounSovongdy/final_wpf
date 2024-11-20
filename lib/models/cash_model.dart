@@ -3,6 +3,8 @@ import 'dart:convert';
 class CashModel {
   final int id;
   final String date;
+  final String cashYear;
+  final String cashMonth;
   final String saleman;
   final String idCard;
   final String name;
@@ -31,6 +33,8 @@ class CashModel {
   CashModel({
     this.id = 0,
     this.date = '',
+    required this.cashYear,
+    required this.cashMonth,
     this.saleman = '',
     this.idCard = '',
     this.name = '',
@@ -61,6 +65,8 @@ class CashModel {
     return <String, dynamic>{
       'id': id,
       'date': date,
+      'cash_year': cashYear,
+      'cash_month': cashMonth,
       'saleman': saleman,
       'idCard': idCard,
       'name': name,
@@ -92,6 +98,8 @@ class CashModel {
     return CashModel(
       id: map['id'] as int,
       date: map['date'] as String,
+      cashYear: map['cash_year'] as String,
+      cashMonth: map['cash_month'] as String,
       saleman: map['saleman'] as String,
       idCard: map['idCard'] as String,
       name: map['name'] as String,

@@ -117,8 +117,8 @@ class NewLeasingController extends GetxController {
       var currMonth = dateNow.split('-')[1];
 
       var index = 1;
-      await getIndexOfTotalSale(currYear: currYear, currMonth: currMonth);
-      if (listIndex.isNotEmpty) index = int.parse(listIndex[0].totalSale) + 1;
+      await getIndexOfLeasing(currYear: currYear, currMonth: currMonth);
+      if (leasingIndex.isNotEmpty) index = leasingIndex.length + 1;
 
       var id = DateFormat('yyMM').format(DateTime.now());
       var leasingID = int.parse('${id}0000');
@@ -179,6 +179,8 @@ class NewLeasingController extends GetxController {
       LeasingModel newLeasing = LeasingModel(
         id: leasingID,
         leasingDate: '$dateNow $timeNow',
+        leasingYear: '${DateTime.parse(dateNow).year}',
+        leasingMonth: '${DateTime.parse(dateNow).month}',
         bookingId: bookID,
         idCard: idCard.value ?? '',
         name: name.value.text,

@@ -8,6 +8,7 @@ import 'package:motor/screens/components/dashboard_card.dart';
 import 'package:motor/screens/components/row_text_field.dart';
 import 'package:motor/screens/components/under_line.dart';
 import 'package:motor/screens/widgets/app_text.dart';
+import 'package:motor/screens/widgets/loading_widget.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 class DashboardScreen extends StatelessWidget {
@@ -18,279 +19,272 @@ class DashboardScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var total = conDash.leasingSale + conDash.cashSale;
-    var totalReceivable = conDash.activeCon + conDash.closeCon;
-    return SingleChildScrollView(
-      child: Container(
-        margin: EdgeInsets.all(defWebPad.px),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            RowCardDashboard3Row(
-              spacer: spacer(context),
-              widget1: DashboardCard(
-                cardTitle: 'Booking',
-                widgetBody: Column(
+    return Obx(
+      () => conDash.loading.value
+          ? LoadingWidget.loading
+          : SingleChildScrollView(
+              child: Container(
+                margin: EdgeInsets.all(defWebPad.px),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Padding(
-                      padding: EdgeInsets.all(defWebPad.px),
-                      child: Row(
-                        children: [
-                          AppText.subTitle(
-                            context,
-                            txt: 'New',
-                          ),
-                          const Spacer(),
-                          AppText.subTitleBold(
-                            context,
-                            txt: '16',
-                          ),
-                        ],
+                    RowCardDashboard3Row(
+                      spacer: spacer(context),
+                      widget1: DashboardCard(
+                        cardTitle: 'Booking',
+                        widgetBody: Column(
+                          children: [
+                            Padding(
+                              padding: EdgeInsets.all(defWebPad.px),
+                              child: Row(
+                                children: [
+                                  AppText.subTitle(context, txt: 'New'),
+                                  const Spacer(),
+                                  AppText.subTitleBold(
+                                    context,
+                                    txt: '${conDash.listNew.length}',
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.all(defWebPad.px),
+                              child: const UnderLineSecond(),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.all(defWebPad.px),
+                              child: Row(
+                                children: [
+                                  AppText.subTitle(context, txt: 'Approved'),
+                                  const Spacer(),
+                                  AppText.subTitleBold(
+                                    context,
+                                    txt: '${conDash.listApproved.length}',
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.all(defWebPad.px),
+                              child: const UnderLineSecond(),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.all(defWebPad.px),
+                              child: Row(
+                                children: [
+                                  AppText.subTitle(context, txt: 'Rejected'),
+                                  const Spacer(),
+                                  AppText.subTitleBold(
+                                    context,
+                                    txt: '${conDash.listRejected.length}',
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      widget2: DashboardCard(
+                        cardTitle: 'Stock',
+                        widgetBody: Column(
+                          children: [
+                            Padding(
+                              padding: EdgeInsets.all(defWebPad.px),
+                              child: Row(
+                                children: [
+                                  AppText.subTitle(context, txt: 'Total Stock'),
+                                  const Spacer(),
+                                  AppText.subTitleBold(
+                                    context,
+                                    txt: '${conDash.stockTotal.value}',
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.all(defWebPad.px),
+                              child: const UnderLineSecond(),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.all(defWebPad.px),
+                              child: Row(
+                                children: [
+                                  AppText.subTitle(context, txt: 'Used'),
+                                  const Spacer(),
+                                  AppText.subTitleBold(
+                                    context,
+                                    txt: '${conDash.stockUsed.value}',
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.all(defWebPad.px),
+                              child: const UnderLineSecond(),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.all(defWebPad.px),
+                              child: Row(
+                                children: [
+                                  AppText.subTitle(context, txt: 'New'),
+                                  const Spacer(),
+                                  AppText.subTitleBold(
+                                    context,
+                                    txt: '${conDash.stockNew.value}',
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      widget3: DashboardCard(
+                        cardTitle: 'Management',
+                        widgetBody: Column(
+                          children: [
+                            Padding(
+                              padding: EdgeInsets.all(defWebPad.px),
+                              child: Row(
+                                children: [
+                                  AppText.subTitle(context, txt: 'User'),
+                                  const Spacer(),
+                                  AppText.subTitleBold(
+                                    context,
+                                    txt: '${conDash.listUser.length}',
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.all(defWebPad.px),
+                              child: const UnderLineSecond(),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.all(defWebPad.px),
+                              child: Row(
+                                children: [
+                                  AppText.subTitle(context, txt: 'Salesman'),
+                                  const Spacer(),
+                                  AppText.subTitleBold(
+                                    context,
+                                    txt: '${conDash.listSale.length}',
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.all(defWebPad.px),
+                              child: const UnderLineSecond(),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.all(defWebPad.px),
+                              child: Row(
+                                children: [
+                                  AppText.subTitle(context, txt: 'Micro'),
+                                  const Spacer(),
+                                  AppText.subTitleBold(
+                                    context,
+                                    txt: '${conDash.listMicro.length}',
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
-                    Padding(
-                      padding: EdgeInsets.all(defWebPad.px),
-                      child: const UnderLineSecond(),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.all(defWebPad.px),
-                      child: Row(
-                        children: [
-                          AppText.subTitle(
-                            context,
-                            txt: 'Approved',
-                          ),
-                          const Spacer(),
-                          AppText.subTitleBold(
-                            context,
-                            txt: '23',
-                          ),
-                        ],
-                      ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.all(defWebPad.px),
-                      child: const UnderLineSecond(),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.all(defWebPad.px),
-                      child: Row(
-                        children: [
-                          AppText.subTitle(
-                            context,
-                            txt: 'Rejected',
-                          ),
-                          const Spacer(),
-                          AppText.subTitleBold(
-                            context,
-                            txt: '05',
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              widget2: DashboardCard(
-                cardTitle: 'Stock',
-                widgetBody: Column(
-                  children: [
-                    Padding(
-                      padding: EdgeInsets.all(defWebPad.px),
-                      child: Row(
-                        children: [
-                          AppText.subTitle(
-                            context,
-                            txt: 'Total Stock',
-                          ),
-                          const Spacer(),
-                          AppText.subTitleBold(
-                            context,
-                            txt: '20',
-                          ),
-                        ],
-                      ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.all(defWebPad.px),
-                      child: const UnderLineSecond(),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.all(defWebPad.px),
-                      child: Row(
-                        children: [
-                          AppText.subTitle(
-                            context,
-                            txt: 'Used',
-                          ),
-                          const Spacer(),
-                          AppText.subTitleBold(
-                            context,
-                            txt: '15',
-                          ),
-                        ],
-                      ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.all(defWebPad.px),
-                      child: const UnderLineSecond(),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.all(defWebPad.px),
-                      child: Row(
-                        children: [
-                          AppText.subTitle(
-                            context,
-                            txt: 'New',
-                          ),
-                          const Spacer(),
-                          AppText.subTitleBold(
-                            context,
-                            txt: '05',
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              widget3: DashboardCard(
-                cardTitle: 'Management',
-                widgetBody: Column(
-                  children: [
-                    Padding(
-                      padding: EdgeInsets.all(defWebPad.px),
-                      child: Row(
-                        children: [
-                          AppText.subTitle(
-                            context,
-                            txt: 'User',
-                          ),
-                          const Spacer(),
-                          AppText.subTitleBold(
-                            context,
-                            txt: '16',
-                          ),
-                        ],
-                      ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.all(defWebPad.px),
-                      child: const UnderLineSecond(),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.all(defWebPad.px),
-                      child: Row(
-                        children: [
-                          AppText.subTitle(
-                            context,
-                            txt: 'Salesman',
-                          ),
-                          const Spacer(),
-                          AppText.subTitleBold(
-                            context,
-                            txt: '23',
-                          ),
-                        ],
-                      ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.all(defWebPad.px),
-                      child: const UnderLineSecond(),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.all(defWebPad.px),
-                      child: Row(
-                        children: [
-                          AppText.subTitle(
-                            context,
-                            txt: 'Micro',
-                          ),
-                          const Spacer(),
-                          AppText.subTitleBold(
-                            context,
-                            txt: '05',
-                          ),
-                        ],
-                      ),
+                    spacer(context),
+                    RowCardDashboard2Row(
+                      spacer: spacer(context),
+                      widget1: conDash.leasingSale.value > 0 &&
+                              conDash.cashSale.value > 0
+                          ? DashboardCard(
+                              cardTitle: 'Sales',
+                              widgetBody: Padding(
+                                padding: EdgeInsets.all(defMobPad.px * 4),
+                                child: PieChart(
+                                  PieChartData(
+                                    sections: [
+                                      PieChartSectionData(
+                                        value: conDash.leasingSale.value,
+                                        color: bgColor,
+                                        title:
+                                            'Leasing\n${conDash.leasingSale.value.toStringAsFixed(1)}%',
+                                        radius: 50,
+                                        titleStyle: const TextStyle(
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.bold,
+                                          color: whiteColor,
+                                        ),
+                                      ),
+                                      PieChartSectionData(
+                                        value: conDash.cashSale.value,
+                                        color: Colors.green,
+                                        title:
+                                            'Cash\n${conDash.cashSale.value.toStringAsFixed(1)}%',
+                                        radius: 50,
+                                        titleStyle: const TextStyle(
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.bold,
+                                          color: whiteColor,
+                                        ),
+                                      ),
+                                    ],
+                                    sectionsSpace: 3,
+                                    centerSpaceRadius: 40,
+                                    borderData: FlBorderData(show: false),
+                                  ),
+                                ),
+                              ),
+                            )
+                          : Container(),
+                      widget2: conDash.activeCon.value > 0 &&
+                              conDash.closeCon.value > 0
+                          ? DashboardCard(
+                              cardTitle: 'Receivable',
+                              widgetBody: Padding(
+                                padding: EdgeInsets.all(defMobPad.px * 4),
+                                child: PieChart(
+                                  PieChartData(
+                                    sections: [
+                                      PieChartSectionData(
+                                        value: conDash.activeCon.value,
+                                        color: bgColor,
+                                        title:
+                                            'Active\n${conDash.activeCon.toStringAsFixed(1)}%',
+                                        radius: 50,
+                                        titleStyle: const TextStyle(
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.bold,
+                                          color: whiteColor,
+                                        ),
+                                      ),
+                                      PieChartSectionData(
+                                        value: conDash.closeCon.value,
+                                        color: Colors.green,
+                                        title:
+                                            'Close\n${conDash.closeCon.toStringAsFixed(1)}%',
+                                        radius: 50,
+                                        titleStyle: const TextStyle(
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.bold,
+                                          color: whiteColor,
+                                        ),
+                                      ),
+                                    ],
+                                    sectionsSpace: 3,
+                                    centerSpaceRadius: 40,
+                                    borderData: FlBorderData(show: false),
+                                  ),
+                                ),
+                              ),
+                            )
+                          : Container(),
                     ),
                   ],
                 ),
               ),
             ),
-            spacer(context),
-            RowCardDashboard2Row(
-              spacer: spacer(context),
-              widget1: DashboardCard(
-                cardTitle: 'Sales',
-                widgetBody: Padding(
-                  padding: EdgeInsets.all(defMobPad.px * 4),
-                  child: PieChart(
-                    PieChartData(
-                      sections: [
-                        PieChartSectionData(
-                          value: conDash.leasingSale,
-                          color: bgColor,
-                          title:
-                              'Leasing\n${((conDash.leasingSale / total) * 100).toStringAsFixed(1)}%',
-                          radius: 50,
-                          titleStyle: const TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.bold,
-                              color: whiteColor),
-                        ),
-                        PieChartSectionData(
-                          value: conDash.cashSale,
-                          color: Colors.green,
-                          title:
-                              'Cash\n${((conDash.cashSale / total) * 100).toStringAsFixed(1)}%',
-                          radius: 50,
-                          titleStyle: const TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.bold,
-                              color: whiteColor),
-                        ),
-                      ],
-                      sectionsSpace: 3,
-                      centerSpaceRadius: 40,
-                      borderData: FlBorderData(show: false),
-                    ),
-                  ),
-                ),
-              ),
-              widget2: DashboardCard(
-                cardTitle: 'Receivable',
-                widgetBody: Padding(
-                  padding: EdgeInsets.all(defMobPad.px * 4),
-                  child: PieChart(
-                    PieChartData(
-                      sections: [
-                        PieChartSectionData(
-                          value: conDash.activeCon,
-                          color: bgColor,
-                          title: 'Active\n${((conDash.activeCon / totalReceivable) * 100).toStringAsFixed(1)}%',
-                          radius: 50,
-                          titleStyle: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold,color: whiteColor),
-                        ),
-                        PieChartSectionData(
-                          value: conDash.closeCon,
-                          color: Colors.green,
-                          title: 'Close\n${((conDash.closeCon / totalReceivable) * 100).toStringAsFixed(1)}%',
-                          radius: 50,
-                          titleStyle: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold,color: whiteColor),
-                        ),
-                      ],
-                      sectionsSpace: 3,
-                      centerSpaceRadius: 40,
-                      borderData: FlBorderData(show: false),
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
     );
   }
 }

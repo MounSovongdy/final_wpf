@@ -100,7 +100,8 @@ var byResetPassword = [].obs;
 var resetPassword = [].obs;
 var totalExpense = [].obs;
 var byTotalExpense = [].obs;
-var listIndex = [].obs;
+var cashIndex = [].obs;
+var leasingIndex = [].obs;
 
 Future<void> getByUser(String userlogin) async {
   var res = await userCol.where('user', isEqualTo: userlogin).get();
@@ -2209,18 +2210,34 @@ Future<void> insertTotalExpenseStaff({
   }
 }
 
-Future<void> getIndexOfTotalSale({
+Future<void> getIndexOfLeasing({
   required String currYear,
   required String currMonth,
 }) async {
   try {
-    var res = await totalExpenseCol
-        .where('year', isEqualTo: currYear)
-        .where('month', isEqualTo: currMonth)
+    var res = await leasingCol
+        .where('leasing_year', isEqualTo: currYear)
+        .where('leasing_month', isEqualTo: currMonth)
         .get();
-    listIndex.value =
-        res.docs.map((doc) => TotalExpenseModel.fromMap(doc.data())).toList();
+    leasingIndex.value =
+        res.docs.map((doc) => LeasingModel.fromMap(doc.data())).toList();
   } catch (e) {
-    debugPrint('Failed to get index of total sale.');
+    debugPrint('Failed to get index of Leasing.');
+  }
+}
+
+Future<void> getIndexOfCash({
+  required String currYear,
+  required String currMonth,
+}) async {
+  try {
+    var res = await cashCol
+        .where('cash_year', isEqualTo: currYear)
+        .where('cash_month', isEqualTo: currMonth)
+        .get();
+    cashIndex.value =
+        res.docs.map((doc) => CashModel.fromMap(doc.data())).toList();
+  } catch (e) {
+    debugPrint('Failed to get index of cash.');
   }
 }

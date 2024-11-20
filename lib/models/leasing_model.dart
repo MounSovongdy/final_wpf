@@ -3,6 +3,8 @@ import 'dart:convert';
 class LeasingModel {
   final int id;
   final String leasingDate;
+  final String leasingYear;
+  final String leasingMonth;
   final int bookingId;
   final String idCard;
   final String name;
@@ -38,6 +40,8 @@ class LeasingModel {
   LeasingModel({
     this.id = 0,
     this.leasingDate = '',
+    this.leasingYear = '',
+    this.leasingMonth = '',
     this.bookingId = 0,
     this.idCard = '',
     this.name = '',
@@ -75,6 +79,8 @@ class LeasingModel {
     return <String, dynamic>{
       'id': id,
       'leasing_date': leasingDate,
+      'leasing_year': leasingYear,
+      'leasing_month': leasingMonth,
       'booking_id': bookingId,
       'id_card': idCard,
       'name': name,
@@ -113,6 +119,8 @@ class LeasingModel {
     return LeasingModel(
       id: map['id'] as int,
       leasingDate: map['leasing_date'] as String,
+      leasingYear: map['leasing_year'] as String,
+      leasingMonth: map['leasing_month'] as String,
       bookingId: map['booking_id'] as int,
       idCard: map['id_card'] as String,
       name: map['name'] as String,

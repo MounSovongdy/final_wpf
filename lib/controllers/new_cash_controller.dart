@@ -83,8 +83,8 @@ class NewCashController extends GetxController {
       var currMonth = dateNow.split('-')[1];
 
       var index = 1;
-      await getIndexOfTotalSale(currYear: currYear, currMonth: currMonth);
-      if (listIndex.isNotEmpty) index = int.parse(listIndex[0].totalSale) + 1;
+      await getIndexOfCash(currYear: currYear, currMonth: currMonth);
+      if (cashIndex.isNotEmpty) index = cashIndex.length + 1;
 
       var id = DateFormat('yyMM').format(DateTime.now());
       var cashID = int.parse('${id}0000');
@@ -97,6 +97,8 @@ class NewCashController extends GetxController {
       CashModel newCash = CashModel(
         id: cashID,
         date: dateBooking.value.text,
+        cashYear: '${DateTime.parse(dateNow).year}',
+        cashMonth: '${DateTime.parse(dateNow).month}',
         saleman: salesman.value ?? '',
         idCard: idCard.value.text,
         name: name.value.text,
