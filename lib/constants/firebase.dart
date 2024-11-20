@@ -58,6 +58,7 @@ final totalExpenseCol = _firebase.collection('total_expense_test');
 var currVersion = '1.0.0'.obs;
 var userLogin = ''.obs;
 var userName = ''.obs;
+var userRole = ''.obs;
 var byUser = [].obs;
 var user = [].obs;
 var bySaleMan = [].obs;

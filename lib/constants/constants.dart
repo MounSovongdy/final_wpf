@@ -27,6 +27,10 @@ var timeFormat = DateFormat.Hm();
 var dateNow = dateFormat.format(DateTime.now());
 var timeNow = timeFormat.format(DateTime.now());
 
+var roleSuperAdmin = 'Super Admin';
+var roleAdmin = 'Admin';
+var roleUser = 'User';
+
 Timer? inactivityTimer;
 
 SizedBox spacer(BuildContext context) {

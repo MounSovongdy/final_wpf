@@ -8,6 +8,7 @@ class CustomAppBar {
   static AppBar defAppBar(
     BuildContext context, {
     required String txt,
+    required String role,
     required VoidCallback tap,
   }) {
     var size = Responsive.isDesktop(context) ? 30 : 26;
@@ -35,7 +36,13 @@ class CustomAppBar {
             ),
           ),
           SizedBox(width: defWebPad.px / 1.5),
-          AppText.header(context, txt: txt, space: 1.5, color: whiteColor),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              AppText.header(context, txt: txt, space: 1.5, color: whiteColor),
+              AppText.subTitle(context, txt: role, color: whiteColor),
+            ],
+          ),
         ],
       ),
     );

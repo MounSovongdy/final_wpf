@@ -56,6 +56,7 @@ class MainScreen extends StatelessWidget {
       context,
       tap: con.controlMenu,
       txt: userName.value,
+      role: userRole.value,
     );
 
     var drawer = Drawer(child: DrawerMenu());

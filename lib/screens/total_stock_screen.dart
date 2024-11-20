@@ -64,30 +64,38 @@ class TotalStockScreen extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              AppButtonSubmit(
-                txt: 'Download Report',
-                width: Responsive.isDesktop(context) ? 200.px : 150.px,
-                color: secondGreyColor,
-                tap: () {},
-              ),
-              spacer(context),
-              spacer(context),
-              AppButtonSubmit(
-                txt: 'Add Stock',
-                width: Responsive.isDesktop(context) ? 150.px : 100.px,
-                tap: () async {
-                  startInactivityTimer();
-                  con.title.value = 'Add Stock';
-                  con2.isRead.value = false;
-                  con2.clearText();
-                  con2.listModel.clear();
-                  await getAllProduct();
-                  for (var pro in product) {
-                    con2.listModel.add(pro.model);
-                  }
-                  con1.index.value = 10;
-                },
-              ),
+              userRole.value == roleSuperAdmin
+                  ? AppButtonSubmit(
+                      txt: 'Download Report',
+                      width: Responsive.isDesktop(context) ? 200.px : 150.px,
+                      color: secondGreyColor,
+                      tap: () {},
+                    )
+                  : Container(),
+              userRole.value == roleSuperAdmin || userRole.value == roleAdmin
+                  ? spacer(context)
+                  : Container(),
+              userRole.value == roleSuperAdmin || userRole.value == roleAdmin
+                  ? spacer(context)
+                  : Container(),
+              userRole.value == roleSuperAdmin || userRole.value == roleAdmin
+                  ? AppButtonSubmit(
+                      txt: 'Add Stock',
+                      width: Responsive.isDesktop(context) ? 150.px : 100.px,
+                      tap: () async {
+                        startInactivityTimer();
+                        con.title.value = 'Add Stock';
+                        con2.isRead.value = false;
+                        con2.clearText();
+                        con2.listModel.clear();
+                        await getAllProduct();
+                        for (var pro in product) {
+                          con2.listModel.add(pro.model);
+                        }
+                        con1.index.value = 10;
+                      },
+                    )
+                  : Container(),
             ],
           ),
         ],
@@ -95,47 +103,57 @@ class TotalStockScreen extends StatelessWidget {
     );
   }
 }
-Widget totalStockDataTable(BuildContext context){
+
+Widget totalStockDataTable(BuildContext context) {
   final con = Get.put(TotalStockController());
   final conAS = Get.put(AddStockController());
   final conMain = Get.put(MainController());
-  
+
   return AppDataTable(
-      columnHeaders: [
-        DataTableWidget.column(context, 'ID'),
-        DataTableWidget.column(context, 'Date In'),
-        DataTableWidget.column(context, 'Model'),
-        DataTableWidget.column(context, 'Brand'),
-        DataTableWidget.column(context, 'Year'),
-        DataTableWidget.column(context, 'Condition'),
-        DataTableWidget.column(context, 'QTY Begin'),
-        DataTableWidget.column(context, 'QTY Today'),
-        DataTableWidget.column(context, 'Total QTY'),
+    columnHeaders: [
+      DataTableWidget.column(context, 'ID'),
+      DataTableWidget.column(context, 'Date In'),
+      DataTableWidget.column(context, 'Model'),
+      DataTableWidget.column(context, 'Brand'),
+      DataTableWidget.column(context, 'Year'),
+      DataTableWidget.column(context, 'Condition'),
+      DataTableWidget.column(context, 'QTY Begin'),
+      DataTableWidget.column(context, 'QTY Today'),
+      DataTableWidget.column(context, 'Total QTY'),
+      if (userRole.value == roleSuperAdmin)
         DataTableWidget.column(context, 'Price in QTY Begin'),
+      if (userRole.value == roleSuperAdmin)
         DataTableWidget.column(context, 'Price in QTY Today'),
-        DataTableWidget.column(
-            context, 'Total Price in QTY Begin'),
-        DataTableWidget.column(
-            context, 'Total Price in QTY Today'),
-        DataTableWidget.column(context, 'Actions'),],
-      rowData: List.generate(
-        con.filteredTotalStock.length,
-            (index) {
-          var data = con.filteredTotalStock[index];
-          return [
-            DataTableWidget.cell(Get.context!, '${data.id}'),
-            DataTableWidget.cell(Get.context!, data.newDateIn),
-            DataTableWidget.cell(Get.context!, data.model),
-            DataTableWidget.cell(Get.context!, data.brand),
-            DataTableWidget.cell(Get.context!, data.year),
-            DataTableWidget.cell(Get.context!, data.condition),
-            DataTableWidget.cell(Get.context!, data.oldQty),
-            DataTableWidget.cell(Get.context!, data.newQty),
-            DataTableWidget.cell(Get.context!, data.totalQty),
+      if (userRole.value == roleSuperAdmin)
+        DataTableWidget.column(context, 'Total Price in QTY Begin'),
+      if (userRole.value == roleSuperAdmin)
+        DataTableWidget.column(context, 'Total Price in QTY Today'),
+      if (userRole.value == roleSuperAdmin)
+        DataTableWidget.column(context, 'Actions'),
+    ],
+    rowData: List.generate(
+      con.filteredTotalStock.length,
+      (index) {
+        var data = con.filteredTotalStock[index];
+        return [
+          DataTableWidget.cell(Get.context!, '${data.id}'),
+          DataTableWidget.cell(Get.context!, data.newDateIn),
+          DataTableWidget.cell(Get.context!, data.model),
+          DataTableWidget.cell(Get.context!, data.brand),
+          DataTableWidget.cell(Get.context!, data.year),
+          DataTableWidget.cell(Get.context!, data.condition),
+          DataTableWidget.cell(Get.context!, data.oldQty),
+          DataTableWidget.cell(Get.context!, data.newQty),
+          DataTableWidget.cell(Get.context!, data.totalQty),
+          if (userRole.value == roleSuperAdmin)
             DataTableWidget.cell(Get.context!, data.oldPrice),
+          if (userRole.value == roleSuperAdmin)
             DataTableWidget.cell(Get.context!, data.newPrice),
+          if (userRole.value == roleSuperAdmin)
             DataTableWidget.cell(Get.context!, data.oldTotalPrice),
+          if (userRole.value == roleSuperAdmin)
             DataTableWidget.cell(Get.context!, data.newTotalPrice),
+          if (userRole.value == roleSuperAdmin)
             DataTableWidget.cellBtn(
               Get.context!,
               btnDelete: false,
@@ -152,8 +170,8 @@ Widget totalStockDataTable(BuildContext context){
                 conMain.index.value = 10;
               },
             ),
-          ];
-        },
-      ),
+        ];
+      },
+    ),
   );
 }
