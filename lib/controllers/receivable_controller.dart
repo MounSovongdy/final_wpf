@@ -18,27 +18,29 @@ class ReceivableController extends GetxController {
 
   var search = TextEditingController().obs;
   var filteredRece = [].obs;
+  var filterPay = [].obs;
 
   void filterReceivableData() {
     String query = search.value.text.toLowerCase();
 
-    filteredRece.value = receivable.where((data) {
-      return data.id.toString().contains(query) ||
-          data.saleman.toLowerCase().contains(query) ||
-          data.date.toLowerCase().contains(query) ||
-          data.name.toLowerCase().contains(query) ||
-          data.tel1.toLowerCase().contains(query) ||
-          data.tel2.toLowerCase().contains(query) ||
-          data.tel3.toLowerCase().contains(query) ||
-          data.document.toLowerCase().contains(query) ||
-          data.brand.toLowerCase().contains(query) ||
-          data.model.toLowerCase().contains(query) ||
-          data.color.toLowerCase().contains(query) ||
-          data.year.toLowerCase().contains(query) ||
-          data.condition.toLowerCase().contains(query) ||
-          data.total.toLowerCase().contains(query) ||
-          data.receiveAmount.toLowerCase().contains(query) ||
-          data.amountLeft.toLowerCase().contains(query);
+    filteredRece.value = receivablewithpayment.where((data) {
+      return data['id'].toString().contains(query) ||
+          data['saleman'].toLowerCase().contains(query) ||
+          data['date'].toLowerCase().contains(query) ||
+          data['name'].toLowerCase().contains(query) ||
+          data['tel1'].toLowerCase().contains(query) ||
+          data['tel2'].toLowerCase().contains(query) ||
+          data['tel3'].toLowerCase().contains(query) ||
+          data['nextPayment'].toLowerCase().contains(query) ||
+          data['document'].toLowerCase().contains(query) ||
+          data['brand'].toLowerCase().contains(query) ||
+          data['model'].toLowerCase().contains(query) ||
+          data['color'].toLowerCase().contains(query) ||
+          data['year'].toLowerCase().contains(query) ||
+          data['condition'].toLowerCase().contains(query) ||
+          data['total'].toLowerCase().contains(query) ||
+          data['receiveAmount'].toLowerCase().contains(query) ||
+          data['amountLeft'].toLowerCase().contains(query);
     }).toList();
   }
 
@@ -213,7 +215,78 @@ class ReceivableController extends GetxController {
                         );
                         clearText();
                         await getAllReceivable();
-                        filteredRece.value = receivable;
+                        filteredRece.clear();
+                        for (var data in receivable) {
+                          var id = data.id;
+                          var saleman = data.saleman;
+                          var date = data.date;
+                          var name = data.name;
+                          var tel1 = data.tel1;
+                          var tel2 = data.tel2;
+                          var tel3 = data.tel3;
+                          var document = data.document;
+                          var brand = data.brand;
+                          var model = data.model;
+                          var color = data.color;
+                          var year = data.year;
+                          var condition = data.condition;
+                          var total = data.total;
+                          var receiveAmount = data.receiveAmount;
+                          var amountLeft = data.amountLeft;
+                          var nextPayment = '';
+                          var colorPayment = '';
+
+                          await getByPaymentTable(id);
+                          var listPaid = [];
+                          for (var data in byPaymentTable) {
+                            if (data.paid == '' && data.paid != 'P')
+                              listPaid.add(data.date);
+                          }
+
+                          if (listPaid.isNotEmpty) {
+                            nextPayment = listPaid[0];
+                            var today = DateTime.now();
+                            var input = DateTime.parse(nextPayment);
+
+                            var todayDate =
+                                DateTime(today.year, today.month, today.day);
+                            var inputDate =
+                                DateTime(input.year, input.month, input.day);
+
+                            var day = todayDate.difference(inputDate).inDays;
+
+                            if (day >= 90)
+                              colorPayment = "Black";
+                            else if (day >= 30)
+                              colorPayment = "Red";
+                            else if (day >= 7)
+                              colorPayment = "Yellow";
+                            else
+                              colorPayment = "Green";
+                          }
+
+                          receivablewithpayment.add({
+                            'id': id,
+                            'saleman': saleman,
+                            'date': date,
+                            'name': name,
+                            'tel1': tel1,
+                            'tel2': tel2,
+                            'tel3': tel3,
+                            'document': document,
+                            'brand': brand,
+                            'model': model,
+                            'color': color,
+                            'year': year,
+                            'condition': condition,
+                            'total': total,
+                            'receiveAmount': receiveAmount,
+                            'amountLeft': amountLeft,
+                            'nextPayment': nextPayment,
+                            'colorPayment': colorPayment,
+                          });
+                        }
+                        filteredRece.value = receivablewithpayment;
                         search.value.addListener(filterReceivableData);
                         Get.back();
 
@@ -360,54 +433,68 @@ class ReceivableController extends GetxController {
                             ),
                           ],
                         ),
-                        ...byPaymentTable.map((data) {
-                          return TableRow(
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: AppText.title(
-                                  context,
-                                  txt: '${data.no}',
+                        ...byPaymentTable.map(
+                          (data) {
+                            return TableRow(
+                              children: [
+                                Container(
+                                  padding: const EdgeInsets.all(8.0),
+                                  color: getRowColor(data.lateDate),
+                                  child: AppText.title(
+                                    context,
+                                    txt: '${data.no}',
+                                    color: getTextRowColor(data.lateDate),
+                                  ),
                                 ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: AppText.title(
-                                  context,
-                                  txt: data.date,
+                                Container(
+                                  padding: const EdgeInsets.all(8.0),
+                                  color: getRowColor(data.lateDate),
+                                  child: AppText.title(
+                                    context,
+                                    txt: data.date,
+                                    color: getTextRowColor(data.lateDate),
+                                  ),
                                 ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: AppText.title(
-                                  context,
-                                  txt: data.amount,
+                                Container(
+                                  padding: const EdgeInsets.all(8.0),
+                                  color: getRowColor(data.lateDate),
+                                  child: AppText.title(
+                                    context,
+                                    txt: data.amount,
+                                    color: getTextRowColor(data.lateDate),
+                                  ),
                                 ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: AppText.title(
-                                  context,
-                                  txt: data.paid,
+                                Container(
+                                  padding: const EdgeInsets.all(8.0),
+                                  color: getRowColor(data.lateDate),
+                                  child: AppText.title(
+                                    context,
+                                    txt: data.paid,
+                                    color: getTextRowColor(data.lateDate),
+                                  ),
                                 ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: AppText.title(
-                                  context,
-                                  txt: data.paidDate,
+                                Container(
+                                  padding: const EdgeInsets.all(8.0),
+                                  color: getRowColor(data.lateDate),
+                                  child: AppText.title(
+                                    context,
+                                    txt: data.paidDate,
+                                    color: getTextRowColor(data.lateDate),
+                                  ),
                                 ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: AppText.title(
-                                  context,
-                                  txt: data.lateDate,
+                                Container(
+                                  padding: const EdgeInsets.all(8.0),
+                                  color: getRowColor(data.lateDate),
+                                  child: AppText.title(
+                                    context,
+                                    txt: data.lateDate,
+                                    color: getTextRowColor(data.lateDate),
+                                  ),
                                 ),
-                              ),
-                            ],
-                          );
-                        }),
+                              ],
+                            );
+                          },
+                        ),
                       ],
                     ),
                   ),
@@ -426,5 +513,37 @@ class ReceivableController extends GetxController {
         );
       },
     );
+  }
+
+  Color getTextRowColor(String day) {
+    if (day != '') {
+      var newDay = int.parse(day);
+      var color = Colors.transparent;
+      if (newDay >= 90)
+        color = Colors.white;
+      else
+        color = Colors.black;
+
+      return color;
+    } else {
+      return Colors.black;
+    }
+  }
+
+  Color getRowColor(String day) {
+    if (day != '') {
+      var newDay = int.parse(day);
+      var color = Colors.transparent;
+      if (newDay >= 90) color = Colors.black.withOpacity(0.7);
+      if (newDay >= 30) color = Colors.red.withOpacity(0.7);
+      if (newDay >= 7)
+        color = Colors.yellow.withOpacity(0.7);
+      else
+        color = Colors.green.withOpacity(0.7);
+
+      return color;
+    } else {
+      return Colors.transparent;
+    }
   }
 }

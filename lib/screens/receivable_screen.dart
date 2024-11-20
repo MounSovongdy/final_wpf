@@ -5,7 +5,7 @@ import 'package:motor/constants/firebase.dart';
 import 'package:motor/controllers/main_controller.dart';
 import 'package:motor/controllers/print_payment_table_controller.dart';
 import 'package:motor/controllers/receivable_controller.dart';
-import 'package:motor/screens/components/app_data_table.dart';
+import 'package:motor/screens/components/app_data_table_receivable.dart';
 import 'package:motor/screens/widgets/app_text.dart';
 import 'package:motor/screens/widgets/data_table_widget.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
@@ -58,79 +58,165 @@ class ReceivableScreen extends StatelessWidget {
   }
 }
 
-Widget receivableDataTable(BuildContext context){
+Widget receivableDataTable(BuildContext context) {
   final con = Get.put(ReceivableController());
-  return AppDataTable(
-      columnHeaders: [
-        DataTableWidget.column(context, 'ID'),
-        DataTableWidget.column(context, 'Saleman'),
-        DataTableWidget.column(context, 'Receivable Date'),
-        DataTableWidget.column(context, 'Name'),
-        DataTableWidget.column(context, 'Telephone 1'),
-        DataTableWidget.column(context, 'Telephone 2'),
-        DataTableWidget.column(context, 'Telephone 3'),
-        DataTableWidget.column(context, 'Document'),
-        DataTableWidget.column(context, 'Brand'),
-        DataTableWidget.column(context, 'Model'),
-        DataTableWidget.column(context, 'Color'),
-        DataTableWidget.column(context, 'Year'),
-        DataTableWidget.column(context, 'Condition'),
-        DataTableWidget.column(context, 'Total Amount'),
-        DataTableWidget.column(context, 'Receive Payment'),
-        DataTableWidget.column(context, 'Amount Left'),
-        DataTableWidget.column(context, 'Action'),
-      ],
+
+  Color getRowColor(String colorPayment) {
+    if (colorPayment == "Black") {
+      return Colors.white;
+    } else {
+      return Colors.black;
+    }
+  }
+
+  return AppDataTableReceivable(
+    source: con.filteredRece,
+    columnHeaders: [
+      DataTableWidget.column(context, 'ID'),
+      DataTableWidget.column(context, 'Saleman'),
+      DataTableWidget.column(context, 'Receivable Date'),
+      DataTableWidget.column(context, 'Name'),
+      DataTableWidget.column(context, 'Telephone 1'),
+      DataTableWidget.column(context, 'Telephone 2'),
+      DataTableWidget.column(context, 'Telephone 3'),
+      DataTableWidget.column(context, 'Next Payment'),
+      DataTableWidget.column(context, 'Document'),
+      DataTableWidget.column(context, 'Brand'),
+      DataTableWidget.column(context, 'Model'),
+      DataTableWidget.column(context, 'Color'),
+      DataTableWidget.column(context, 'Year'),
+      DataTableWidget.column(context, 'Condition'),
+      DataTableWidget.column(context, 'Total Amount'),
+      DataTableWidget.column(context, 'Receive Payment'),
+      DataTableWidget.column(context, 'Amount Left'),
+      DataTableWidget.column(context, 'Color Payment'),
+      DataTableWidget.column(context, 'Action'),
+    ],
     rowData: List.generate(
       con.filteredRece.length,
-          (index) {
+      (index) {
         var data = con.filteredRece[index];
         return [
-          DataTableWidget.cell(Get.context!, '${data.id}'),
-          DataTableWidget.cell(Get.context!, data.saleman),
-          DataTableWidget.cell(Get.context!, data.date),
-          DataTableWidget.cell(Get.context!, data.name),
-          DataTableWidget.cell(Get.context!, data.tel1),
-          DataTableWidget.cell(Get.context!, data.tel2),
-          DataTableWidget.cell(Get.context!, data.tel3),
-          DataTableWidget.cell(Get.context!, data.document),
-          DataTableWidget.cell(Get.context!, data.brand),
-          DataTableWidget.cell(Get.context!, data.model),
-          DataTableWidget.cell(Get.context!, data.color),
-          DataTableWidget.cell(Get.context!, data.year),
-          DataTableWidget.cell(Get.context!, data.condition),
-          DataTableWidget.cell(Get.context!, data.total),
-          DataTableWidget.cell(Get.context!, data.receiveAmount),
-          DataTableWidget.cell(Get.context!, data.amountLeft),
+          DataTableWidget.cell(
+            Get.context!,
+            '${data['id']}',
+            color: getRowColor(data['colorPayment']),
+          ),
+          DataTableWidget.cell(
+            Get.context!,
+            data['saleman'],
+            color: getRowColor(data['colorPayment']),
+          ),
+          DataTableWidget.cell(
+            Get.context!,
+            data['date'],
+            color: getRowColor(data['colorPayment']),
+          ),
+          DataTableWidget.cell(
+            Get.context!,
+            data['name'],
+            color: getRowColor(data['colorPayment']),
+          ),
+          DataTableWidget.cell(
+            Get.context!,
+            data['tel1'],
+            color: getRowColor(data['colorPayment']),
+          ),
+          DataTableWidget.cell(
+            Get.context!,
+            data['tel2'],
+            color: getRowColor(data['colorPayment']),
+          ),
+          DataTableWidget.cell(
+            Get.context!,
+            data['tel3'],
+            color: getRowColor(data['colorPayment']),
+          ),
+          DataTableWidget.cell(
+            Get.context!,
+            data['nextPayment'],
+            color: getRowColor(data['colorPayment']),
+          ),
+          DataTableWidget.cell(
+            Get.context!,
+            data['document'],
+            color: getRowColor(data['colorPayment']),
+          ),
+          DataTableWidget.cell(
+            Get.context!,
+            data['brand'],
+            color: getRowColor(data['colorPayment']),
+          ),
+          DataTableWidget.cell(
+            Get.context!,
+            data['model'],
+            color: getRowColor(data['colorPayment']),
+          ),
+          DataTableWidget.cell(
+            Get.context!,
+            data['color'],
+            color: getRowColor(data['colorPayment']),
+          ),
+          DataTableWidget.cell(
+            Get.context!,
+            data['year'],
+            color: getRowColor(data['colorPayment']),
+          ),
+          DataTableWidget.cell(
+            Get.context!,
+            data['condition'],
+            color: getRowColor(data['colorPayment']),
+          ),
+          DataTableWidget.cell(
+            Get.context!,
+            data['total'],
+            color: getRowColor(data['colorPayment']),
+          ),
+          DataTableWidget.cell(
+            Get.context!,
+            data['receiveAmount'],
+            color: getRowColor(data['colorPayment']),
+          ),
+          DataTableWidget.cell(
+            Get.context!,
+            data['amountLeft'],
+            color: getRowColor(data['colorPayment']),
+          ),
+          DataTableWidget.cell(
+            Get.context!,
+            data['colorPayment'],
+            color: getRowColor(data['colorPayment']),
+          ),
           DataTableWidget.cellBtn(
             Get.context!,
             btnEdit: false,
             btnDelete: false,
             btnPrint: true,
-            btnAddPayment: conToNum(data.amountLeft) > 0 ? true : false,
+            btnAddPayment: conToNum(data['amountLeft']) > 0 ? true : false,
             btnViewPayment: true,
             edit: () => debugPrint('Edit $index'),
             delete: () => debugPrint('Delete $index'),
-            print: () => printPaymentTable(data.id),
+            print: () => printPaymentTable(data['id']),
             addPayment: () async {
               byPaymentTable.clear();
               con.scheduleList.clear();
               con.clearText();
-              con.totalAmount.value.text = data.total;
-              con.paidAmount.value.text = data.receiveAmount;
-              con.leftAmount.value.text = data.amountLeft;
+              con.totalAmount.value.text = data['total'];
+              con.paidAmount.value.text = data['receiveAmount'];
+              con.leftAmount.value.text = data['amountLeft'];
 
-              await getByPaymentTable(data.id);
+              await getByPaymentTable(data['id']);
               for (var data in byPaymentTable) {
                 if (data.date != '' && data.paid == '') {
                   con.scheduleList.add(data.date);
                 }
               }
-              con.showDialogAddPayment(Get.context!, data.id);
+              con.showDialogAddPayment(Get.context!, data['id']);
             },
             viewPayment: () async {
               byPaymentTable.clear();
               con.clearText();
-              await getByPaymentTable(data.id);
+              await getByPaymentTable(data['id']);
               con.showDialogViewPayment(Get.context!);
             },
           ),

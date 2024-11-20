@@ -147,10 +147,83 @@ class DrawerMenu extends StatelessWidget {
                   tap: () async {
                     if (Responsive.isMobile(context)) con.controlDrawer();
                     startInactivityTimer();
+                    LoadingWidget.dialogLoading(duration: 1, isBack: false);
                     await getAllReceivable();
-                    conRec.filteredRece.value = receivable;
+                    conRec.filteredRece.clear();
+                    for (var data in receivable) {
+                      var id = data.id;
+                      var saleman = data.saleman;
+                      var date = data.date;
+                      var name = data.name;
+                      var tel1 = data.tel1;
+                      var tel2 = data.tel2;
+                      var tel3 = data.tel3;
+                      var document = data.document;
+                      var brand = data.brand;
+                      var model = data.model;
+                      var color = data.color;
+                      var year = data.year;
+                      var condition = data.condition;
+                      var total = data.total;
+                      var receiveAmount = data.receiveAmount;
+                      var amountLeft = data.amountLeft;
+                      var nextPayment = '';
+                      var colorPayment = '';
+
+                      await getByPaymentTable(id);
+                      var listPaid = [];
+                      for (var data in byPaymentTable) {
+                        if (data.paid == '' && data.paid != 'P')
+                          listPaid.add(data.date);
+                      }
+
+                      if (listPaid.isNotEmpty) {
+                        nextPayment = listPaid[0];
+                        var today = DateTime.now();
+                        var input = DateTime.parse(nextPayment);
+
+                        var todayDate =
+                            DateTime(today.year, today.month, today.day);
+                        var inputDate =
+                            DateTime(input.year, input.month, input.day);
+
+                        var day = todayDate.difference(inputDate).inDays;
+
+                        if (day >= 90)
+                          colorPayment = "Black";
+                        else if (day >= 30)
+                          colorPayment = "Red";
+                        else if (day >= 7)
+                          colorPayment = "Yellow";
+                        else
+                          colorPayment = "Green";
+                      }
+
+                      receivablewithpayment.add({
+                        'id': id,
+                        'saleman': saleman,
+                        'date': date,
+                        'name': name,
+                        'tel1': tel1,
+                        'tel2': tel2,
+                        'tel3': tel3,
+                        'document': document,
+                        'brand': brand,
+                        'model': model,
+                        'color': color,
+                        'year': year,
+                        'condition': condition,
+                        'total': total,
+                        'receiveAmount': receiveAmount,
+                        'amountLeft': amountLeft,
+                        'nextPayment': nextPayment,
+                        'colorPayment': colorPayment,
+                      });
+                    }
+                    conRec.filteredRece.value = receivablewithpayment;
                     conRec.search.value
                         .addListener(conRec.filterReceivableData);
+                    Get.back();
 
                     con.index.value = 6;
                   },

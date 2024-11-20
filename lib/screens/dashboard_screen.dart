@@ -196,7 +196,7 @@ class DashboardScreen extends StatelessWidget {
                     spacer(context),
                     RowCardDashboard2Row(
                       spacer: spacer(context),
-                      widget1: conDash.leasingSale.value > 0 &&
+                      widget1: conDash.leasingSale.value > 0 ||
                               conDash.cashSale.value > 0
                           ? DashboardCard(
                               cardTitle: 'Sales',
@@ -238,7 +238,7 @@ class DashboardScreen extends StatelessWidget {
                               ),
                             )
                           : Container(),
-                      widget2: conDash.activeCon.value > 0 &&
+                      widget2: conDash.activeCon.value > 0 ||
                               conDash.closeCon.value > 0
                           ? DashboardCard(
                               cardTitle: 'Receivable',

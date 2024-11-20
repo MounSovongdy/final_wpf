@@ -20,10 +20,11 @@ class DataTableWidget {
 
   static DataCell cell(
     BuildContext context,
-    String txt,
-  ) {
+    String txt, {
+    Color color = blackColor,
+  }) {
     return DataCell(
-      AppText.title(context, txt: txt),
+      AppText.title(context, txt: txt, color: color),
     );
   }
 

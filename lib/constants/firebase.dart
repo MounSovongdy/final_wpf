@@ -102,6 +102,7 @@ var totalExpense = [].obs;
 var byTotalExpense = [].obs;
 var cashIndex = [].obs;
 var leasingIndex = [].obs;
+var receivablewithpayment = [].obs;
 
 Future<void> getByUser(String userlogin) async {
   var res = await userCol.where('user', isEqualTo: userlogin).get();
