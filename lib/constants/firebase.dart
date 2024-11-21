@@ -104,6 +104,7 @@ var byTotalExpense = [].obs;
 var cashIndex = [].obs;
 var leasingIndex = [].obs;
 var receivablewithpayment = [].obs;
+var plate = [].obs;
 
 Future<void> getByUser(String userlogin) async {
   var res = await userCol.where('user', isEqualTo: userlogin).get();
@@ -702,11 +703,25 @@ Future<void> getByReceivable(int id) async {
 }
 
 Future<void> getByPaymentSchedule(int id) async {
-  var res = await paymentTableCol.where('id', isEqualTo: id).get();
+  var res = await paymentTableCol
+      .where('id', isEqualTo: id)
+      .where('type', isEqualTo: 'Table')
+      .get();
   schedule.value =
       res.docs.map((doc) => PaymentTableModel.fromMap(doc.data())).toList();
 
   schedule.sort((a, b) => a.date.compareTo(b.date));
+}
+
+Future<void> getByPlateSchedule(int id) async {
+  var res = await paymentTableCol
+      .where('id', isEqualTo: id)
+      .where('type', isEqualTo: 'Plate')
+      .get();
+  plate.value =
+      res.docs.map((doc) => PaymentTableModel.fromMap(doc.data())).toList();
+
+  plate.sort((a, b) => a.date.compareTo(b.date));
 }
 
 Future<void> insertLeasing(
@@ -797,6 +812,7 @@ Future<void> insertLeasing(
           color: greenColor,
         );
       } else {
+        Get.back();
         LoadingWidget.showTextDialog(
           Get.context!,
           title: 'Error',
@@ -805,6 +821,7 @@ Future<void> insertLeasing(
         );
       }
     } else {
+      Get.back();
       LoadingWidget.showTextDialog(
         Get.context!,
         title: 'Error',
@@ -1234,6 +1251,7 @@ Future<void> insertCash(
         );
         clear();
       } else {
+        Get.back();
         LoadingWidget.showTextDialog(
           Get.context!,
           title: 'Error',
@@ -1242,6 +1260,7 @@ Future<void> insertCash(
         );
       }
     } else {
+      Get.back();
       LoadingWidget.showTextDialog(
         Get.context!,
         title: 'Error',

@@ -95,10 +95,12 @@ class DrawerMenu extends StatelessWidget {
                 DrawerListTile(
                   tap: () async {
                     if (Responsive.isMobile(context)) con.controlDrawer();
+                    LoadingWidget.dialogLoading(duration: 1, isBack: false);
                     startInactivityTimer();
                     await getAllBooking();
                     conBook.filteredBooking.value = booking;
                     conBook.search.value.addListener(conBook.filterBookingData);
+                    Get.back();
                     con.index.value = 1;
                   },
                   title: 'Booking',
@@ -113,11 +115,14 @@ class DrawerMenu extends StatelessWidget {
                       child: DrawerListTile(
                         tap: () async {
                           if (Responsive.isMobile(context)) con.controlDrawer();
+                          LoadingWidget.dialogLoading(
+                              duration: 1, isBack: false);
                           startInactivityTimer();
                           await getAllLeasing();
                           conLeasing.filteredLeasing.value = leasing;
                           conLeasing.search.value
                               .addListener(conLeasing.filterLeasingData);
+                          Get.back();
                           con.index.value = 21;
                         },
                         title: 'Leasing Sale',
@@ -129,12 +134,14 @@ class DrawerMenu extends StatelessWidget {
                       child: DrawerListTile(
                         tap: () async {
                           if (Responsive.isMobile(context)) con.controlDrawer();
+                          LoadingWidget.dialogLoading(
+                              duration: 1, isBack: false);
                           startInactivityTimer();
                           await getAllCash();
                           conCash.filteredCash.value = cash;
                           conCash.search.value
                               .addListener(conCash.filterCashData);
-
+                          Get.back();
                           con.index.value = 23;
                         },
                         title: 'Cash Sale',
@@ -191,14 +198,18 @@ class DrawerMenu extends StatelessWidget {
 
                               var day = todayDate.difference(inputDate).inDays;
 
-                              if (day >= 90)
+                              if (day > 60)
                                 colorPayment = "Black";
-                              else if (day >= 30)
+                              else if (day > 30)
                                 colorPayment = "Red";
-                              else if (day >= 7)
+                              else if (day > 7)
                                 colorPayment = "Yellow";
-                              else
+                              else if (day == 0)
+                                colorPayment = "Silver";
+                              else if (day > 0 && day <= 7)
                                 colorPayment = "Green";
+                              else
+                                colorPayment = "Not Yet Due";
                             }
 
                             receivablewithpayment.add({
@@ -242,11 +253,14 @@ class DrawerMenu extends StatelessWidget {
                       child: DrawerListTile(
                         tap: () async {
                           if (Responsive.isMobile(context)) con.controlDrawer();
+                          LoadingWidget.dialogLoading(
+                              duration: 1, isBack: false);
                           startInactivityTimer();
                           await getAllStock();
                           conTS.filteredTotalStock.value = totalStock;
                           conTS.search.value
                               .addListener(conTS.filterTotalStockData);
+                          Get.back();
                           con.index.value = 9;
                         },
                         title: 'Stock',
@@ -258,12 +272,14 @@ class DrawerMenu extends StatelessWidget {
                       child: DrawerListTile(
                         tap: () async {
                           if (Responsive.isMobile(context)) con.controlDrawer();
+                          LoadingWidget.dialogLoading(
+                              duration: 1, isBack: false);
                           startInactivityTimer();
                           await getAllProduct();
                           conPro.filteredProduct.value = product;
                           conPro.search.value
                               .addListener(conPro.filterProductData);
-
+                          Get.back();
                           con.index.value = 11;
                         },
                         title: 'Product',
@@ -423,6 +439,8 @@ class DrawerMenu extends StatelessWidget {
                               tap: () async {
                                 if (Responsive.isMobile(context))
                                   con.controlDrawer();
+                                LoadingWidget.dialogLoading(
+                                    duration: 1, isBack: false);
                                 startInactivityTimer();
                                 await getAllSaleManCommission();
                                 conStaff.monthList.clear();
@@ -459,7 +477,7 @@ class DrawerMenu extends StatelessWidget {
                                 conStaff.filteredStaff.value = saleManCom;
                                 conStaff.search.value
                                     .addListener(conStaff.filterStaffData);
-
+                                Get.back();
                                 con.index.value = 43;
                               },
                               title: 'Staff Expense',
@@ -472,6 +490,8 @@ class DrawerMenu extends StatelessWidget {
                               tap: () async {
                                 if (Responsive.isMobile(context))
                                   con.controlDrawer();
+                                LoadingWidget.dialogLoading(
+                                    duration: 1, isBack: false);
                                 startInactivityTimer();
                                 await getAllMicroCommission();
                                 conTeacher.monthList.clear();
@@ -506,7 +526,7 @@ class DrawerMenu extends StatelessWidget {
                                 conTeacher.filteredMicro.value = microCom;
                                 conTeacher.search.value
                                     .addListener(conTeacher.filterMicroData);
-
+                                Get.back();
                                 con.index.value = 31;
                               },
                               title: 'Teacher Bonus',
@@ -519,6 +539,8 @@ class DrawerMenu extends StatelessWidget {
                               tap: () async {
                                 if (Responsive.isMobile(context))
                                   con.controlDrawer();
+                                LoadingWidget.dialogLoading(
+                                    duration: 1, isBack: false);
                                 startInactivityTimer();
                                 await getAllAdvertise();
                                 conAdv.monthList.clear();
@@ -551,7 +573,7 @@ class DrawerMenu extends StatelessWidget {
                                 conAdv.filteredAdv.value = advertise;
                                 conAdv.search.value
                                     .addListener(conAdv.filterAdvData);
-
+                                Get.back();
                                 con.index.value = 33;
                               },
                               title: 'Advertising',
@@ -564,6 +586,8 @@ class DrawerMenu extends StatelessWidget {
                               tap: () async {
                                 if (Responsive.isMobile(context))
                                   con.controlDrawer();
+                                LoadingWidget.dialogLoading(
+                                    duration: 1, isBack: false);
                                 startInactivityTimer();
                                 await getAllKoi();
                                 conKoi.monthList.clear();
@@ -596,7 +620,7 @@ class DrawerMenu extends StatelessWidget {
                                 conKoi.filteredKoi.value = koi;
                                 conKoi.search.value
                                     .addListener(conKoi.filterKoiData);
-
+                                Get.back();
                                 con.index.value = 35;
                               },
                               title: 'KOL',
@@ -609,6 +633,8 @@ class DrawerMenu extends StatelessWidget {
                               tap: () async {
                                 if (Responsive.isMobile(context))
                                   con.controlDrawer();
+                                LoadingWidget.dialogLoading(
+                                    duration: 1, isBack: false);
                                 startInactivityTimer();
                                 await getAllGift();
                                 conGift.monthList.clear();
@@ -641,7 +667,7 @@ class DrawerMenu extends StatelessWidget {
                                 conGift.filteredGift.value = gift;
                                 conGift.search.value
                                     .addListener(conGift.filterGiftData);
-
+                                Get.back();
                                 con.index.value = 37;
                               },
                               title: 'Gift',
@@ -654,6 +680,8 @@ class DrawerMenu extends StatelessWidget {
                               tap: () async {
                                 if (Responsive.isMobile(context))
                                   con.controlDrawer();
+                                LoadingWidget.dialogLoading(
+                                    duration: 1, isBack: false);
                                 startInactivityTimer();
                                 await getAllFriendCommission();
                                 conFri.monthList.clear();
@@ -686,7 +714,7 @@ class DrawerMenu extends StatelessWidget {
                                 conFri.filteredCommission.value = friendCom;
                                 conFri.search.value
                                     .addListener(conFri.filterCommissionData);
-
+                                Get.back();
                                 con.index.value = 39;
                               },
                               title: 'Commission',
@@ -699,6 +727,8 @@ class DrawerMenu extends StatelessWidget {
                               tap: () async {
                                 if (Responsive.isMobile(context))
                                   con.controlDrawer();
+                                LoadingWidget.dialogLoading(
+                                    duration: 1, isBack: false);
                                 startInactivityTimer();
                                 await getAllRental();
                                 conRental.monthList.clear();
@@ -733,7 +763,7 @@ class DrawerMenu extends StatelessWidget {
                                 conRental.filteredRental.value = rental;
                                 conRental.search.value
                                     .addListener(conRental.filterRentalData);
-
+                                Get.back();
                                 con.index.value = 41;
                               },
                               title: 'Rental',
@@ -743,85 +773,96 @@ class DrawerMenu extends StatelessWidget {
                         ],
                       )
                     : Container(),
-                userRole.value == roleSuperAdmin
-                    ? DrawerExpansionTile(
-                        title: 'Management',
-                        svgSrc: 'assets/icons/Management.svg',
-                        children: [
-                          Container(
+                DrawerExpansionTile(
+                  title: 'Management',
+                  svgSrc: 'assets/icons/Management.svg',
+                  children: [
+                    userRole.value == roleSuperAdmin
+                        ? Container(
                             padding: EdgeInsets.only(left: 36.px),
                             child: DrawerListTile(
                               tap: () async {
                                 if (Responsive.isMobile(context))
                                   con.controlDrawer();
+                                LoadingWidget.dialogLoading(
+                                    duration: 1, isBack: false);
                                 startInactivityTimer();
                                 await getAllUser();
                                 conU.filteredUsers.value = user;
                                 conU.search.value
                                     .addListener(conU.filterUserData);
+                                Get.back();
                                 con.index.value = 15;
                               },
                               title: 'User',
                               svgSrc: 'assets/icons/CreateUser.svg',
                             ),
-                          ),
-                          Container(
+                          )
+                        : Container(),
+                    userRole.value == roleSuperAdmin
+                        ? Container(
                             padding: EdgeInsets.only(left: 36.px),
                             child: DrawerListTile(
                               tap: () async {
                                 if (Responsive.isMobile(context))
                                   con.controlDrawer();
+                                LoadingWidget.dialogLoading(
+                                    duration: 1, isBack: false);
                                 startInactivityTimer();
                                 await getAllSaleMan();
                                 conSM.filteredSale.value = saleMan;
                                 conSM.search.value
                                     .addListener(conSM.filterSaleData);
-
+                                Get.back();
                                 con.index.value = 17;
                               },
                               title: 'Salesman',
                               svgSrc: 'assets/icons/CreateSalesman.svg',
                             ),
-                          ),
-                          Container(
+                          )
+                        : Container(),
+                    userRole.value == roleSuperAdmin
+                        ? Container(
                             padding: EdgeInsets.only(left: 36.px),
                             child: DrawerListTile(
                               tap: () async {
                                 if (Responsive.isMobile(context))
                                   con.controlDrawer();
+                                LoadingWidget.dialogLoading(
+                                    duration: 1, isBack: false);
                                 startInactivityTimer();
                                 await getAllMicro();
                                 conMi.filteredMicro.value = micro;
                                 conMi.search.value
                                     .addListener(conMi.filterMicroData);
-
+                                Get.back();
                                 con.index.value = 19;
                               },
                               title: 'Micro',
                               svgSrc: 'assets/icons/CreateMicro.svg',
                             ),
-                          ),
-                          Container(
-                            padding: EdgeInsets.only(left: 36.px),
-                            child: DrawerListTile(
-                              tap: () async {
-                                if (Responsive.isMobile(context))
-                                  con.controlDrawer();
-                                startInactivityTimer();
-                                await getAllAddress();
-                                conA.filteredAddress.value = address;
-                                conA.search.value
-                                    .addListener(conA.filterAddressData);
-
-                                con.index.value = 27;
-                              },
-                              title: 'Address',
-                              svgSrc: 'assets/icons/Address.svg',
-                            ),
-                          ),
-                        ],
-                      )
-                    : Container(),
+                          )
+                        : Container(),
+                    Container(
+                      padding: EdgeInsets.only(left: 36.px),
+                      child: DrawerListTile(
+                        tap: () async {
+                          if (Responsive.isMobile(context)) con.controlDrawer();
+                          LoadingWidget.dialogLoading(
+                              duration: 1, isBack: false);
+                          startInactivityTimer();
+                          await getAllAddress();
+                          conA.filteredAddress.value = address;
+                          conA.search.value.addListener(conA.filterAddressData);
+                          Get.back();
+                          con.index.value = 27;
+                        },
+                        title: 'Address',
+                        svgSrc: 'assets/icons/Address.svg',
+                      ),
+                    ),
+                  ],
+                ),
                 userRole.value == roleSuperAdmin
                     ? DrawerExpansionTile(
                         title: 'Setting',
@@ -833,13 +874,15 @@ class DrawerMenu extends StatelessWidget {
                               tap: () async {
                                 if (Responsive.isMobile(context))
                                   con.controlDrawer();
+                                LoadingWidget.dialogLoading(
+                                    duration: 1, isBack: false);
                                 startInactivityTimer();
                                 conReset.clearText();
                                 await getAllUser();
                                 conReset.fullNameList.clear();
                                 for (var data in user)
                                   conReset.fullNameList.add(data.name);
-
+                                Get.back();
                                 con.index.value = 45;
                               },
                               title: 'Reset Password',

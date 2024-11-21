@@ -255,14 +255,18 @@ class ReceivableController extends GetxController {
 
                             var day = todayDate.difference(inputDate).inDays;
 
-                            if (day >= 90)
+                            if (day > 60)
                               colorPayment = "Black";
-                            else if (day >= 30)
+                            else if (day > 30)
                               colorPayment = "Red";
-                            else if (day >= 7)
+                            else if (day > 7)
                               colorPayment = "Yellow";
-                            else
+                            else if (day == 0)
+                              colorPayment = "Silver";
+                            else if (day > 0 && day <= 7)
                               colorPayment = "Green";
+                            else
+                              colorPayment = "Not Yet Due";
                           }
 
                           receivablewithpayment.add({
@@ -519,7 +523,7 @@ class ReceivableController extends GetxController {
     if (day != '') {
       var newDay = int.parse(day);
       var color = Colors.transparent;
-      if (newDay >= 90)
+      if (newDay > 60)
         color = Colors.white;
       else
         color = Colors.black;
@@ -534,9 +538,11 @@ class ReceivableController extends GetxController {
     if (day != '') {
       var newDay = int.parse(day);
       var color = Colors.transparent;
-      if (newDay >= 90) color = Colors.black.withOpacity(0.7);
-      if (newDay >= 30) color = Colors.red.withOpacity(0.7);
-      if (newDay >= 7)
+      if (newDay > 60)
+        color = Colors.black.withOpacity(0.7);
+      else if (newDay > 30)
+        color = Colors.red.withOpacity(0.7);
+      else if (newDay > 7)
         color = Colors.yellow.withOpacity(0.7);
       else
         color = Colors.green.withOpacity(0.7);

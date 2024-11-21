@@ -173,6 +173,8 @@ class _AppDataTableState extends State<AppDataTableReceivable> {
       return Colors.yellow.withOpacity(0.7);
     } else if (colorPayment == "Green") {
       return Colors.green.withOpacity(0.7);
+    } else if (colorPayment == "Silver") {
+      return Colors.grey.withOpacity(0.7);
     } else {
       return Colors.transparent;
     }

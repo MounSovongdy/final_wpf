@@ -23,6 +23,7 @@ Future<String> generateHtmlContent({
   required String penalty,
   required int counter,
   required payment,
+  required plate,
   required String leasingYear,
   required String leasingMonth,
   required String leasingDay,
@@ -297,6 +298,19 @@ Future<String> generateHtmlContent({
                                 </thead>
                                 <tbody>
                           ''');
+  for (int i = 0; i < plate.length; i++) {
+    var amount = num.parse(plate[i].amount).toStringAsFixed(2);
+
+    htmlContent.writeln('<tr style="height: 10px;">');
+    htmlContent.writeln(
+        '<td style="text-align:center; line-height: 10px;"> ${plate[i].no}</td>');
+    htmlContent.writeln(
+        '<td style="text-align:center; line-height: 10px;"> ${plate[i].date}</td>');
+    htmlContent.writeln(
+        '<td style="text-align:center; line-height: 10px;"> $amount \$</td>');
+    htmlContent
+        .writeln('<td style="line-height: 10px;"> ${plate[i].note}</td>');
+  }
 
   for (int i = counter; i < payment.length; i++) {
     var amount = num.parse(payment[i].amount).toStringAsFixed(2);
@@ -358,6 +372,7 @@ Future<String> generateHtmlContent({
 void printPaymentTable(int id) async {
   await getByLeasing(id);
   await getByReceivable(id);
+  await getByPlateSchedule(id);
   await getByPaymentSchedule(id);
 
   int counter = 0;
@@ -366,6 +381,7 @@ void printPaymentTable(int id) async {
     penalty: byReceivable[0].penalty,
     counter: counter,
     payment: schedule,
+    plate: plate,
     leasingYear: byLeasing[0].leasingDate.split(' ')[0].split('-')[0],
     leasingMonth: byLeasing[0].leasingDate.split(' ')[0].split('-')[1],
     leasingDay: byLeasing[0].leasingDate.split(' ')[0].split('-')[2],

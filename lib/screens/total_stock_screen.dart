@@ -72,13 +72,9 @@ class TotalStockScreen extends StatelessWidget {
                       tap: () {},
                     )
                   : Container(),
-              userRole.value == roleSuperAdmin || userRole.value == roleAdmin
-                  ? spacer(context)
-                  : Container(),
-              userRole.value == roleSuperAdmin || userRole.value == roleAdmin
-                  ? spacer(context)
-                  : Container(),
-              userRole.value == roleSuperAdmin || userRole.value == roleAdmin
+              userRole.value == roleSuperAdmin ? spacer(context) : Container(),
+              userRole.value == roleSuperAdmin ? spacer(context) : Container(),
+              userRole.value == roleSuperAdmin
                   ? AppButtonSubmit(
                       txt: 'Add Stock',
                       width: Responsive.isDesktop(context) ? 150.px : 100.px,
