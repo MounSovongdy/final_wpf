@@ -182,7 +182,7 @@ class DrawerMenu extends StatelessWidget {
                             await getByPaymentTable(id);
                             var listPaid = [];
                             for (var data in byPaymentTable) {
-                              if (data.paid == '' && data.paid != 'P')
+                              if (data.type == 'Table' && data.paid == '')
                                 listPaid.add(data.date);
                             }
 
@@ -210,6 +210,12 @@ class DrawerMenu extends StatelessWidget {
                                 colorPayment = "Green";
                               else
                                 colorPayment = "Not Yet Due";
+                            } else {
+                              if (num.parse(amountLeft) > 0) {
+                                colorPayment = 'Out of Schedule';
+                              } else if (num.parse(amountLeft) == 0) {
+                                colorPayment = 'Paid Off';
+                              }
                             }
 
                             receivablewithpayment.add({
@@ -918,15 +924,17 @@ class DrawerMenu extends StatelessWidget {
                 padding: EdgeInsets.all(13.px),
                 child: Row(
                   children: [
-                    AppText.subTitle(
-                      context,
-                      txt: '© 2024 Admin Dashboard',
-                      color: whiteColor,
+                    Expanded(
+                      flex: 6,
+                      child: AppText.subTitle(
+                        context,
+                        txt: '© 2024 Admin Dashboard',
+                        color: whiteColor,
+                      ),
                     ),
-                    const Spacer(),
                     AppText.subTitle(
                       context,
-                      txt: 'v1.1.1',
+                      txt: 'v$currVersion',
                       color: whiteColor,
                     ),
                   ],

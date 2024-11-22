@@ -102,6 +102,8 @@ Widget leasingDataTable(BuildContext context) {
       DataTableWidget.column(context, 'Year'),
       DataTableWidget.column(context, 'Condition'),
       DataTableWidget.column(context, 'Price'),
+      DataTableWidget.column(context, 'Discount'),
+      DataTableWidget.column(context, 'Deposit'),
       DataTableWidget.column(context, 'Remain'),
       DataTableWidget.column(context, 'Bank Receivable'),
       DataTableWidget.column(context, 'Acc Receivable'),
@@ -111,7 +113,7 @@ Widget leasingDataTable(BuildContext context) {
     ],
     rowData: List.generate(
       con.filteredLeasing.length,
-          (index) {
+      (index) {
         var data = con.filteredLeasing[index];
         return [
           DataTableWidget.cell(Get.context!, '${data.id}'),
@@ -128,6 +130,8 @@ Widget leasingDataTable(BuildContext context) {
           DataTableWidget.cell(Get.context!, data.year),
           DataTableWidget.cell(Get.context!, data.condition),
           DataTableWidget.cell(Get.context!, data.price),
+          DataTableWidget.cell(Get.context!, data.discount),
+          DataTableWidget.cell(Get.context!, data.deposit),
           DataTableWidget.cell(Get.context!, data.remain),
           DataTableWidget.cell(Get.context!, data.approveAmount),
           DataTableWidget.cell(Get.context!, data.totalDebt),

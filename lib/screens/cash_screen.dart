@@ -108,6 +108,7 @@ Widget cashDataTable(BuildContext context) {
       DataTableWidget.column(context, 'Year'),
       DataTableWidget.column(context, 'Condition'),
       DataTableWidget.column(context, 'Price'),
+      DataTableWidget.column(context, 'Discount'),
       DataTableWidget.column(context, 'Saleman'),
       DataTableWidget.column(context, 'Come by'),
       DataTableWidget.column(context, 'Action'),
@@ -131,6 +132,7 @@ Widget cashDataTable(BuildContext context) {
           DataTableWidget.cell(Get.context!, data.year),
           DataTableWidget.cell(Get.context!, data.condition),
           DataTableWidget.cell(Get.context!, data.price),
+          DataTableWidget.cell(Get.context!, data.discount),
           DataTableWidget.cell(Get.context!, data.saleman),
           DataTableWidget.cell(Get.context!, data.comeBy),
           DataTableWidget.cellBtn(

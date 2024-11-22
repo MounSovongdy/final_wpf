@@ -37,25 +37,25 @@ final addressCol = _firebase.collection('address');
 final colorCol = _firebase.collection('color');
 final brandCol = _firebase.collection('brand');
 final productCol = _firebase.collection('product');
-final addStockCol = _firebase.collection('add_stock_test');
-final totalStockCol = _firebase.collection('total_stock_test');
-final bookingCol = _firebase.collection('booking_test');
-final bookingMicroCol = _firebase.collection('booking_micro_test');
-final leasingCol = _firebase.collection('leasing_test');
-final microComCol = _firebase.collection('micro_commission_test');
-final saleManComCol = _firebase.collection('sale_man_commission_test');
-final friendComCol = _firebase.collection('friend_commission_test');
-final cashCol = _firebase.collection('cash_test');
-final receivableCol = _firebase.collection('receivable_test');
-final paymentTableCol = _firebase.collection('payment_table_test');
-final advertisingCol = _firebase.collection('advertising_test');
-final rentalCol = _firebase.collection('rental_test');
-final giftCol = _firebase.collection('gift_test');
-final koiCol = _firebase.collection('koi_test');
+final addStockCol = _firebase.collection('add_stock');
+final totalStockCol = _firebase.collection('total_stock');
+final bookingCol = _firebase.collection('booking');
+final bookingMicroCol = _firebase.collection('booking_micro');
+final leasingCol = _firebase.collection('leasing');
+final microComCol = _firebase.collection('micro_commission');
+final saleManComCol = _firebase.collection('sale_man_commission');
+final friendComCol = _firebase.collection('friend_commission');
+final cashCol = _firebase.collection('cash');
+final receivableCol = _firebase.collection('receivable');
+final paymentTableCol = _firebase.collection('payment_table');
+final advertisingCol = _firebase.collection('advertising');
+final rentalCol = _firebase.collection('rental');
+final giftCol = _firebase.collection('gift');
+final koiCol = _firebase.collection('koi');
 final resetPasswordCol = _firebase.collection('reset_password');
-final totalExpenseCol = _firebase.collection('total_expense_test');
+final totalExpenseCol = _firebase.collection('total_expense');
 
-var currVersion = '1.0.0'.obs;
+var currVersion = '1.2.0'.obs;
 var userLogin = ''.obs;
 var userName = ''.obs;
 var userRole = ''.obs;
@@ -1278,7 +1278,7 @@ Future<void> getByPaymentTable(int id) async {
   byPaymentTable.value =
       res.docs.map((doc) => PaymentTableModel.fromMap(doc.data())).toList();
 
-  byPaymentTable.sort((a, b) => a.date.compareTo(b.date));
+  byPaymentTable.sort((a, b) => a.no.compareTo(b.no));
 }
 
 Future<void> insertPayment({
@@ -1341,6 +1341,7 @@ Future<void> addMorePayment({
     var res1 = await paymentTableCol.where('id', isEqualTo: id).get();
     byPaymentTable.value =
         res1.docs.map((doc) => PaymentTableModel.fromMap(doc.data())).toList();
+    byPaymentTable.sort((a, b) => b.no.compareTo(a.no));
 
     var docId2 = '';
     var res2 = await receivableCol.where('id', isEqualTo: id).get();
@@ -1360,13 +1361,11 @@ Future<void> addMorePayment({
         'receive_amount': '${receive.toStringAsFixed(2)}',
         'amount_left': '${left.toStringAsFixed(2)}',
       });
-      await paymentTableCol
-          .doc('$id-${byPaymentTable[byPaymentTable.length - 1].no + 1}')
-          .set({
+      await paymentTableCol.doc('$id-${byPaymentTable[0].no + 1}').set({
         'amount': '',
         'date': '',
         'late_date': '',
-        'no': byPaymentTable[byPaymentTable.length - 1].no + 1,
+        'no': byPaymentTable[0].no + 1,
         'penalty': '0',
         'type': 'Input',
         'id': id,

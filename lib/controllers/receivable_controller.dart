@@ -207,10 +207,10 @@ class ReceivableController extends GetxController {
                           paid: amount.value.text,
                           paidDate: datePayment.value.text,
                           note: remark.value.text,
-                          late: dayLate <= 0
-                              ? '0'
-                              : dayLate == -1
-                                  ? ''
+                          late: schedule.value == "P"
+                              ? ''
+                              : dayLate <= 0
+                                  ? '0'
                                   : '$dayLate',
                         );
                         clearText();
@@ -239,7 +239,7 @@ class ReceivableController extends GetxController {
                           await getByPaymentTable(id);
                           var listPaid = [];
                           for (var data in byPaymentTable) {
-                            if (data.paid == '' && data.paid != 'P')
+                            if (data.type == 'Table' && data.paid == '')
                               listPaid.add(data.date);
                           }
 
@@ -267,6 +267,12 @@ class ReceivableController extends GetxController {
                               colorPayment = "Green";
                             else
                               colorPayment = "Not Yet Due";
+                          } else {
+                            if (num.parse(amountLeft) > 0) {
+                              colorPayment = 'Out of Schedule';
+                            } else if (num.parse(amountLeft) == 0) {
+                              colorPayment = 'Paid Off';
+                            }
                           }
 
                           receivablewithpayment.add({
@@ -320,7 +326,88 @@ class ReceivableController extends GetxController {
                         );
                         clearText();
                         await getAllReceivable();
-                        filteredRece.value = receivable;
+                        filteredRece.clear();
+                        for (var data in receivable) {
+                          var id = data.id;
+                          var saleman = data.saleman;
+                          var date = data.date;
+                          var name = data.name;
+                          var tel1 = data.tel1;
+                          var tel2 = data.tel2;
+                          var tel3 = data.tel3;
+                          var document = data.document;
+                          var brand = data.brand;
+                          var model = data.model;
+                          var color = data.color;
+                          var year = data.year;
+                          var condition = data.condition;
+                          var total = data.total;
+                          var receiveAmount = data.receiveAmount;
+                          var amountLeft = data.amountLeft;
+                          var nextPayment = '';
+                          var colorPayment = '';
+
+                          await getByPaymentTable(id);
+                          var listPaid = [];
+                          for (var data in byPaymentTable) {
+                            if (data.type == 'Table' && data.paid == '')
+                              listPaid.add(data.date);
+                          }
+
+                          if (listPaid.isNotEmpty) {
+                            nextPayment = listPaid[0];
+                            var today = DateTime.now();
+                            var input = DateTime.parse(nextPayment);
+
+                            var todayDate =
+                                DateTime(today.year, today.month, today.day);
+                            var inputDate =
+                                DateTime(input.year, input.month, input.day);
+
+                            var day = todayDate.difference(inputDate).inDays;
+
+                            if (day > 60)
+                              colorPayment = "Black";
+                            else if (day > 30)
+                              colorPayment = "Red";
+                            else if (day > 7)
+                              colorPayment = "Yellow";
+                            else if (day == 0)
+                              colorPayment = "Silver";
+                            else if (day > 0 && day <= 7)
+                              colorPayment = "Green";
+                            else
+                              colorPayment = "Not Yet Due";
+                          } else {
+                            if (num.parse(amountLeft) > 0) {
+                              colorPayment = 'Out of Schedule';
+                            } else if (num.parse(amountLeft) == 0) {
+                              colorPayment = 'Paid Off';
+                            }
+                          }
+
+                          receivablewithpayment.add({
+                            'id': id,
+                            'saleman': saleman,
+                            'date': date,
+                            'name': name,
+                            'tel1': tel1,
+                            'tel2': tel2,
+                            'tel3': tel3,
+                            'document': document,
+                            'brand': brand,
+                            'model': model,
+                            'color': color,
+                            'year': year,
+                            'condition': condition,
+                            'total': total,
+                            'receiveAmount': receiveAmount,
+                            'amountLeft': amountLeft,
+                            'nextPayment': nextPayment,
+                            'colorPayment': colorPayment,
+                          });
+                        }
+                        filteredRece.value = receivablewithpayment;
                         search.value.addListener(filterReceivableData);
                         scheduleList.clear();
                         await getByPaymentTable(id);
@@ -544,9 +631,10 @@ class ReceivableController extends GetxController {
         color = Colors.red.withOpacity(0.7);
       else if (newDay > 7)
         color = Colors.yellow.withOpacity(0.7);
-      else
+      else if (newDay < 7 && newDay >= 0)
         color = Colors.green.withOpacity(0.7);
-
+      else
+        color = Colors.transparent;
       return color;
     } else {
       return Colors.transparent;
