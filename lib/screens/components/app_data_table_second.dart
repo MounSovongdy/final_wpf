@@ -54,9 +54,12 @@ class _AppDataTableState extends State<AppDataTableSecond> {
 
   @override
   void initState() {
-    _con.resetPage();
-
     super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      setState(() {
+        _con.resetPage();
+      });
+    });
   }
 
   @override
