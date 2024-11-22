@@ -64,16 +64,16 @@ class TotalStockScreen extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              userRole.value == roleSuperAdmin
-                  ? AppButtonSubmit(
-                      txt: 'Download Report',
-                      width: Responsive.isDesktop(context) ? 200.px : 150.px,
-                      color: secondGreyColor,
-                      tap: () {},
-                    )
-                  : Container(),
-              userRole.value == roleSuperAdmin ? spacer(context) : Container(),
-              userRole.value == roleSuperAdmin ? spacer(context) : Container(),
+              // userRole.value == roleSuperAdmin
+              //     ? AppButtonSubmit(
+              //         txt: 'Download Report',
+              //         width: Responsive.isDesktop(context) ? 200.px : 150.px,
+              //         color: secondGreyColor,
+              //         tap: () {},
+              //       )
+              //     : Container(),
+              // userRole.value == roleSuperAdmin ? spacer(context) : Container(),
+              // userRole.value == roleSuperAdmin ? spacer(context) : Container(),
               userRole.value == roleSuperAdmin
                   ? AppButtonSubmit(
                       txt: 'Add Stock',
