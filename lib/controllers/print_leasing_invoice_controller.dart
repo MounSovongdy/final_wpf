@@ -108,6 +108,7 @@ Future<String> generateHtmlContent({
   <body>
       <div id="wrapper">
           <div id="receiptData" style="margin: 0 auto; text-align: center;">
+          <br>
               <!-- Header Image -->
               <div><img src="http://moto.cpos.cc/header.png" alt="Header Image" style="width: 100%;"></div>
               <br>
@@ -179,7 +180,7 @@ Future<String> generateHtmlContent({
                   </td>
                 </tr>
               </table>
-              <br><br><br><br><br><br><br><br><br><br><br>
+              <br>
               <!-- Signatures -->
               <table width="100%" class="table">
                   <tr>
@@ -189,6 +190,22 @@ Future<String> generateHtmlContent({
                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                       </td>
                       <td class="text-center">ត្រាហាងម៉ូតូ<br>Store Stamp</td>
+                  </tr>
+                  <tr>
+                    <td><br></td>
+                    <td><br></td>
+                  </tr>
+                  <tr>
+                    <td><br></td>
+                    <td><br></td>
+                  </tr>
+                  <tr>
+                      <td class="text-center">............................</td>
+                      <td>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                      </td>
+                      <td class="text-center">............................</td>
                   </tr>
               </table>
           </div>
