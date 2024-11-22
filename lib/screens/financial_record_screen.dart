@@ -47,7 +47,7 @@ class FinancialRecordScreen extends StatelessWidget {
                 list: con.monthList,
                 onChanged: (v) async {
                   if (v != null) {
-                    LoadingWidget.dialogLoading(duration: 1, isBack: false);
+                    LoadingWidget.dialogLoading(duration: 1, isBack: true);
                     con.selectedMonth.value = v;
                     await getTotalExpense(
                       year: con.selectedMonth.value!.split('-')[0],
@@ -66,7 +66,7 @@ class FinancialRecordScreen extends StatelessWidget {
                       var tempNS = num.parse(byTotalExpense[0].netSale);
                       var tempSR = num.parse(byTotalExpense[0].saleRevenue);
                       var tempTS = num.parse(byTotalExpense[0].totalSale);
-                      var tempASR = num.parse(byTotalExpense[0].avgSaleRevenue);
+                      var tempASR = num.parse(byTotalExpense[0].totalProfit);
                       var tempAP = num.parse(byTotalExpense[0].avgProfit);
 
                       conFC.adv.value = '$tempA'.contains('.')
@@ -102,7 +102,7 @@ class FinancialRecordScreen extends StatelessWidget {
                       conFC.totalUnitSale.value = '$tempTS'.contains('.')
                           ? num.parse('$tempTS').toStringAsFixed(2)
                           : num.parse('$tempTS').toString();
-                      conFC.avgSaleRevenue.value = '$tempASR'.contains('.')
+                      conFC.totalProfit.value = '$tempASR'.contains('.')
                           ? num.parse('$tempASR').toStringAsFixed(2)
                           : num.parse('$tempASR').toString();
                       conFC.avgProfit.value = '$tempAP'.contains('.')
@@ -128,7 +128,7 @@ class FinancialRecordScreen extends StatelessWidget {
                         {'value': '${conFC.netsale.value} \$'},
                         {'value': '${conFC.saleRevenue.value} \$'},
                         {'value': '${conFC.totalUnitSale.value} '},
-                        {'value': '${conFC.avgSaleRevenue.value} \$'},
+                        {'value': '${conFC.totalProfit.value} \$'},
                         {'value': '${conFC.avgProfit.value} \$'},
                       ];
                       Get.back();

@@ -16,7 +16,7 @@ class TotalExpenseModel {
   final String netSale;
   final String saleRevenue;
   final String totalSale;
-  final String avgSaleRevenue;
+  final String totalProfit;
   final String avgProfit;
 
   TotalExpenseModel({
@@ -35,7 +35,7 @@ class TotalExpenseModel {
     this.netSale = '',
     this.saleRevenue = '',
     this.totalSale = '',
-    this.avgSaleRevenue = '',
+    this.totalProfit = '',
     this.avgProfit = '',
   });
 
@@ -56,7 +56,7 @@ class TotalExpenseModel {
       'net_sale': netSale,
       'sale_revenue': saleRevenue,
       'total_sale': totalSale,
-      'avg_sale_revenue': avgSaleRevenue,
+      'total_profit': totalProfit,
       'avg_profit': avgProfit,
     };
   }
@@ -78,7 +78,7 @@ class TotalExpenseModel {
       netSale: map['net_sale'] as String,
       saleRevenue: map['sale_revenue'] as String,
       totalSale: map['total_sale'] as String,
-      avgSaleRevenue: map['avg_sale_revenue'] as String,
+      totalProfit: map['total_profit'] as String,
       avgProfit: map['avg_profit'] as String,
     );
   }

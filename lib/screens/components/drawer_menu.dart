@@ -95,7 +95,7 @@ class DrawerMenu extends StatelessWidget {
                 DrawerListTile(
                   tap: () async {
                     if (Responsive.isMobile(context)) con.controlDrawer();
-                    LoadingWidget.dialogLoading(duration: 1, isBack: false);
+                    LoadingWidget.dialogLoading(duration: 1, isBack: true);
                     startInactivityTimer();
                     await getAllBooking();
                     conBook.filteredBooking.value = booking;
@@ -116,7 +116,7 @@ class DrawerMenu extends StatelessWidget {
                         tap: () async {
                           if (Responsive.isMobile(context)) con.controlDrawer();
                           LoadingWidget.dialogLoading(
-                              duration: 1, isBack: false);
+                              duration: 1, isBack: true);
                           startInactivityTimer();
                           await getAllLeasing();
                           conLeasing.filteredLeasing.value = leasing;
@@ -135,7 +135,7 @@ class DrawerMenu extends StatelessWidget {
                         tap: () async {
                           if (Responsive.isMobile(context)) con.controlDrawer();
                           LoadingWidget.dialogLoading(
-                              duration: 1, isBack: false);
+                              duration: 1, isBack: true);
                           startInactivityTimer();
                           await getAllCash();
                           conCash.filteredCash.value = cash;
@@ -156,7 +156,7 @@ class DrawerMenu extends StatelessWidget {
                           if (Responsive.isMobile(context)) con.controlDrawer();
                           startInactivityTimer();
                           LoadingWidget.dialogLoading(
-                              duration: 1, isBack: false);
+                              duration: 1, isBack: true);
                           await getAllReceivable();
                           conRec.filteredRece.clear();
                           for (var data in receivable) {
@@ -260,7 +260,7 @@ class DrawerMenu extends StatelessWidget {
                         tap: () async {
                           if (Responsive.isMobile(context)) con.controlDrawer();
                           LoadingWidget.dialogLoading(
-                              duration: 1, isBack: false);
+                              duration: 1, isBack: true);
                           startInactivityTimer();
                           await getAllStock();
                           conTS.filteredTotalStock.value = totalStock;
@@ -279,7 +279,7 @@ class DrawerMenu extends StatelessWidget {
                         tap: () async {
                           if (Responsive.isMobile(context)) con.controlDrawer();
                           LoadingWidget.dialogLoading(
-                              duration: 1, isBack: false);
+                              duration: 1, isBack: true);
                           startInactivityTimer();
                           await getAllProduct();
                           conPro.filteredProduct.value = product;
@@ -306,7 +306,7 @@ class DrawerMenu extends StatelessWidget {
                                 if (Responsive.isMobile(context))
                                   con.controlDrawer();
                                 LoadingWidget.dialogLoading(
-                                    duration: 3, isBack: false);
+                                    duration: 3, isBack: true);
                                 startInactivityTimer();
                                 await getAllTotalExpense();
                                 conFR.monthList.clear();
@@ -352,7 +352,7 @@ class DrawerMenu extends StatelessWidget {
                                     var tempTS =
                                         num.parse(byTotalExpense[0].totalSale);
                                     var tempASR = num.parse(
-                                        byTotalExpense[0].avgSaleRevenue);
+                                        byTotalExpense[0].totalProfit);
                                     var tempAP =
                                         num.parse(byTotalExpense[0].avgProfit);
 
@@ -395,7 +395,7 @@ class DrawerMenu extends StatelessWidget {
                                             ? num.parse('$tempTS')
                                                 .toStringAsFixed(2)
                                             : num.parse('$tempTS').toString();
-                                    conFC.avgSaleRevenue.value =
+                                    conFC.totalProfit.value =
                                         '$tempASR'.contains('.')
                                             ? num.parse('$tempASR')
                                                 .toStringAsFixed(2)
@@ -428,7 +428,7 @@ class DrawerMenu extends StatelessWidget {
                                   {'value': '${conFC.netsale.value} \$'},
                                   {'value': '${conFC.saleRevenue.value} \$'},
                                   {'value': '${conFC.totalUnitSale.value} '},
-                                  {'value': '${conFC.avgSaleRevenue.value} \$'},
+                                  {'value': '${conFC.totalProfit.value} \$'},
                                   {'value': '${conFC.avgProfit.value} \$'},
                                 ];
 
@@ -446,7 +446,7 @@ class DrawerMenu extends StatelessWidget {
                                 if (Responsive.isMobile(context))
                                   con.controlDrawer();
                                 LoadingWidget.dialogLoading(
-                                    duration: 1, isBack: false);
+                                    duration: 1, isBack: true);
                                 startInactivityTimer();
                                 await getAllSaleManCommission();
                                 conStaff.monthList.clear();
@@ -497,7 +497,7 @@ class DrawerMenu extends StatelessWidget {
                                 if (Responsive.isMobile(context))
                                   con.controlDrawer();
                                 LoadingWidget.dialogLoading(
-                                    duration: 1, isBack: false);
+                                    duration: 1, isBack: true);
                                 startInactivityTimer();
                                 await getAllMicroCommission();
                                 conTeacher.monthList.clear();
@@ -546,7 +546,7 @@ class DrawerMenu extends StatelessWidget {
                                 if (Responsive.isMobile(context))
                                   con.controlDrawer();
                                 LoadingWidget.dialogLoading(
-                                    duration: 1, isBack: false);
+                                    duration: 1, isBack: true);
                                 startInactivityTimer();
                                 await getAllAdvertise();
                                 conAdv.monthList.clear();
@@ -593,7 +593,7 @@ class DrawerMenu extends StatelessWidget {
                                 if (Responsive.isMobile(context))
                                   con.controlDrawer();
                                 LoadingWidget.dialogLoading(
-                                    duration: 1, isBack: false);
+                                    duration: 1, isBack: true);
                                 startInactivityTimer();
                                 await getAllKoi();
                                 conKoi.monthList.clear();
@@ -640,7 +640,7 @@ class DrawerMenu extends StatelessWidget {
                                 if (Responsive.isMobile(context))
                                   con.controlDrawer();
                                 LoadingWidget.dialogLoading(
-                                    duration: 1, isBack: false);
+                                    duration: 1, isBack: true);
                                 startInactivityTimer();
                                 await getAllGift();
                                 conGift.monthList.clear();
@@ -687,7 +687,7 @@ class DrawerMenu extends StatelessWidget {
                                 if (Responsive.isMobile(context))
                                   con.controlDrawer();
                                 LoadingWidget.dialogLoading(
-                                    duration: 1, isBack: false);
+                                    duration: 1, isBack: true);
                                 startInactivityTimer();
                                 await getAllFriendCommission();
                                 conFri.monthList.clear();
@@ -734,7 +734,7 @@ class DrawerMenu extends StatelessWidget {
                                 if (Responsive.isMobile(context))
                                   con.controlDrawer();
                                 LoadingWidget.dialogLoading(
-                                    duration: 1, isBack: false);
+                                    duration: 1, isBack: true);
                                 startInactivityTimer();
                                 await getAllRental();
                                 conRental.monthList.clear();
@@ -791,7 +791,7 @@ class DrawerMenu extends StatelessWidget {
                                 if (Responsive.isMobile(context))
                                   con.controlDrawer();
                                 LoadingWidget.dialogLoading(
-                                    duration: 1, isBack: false);
+                                    duration: 1, isBack: true);
                                 startInactivityTimer();
                                 await getAllUser();
                                 conU.filteredUsers.value = user;
@@ -813,7 +813,7 @@ class DrawerMenu extends StatelessWidget {
                                 if (Responsive.isMobile(context))
                                   con.controlDrawer();
                                 LoadingWidget.dialogLoading(
-                                    duration: 1, isBack: false);
+                                    duration: 1, isBack: true);
                                 startInactivityTimer();
                                 await getAllSaleMan();
                                 conSM.filteredSale.value = saleMan;
@@ -835,7 +835,7 @@ class DrawerMenu extends StatelessWidget {
                                 if (Responsive.isMobile(context))
                                   con.controlDrawer();
                                 LoadingWidget.dialogLoading(
-                                    duration: 1, isBack: false);
+                                    duration: 1, isBack: true);
                                 startInactivityTimer();
                                 await getAllMicro();
                                 conMi.filteredMicro.value = micro;
@@ -855,7 +855,7 @@ class DrawerMenu extends StatelessWidget {
                         tap: () async {
                           if (Responsive.isMobile(context)) con.controlDrawer();
                           LoadingWidget.dialogLoading(
-                              duration: 1, isBack: false);
+                              duration: 1, isBack: true);
                           startInactivityTimer();
                           await getAllAddress();
                           conA.filteredAddress.value = address;
@@ -881,7 +881,7 @@ class DrawerMenu extends StatelessWidget {
                                 if (Responsive.isMobile(context))
                                   con.controlDrawer();
                                 LoadingWidget.dialogLoading(
-                                    duration: 1, isBack: false);
+                                    duration: 1, isBack: true);
                                 startInactivityTimer();
                                 conReset.clearText();
                                 await getAllUser();

@@ -69,7 +69,7 @@ class NewKoiScreen extends StatelessWidget {
                   color: secondGreyColor,
                   tap: () async {
                     startInactivityTimer();
-                    LoadingWidget.dialogLoading(duration: 5, isBack: false);
+                    LoadingWidget.dialogLoading(duration: 5, isBack: true);
                     await getAllKoi();
                     conKoi.monthList.clear();
                     if (koi.isNotEmpty) {

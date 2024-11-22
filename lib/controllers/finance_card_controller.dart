@@ -13,7 +13,7 @@ class FinanceCardController extends GetxController {
   var netsale = '0'.obs;
   var saleRevenue = '0'.obs;
   var totalUnitSale = '0'.obs;
-  var avgSaleRevenue = '0'.obs;
+  var totalProfit = '0'.obs;
   var avgProfit = '0'.obs;
 
   final itemTitle = [
@@ -30,7 +30,7 @@ class FinanceCardController extends GetxController {
     {'name': 'Net Sale'},
     {'name': 'Sale Revenue'},
     {'name': 'Total Unit Sale'},
-    {'name': 'Average Sale Revenue'},
+    {'name': 'Total Profit'},
     {'name': 'Average Profit'},
   ];
 

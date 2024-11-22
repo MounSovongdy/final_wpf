@@ -95,7 +95,7 @@ class NewStaffScreen extends StatelessWidget {
                   color: secondGreyColor,
                   tap: () async {
                     startInactivityTimer();
-                    LoadingWidget.dialogLoading(duration: 5, isBack: false);
+                    LoadingWidget.dialogLoading(duration: 5, isBack: true);
                     await getAllSaleManCommission();
                     conStaff.monthList.clear();
                     if (saleManCom.isNotEmpty) {

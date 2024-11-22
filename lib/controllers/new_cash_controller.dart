@@ -78,7 +78,7 @@ class NewCashController extends GetxController {
         discount.value.text != '' &&
         totalPrice.value.text != '' &&
         comeBy.value != null) {
-      LoadingWidget.dialogLoading(duration: 5, isBack: false);
+      LoadingWidget.dialogLoading(duration: 5, isBack: true);
       var currYear = dateNow.split('-')[0];
       var currMonth = dateNow.split('-')[1];
 

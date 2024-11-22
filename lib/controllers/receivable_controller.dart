@@ -199,7 +199,7 @@ class ReceivableController extends GetxController {
                           dayLate = -1;
                         }
 
-                        LoadingWidget.dialogLoading(duration: 5, isBack: false);
+                        LoadingWidget.dialogLoading(duration: 5, isBack: true);
                         await insertPayment(
                           id: id,
                           no: int.parse(no.value),
@@ -317,7 +317,7 @@ class ReceivableController extends GetxController {
                     } else {
                       if (amount.value.text != '' &&
                           datePayment.value.text != '') {
-                        LoadingWidget.dialogLoading(duration: 5, isBack: false);
+                        LoadingWidget.dialogLoading(duration: 5, isBack: true);
                         await addMorePayment(
                           id: id,
                           paid: amount.value.text,

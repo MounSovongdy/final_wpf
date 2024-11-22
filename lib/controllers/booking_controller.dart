@@ -103,7 +103,7 @@ class BookingController extends GetxController {
     var workMinutes = difference.inMinutes % 60;
     var workingHours = '$workDays Days $workHours Hours $workMinutes Minutes';
 
-    LoadingWidget.dialogLoading(duration: 5, isBack: false);
+    LoadingWidget.dialogLoading(duration: 5, isBack: true);
 
     if (data.micro2 == '' && data.statusBooking2 == '') {
       if (status.value != 'New') {

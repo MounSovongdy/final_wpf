@@ -37,23 +37,23 @@ final addressCol = _firebase.collection('address');
 final colorCol = _firebase.collection('color');
 final brandCol = _firebase.collection('brand');
 final productCol = _firebase.collection('product');
-final addStockCol = _firebase.collection('add_stock');
-final totalStockCol = _firebase.collection('total_stock');
-final bookingCol = _firebase.collection('booking');
-final bookingMicroCol = _firebase.collection('booking_micro');
-final leasingCol = _firebase.collection('leasing');
-final microComCol = _firebase.collection('micro_commission');
-final saleManComCol = _firebase.collection('sale_man_commission');
-final friendComCol = _firebase.collection('friend_commission');
-final cashCol = _firebase.collection('cash');
-final receivableCol = _firebase.collection('receivable');
-final paymentTableCol = _firebase.collection('payment_table');
-final advertisingCol = _firebase.collection('advertising');
-final rentalCol = _firebase.collection('rental');
-final giftCol = _firebase.collection('gift');
-final koiCol = _firebase.collection('koi');
+final addStockCol = _firebase.collection('add_stock_1');
+final totalStockCol = _firebase.collection('total_stock_1');
+final bookingCol = _firebase.collection('booking_1');
+final bookingMicroCol = _firebase.collection('booking_micro_1');
+final leasingCol = _firebase.collection('leasing_1');
+final microComCol = _firebase.collection('micro_commission_1');
+final saleManComCol = _firebase.collection('sale_man_commission_1');
+final friendComCol = _firebase.collection('friend_commission_1');
+final cashCol = _firebase.collection('cash_1');
+final receivableCol = _firebase.collection('receivable_1');
+final paymentTableCol = _firebase.collection('payment_table_1');
+final advertisingCol = _firebase.collection('advertising_1');
+final rentalCol = _firebase.collection('rental_1');
+final giftCol = _firebase.collection('gift_1');
+final koiCol = _firebase.collection('koi_1');
 final resetPasswordCol = _firebase.collection('reset_password');
-final totalExpenseCol = _firebase.collection('total_expense');
+final totalExpenseCol = _firebase.collection('total_expense_1');
 
 var currVersion = '1.2.0'.obs;
 var userLogin = ''.obs;
@@ -1484,20 +1484,23 @@ Future<void> insertFinancial({
       num netSale = 0;
       num saleRevenue = 0;
       num totalSale = 0;
-      num avgSaleRevenue = 0;
+      num totalProfit = 0;
       num avgProfit = 0;
+      num totalExpense = 0;
+
       for (var e in res.docs) {
         netSale = num.parse(e['net_sale']);
         saleRevenue = num.parse(e['sale_revenue']);
         totalSale = num.parse(e['total_sale']);
-        avgSaleRevenue = num.parse(e['avg_sale_revenue']);
+        totalProfit = num.parse(e['total_profit']);
         avgProfit = num.parse(e['avg_profit']);
+        totalExpense = num.parse(e['total_expense']);
       }
       netSale = netSale + num.parse(sell);
-      saleRevenue = num.parse(sell) - num.parse(cost);
+      saleRevenue = saleRevenue + (num.parse(sell) - num.parse(cost));
       totalSale = totalSale + 1;
-      avgSaleRevenue = saleRevenue / totalSale;
-      avgProfit = netSale / totalSale;
+      totalProfit = saleRevenue - totalExpense;
+      avgProfit = totalProfit / totalSale;
 
       var tempNetSale = '$netSale'.contains('.')
           ? num.parse('$netSale').toStringAsFixed(2)
@@ -1508,9 +1511,9 @@ Future<void> insertFinancial({
       var tempTotalSale = '$totalSale'.contains('.')
           ? num.parse('$totalSale').toStringAsFixed(2)
           : num.parse('$totalSale').toString();
-      var tempAvgSaleRevenue = '$avgSaleRevenue'.contains('.')
-          ? num.parse('$avgSaleRevenue').toStringAsFixed(2)
-          : num.parse('$avgSaleRevenue').toString();
+      var tempTotalProfit = '$totalProfit'.contains('.')
+          ? num.parse('$totalProfit').toStringAsFixed(2)
+          : num.parse('$totalProfit').toString();
       var tempAvgProfit = '$avgProfit'.contains('.')
           ? num.parse('$avgProfit').toStringAsFixed(2)
           : num.parse('$avgProfit').toString();
@@ -1519,15 +1522,15 @@ Future<void> insertFinancial({
         'net_sale': tempNetSale,
         'sale_revenue': tempSaleRevenue,
         'total_sale': tempTotalSale,
-        'avg_sale_revenue': tempAvgSaleRevenue,
+        'total_profit': tempTotalProfit,
         'avg_profit': tempAvgProfit,
       });
     } else {
       num netSale = num.parse(sell);
       num saleRevenue = num.parse(sell) - num.parse(cost);
       num totalSale = 1;
-      num avgSaleRevenue = saleRevenue / totalSale;
-      num avgProfit = netSale / totalSale;
+      num totalProfit = saleRevenue;
+      num avgProfit = totalProfit / totalSale;
 
       var newNetSale = '$netSale'.contains('.')
           ? num.parse('$netSale').toStringAsFixed(2)
@@ -1538,9 +1541,9 @@ Future<void> insertFinancial({
       var newTotalSale = '$totalSale'.contains('.')
           ? num.parse('$totalSale').toStringAsFixed(2)
           : num.parse('$totalSale').toString();
-      var newAvgSaleRevenue = '$avgSaleRevenue'.contains('.')
-          ? num.parse('$avgSaleRevenue').toStringAsFixed(2)
-          : num.parse('$avgSaleRevenue').toString();
+      var newTotalProfilt = '$totalProfit'.contains('.')
+          ? num.parse('$totalProfit').toStringAsFixed(2)
+          : num.parse('$totalProfit').toString();
       var newAvgProfit = '$avgProfit'.contains('.')
           ? num.parse('$avgProfit').toStringAsFixed(2)
           : num.parse('$avgProfit').toString();
@@ -1561,7 +1564,7 @@ Future<void> insertFinancial({
         'net_sale': newNetSale,
         'sale_revenue': newSaleRevenue,
         'total_sale': newTotalSale,
-        'avg_sale_revenue': newAvgSaleRevenue,
+        'total_profit': newTotalProfilt,
         'avg_profit': newAvgProfit,
       });
     }
@@ -1597,6 +1600,10 @@ Future<void> insertTotalExpenseRental({
         num koi = 0;
         num gift = 0;
         num commission = 0;
+        num totalProfit = 0;
+        num avgProfit = 0;
+        num saleRevenue = 0;
+        num totalSale = 0;
 
         for (var e in res2.docs) {
           salaryE = num.parse(e['salaryE']);
@@ -1606,6 +1613,8 @@ Future<void> insertTotalExpenseRental({
           koi = num.parse(e['koi']);
           gift = num.parse(e['gift']);
           commission = num.parse(e['commission']);
+          saleRevenue = num.parse(e['sale_revenue']);
+          totalSale = num.parse(e['total_sale']);
         }
 
         oldTotal = amount +
@@ -1616,19 +1625,29 @@ Future<void> insertTotalExpenseRental({
             koi +
             gift +
             commission;
+        totalProfit = saleRevenue - oldTotal;
+        avgProfit = totalProfit / totalSale;
 
         var tempNewTotal = '$oldTotal'.contains('.')
             ? num.parse('$oldTotal').toStringAsFixed(2)
             : num.parse('$oldTotal').toString();
+        var tempTotalProfit = '$totalProfit'.contains('.')
+            ? num.parse('$totalProfit').toStringAsFixed(2)
+            : num.parse('$totalProfit').toString();
+        var tempAvgProfit = '$avgProfit'.contains('.')
+            ? num.parse('$avgProfit').toStringAsFixed(2)
+            : num.parse('$avgProfit').toString();
 
-        LoadingWidget.dialogLoading(duration: 3, isBack: false);
+        LoadingWidget.dialogLoading(duration: 3, isBack: true);
         await totalExpenseCol.doc('$year-$month').update({
           'rental': '$amount',
           'total_expense': tempNewTotal,
+          'total_profit': tempTotalProfit,
+          'avg_profit': tempAvgProfit,
         });
         Get.back();
       } else {
-        LoadingWidget.dialogLoading(duration: 3, isBack: false);
+        LoadingWidget.dialogLoading(duration: 3, isBack: true);
         await totalExpenseCol.doc('$year-$month').set({
           'id': num.parse('$year$month'),
           'year': year,
@@ -1645,7 +1664,7 @@ Future<void> insertTotalExpenseRental({
           'net_sale': '0',
           'sale_revenue': '0',
           'total_sale': '0',
-          'avg_sale_revenue': '0',
+          'total_profit': '0',
           'avg_profit': '0',
         });
         Get.back();
@@ -1690,6 +1709,10 @@ Future<void> insertTotalExpenseFriend({
         num advertise = 0;
         num koi = 0;
         num gift = 0;
+        num totalProfit = 0;
+        num avgProfit = 0;
+        num saleRevenue = 0;
+        num totalSale = 0;
 
         for (var e in res2.docs) {
           rental = num.parse(e['rental']);
@@ -1699,6 +1722,8 @@ Future<void> insertTotalExpenseFriend({
           advertise = num.parse(e['advertise']);
           koi = num.parse(e['koi']);
           gift = num.parse(e['gift']);
+          saleRevenue = num.parse(e['sale_revenue']);
+          totalSale = num.parse(e['total_sale']);
         }
 
         oldTotal = rental +
@@ -1709,19 +1734,29 @@ Future<void> insertTotalExpenseFriend({
             koi +
             gift +
             amount;
+        totalProfit = saleRevenue - oldTotal;
+        avgProfit = totalProfit / totalSale;
 
         var tempNewTotal = '$oldTotal'.contains('.')
             ? num.parse('$oldTotal').toStringAsFixed(2)
             : num.parse('$oldTotal').toString();
+        var tempTotalProfit = '$totalProfit'.contains('.')
+            ? num.parse('$totalProfit').toStringAsFixed(2)
+            : num.parse('$totalProfit').toString();
+        var tempAvgProfit = '$avgProfit'.contains('.')
+            ? num.parse('$avgProfit').toStringAsFixed(2)
+            : num.parse('$avgProfit').toString();
 
-        LoadingWidget.dialogLoading(duration: 3, isBack: false);
+        LoadingWidget.dialogLoading(duration: 3, isBack: true);
         await totalExpenseCol.doc('$year-$month').update({
           'commission': '$amount',
           'total_expense': tempNewTotal,
+          'total_profit': tempTotalProfit,
+          'avg_profit': tempAvgProfit,
         });
         Get.back();
       } else {
-        LoadingWidget.dialogLoading(duration: 3, isBack: false);
+        LoadingWidget.dialogLoading(duration: 3, isBack: true);
         await totalExpenseCol.doc('$year-$month').set({
           'id': num.parse('$year$month'),
           'year': year,
@@ -1738,7 +1773,7 @@ Future<void> insertTotalExpenseFriend({
           'net_sale': '0',
           'sale_revenue': '0',
           'total_sale': '0',
-          'avg_sale_revenue': '0',
+          'total_profit': '0',
           'avg_profit': '0',
         });
         Get.back();
@@ -1783,6 +1818,10 @@ Future<void> insertTotalExpenseGift({
         num advertise = 0;
         num koi = 0;
         num commission = 0;
+        num totalProfit = 0;
+        num avgProfit = 0;
+        num saleRevenue = 0;
+        num totalSale = 0;
 
         for (var e in res2.docs) {
           rental = num.parse(e['rental']);
@@ -1792,6 +1831,8 @@ Future<void> insertTotalExpenseGift({
           advertise = num.parse(e['advertise']);
           koi = num.parse(e['koi']);
           commission = num.parse(e['commission']);
+          saleRevenue = num.parse(e['sale_revenue']);
+          totalSale = num.parse(e['total_sale']);
         }
 
         oldTotal = rental +
@@ -1802,19 +1843,29 @@ Future<void> insertTotalExpenseGift({
             koi +
             commission +
             amount;
+        totalProfit = saleRevenue - oldTotal;
+        avgProfit = totalProfit / totalSale;
 
         var tempNewTotal = '$oldTotal'.contains('.')
             ? num.parse('$oldTotal').toStringAsFixed(2)
             : num.parse('$oldTotal').toString();
+        var tempTotalProfit = '$totalProfit'.contains('.')
+            ? num.parse('$totalProfit').toStringAsFixed(2)
+            : num.parse('$totalProfit').toString();
+        var tempAvgProfit = '$avgProfit'.contains('.')
+            ? num.parse('$avgProfit').toStringAsFixed(2)
+            : num.parse('$avgProfit').toString();
 
-        LoadingWidget.dialogLoading(duration: 3, isBack: false);
+        LoadingWidget.dialogLoading(duration: 3, isBack: true);
         await totalExpenseCol.doc('$year-$month').update({
           'gift': '$amount',
           'total_expense': tempNewTotal,
+          'total_profit': tempTotalProfit,
+          'avg_profit': tempAvgProfit,
         });
         Get.back();
       } else {
-        LoadingWidget.dialogLoading(duration: 3, isBack: false);
+        LoadingWidget.dialogLoading(duration: 3, isBack: true);
         await totalExpenseCol.doc('$year-$month').set({
           'id': num.parse('$year$month'),
           'year': year,
@@ -1831,7 +1882,7 @@ Future<void> insertTotalExpenseGift({
           'net_sale': '0',
           'sale_revenue': '0',
           'total_sale': '0',
-          'avg_sale_revenue': '0',
+          'total_profit': '0',
           'avg_profit': '0',
         });
         Get.back();
@@ -1876,6 +1927,10 @@ Future<void> insertTotalExpenseKoi({
         num advertise = 0;
         num gift = 0;
         num commission = 0;
+        num totalProfit = 0;
+        num avgProfit = 0;
+        num saleRevenue = 0;
+        num totalSale = 0;
 
         for (var e in res2.docs) {
           rental = num.parse(e['rental']);
@@ -1885,6 +1940,8 @@ Future<void> insertTotalExpenseKoi({
           advertise = num.parse(e['advertise']);
           gift = num.parse(e['gift']);
           commission = num.parse(e['commission']);
+          saleRevenue = num.parse(e['sale_revenue']);
+          totalSale = num.parse(e['total_sale']);
         }
 
         oldTotal = rental +
@@ -1895,19 +1952,29 @@ Future<void> insertTotalExpenseKoi({
             gift +
             commission +
             amount;
+        totalProfit = saleRevenue - oldTotal;
+        avgProfit = totalProfit / totalSale;
 
         var tempNewTotal = '$oldTotal'.contains('.')
             ? num.parse('$oldTotal').toStringAsFixed(2)
             : num.parse('$oldTotal').toString();
+        var tempTotalProfit = '$totalProfit'.contains('.')
+            ? num.parse('$totalProfit').toStringAsFixed(2)
+            : num.parse('$totalProfit').toString();
+        var tempAvgProfit = '$avgProfit'.contains('.')
+            ? num.parse('$avgProfit').toStringAsFixed(2)
+            : num.parse('$avgProfit').toString();
 
-        LoadingWidget.dialogLoading(duration: 3, isBack: false);
+        LoadingWidget.dialogLoading(duration: 3, isBack: true);
         await totalExpenseCol.doc('$year-$month').update({
           'koi': '$amount',
           'total_expense': tempNewTotal,
+          'total_profit': tempTotalProfit,
+          'avg_profit': tempAvgProfit,
         });
         Get.back();
       } else {
-        LoadingWidget.dialogLoading(duration: 3, isBack: false);
+        LoadingWidget.dialogLoading(duration: 3, isBack: true);
         await totalExpenseCol.doc('$year-$month').set({
           'id': num.parse('$year$month'),
           'year': year,
@@ -1924,7 +1991,7 @@ Future<void> insertTotalExpenseKoi({
           'net_sale': '0',
           'sale_revenue': '0',
           'total_sale': '0',
-          'avg_sale_revenue': '0',
+          'total_profit': '0',
           'avg_profit': '0',
         });
         Get.back();
@@ -1969,6 +2036,10 @@ Future<void> insertTotalExpenseAdv({
         num koi = 0;
         num gift = 0;
         num commission = 0;
+        num totalProfit = 0;
+        num avgProfit = 0;
+        num saleRevenue = 0;
+        num totalSale = 0;
 
         for (var e in res2.docs) {
           rental = num.parse(e['rental']);
@@ -1978,6 +2049,8 @@ Future<void> insertTotalExpenseAdv({
           koi = num.parse(e['koi']);
           gift = num.parse(e['gift']);
           commission = num.parse(e['commission']);
+          saleRevenue = num.parse(e['sale_revenue']);
+          totalSale = num.parse(e['total_sale']);
         }
 
         oldTotal = rental +
@@ -1988,19 +2061,29 @@ Future<void> insertTotalExpenseAdv({
             gift +
             commission +
             amount;
+        totalProfit = saleRevenue - oldTotal;
+        avgProfit = totalProfit / totalSale;
 
         var tempNewTotal = '$oldTotal'.contains('.')
             ? num.parse('$oldTotal').toStringAsFixed(2)
             : num.parse('$oldTotal').toString();
+        var tempTotalProfit = '$totalProfit'.contains('.')
+            ? num.parse('$totalProfit').toStringAsFixed(2)
+            : num.parse('$totalProfit').toString();
+        var tempAvgProfit = '$avgProfit'.contains('.')
+            ? num.parse('$avgProfit').toStringAsFixed(2)
+            : num.parse('$avgProfit').toString();
 
-        LoadingWidget.dialogLoading(duration: 3, isBack: false);
+        LoadingWidget.dialogLoading(duration: 3, isBack: true);
         await totalExpenseCol.doc('$year-$month').update({
           'advertise': '$amount',
           'total_expense': tempNewTotal,
+          'total_profit': tempTotalProfit,
+          'avg_profit': tempAvgProfit,
         });
         Get.back();
       } else {
-        LoadingWidget.dialogLoading(duration: 3, isBack: false);
+        LoadingWidget.dialogLoading(duration: 3, isBack: true);
         await totalExpenseCol.doc('$year-$month').set({
           'id': num.parse('$year$month'),
           'year': year,
@@ -2017,7 +2100,7 @@ Future<void> insertTotalExpenseAdv({
           'net_sale': '0',
           'sale_revenue': '0',
           'total_sale': '0',
-          'avg_sale_revenue': '0',
+          'total_profit': '0',
           'avg_profit': '0',
         });
         Get.back();
@@ -2062,6 +2145,10 @@ Future<void> insertTotalExpenseBonusT({
         num koi = 0;
         num gift = 0;
         num commission = 0;
+        num totalProfit = 0;
+        num avgProfit = 0;
+        num saleRevenue = 0;
+        num totalSale = 0;
 
         for (var e in res2.docs) {
           rental = num.parse(e['rental']);
@@ -2071,6 +2158,8 @@ Future<void> insertTotalExpenseBonusT({
           koi = num.parse(e['koi']);
           gift = num.parse(e['gift']);
           commission = num.parse(e['commission']);
+          saleRevenue = num.parse(e['sale_revenue']);
+          totalSale = num.parse(e['total_sale']);
         }
 
         oldTotal = rental +
@@ -2081,19 +2170,29 @@ Future<void> insertTotalExpenseBonusT({
             gift +
             commission +
             amount;
+        totalProfit = saleRevenue - oldTotal;
+        avgProfit = totalProfit / totalSale;
 
         var tempNewTotal = '$oldTotal'.contains('.')
             ? num.parse('$oldTotal').toStringAsFixed(2)
             : num.parse('$oldTotal').toString();
+        var tempTotalProfit = '$totalProfit'.contains('.')
+            ? num.parse('$totalProfit').toStringAsFixed(2)
+            : num.parse('$totalProfit').toString();
+        var tempAvgProfit = '$avgProfit'.contains('.')
+            ? num.parse('$avgProfit').toStringAsFixed(2)
+            : num.parse('$avgProfit').toString();
 
-        LoadingWidget.dialogLoading(duration: 3, isBack: false);
+        LoadingWidget.dialogLoading(duration: 3, isBack: true);
         await totalExpenseCol.doc('$year-$month').update({
           'bonusT': '$amount',
           'total_expense': tempNewTotal,
+          'total_profit': tempTotalProfit,
+          'avg_profit': tempAvgProfit,
         });
         Get.back();
       } else {
-        LoadingWidget.dialogLoading(duration: 3, isBack: false);
+        LoadingWidget.dialogLoading(duration: 3, isBack: true);
         await totalExpenseCol.doc('$year-$month').set({
           'id': num.parse('$year$month'),
           'year': year,
@@ -2110,7 +2209,7 @@ Future<void> insertTotalExpenseBonusT({
           'net_sale': '0',
           'sale_revenue': '0',
           'total_sale': '0',
-          'avg_sale_revenue': '0',
+          'total_profit': '0',
           'avg_profit': '0',
         });
         Get.back();
@@ -2159,6 +2258,10 @@ Future<void> insertTotalExpenseStaff({
         num koi = 0;
         num gift = 0;
         num commission = 0;
+        num totalProfit = 0;
+        num avgProfit = 0;
+        num saleRevenue = 0;
+        num totalSale = 0;
 
         for (var e in res2.docs) {
           rental = num.parse(e['rental']);
@@ -2167,6 +2270,8 @@ Future<void> insertTotalExpenseStaff({
           koi = num.parse(e['koi']);
           gift = num.parse(e['gift']);
           commission = num.parse(e['commission']);
+          saleRevenue = num.parse(e['sale_revenue']);
+          totalSale = num.parse(e['total_sale']);
         }
 
         oldTotal = rental +
@@ -2177,16 +2282,26 @@ Future<void> insertTotalExpenseStaff({
             commission +
             salary +
             bonus;
+        totalProfit = saleRevenue - oldTotal;
+        avgProfit = totalProfit / totalSale;
 
         var tempNewTotal = '$oldTotal'.contains('.')
             ? num.parse('$oldTotal').toStringAsFixed(2)
             : num.parse('$oldTotal').toString();
+        var tempTotalProfit = '$totalProfit'.contains('.')
+            ? num.parse('$totalProfit').toStringAsFixed(2)
+            : num.parse('$totalProfit').toString();
+        var tempAvgProfit = '$avgProfit'.contains('.')
+            ? num.parse('$avgProfit').toStringAsFixed(2)
+            : num.parse('$avgProfit').toString();
 
-        LoadingWidget.dialogLoading(duration: 3, isBack: false);
+        LoadingWidget.dialogLoading(duration: 3, isBack: true);
         await totalExpenseCol.doc('$year-$month').update({
           'salaryE': '$salary',
           'bonusE': '$bonus',
           'total_expense': tempNewTotal,
+          'total_profit': tempTotalProfit,
+          'avg_profit': tempAvgProfit,
         });
         Get.back();
       } else {
@@ -2195,7 +2310,7 @@ Future<void> insertTotalExpenseStaff({
             ? num.parse('$tot').toStringAsFixed(2)
             : num.parse('$tot').toString();
 
-        LoadingWidget.dialogLoading(duration: 3, isBack: false);
+        LoadingWidget.dialogLoading(duration: 3, isBack: true);
         await totalExpenseCol.doc('$year-$month').set({
           'id': num.parse('$year$month'),
           'year': year,
@@ -2212,7 +2327,7 @@ Future<void> insertTotalExpenseStaff({
           'net_sale': '0',
           'sale_revenue': '0',
           'total_sale': '0',
-          'avg_sale_revenue': '0',
+          'total_profit': '0',
           'avg_profit': '0',
         });
         Get.back();

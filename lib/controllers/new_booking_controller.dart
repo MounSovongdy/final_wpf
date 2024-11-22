@@ -75,7 +75,7 @@ class NewBookingController extends GetxController {
         discount.value.text != '' &&
         deposit.value.text != '' &&
         newRemain >= 0) {
-      LoadingWidget.dialogLoading(duration: 5, isBack: false);
+      LoadingWidget.dialogLoading(duration: 5, isBack: true);
 
       await getLastBooking();
       var id = DateFormat('yyMMddkkmmss').format(DateTime.now());
@@ -219,7 +219,7 @@ class NewBookingController extends GetxController {
         workingHours2: byBookingMicro[0].workingHours2,
       );
 
-      LoadingWidget.dialogLoading(duration: 5, isBack: false);
+      LoadingWidget.dialogLoading(duration: 5, isBack: true);
       await updateByBooking(byBooking[0].id, newBook, newBookMicro);
       Get.back();
       clearText();

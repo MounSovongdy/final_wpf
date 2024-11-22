@@ -16,11 +16,13 @@ class LoginController extends GetxController {
 
   void login(BuildContext context) async {
     if (email.value.text != '' && pass.value.text != '') {
+      LoadingWidget.dialogLoading(duration: 1, isBack: true);
       await getByUser(email.value.text);
 
       if (byUser.isNotEmpty) {
         if (pass.value.text == byUser[0].password) {
           if (pass.value.text == '123456') {
+            Get.back();
             changePassword(Get.context!);
           } else {
             startInactivityTimer();
@@ -28,9 +30,11 @@ class LoginController extends GetxController {
             userName.value = byUser[0].name;
             userRole.value = byUser[0].role;
             pass.value.clear();
+            Get.back();
             Get.offAll(() => MainScreen());
           }
         } else {
+          Get.back();
           LoadingWidget.showTextDialog(
             Get.context!,
             title: 'Error',
@@ -39,6 +43,7 @@ class LoginController extends GetxController {
           );
         }
       } else {
+        Get.back();
         LoadingWidget.showTextDialog(
           Get.context!,
           title: 'Error',
