@@ -233,7 +233,8 @@ Future<String> generateHtmlContent({
 
               <div id="wrapper">        
                     <div id="receiptData" style="width: auto; max-width: 700px; margin: 0 auto;">                       
-                        <div id="receipt-data" style="padding-right:10px;">                         
+                        <div id="receipt-data" style="padding-right:10px;">
+                        <br>                     
                               <table width="100%">                                 
                                 <tr>                               
                                   <b><p style="font-size: 23px; font-family:Khmer OS Bokor;text-align:center;">កិច្ចសន្យាបង់ប្រាក់</p></b>

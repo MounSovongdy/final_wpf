@@ -310,20 +310,18 @@ class NewLeasingScreen extends StatelessWidget {
                   ? RowTextField(
                       spacer: spacer(context),
                       widget1: AppTextField(
-                        txt: 'Tel 2nd',
+                        txt: 'Telephone 2',
                         con: con.phoneCus2.value,
                         isNumber: true,
                         digit: 10,
                       ),
                       widget2: AppTextField(
-                        txt: 'Name 2nd',
-                        con: con.nameCus2.value
+                        txt: 'Name 2',
+                        con: con.nameCus2.value,
                       ),
                       widget3: AppTextField(
-                        txt: 'Tel 3rd',
-                        con: con.phoneCus3.value,
-                        isNumber: true,
-                        digit: 10,
+                        txt: 'Document',
+                        con: con.document.value,
                       ),
                     )
                   : Container(),
@@ -333,12 +331,14 @@ class NewLeasingScreen extends StatelessWidget {
                   ? RowTextField(
                       spacer: spacer(context),
                       widget1: AppTextField(
-                        txt: 'Name 3rd',
-                        con: con.nameCus3.value,
+                        txt: 'Telephone 3',
+                        con: con.phoneCus3.value,
+                        isNumber: true,
+                        digit: 10,
                       ),
                       widget2: AppTextField(
-                        txt: 'Document',
-                        con: con.document.value,
+                        txt: 'Name 3',
+                        con: con.nameCus3.value,
                       ),
                       widget3: AppTextField(
                         txt: 'Penalty',
@@ -346,8 +346,8 @@ class NewLeasingScreen extends StatelessWidget {
                         isNumber: true,
                         digit: 10,
                       ),
-                    ) 
-                  : Container()
+                    )
+                  : Container(),
             ),
             Obx(
               () => con.isReceivable.value
