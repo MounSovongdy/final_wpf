@@ -55,7 +55,7 @@ final koiCol = _firebase.collection('koi');
 final resetPasswordCol = _firebase.collection('reset_password');
 final totalExpenseCol = _firebase.collection('total_expense');
 
-var currVersion = '1.2.0'.obs;
+var currVersion = '1.3.0'.obs;
 var userLogin = ''.obs;
 var userName = ''.obs;
 var userRole = ''.obs;
