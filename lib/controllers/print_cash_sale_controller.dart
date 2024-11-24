@@ -197,6 +197,9 @@ Future<String> generateHtmlContent({
                     <td><br></td>
                   </tr>
                   <tr>
+                    <td><br></td>
+                  </tr>
+                  <tr>
                       <td class="text-center"><b>$customerName</b></td>
                       <td>
                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
