@@ -27,6 +27,8 @@ class LeasingController extends GetxController {
           data.year.toLowerCase().contains(query) ||
           data.condition.toLowerCase().contains(query) ||
           data.price.toLowerCase().contains(query) ||
+          data.discount.toLowerCase().contains(query) ||
+          data.deposit.toLowerCase().contains(query) ||
           data.remain.toLowerCase().contains(query) ||
           data.approveAmount.toLowerCase().contains(query) ||
           data.totalDebt.toLowerCase().contains(query) ||

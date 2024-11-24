@@ -142,7 +142,7 @@ Widget koiDataTable(BuildContext context) {
         var data = con.filteredKoi[index];
         return [
           DataTableWidget.cell(Get.context!, '${data.id}'),
-          DataTableWidget.cell(Get.context!, '${data.year}-${data.month}'),
+          DataTableWidget.cell(Get.context!, data.date),
           DataTableWidget.cell(Get.context!, data.name),
           DataTableWidget.cell(Get.context!, data.amount),
         ];

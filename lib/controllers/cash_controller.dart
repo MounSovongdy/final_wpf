@@ -23,6 +23,7 @@ class CashController extends GetxController {
           data.year.toLowerCase().contains(query) ||
           data.condition.toLowerCase().contains(query) ||
           data.price.toLowerCase().contains(query) ||
+          data.discount.toLowerCase().contains(query) ||
           data.saleman.toLowerCase().contains(query) ||
           data.comeBy.toLowerCase().contains(query);
     }).toList();

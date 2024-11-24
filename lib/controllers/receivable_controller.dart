@@ -40,7 +40,8 @@ class ReceivableController extends GetxController {
           data['condition'].toLowerCase().contains(query) ||
           data['total'].toLowerCase().contains(query) ||
           data['receiveAmount'].toLowerCase().contains(query) ||
-          data['amountLeft'].toLowerCase().contains(query);
+          data['amountLeft'].toLowerCase().contains(query) ||
+          data['colorPayment'].toLowerCase().contains(query);
     }).toList();
   }
 
@@ -411,6 +412,7 @@ class ReceivableController extends GetxController {
                         search.value.addListener(filterReceivableData);
                         scheduleList.clear();
                         await getByPaymentTable(id);
+                        scheduleList.clear();
                         for (var data in byPaymentTable) {
                           if (data.date != '' && data.paid == '') {
                             scheduleList.add(data.date);
