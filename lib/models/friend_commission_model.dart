@@ -2,6 +2,7 @@ import 'dart:convert';
 
 class FriendCommissionModel {
   final int id;
+  final String date;
   final String year;
   final String month;
   final String name;
@@ -12,6 +13,7 @@ class FriendCommissionModel {
 
   FriendCommissionModel({
     this.id = 0,
+    this.date = '',
     this.year = '',
     this.month = '',
     this.name = '',
@@ -24,6 +26,7 @@ class FriendCommissionModel {
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
       'id': id,
+      'date': date,
       'year': year,
       'month': month,
       'name': name,
@@ -37,6 +40,7 @@ class FriendCommissionModel {
   factory FriendCommissionModel.fromMap(Map<String, dynamic> map) {
     return FriendCommissionModel(
       id: map['id'] as int,
+      date: map['date'] as String,
       year: map['year'] as String,
       month: map['month'] as String,
       name: map['name'] as String,
@@ -49,5 +53,7 @@ class FriendCommissionModel {
 
   String toJson() => json.encode(toMap());
 
-  factory FriendCommissionModel.fromJson(String source) => FriendCommissionModel.fromMap(json.decode(source) as Map<String, dynamic>);
+  factory FriendCommissionModel.fromJson(String source) =>
+      FriendCommissionModel.fromMap(
+          json.decode(source) as Map<String, dynamic>);
 }

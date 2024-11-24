@@ -237,6 +237,7 @@ class NewLeasingController extends GetxController {
       );
       FriendCommissionModel newFriCom = FriendCommissionModel(
         id: newFriendComId,
+        date: dateNow,
         year: '${DateTime.now().year}',
         month: '${DateTime.now().month}',
         name: nameIntro.value.text,
