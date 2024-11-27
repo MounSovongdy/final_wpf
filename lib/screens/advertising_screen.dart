@@ -68,7 +68,7 @@ class AdvertisingScreen extends StatelessWidget {
                 con: con.amount.value,
                 readOnly: true,
               ),
-              widget3: AppButtonCalulation(
+              widget3: AppButtonCalculator(
                 txt: 'Calulation',
                 tap: () => con.calculateTotal(context),
               ),

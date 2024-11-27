@@ -38,7 +38,7 @@ class AppButtonSubmit extends StatelessWidget {
   }
 }
 
-class AppButtonCalulation extends StatelessWidget {
+class AppButtonCalculator extends StatelessWidget {
   final String txt;
   final Widget? suffix;
   final double width, height;
@@ -46,7 +46,7 @@ class AppButtonCalulation extends StatelessWidget {
   final TextInputType txtInput;
   final Function()? tap;
 
-  const AppButtonCalulation({
+  const AppButtonCalculator({
     super.key,
     required this.txt,
     this.suffix,
@@ -89,6 +89,35 @@ class AppButtonCalulation extends StatelessWidget {
           ),
         ),
       ],
+    );
+  }
+}
+
+class AppButtonLogin extends StatelessWidget {
+  final String txt;
+  final Color color;
+  final Function()? tap;
+
+  const AppButtonLogin({
+    super.key,
+    required this.txt,
+    this.color = bgColor,
+    this.tap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: 40.px,
+      child: ElevatedButton(
+        onPressed: tap,
+        style: ButtonStyle(
+          backgroundColor: WidgetStatePropertyAll(color),
+        ),
+        child: Center(
+          child: AppText.title(context, txt: txt, color: whiteColor),
+        ),
+      ),
     );
   }
 }

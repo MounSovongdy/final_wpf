@@ -15,56 +15,95 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var flex = !Responsive.isMobile(context) ? 4 : 2;
-
     return Scaffold(
-      body: Align(
-        alignment: Alignment.center,
-        child: Container(
-          width: 650.px,
-          height: 450.px,
-          padding: EdgeInsets.symmetric(horizontal: defWebPad.px * flex),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10),
-            border: Border.all(color: secondGreyColor),
-            color: greyColor.withOpacity(0.2),
-          ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              AppText.largeHeader(context, txt: "Motor Shop System"),
-              spacer(context),
-              spacer(context),
-              AppTextField(flex: flex, txt: 'User Login', con: con.email.value),
-              spacer(context),
-              Obx(
-                () => AppTextField(
-                  flex: flex,
-                  txt: 'Password',
-                  con: con.pass.value,
-                  obscureText: con.visible.value,
-                  showSuffixIcon: true,
-                  suffix: InkWell(
-                    onTap: () => con.visible.value = !con.visible.value,
-                    child: Icon(con.visible.value
-                        ? Icons.visibility_off
-                        : Icons.visibility),
+      body: buildLoginForm(context),
+    );
+  }
+
+  Widget buildLoginForm(BuildContext context) {
+    var flex = !Responsive.isMobile(context) ? 4 : 2;
+    return Row(
+      children: [
+        Responsive.isDesktop(context) ?
+        Expanded(
+          flex: 1,
+          child: Container(
+            color: whiteColor,
+            child: Align(
+              alignment: Alignment.center,
+              child: Container(
+                decoration: const BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage('assets/images/Loginlogo1.png'),
                   ),
                 ),
               ),
-              spacer(context),
-              spacer(context),
-              Align(
-                alignment: Alignment.centerRight,
-                child: AppButtonSubmit(
-                  txt: 'Login',
-                  tap: () => con.login(context),
+            ),
+          ),
+        ): Container(),
+        Expanded(
+          flex: 1,
+          child: Container(
+            color: greyColor,
+            child: Align(
+              alignment: Alignment.center,
+              child: Container(
+                width: 650.px,
+                padding: EdgeInsets.symmetric(horizontal: defWebPad.px * flex),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Container(
+                      width: 150.px,
+                      height: 150.px,
+                      decoration: const BoxDecoration(
+                        color: whiteColor,
+                        shape: BoxShape.circle,
+                        image: DecorationImage(
+                          image: AssetImage('assets/images/Systemlogo.png'),
+                        ),
+                      ),
+                    ),
+                    spacer(context),
+                    AppText.largeHeader(context, txt: "Motor Shop Management System"),
+                    AppText.subTitle(context, txt: "Login to continue"),
+                    spacer(context),
+                    spacer(context),
+                    spacer(context),
+                    AppTextFieldLogin(
+                        flex: flex, txt: 'User Login', con: con.email.value),
+                    spacer(context),
+                    Obx(
+                      () => AppTextFieldLogin(
+                        flex: flex,
+                        txt: 'Password',
+                        con: con.pass.value,
+                        obscureText: con.visible.value,
+                        showSuffixIcon: true,
+                        suffix: InkWell(
+                          onTap: () => con.visible.value = !con.visible.value,
+                          child: Icon(con.visible.value
+                              ? Icons.visibility_off
+                              : Icons.visibility),
+                        ),
+                      ),
+                    ),
+                    spacer(context),
+                    spacer(context),
+                    Align(
+                      alignment: Alignment.centerRight,
+                      child: AppButtonLogin(
+                        txt: 'Login',
+                        tap: () => con.login(context),
+                      ),
+                    ),
+                  ],
                 ),
               ),
-            ],
+            ),
           ),
         ),
-      ),
+      ],
     );
   }
 }

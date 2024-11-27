@@ -81,3 +81,53 @@ class AppTextField extends StatelessWidget {
     );
   }
 }
+
+class AppTextFieldLogin extends StatelessWidget {
+  final String txt; // Label text
+  final TextEditingController con; // Controller for input
+  final bool obscureText; // Whether the text is obscured (for passwords)
+  final Widget? suffix; // Custom suffix widget (like an icon)
+  final bool showSuffixIcon; // Whether to show the suffix icon
+  final int flex; // Responsiveness factor
+
+  const AppTextFieldLogin({
+    super.key,
+    required this.txt,
+    required this.con,
+    this.obscureText = false,
+    this.suffix,
+    this.showSuffixIcon = false,
+    this.flex = 1,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return TextField(
+      controller: con,
+      obscureText: obscureText,
+      decoration: InputDecoration(
+        labelText: txt,
+        labelStyle: const TextStyle(color: bgColor, fontSize: 14),
+        filled: true,
+        fillColor: whiteColor,
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: const BorderSide(color: whiteColor),
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: const BorderSide(color: whiteColor),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: const BorderSide(color: bgColor),
+        ),
+        suffixIcon: showSuffixIcon ? suffix : null,
+        contentPadding: const EdgeInsets.symmetric(
+          horizontal: 16,
+          vertical: 14,
+        ),
+      ),
+    );
+  }
+}
