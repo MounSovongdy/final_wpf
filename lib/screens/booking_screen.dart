@@ -6,6 +6,7 @@ import 'package:motor/constants/responsive.dart';
 import 'package:motor/controllers/booking_controller.dart';
 import 'package:motor/controllers/main_controller.dart';
 import 'package:motor/controllers/new_booking_controller.dart';
+import 'package:motor/controllers/report_controller.dart';
 import 'package:motor/screens/components/app_button.dart';
 import 'package:motor/screens/components/app_data_table.dart';
 import 'package:motor/screens/components/app_dropdown_search.dart';
@@ -21,6 +22,7 @@ class BookingScreen extends StatelessWidget {
   final con = Get.put(BookingController());
   final conMain = Get.put(MainController());
   final conNewBook = Get.put(NewBookingController());
+  final conReport = Get.put(ReportController());
 
   final scroll = ScrollController();
 
@@ -71,12 +73,33 @@ class BookingScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               AppButtonSubmit(
+                txt: 'Report',
+                color: greyColor,
+                width: Responsive.isDesktop(context) ? 150.px : 100.px,
+                tap: () async {
+                  await conReport.downloadExcel(
+                    fileName: 'Booking Report',
+                    headers: [
+                      'ល.រ',
+                      'ថ្ងៃ-ខែ-ឆ្នាំ',
+                      'ឈ្មោះចំណាយ',
+                      'ប្រភេទទំនិញ',
+                      'ចំនួន',
+                      'ខ្នាត',
+                      'ចំនួនទឹកប្រាក់',
+                      'រូបិយប័ណ្ណ'
+                    ],
+                    data: [],
+                  );
+                },
+              ),
+              spacer(context),
+              AppButtonSubmit(
                 txt: 'New',
                 width: Responsive.isDesktop(context) ? 150.px : 100.px,
                 tap: () async {
                   conNewBook.clearText();
                   con.title.value = 'New Booking';
-
                   conNewBook.date.value.text = '$dateNow $timeNow';
                   conNewBook.discount.value.text = '0';
                   await microName();
