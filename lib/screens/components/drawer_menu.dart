@@ -7,7 +7,9 @@ import 'package:motor/controllers/add_stock_controller.dart';
 import 'package:motor/controllers/address_controller.dart';
 import 'package:motor/controllers/advertising_controller.dart';
 import 'package:motor/controllers/booking_controller.dart';
+import 'package:motor/controllers/brand_controller.dart';
 import 'package:motor/controllers/cash_controller.dart';
+import 'package:motor/controllers/color_controller.dart';
 import 'package:motor/controllers/commission_controller.dart';
 import 'package:motor/controllers/dashboard_card_controller.dart';
 import 'package:motor/controllers/finance_card_controller.dart';
@@ -60,6 +62,8 @@ class DrawerMenu extends StatelessWidget {
   final conFR = Get.put(FinanceRecordController());
   final conFC = Get.put(FinanceCardController());
   final conDash = Get.put(DashboardCardController());
+  final conBrand = Get.put(BrandController());
+  final conColor = Get.put(ColorController());
 
   @override
   Widget build(BuildContext context) {
@@ -849,6 +853,44 @@ class DrawerMenu extends StatelessWidget {
                             ),
                           )
                         : Container(),
+                    Container(
+                      padding: EdgeInsets.only(left: 36.px),
+                      child: DrawerListTile(
+                        tap: () async {
+                          if (Responsive.isMobile(context)) con.controlDrawer();
+                          LoadingWidget.dialogLoading(
+                              duration: 1, isBack: true);
+                          startInactivityTimer();
+                          await getAllBrand();
+                          conBrand.filteredBrand.value = brand;
+                          conBrand.search.value
+                              .addListener(conBrand.filterBrandData);
+                          Get.back();
+                          con.index.value = 46;
+                        },
+                        title: 'Brand',
+                        svgSrc: 'assets/icons/Address.svg',
+                      ),
+                    ),
+                    Container(
+                      padding: EdgeInsets.only(left: 36.px),
+                      child: DrawerListTile(
+                        tap: () async {
+                          if (Responsive.isMobile(context)) con.controlDrawer();
+                          LoadingWidget.dialogLoading(
+                              duration: 1, isBack: true);
+                          startInactivityTimer();
+                          await getAllColor();
+                          conColor.filteredColor.value = color;
+                          conColor.search.value
+                              .addListener(conColor.filterColorData);
+                          Get.back();
+                          con.index.value = 48;
+                        },
+                        title: 'Color',
+                        svgSrc: 'assets/icons/Address.svg',
+                      ),
+                    ),
                     Container(
                       padding: EdgeInsets.only(left: 36.px),
                       child: DrawerListTile(

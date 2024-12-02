@@ -51,6 +51,7 @@ class LeasingController extends GetxController {
   Future<void> brandName() async {
     con.brandList.clear();
     await getAllBrand();
+    brand.sort((a, b) => a.id.compareTo(b.id));
     for (var data in brand) {
       con.brandList.add(data.brand);
     }
@@ -59,6 +60,7 @@ class LeasingController extends GetxController {
   Future<void> colorName() async {
     con.colorList.clear();
     await getAllColor();
+    color.sort((a, b) => a.id.compareTo(b.id));
     for (var data in color) {
       con.colorList.add(data.color);
     }

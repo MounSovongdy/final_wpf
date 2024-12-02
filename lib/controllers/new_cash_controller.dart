@@ -228,6 +228,7 @@ class NewCashController extends GetxController {
   Future<void> saleManName() async {
     saleManList.clear();
     await getAllSaleMan();
+    saleMan.sort((a, b) => a.id.compareTo(b.id));
     for (var data in saleMan) {
       saleManList.add(data.name);
     }
@@ -236,6 +237,7 @@ class NewCashController extends GetxController {
   Future<void> brandName() async {
     brandList.clear();
     await getAllBrand();
+    brand.sort((a, b) => a.id.compareTo(b.id));
     for (var data in brand) {
       brandList.add(data.brand);
     }
@@ -244,6 +246,7 @@ class NewCashController extends GetxController {
   Future<void> addressName() async {
     addressList.clear();
     await getAllAddress();
+    address.sort((a, b) => a.id.compareTo(b.id));
     for (var data in address) {
       addressList.add(data.address);
     }
@@ -252,6 +255,7 @@ class NewCashController extends GetxController {
   Future<void> colorName() async {
     colorList.clear();
     await getAllColor();
+    color.sort((a, b) => a.id.compareTo(b.id));
     for (var data in color) {
       colorList.add(data.color);
     }

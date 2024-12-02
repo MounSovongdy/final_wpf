@@ -122,6 +122,7 @@ class BookingScreen extends StatelessWidget {
   Future<void> addressName() async {
     conNewBook.addressList.clear();
     await getAllAddress();
+    address.sort((a, b) => a.id.compareTo(b.id));
     for (var data in address) {
       conNewBook.addressList.add(data.address);
     }
@@ -130,6 +131,7 @@ class BookingScreen extends StatelessWidget {
   Future<void> microName() async {
     conNewBook.microList.clear();
     await getAllMicro();
+    micro.sort((a, b) => a.id.compareTo(b.id));
     for (var data in micro) {
       conNewBook.microList.add(data.name);
     }
@@ -138,6 +140,7 @@ class BookingScreen extends StatelessWidget {
   Future<void> saleManName() async {
     conNewBook.saleManList.clear();
     await getAllSaleMan();
+    saleMan.sort((a, b) => a.id.compareTo(b.id));
     for (var data in saleMan) {
       conNewBook.saleManList.add(data.name);
     }
@@ -146,6 +149,7 @@ class BookingScreen extends StatelessWidget {
   Future<void> brandName() async {
     conNewBook.brandList.clear();
     await getAllBrand();
+    brand.sort((a, b) => a.id.compareTo(b.id));
     for (var data in brand) {
       conNewBook.brandList.add(data.brand);
     }
@@ -154,6 +158,7 @@ class BookingScreen extends StatelessWidget {
   Future<void> colorName() async {
     conNewBook.colorList.clear();
     await getAllColor();
+    color.sort((a, b) => a.id.compareTo(b.id));
     for (var data in color) {
       conNewBook.colorList.add(data.color);
     }
@@ -168,6 +173,7 @@ Widget bookingDataTable(BuildContext context) {
   Future<void> microName() async {
     conNewBook.microList.clear();
     await getAllMicro();
+    micro.sort((a, b) => a.id.compareTo(b.id));
     for (var data in micro) {
       conNewBook.microList.add(data.name);
     }
@@ -176,6 +182,7 @@ Widget bookingDataTable(BuildContext context) {
   Future<void> saleManName() async {
     conNewBook.saleManList.clear();
     await getAllSaleMan();
+    saleMan.sort((a, b) => a.id.compareTo(b.id));
     for (var data in saleMan) {
       conNewBook.saleManList.add(data.name);
     }
@@ -184,6 +191,7 @@ Widget bookingDataTable(BuildContext context) {
   Future<void> brandName() async {
     conNewBook.brandList.clear();
     await getAllBrand();
+    brand.sort((a, b) => a.id.compareTo(b.id));
     for (var data in brand) {
       conNewBook.brandList.add(data.brand);
     }
@@ -192,6 +200,7 @@ Widget bookingDataTable(BuildContext context) {
   Future<void> addressName() async {
     conNewBook.addressList.clear();
     await getAllAddress();
+    address.sort((a, b) => a.id.compareTo(b.id));
     for (var data in address) {
       conNewBook.addressList.add(data.address);
     }
@@ -200,6 +209,7 @@ Widget bookingDataTable(BuildContext context) {
   Future<void> colorName() async {
     conNewBook.colorList.clear();
     await getAllColor();
+    color.sort((a, b) => a.id.compareTo(b.id));
     for (var data in color) {
       conNewBook.colorList.add(data.color);
     }

@@ -67,7 +67,9 @@ var byMicro = [].obs;
 var micro = [].obs;
 var address = [].obs;
 var byAddress = [].obs;
+var byColor = [].obs;
 var color = [].obs;
+var byBrand = [].obs;
 var brand = [].obs;
 var byProduct = [].obs;
 var product = [].obs;
@@ -313,6 +315,40 @@ Future<void> getByProductID(int id) async {
 Future<void> getAllBrand() async {
   var res = await brandCol.orderBy('id', descending: true).get();
   brand.value = res.docs.map((doc) => BrandModel.fromMap(doc.data())).toList();
+}
+
+Future<void> getLastBrand() async {
+  var res = await brandCol.orderBy('id', descending: true).limit(1).get();
+  brand.value = res.docs.map((doc) => BrandModel.fromMap(doc.data())).toList();
+}
+
+Future<void> getByBrandID(int id) async {
+  var res = await brandCol.where('id', isEqualTo: id).get();
+  byBrand.value =
+      res.docs.map((doc) => BrandModel.fromMap(doc.data())).toList();
+}
+
+Future<void> insertBrand(BrandModel brand) async {
+  try {
+    await brandCol.doc('${brand.id}').set(brand.toMap());
+  } catch (e) {
+    debugPrint('Failed to add brand: $e');
+  }
+}
+
+Future<void> updateByBrand(int id, BrandModel b) async {
+  try {
+    var docId = '';
+    var result = await brandCol.where('id', isEqualTo: id).get();
+
+    for (var doc in result.docs) {
+      docId = doc.id;
+    }
+
+    await brandCol.doc(docId).update(b.toMap());
+  } catch (e) {
+    debugPrint('Failed to updateByBrand: $e');
+  }
 }
 
 Future<void> getByProduct(String brand) async {
@@ -1436,8 +1472,42 @@ Future<void> insertAddress(AddressModel addr) async {
 }
 
 Future<void> getAllColor() async {
-  var res = await colorCol.orderBy('id', descending: false).get();
+  var res = await colorCol.orderBy('id', descending: true).get();
   color.value = res.docs.map((doc) => ColorModel.fromMap(doc.data())).toList();
+}
+
+Future<void> getLastColor() async {
+  var res = await colorCol.orderBy('id', descending: true).limit(1).get();
+  color.value = res.docs.map((doc) => ColorModel.fromMap(doc.data())).toList();
+}
+
+Future<void> getByColorID(int id) async {
+  var res = await colorCol.where('id', isEqualTo: id).get();
+  byColor.value =
+      res.docs.map((doc) => ColorModel.fromMap(doc.data())).toList();
+}
+
+Future<void> insertColor(ColorModel color) async {
+  try {
+    await colorCol.doc('${color.id}').set(color.toMap());
+  } catch (e) {
+    debugPrint('Failed to add Color: $e');
+  }
+}
+
+Future<void> updateByColor(int id, ColorModel b) async {
+  try {
+    var docId = '';
+    var result = await colorCol.where('id', isEqualTo: id).get();
+
+    for (var doc in result.docs) {
+      docId = doc.id;
+    }
+
+    await colorCol.doc(docId).update(b.toMap());
+  } catch (e) {
+    debugPrint('Failed to updateByColor: $e');
+  }
 }
 
 dynamic conToNum(String input) {

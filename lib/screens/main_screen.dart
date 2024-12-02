@@ -8,13 +8,17 @@ import 'package:motor/screens/add_stock_screen.dart';
 import 'package:motor/screens/address_screen.dart';
 import 'package:motor/screens/advertising_screen.dart';
 import 'package:motor/screens/booking_screen.dart';
+import 'package:motor/screens/brand_screen.dart';
 import 'package:motor/screens/cash_screen.dart';
+import 'package:motor/screens/color_screen.dart';
 import 'package:motor/screens/commission_screen.dart';
 import 'package:motor/screens/create_address_screen.dart';
 import 'package:motor/screens/gift_screen.dart';
 import 'package:motor/screens/kol_screen.dart';
 import 'package:motor/screens/leasing_screen.dart';
 import 'package:motor/screens/new_advertising_screen.dart';
+import 'package:motor/screens/new_brand_screen.dart';
+import 'package:motor/screens/new_color_screen.dart';
 import 'package:motor/screens/new_koi_screen.dart';
 import 'package:motor/screens/new_staff_screen.dart';
 import 'package:motor/screens/reset_password_screen.dart';
@@ -165,6 +169,14 @@ class MainScreen extends StatelessWidget {
             return NewRentalScreen();
           case 45:
             return ResetPasswordScreen();
+          case 46:
+            return BrandScreen();
+          case 47:
+            return NewBrandScreen();
+             case 48:
+            return ColorScreen();
+             case 49:
+            return NewColorScreen();
           default:
             return DashboardScreen();
         }
