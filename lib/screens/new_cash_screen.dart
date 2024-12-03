@@ -13,6 +13,7 @@ import 'package:motor/screens/components/row_text_field.dart';
 import 'package:motor/screens/components/title_underline.dart';
 import 'package:motor/screens/components/under_line.dart';
 import 'package:motor/screens/widgets/app_text.dart';
+import 'package:motor/screens/widgets/loading_widget.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 class NewCashScreen extends StatelessWidget {
@@ -293,11 +294,12 @@ class NewCashScreen extends StatelessWidget {
                   color: secondGreyColor,
                   tap: () async {
                     startInactivityTimer();
+                    LoadingWidget.dialogLoading(duration: 1, isBack: true);
                     con.clearText();
                     await getAllCash();
                     conC.filteredCash.value = cash;
                     conC.search.value.addListener(conC.filterCashData);
-
+                    Get.back();
                     conMain.index.value = conMain.index.value - 1;
                   },
                 ),

@@ -69,10 +69,7 @@ class NewGiftScreen extends StatelessWidget {
                   color: secondGreyColor,
                   tap: () async {
                     startInactivityTimer();
-                    LoadingWidget.dialogLoading(
-                      duration: 5,
-                      isBack: false,
-                    );
+                    LoadingWidget.dialogLoading(duration: 5, isBack: true);
                     await getAllGift();
                     conGift.monthList.clear();
                     if (gift.isNotEmpty) {

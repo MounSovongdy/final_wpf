@@ -14,6 +14,7 @@ import 'package:motor/screens/components/row_text_field.dart';
 import 'package:motor/screens/components/under_line.dart';
 import 'package:motor/screens/widgets/app_text.dart';
 import 'package:motor/screens/widgets/data_table_widget.dart';
+import 'package:motor/screens/widgets/loading_widget.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 class StaffScreen extends StatelessWidget {
@@ -119,13 +120,14 @@ class StaffScreen extends StatelessWidget {
                   width: Responsive.isDesktop(context) ? 150.px : 100.px,
                   tap: () async {
                     startInactivityTimer();
+                    LoadingWidget.dialogLoading(duration: 1, isBack: true);
                     conNewStaff.nameList.clear();
                     conNewStaff.clearText();
                     await getAllSaleMan();
                     for (var data in saleMan) {
                       conNewStaff.nameList.add(data.name);
                     }
-
+                    Get.back();
                     conMain.index.value = 44;
                   },
                 ),

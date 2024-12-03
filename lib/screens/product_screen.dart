@@ -71,14 +71,17 @@ class ProductScreen extends StatelessWidget {
                   width: Responsive.isDesktop(context) ? 150.px : 100.px,
                   tap: () async {
                     con.title.value = 'Create Product';
+                    LoadingWidget.dialogLoading(duration: 1, isBack: true);
                     conCP.clearText();
                     conCP.brandList.clear();
                     await getAllBrand();
+                    brand.sort((a, b) => a.id.compareTo(b.id));
                     for (var data in brand) {
                       conCP.brandList.add(data.brand);
                     }
 
                     startInactivityTimer();
+                    Get.back();
                     conMain.index.value = 12;
                   },
                 ),
@@ -91,65 +94,64 @@ class ProductScreen extends StatelessWidget {
   }
 }
 
-Widget productDataTable(BuildContext context){
+Widget productDataTable(BuildContext context) {
   final con = Get.put(ProductController());
   final conCP = Get.put(CreateProductController());
   final conMain = Get.put(MainController());
 
   return AppDataTableSecond(
-      columnHeaders: [
-        DataTableWidget.column(context, 'ID'),
-        DataTableWidget.column(context, 'Brand'),
-        DataTableWidget.column(context, 'Model'),
-        DataTableWidget.column(context, 'Action'),
-      ],
-      rowData: List.generate(
-        con.filteredProduct.length,
-            (index) {
-          var data = con.filteredProduct[index];
-          return [
-            DataTableWidget.cell(Get.context!, '${data.id}'),
-            DataTableWidget.cell(Get.context!, data.brand),
-            DataTableWidget.cell(Get.context!, data.model),
-            DataTableWidget.cellBtn(
-              Get.context!,
-              edit: () async {
-                startInactivityTimer();
-                conCP.clearText();
-                con.title.value = 'Edit Product';
-                conCP.brandList.clear();
-                await getAllBrand();
-                for (var data in brand) {
-                  conCP.brandList.add(data.brand);
-                }
-                await con.editProduct(data.id);
-                conMain.index.value = 12;
-              },
-              delete: () {
-                startInactivityTimer();
-                LoadingWidget.showTextDialog(
-                  Get.context!,
-                  title: 'Warning',
-                  content: 'Are you sure to delete?',
-                  color: redColor,
-                  txtBack: 'Cancel',
-                  btnColor: secondGreyColor,
-                  widget: TextButton(
-                    onPressed: () async {
-                      await deleteProduct(con.filteredProduct[index].id);
-                      con.filteredProduct.clear();
-                      await getAllProduct();
-                      con.filteredProduct.value = product;
-                      Get.back();
-                    },
-                    child: AppText.title(Get.context!, txt: 'Confirm'),
-                  ),
-                );
-              },
-            ),
-          ];
-        },
-      ),
+    columnHeaders: [
+      DataTableWidget.column(context, 'ID'),
+      DataTableWidget.column(context, 'Brand'),
+      DataTableWidget.column(context, 'Model'),
+      DataTableWidget.column(context, 'Action'),
+    ],
+    rowData: List.generate(
+      con.filteredProduct.length,
+      (index) {
+        var data = con.filteredProduct[index];
+        return [
+          DataTableWidget.cell(Get.context!, '${data.id}'),
+          DataTableWidget.cell(Get.context!, data.brand),
+          DataTableWidget.cell(Get.context!, data.model),
+          DataTableWidget.cellBtn(
+            Get.context!,
+            edit: () async {
+              startInactivityTimer();
+              conCP.clearText();
+              con.title.value = 'Edit Product';
+              conCP.brandList.clear();
+              await getAllBrand();
+              for (var data in brand) {
+                conCP.brandList.add(data.brand);
+              }
+              await con.editProduct(data.id);
+              conMain.index.value = 12;
+            },
+            delete: () {
+              startInactivityTimer();
+              LoadingWidget.showTextDialog(
+                Get.context!,
+                title: 'Warning',
+                content: 'Are you sure to delete?',
+                color: redColor,
+                txtBack: 'Cancel',
+                btnColor: secondGreyColor,
+                widget: TextButton(
+                  onPressed: () async {
+                    await deleteProduct(con.filteredProduct[index].id);
+                    con.filteredProduct.clear();
+                    await getAllProduct();
+                    con.filteredProduct.value = product;
+                    Get.back();
+                  },
+                  child: AppText.title(Get.context!, txt: 'Confirm'),
+                ),
+              );
+            },
+          ),
+        ];
+      },
+    ),
   );
 }
-

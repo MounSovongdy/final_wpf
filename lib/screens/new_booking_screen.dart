@@ -13,6 +13,7 @@ import 'package:motor/screens/components/row_text_field.dart';
 import 'package:motor/screens/components/title_underline.dart';
 import 'package:motor/screens/components/under_line.dart';
 import 'package:motor/screens/widgets/app_text.dart';
+import 'package:motor/screens/widgets/loading_widget.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 class NewBookingScreen extends StatelessWidget {
@@ -281,11 +282,12 @@ class NewBookingScreen extends StatelessWidget {
                   color: secondGreyColor,
                   tap: () async {
                     startInactivityTimer();
+                    LoadingWidget.dialogLoading(duration: 1, isBack: true);
                     con.clearText();
                     await getAllBooking();
                     conBook.filteredBooking.value = booking;
                     conBook.search.value.addListener(conBook.filterBookingData);
-
+                    Get.back();
                     conMain.index.value = conMain.index.value - 1;
                   },
                 ),

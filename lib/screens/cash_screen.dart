@@ -11,6 +11,7 @@ import 'package:motor/screens/components/app_data_table.dart';
 import 'package:motor/screens/components/under_line.dart';
 import 'package:motor/screens/widgets/app_text.dart';
 import 'package:motor/screens/widgets/data_table_widget.dart';
+import 'package:motor/screens/widgets/loading_widget.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 class CashScreen extends StatelessWidget {
@@ -71,6 +72,7 @@ class CashScreen extends StatelessWidget {
                 txt: 'New',
                 width: Responsive.isDesktop(context) ? 150.px : 100.px,
                 tap: () async {
+                  LoadingWidget.dialogLoading(duration: 1, isBack: true);
                   conNC.clearText();
                   conNC.dateBooking.value.text = '$dateNow $timeNow';
                   conNC.discount.value.text = '0';
@@ -80,6 +82,7 @@ class CashScreen extends StatelessWidget {
                   await conNC.colorName();
 
                   startInactivityTimer();
+                  Get.back();
                   conMain.index.value = 24;
                 },
               ),

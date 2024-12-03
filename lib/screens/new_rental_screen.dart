@@ -69,10 +69,7 @@ class NewRentalScreen extends StatelessWidget {
                   color: secondGreyColor,
                   tap: () async {
                     startInactivityTimer();
-                    LoadingWidget.dialogLoading(
-                      duration: 5,
-                      isBack: false,
-                    );
+                    LoadingWidget.dialogLoading(duration: 5, isBack: true);
                     await getAllRental();
                     conRen.monthList.clear();
                     if (rental.isNotEmpty) {

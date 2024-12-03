@@ -98,6 +98,7 @@ class BookingScreen extends StatelessWidget {
                 txt: 'New',
                 width: Responsive.isDesktop(context) ? 150.px : 100.px,
                 tap: () async {
+                  LoadingWidget.dialogLoading(duration: 1, isBack: true);
                   conNewBook.clearText();
                   con.title.value = 'New Booking';
                   conNewBook.date.value.text = '$dateNow $timeNow';
@@ -109,6 +110,7 @@ class BookingScreen extends StatelessWidget {
                   await colorName();
 
                   startInactivityTimer();
+                  Get.back();
                   conMain.index.value = 2;
                 },
               ),

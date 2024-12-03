@@ -17,6 +17,7 @@ Future<String> generateHtmlContent({
   required String totalPrice,
   required String gender,
   required String tel,
+  required String brand,
   required String model,
   required String yearProduct,
   required String power,
@@ -24,7 +25,6 @@ Future<String> generateHtmlContent({
   required String frameNo,
   required String machinNo,
 }) async {
-  
   return '''
   <div id="pdfCashInvoice">
   <html lang="en">
@@ -152,7 +152,7 @@ Future<String> generateHtmlContent({
                       <td colspan="3">អាសយដ្ឋាន : <b>$customerAddress</td>
                   </tr>
                   <tr>
-                      <td>ម៉ាកម៉ូតូ : <b>$model</td>
+                      <td>ម៉ាកម៉ូតូ : <b>$brand $model</td>
                       <td>ឆ្នាំផលិត : <b>$yearProduct</td>
                   </tr>
                   <tr>
@@ -230,6 +230,7 @@ void printCashInvoice(int id) async {
     totalPrice: byCash[0].price,
     gender: byCash[0].gender,
     tel: byCash[0].tel,
+    brand: byCash[0].brand,
     model: byCash[0].model,
     yearProduct: byCash[0].year,
     power: byCash[0].power,

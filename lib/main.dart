@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:motor/controllers/main_controller.dart';
 import 'package:motor/firebase_options.dart';
-import 'package:motor/screens/main_screen.dart';
+import 'package:motor/screens/login_screen.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 Future<void> main() async {
@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
           title: 'Motor Shop',
           debugShowCheckedModeBanner: false,
           theme: ThemeData(fontFamily: 'Inter'),
-          home: MainScreen(),
+          home: LoginScreen(),
         );
       },
     );

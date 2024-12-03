@@ -69,10 +69,7 @@ class NewAdvertisingScreen extends StatelessWidget {
                   color: secondGreyColor,
                   tap: () async {
                     startInactivityTimer();
-                    LoadingWidget.dialogLoading(
-                      duration: 5,
-                      isBack: false,
-                    );
+                    LoadingWidget.dialogLoading(duration: 5, isBack: true);
                     await getAllAdvertise();
                     conAdv.monthList.clear();
                     if (advertise.isNotEmpty) {

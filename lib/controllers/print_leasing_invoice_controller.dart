@@ -18,6 +18,7 @@ Future<String> generateHtmlContent({
   required String approveAmount,
   required String gender,
   required String tel,
+  required String brand,
   required String model,
   required String yearProduct,
   required String power,
@@ -152,7 +153,7 @@ Future<String> generateHtmlContent({
                       <td colspan="3">អាសយដ្ឋាន : <b>$customerAddress</td>
                   </tr>
                   <tr>
-                      <td>ម៉ាកម៉ូតូ : <b>$model</td>
+                      <td>ម៉ាកម៉ូតូ : <b>$brand $model</td>
                       <td>ឆ្នាំផលិត : <b>$yearProduct</td>
                   </tr>
                   <tr>
@@ -234,6 +235,7 @@ void printLeasingInvoice(int id) async {
     approveAmount: byLeasing[0].approveAmount,
     gender: byLeasing[0].gender,
     tel: byLeasing[0].tel,
+    brand: byLeasing[0].brand,
     model: byLeasing[0].model,
     yearProduct: byLeasing[0].year,
     power: byLeasing[0].power,

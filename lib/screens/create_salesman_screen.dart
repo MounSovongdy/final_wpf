@@ -14,6 +14,7 @@ import 'package:motor/screens/components/row_text_field.dart';
 import 'package:motor/screens/components/title_underline.dart';
 import 'package:motor/screens/components/under_line.dart';
 import 'package:motor/screens/widgets/app_text.dart';
+import 'package:motor/screens/widgets/loading_widget.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 class CreateSalesmanScreen extends StatelessWidget {
@@ -111,11 +112,12 @@ class CreateSalesmanScreen extends StatelessWidget {
                   color: secondGreyColor,
                   tap: () async {
                     startInactivityTimer();
+                    LoadingWidget.dialogLoading(duration: 1, isBack: true);
                     con.clearText();
                     await getAllSaleMan();
                     conSM.filteredSale.value = saleMan;
                     conSM.search.value.addListener(conSM.filterSaleData);
-
+                    Get.back();
                     conMain.index.value = conMain.index.value - 1;
                   },
                 ),

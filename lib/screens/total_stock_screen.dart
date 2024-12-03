@@ -11,6 +11,7 @@ import 'package:motor/screens/components/app_data_table.dart';
 import 'package:motor/screens/components/under_line.dart';
 import 'package:motor/screens/widgets/app_text.dart';
 import 'package:motor/screens/widgets/data_table_widget.dart';
+import 'package:motor/screens/widgets/loading_widget.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 class TotalStockScreen extends StatelessWidget {
@@ -80,14 +81,17 @@ class TotalStockScreen extends StatelessWidget {
                       width: Responsive.isDesktop(context) ? 150.px : 100.px,
                       tap: () async {
                         startInactivityTimer();
+                        LoadingWidget.dialogLoading(duration: 1, isBack: true);
                         con.title.value = 'Add Stock';
                         con2.isRead.value = false;
                         con2.clearText();
                         con2.listModel.clear();
                         await getAllProduct();
+                        product.sort((a, b) => a.id.compareTo(b.id));
                         for (var pro in product) {
                           con2.listModel.add(pro.model);
                         }
+                        Get.back();
                         con1.index.value = 10;
                       },
                     )

@@ -23,6 +23,7 @@ import 'package:motor/models/rental_model.dart';
 import 'package:motor/models/reset_password_model.dart';
 import 'package:motor/models/sale_man_commission_model.dart';
 import 'package:motor/models/sale_man_model.dart';
+import 'package:motor/models/stock_detail_model.dart';
 import 'package:motor/models/total_expense_model.dart';
 import 'package:motor/models/total_stock_model.dart';
 import 'package:motor/models/user_model.dart';
@@ -37,8 +38,10 @@ final addressCol = _firebase.collection('address');
 final colorCol = _firebase.collection('color');
 final brandCol = _firebase.collection('brand');
 final productCol = _firebase.collection('product');
+final resetPasswordCol = _firebase.collection('reset_password');
 final addStockCol = _firebase.collection('add_stock');
 final totalStockCol = _firebase.collection('total_stock');
+final stockDetailCol = _firebase.collection('stock_detail');
 final bookingCol = _firebase.collection('booking');
 final bookingMicroCol = _firebase.collection('booking_micro');
 final leasingCol = _firebase.collection('leasing');
@@ -52,10 +55,9 @@ final advertisingCol = _firebase.collection('advertising');
 final rentalCol = _firebase.collection('rental');
 final giftCol = _firebase.collection('gift');
 final koiCol = _firebase.collection('koi');
-final resetPasswordCol = _firebase.collection('reset_password');
 final totalExpenseCol = _firebase.collection('total_expense');
 
-var currVersion = '1.4.0'.obs;
+var currVersion = '1.5.0'.obs;
 var userLogin = ''.obs;
 var userName = ''.obs;
 var userRole = ''.obs;
@@ -77,6 +79,8 @@ var addStock = [].obs;
 var stockByModel = [].obs;
 var byTotalStock = [].obs;
 var totalStock = [].obs;
+var stockDetail = [].obs;
+var byStockDetail = [].obs;
 var byBooking = [].obs;
 var booking = [].obs;
 var byBookingMicro = [].obs;
@@ -404,6 +408,32 @@ Future<void> deleteProduct(int id) async {
     await productCol.doc(docId).delete();
   } catch (e) {
     debugPrint('Failed to deleteProduct: $e');
+  }
+}
+
+Future<void> getLasttockDetail() async {
+  var res = await stockDetailCol.orderBy('id', descending: true).limit(1).get();
+  stockDetail.value =
+      res.docs.map((doc) => StockDetailModel.fromMap(doc.data())).toList();
+}
+
+Future<void> insertStockDetail(StockDetailModel detail) async {
+  try {
+    await stockDetailCol.doc('${detail.id}').set(detail.toMap());
+  } catch (e) {
+    debugPrint('Failed to add stock detail: $e');
+  }
+}
+
+Future<void> updateStockDetail(int id, String left) async {
+  try {
+    var docId = '';
+    var result = await stockDetailCol.where('id', isEqualTo: id).get();
+    for (var doc in result.docs) docId = doc.id;
+
+    await stockDetailCol.doc(docId).update({'left_qty': left});
+  } catch (e) {
+    debugPrint('Failed to updateStockDetail: $e');
   }
 }
 
@@ -783,23 +813,40 @@ Future<void> insertLeasing(
 }) async {
   try {
     var docId = '';
-    var list = [];
-    var costPrice = '0';
     var res = await totalStockCol
         .where('model', isEqualTo: model)
         .where('brand', isEqualTo: brand)
         .where('year', isEqualTo: year)
         .where('condition', isEqualTo: condition)
         .get();
-    list = res.docs.map((doc) => TotalStockModel.fromMap(doc.data())).toList();
 
-    for (var doc in res.docs) {
-      docId = doc.id;
-      costPrice = list[0].newPrice;
-    }
+    for (var doc in res.docs) docId = doc.id;
 
     stockByModel.value =
         res.docs.map((doc) => TotalStockModel.fromMap(doc.data())).toList();
+
+    var list = [];
+    var costPrice = '0';
+    var costId = 0;
+    var newLeft = '';
+    var res1 = await stockDetailCol
+        .where('model', isEqualTo: model)
+        .where('brand', isEqualTo: brand)
+        .where('year', isEqualTo: year)
+        .where('condition', isEqualTo: condition)
+        .get();
+    list =
+        res1.docs.map((doc) => StockDetailModel.fromMap(doc.data())).toList();
+    list.sort((a, b) => a.id.compareTo(b.id));
+
+    if (list.isNotEmpty) {
+      var newList = [];
+      for (var data in list) if (data.leftQty != '0') newList.add(data);
+
+      costPrice = newList[0].price;
+      costId = newList[0].id;
+      newLeft = '${int.parse(newList[0].leftQty) - 1}';
+    }
 
     if (stockByModel.isNotEmpty) {
       var oldQty = int.parse(stockByModel[0].totalQty);
@@ -815,6 +862,7 @@ Future<void> insertLeasing(
           sell: sellPrice,
           cost: costPrice,
         );
+        await updateStockDetail(costId, newLeft);
         await updateStatusbooking(bookingId);
         await insertSaleManCommission(
           year: currYear,
@@ -1246,23 +1294,40 @@ Future<void> insertCash(
 }) async {
   try {
     var docId = '';
-    var costPrice = '0';
-    var list = [];
     var res = await totalStockCol
         .where('model', isEqualTo: model)
         .where('brand', isEqualTo: brand)
         .where('year', isEqualTo: year)
         .where('condition', isEqualTo: condition)
         .get();
-    list = res.docs.map((doc) => TotalStockModel.fromMap(doc.data())).toList();
 
-    for (var doc in res.docs) {
-      docId = doc.id;
-      costPrice = list[0].newPrice;
-    }
+    for (var doc in res.docs) docId = doc.id;
 
     stockByModel.value =
         res.docs.map((doc) => TotalStockModel.fromMap(doc.data())).toList();
+
+    var list = [];
+    var costPrice = '0';
+    var costId = 0;
+    var newLeft = '';
+    var res1 = await stockDetailCol
+        .where('model', isEqualTo: model)
+        .where('brand', isEqualTo: brand)
+        .where('year', isEqualTo: year)
+        .where('condition', isEqualTo: condition)
+        .get();
+    list =
+        res1.docs.map((doc) => StockDetailModel.fromMap(doc.data())).toList();
+    list.sort((a, b) => a.id.compareTo(b.id));
+
+    if (list.isNotEmpty) {
+      var newList = [];
+      for (var data in list) if (data.leftQty != '0') newList.add(data);
+
+      costPrice = newList[0].price;
+      costId = newList[0].id;
+      newLeft = '${int.parse(newList[0].leftQty) - 1}';
+    }
 
     if (stockByModel.isNotEmpty) {
       var oldQty = int.parse(stockByModel[0].totalQty);
@@ -1278,6 +1343,7 @@ Future<void> insertCash(
           sell: sellPrice,
           cost: costPrice,
         );
+        await updateStockDetail(costId, newLeft);
         Navigator.of(Get.context!).pop();
         LoadingWidget.showTextDialog(
           Get.context!,

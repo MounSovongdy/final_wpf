@@ -11,6 +11,7 @@ import 'package:motor/screens/components/app_data_table.dart';
 import 'package:motor/screens/components/under_line.dart';
 import 'package:motor/screens/widgets/app_text.dart';
 import 'package:motor/screens/widgets/data_table_widget.dart';
+import 'package:motor/screens/widgets/loading_widget.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 class LeasingScreen extends StatelessWidget {
@@ -68,11 +69,12 @@ class LeasingScreen extends StatelessWidget {
                 width: Responsive.isDesktop(context) ? 150.px : 100.px,
                 tap: () async {
                   startInactivityTimer();
+                  LoadingWidget.dialogLoading(duration: 1, isBack: true);
                   conNL.clearText();
                   await con.getBookingIDandIDCard();
                   await con.brandName();
                   await con.colorName();
-
+                  Get.back();
                   conMain.index.value = 22;
                 },
               ),

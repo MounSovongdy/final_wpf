@@ -60,6 +60,12 @@ class ResetPasswordScreen extends StatelessWidget {
             ),
             spacer(context),
             spacer(context),
+            AppText.title(
+              context,
+              txt: 'Note: After reset the password '
+                  'then the new password is 123456.',
+              color: redColor,
+            ),
             spacer(context),
             const UnderLine(color: secondGreyColor),
             spacer(context),

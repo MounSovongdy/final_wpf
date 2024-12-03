@@ -12,6 +12,7 @@ import 'package:motor/screens/components/row_text_field.dart';
 import 'package:motor/screens/components/title_underline.dart';
 import 'package:motor/screens/components/under_line.dart';
 import 'package:motor/screens/widgets/app_text.dart';
+import 'package:motor/screens/widgets/loading_widget.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 class CreateMicroScreen extends StatelessWidget {
@@ -106,11 +107,12 @@ class CreateMicroScreen extends StatelessWidget {
                   color: secondGreyColor,
                   tap: () async {
                     startInactivityTimer();
+                    LoadingWidget.dialogLoading(duration: 1, isBack: true);
                     con.clearText();
                     await getAllMicro();
                     conMi.filteredMicro.value = micro;
                     conMi.search.value.addListener(conMi.filterMicroData);
-
+                    Get.back();
                     conMain.index.value = conMain.index.value - 1;
                   },
                 ),
