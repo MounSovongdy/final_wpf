@@ -55,7 +55,6 @@ class _AppDataTableState extends State<AppDataTable> {
   @override
   void initState() {
     _con.resetPage();
-    
     super.initState();
   }
 
@@ -77,7 +76,7 @@ class _AppDataTableState extends State<AppDataTable> {
                 scrollDirection: Axis.horizontal,
                 controller: scroll,
                 child: Container(
-                  width: widget.columnHeaders.length * 180.0,
+                  width: widget.columnHeaders.length * 140.0,
                   decoration: BoxDecoration(
                     border: Border.all(
                       width: widget.borderWidth,
@@ -92,18 +91,8 @@ class _AppDataTableState extends State<AppDataTable> {
                           (start + widget.rowsPerPage).clamp(0, totalRows);
                       final displayedRows = widget.rowData.sublist(start, end);
 
-                      // int emptyRowsNeeded =
-                      //     widget.rowsPerPage - displayedRows.length;
-                      // for (int i = 0; i < emptyRowsNeeded; i++) {
-                      //   displayedRows.add(
-                      //     List<DataCell>.generate(
-                      //       widget.columnHeaders.length,
-                      //           (_) => const DataCell(Text("")),
-                      //     ),
-                      //   );
-                      // }
-
                       return DataTable(
+                        columnSpacing: widget.columnSpacing.px,
                         dataRowMinHeight: widget.columnSpacing.px,
                         dataRowMaxHeight: widget.dataRowHeight.px,
                         headingRowHeight: widget.headingRowHeight.px,
@@ -131,7 +120,7 @@ class _AppDataTableState extends State<AppDataTable> {
                 ),
               ),
             ),
-            SizedBox(height: 2.h), // Spacer
+            spacer(context),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [

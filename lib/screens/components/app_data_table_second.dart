@@ -86,17 +86,6 @@ class _AppDataTableState extends State<AppDataTableSecond> {
                   final end = (start + widget.rowsPerPage).clamp(0, totalRows);
                   final displayedRows = widget.rowData.sublist(start, end);
 
-                  // int emptyRowsNeeded =
-                  //     widget.rowsPerPage - displayedRows.length;
-                  // for (int i = 0; i < emptyRowsNeeded; i++) {
-                  //   displayedRows.add(
-                  //     List<DataCell>.generate(
-                  //       widget.columnHeaders.length,
-                  //       (_) => const DataCell(Text("")),
-                  //     ),
-                  //   );
-                  // }
-
                   return DataTable(
                     dataRowMinHeight: widget.columnSpacing.px,
                     dataRowMaxHeight: widget.dataRowHeight.px,
