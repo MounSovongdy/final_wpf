@@ -149,7 +149,7 @@ class DrawerMenu extends StatelessWidget {
                           con.index.value = 23;
                         },
                         title: 'Cash Sale',
-                        svgSrc: 'assets/icons/TotalExpenses.svg',
+                        svgSrc: 'assets/icons/SaleRecord.svg',
                       ),
                     ),
                   ],
@@ -285,25 +285,6 @@ class DrawerMenu extends StatelessWidget {
                           LoadingWidget.dialogLoading(
                               duration: 1, isBack: true);
                           startInactivityTimer();
-                          await getAllBrand();
-                          conBrand.filteredBrand.value = brand;
-                          conBrand.search.value
-                              .addListener(conBrand.filterBrandData);
-                          Get.back();
-                          con.index.value = 46;
-                        },
-                        title: 'Brand',
-                        svgSrc: 'assets/icons/Address.svg',
-                      ),
-                    ),
-                    Container(
-                      padding: EdgeInsets.only(left: 36.px),
-                      child: DrawerListTile(
-                        tap: () async {
-                          if (Responsive.isMobile(context)) con.controlDrawer();
-                          LoadingWidget.dialogLoading(
-                              duration: 1, isBack: true);
-                          startInactivityTimer();
                           await getAllProduct();
                           conPro.filteredProduct.value = product;
                           conPro.search.value
@@ -323,6 +304,25 @@ class DrawerMenu extends StatelessWidget {
                           LoadingWidget.dialogLoading(
                               duration: 1, isBack: true);
                           startInactivityTimer();
+                          await getAllBrand();
+                          conBrand.filteredBrand.value = brand;
+                          conBrand.search.value
+                              .addListener(conBrand.filterBrandData);
+                          Get.back();
+                          con.index.value = 46;
+                        },
+                        title: 'Brand',
+                        svgSrc: 'assets/icons/Brand.svg',
+                      ),
+                    ),
+                    Container(
+                      padding: EdgeInsets.only(left: 36.px),
+                      child: DrawerListTile(
+                        tap: () async {
+                          if (Responsive.isMobile(context)) con.controlDrawer();
+                          LoadingWidget.dialogLoading(
+                              duration: 1, isBack: true);
+                          startInactivityTimer();
                           await getAllColor();
                           conColor.filteredColor.value = color;
                           conColor.search.value
@@ -331,7 +331,7 @@ class DrawerMenu extends StatelessWidget {
                           con.index.value = 48;
                         },
                         title: 'Color',
-                        svgSrc: 'assets/icons/Address.svg',
+                        svgSrc: 'assets/icons/Color.svg',
                       ),
                     ),
                   ],
@@ -766,7 +766,7 @@ class DrawerMenu extends StatelessWidget {
                                 con.index.value = 39;
                               },
                               title: 'Commission',
-                              svgSrc: 'assets/icons/TotalExpenses.svg',
+                              svgSrc: 'assets/icons/Commission.svg',
                             ),
                           ),
                           Container(
