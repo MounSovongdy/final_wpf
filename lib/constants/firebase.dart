@@ -57,7 +57,7 @@ final giftCol = _firebase.collection('gift');
 final koiCol = _firebase.collection('koi');
 final totalExpenseCol = _firebase.collection('total_expense');
 
-var currVersion = '1.5.0'.obs;
+var currVersion = '2.0.0'.obs;
 var userLogin = ''.obs;
 var userName = ''.obs;
 var userRole = ''.obs;
