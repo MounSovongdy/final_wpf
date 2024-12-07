@@ -79,7 +79,7 @@ class _AppDataTableState extends State<AppDataTableReceivable> {
                 scrollDirection: Axis.horizontal,
                 controller: scroll,
                 child: Container(
-                  width: widget.columnHeaders.length * 140.0,
+                  width: widget.columnHeaders.length * 160.0,
                   decoration: BoxDecoration(
                     border: Border.all(
                       width: widget.borderWidth,
