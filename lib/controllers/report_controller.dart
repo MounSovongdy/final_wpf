@@ -1,6 +1,5 @@
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
-// ignore: avoid_web_libraries_in_flutter
 import 'dart:html' as html;
 import 'dart:io';
 import 'package:path_provider/path_provider.dart';
@@ -8,6 +7,7 @@ import 'package:open_file/open_file.dart';
 import 'package:syncfusion_flutter_xlsio/xlsio.dart' as excel;
 
 class ReportController extends GetxController{
+
   Future<void> downloadExcel({
     required String fileName,
     required List<String> headers,
@@ -16,22 +16,16 @@ class ReportController extends GetxController{
     final excel.Workbook workbook = excel.Workbook();
     final excel.Worksheet sheet = workbook.worksheets[0];
 
-    final excel.Style headerStyle = workbook.styles.add('HeaderStyle');
-    headerStyle.fontName = 'Khmer OS';
-    headerStyle.bold = true;
-    headerStyle.hAlign = excel.HAlignType.center;
-    headerStyle.borders.all.lineStyle = excel.LineStyle.thin;
+    final excel.Style dataStyle = workbook.styles.add('DataStyle');
+    dataStyle.fontName = 'Times New Roman';
+    dataStyle.hAlign = excel.HAlignType.center;
+    dataStyle.borders.all.lineStyle = excel.LineStyle.thin; 
 
     for (int i = 0; i < headers.length; i++) {
       final excel.Range cell = sheet.getRangeByIndex(2, i + 1);
       cell.setValue(headers[i]);
-      cell.cellStyle = headerStyle;
+      cell.cellStyle = dataStyle;
     }
-
-    final excel.Style dataStyle = workbook.styles.add('DataStyle');
-    dataStyle.fontName = 'Khmer OS';
-    dataStyle.hAlign = excel.HAlignType.center;
-    dataStyle.borders.all.lineStyle = excel.LineStyle.thin;
     
     for (int i = 0; i < data.length; i++) {
       final row = data[i];

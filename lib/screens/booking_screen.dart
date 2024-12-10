@@ -80,14 +80,24 @@ class BookingScreen extends StatelessWidget {
                   await conReport.downloadExcel(
                     fileName: 'Booking Report',
                     headers: [
-                      'ល.រ',
-                      'ថ្ងៃ-ខែ-ឆ្នាំ',
-                      'ឈ្មោះចំណាយ',
-                      'ប្រភេទទំនិញ',
-                      'ចំនួន',
-                      'ខ្នាត',
-                      'ចំនួនទឹកប្រាក់',
-                      'រូបិយប័ណ្ណ'
+                      'ID',
+                      'Salesman',
+                      'Date',
+                      'ID Card',
+                      'Name',
+                      'Tel',
+                      'Brand',
+                      'Model',
+                      'Color',
+                      'Year',
+                      'Power',
+                      'Condition',
+                      'Price'
+                      'Remain',
+                      'Micro',
+                      'Status Booking',
+                      'Status Booking',
+                      'Working hours'
                     ],
                     data: [],
                   );
