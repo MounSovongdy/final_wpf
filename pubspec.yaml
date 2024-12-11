@@ -32,7 +32,6 @@ dependencies:
   fl_chart: any
   dropdown_search: any
   google_fonts: any
-  typed_data: any
   syncfusion_flutter_pdf: any
   excel: any
   path_provider: any

@@ -1,92 +1,83 @@
-import 'package:flutter/foundation.dart';
-import 'package:get/get.dart';
-// ignore: avoid_web_libraries_in_flutter
 import 'dart:html' as html;
 import 'dart:io';
+import 'package:flutter/foundation.dart';
+import 'package:get/get.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:open_file/open_file.dart';
 import 'package:syncfusion_flutter_xlsio/xlsio.dart' as excel;
 
 class ReportController extends GetxController {
-  Future<void> downloadExcel({
-    required String fileName,
-    required List<String> headers,
-    required List<List<dynamic>> data,
-  }) async {
-    try {
-      // Create workbook and worksheet
-      final excel.Workbook workbook = excel.Workbook();
-      final excel.Worksheet sheet = workbook.worksheets[0];
+  Future<void> downloadExcel() async {
+    final excel.Workbook workbook = excel.Workbook();
+    final excel.Worksheet sheet = workbook.worksheets[0];
 
-      // Define styles
-      final excel.Style headerStyle = workbook.styles.add('HeaderStyle');
-      headerStyle.bold = true;
-      headerStyle.fontName = 'Times New Roman';
-      headerStyle.hAlign = excel.HAlignType.center;
-      headerStyle.borders.all.lineStyle = excel.LineStyle.thin;
+    // Define styles
+    final excel.Style headerStyle = workbook.styles.add('HeaderStyle');
+    headerStyle.bold = true;
+    headerStyle.fontName = 'Times New Roman';
+    headerStyle.hAlign = excel.HAlignType.center;
+    headerStyle.borders.all.lineStyle = excel.LineStyle.thin;
 
-      final excel.Style dataStyle = workbook.styles.add('DataStyle');
-      dataStyle.fontName = 'Times New Roman';
-      dataStyle.hAlign = excel.HAlignType.center;
-      dataStyle.borders.all.lineStyle = excel.LineStyle.thin;
+    final excel.Style dataStyle = workbook.styles.add('DataStyle');
+    dataStyle.fontName = 'Times New Roman';
+    dataStyle.hAlign = excel.HAlignType.center;
+    dataStyle.borders.all.lineStyle = excel.LineStyle.thin;
 
-      // Write headers
-      for (int i = 0; i < headers.length; i++) {
-        final excel.Range cell = sheet.getRangeByIndex(1, i + 1);
-        cell.setText(headers[i]);
-        cell.cellStyle = headerStyle;
-      }
+    // Write headers (example)
+    sheet.getRangeByIndex(1, 1).setText('Header 1');
+    sheet.getRangeByIndex(1, 2).setText('Header 2');
+    sheet.getRangeByIndex(1, 3).setText('Header 3');
+    sheet.getRangeByIndex(1, 4).setText('Header 4');
+    sheet.getRangeByIndex(1, 5).setText('Header 5');
+    sheet.getRangeByIndex(1, 6).setText('Header 6');
 
-      // Write data rows
-      for (int i = 0; i < data.length; i++) {
-        final row = data[i];
-        for (int j = 0; j < row.length; j++) {
-          final excel.Range cell = sheet.getRangeByIndex(i + 2, j + 1);
-          cell.setText(row[j].toString());
-          cell.cellStyle = dataStyle;
-        }
-      }
+    // Write data rows (example)
+    sheet.getRangeByIndex(2, 1).setText('Data 1');
+    sheet.getRangeByIndex(2, 2).setText('Data 2');
+    sheet.getRangeByIndex(2, 3).setText('Data 3');
+    sheet.getRangeByIndex(2, 4).setText('Data 4');
+    sheet.getRangeByIndex(2, 5).setText('Data 5');
+    sheet.getRangeByIndex(2, 6).setText('Data 6');
 
-      // Save workbook as bytes
-      final List<int> bytes = workbook.saveAsStream();
-      workbook.dispose();
+    debugPrint('Excel generation complete');
 
-      if (kIsWeb) {
-        // Handle web file download
-        _downloadFileWeb(bytes, fileName);
-      } else {
-        // Handle mobile/desktop file save
-        await _saveFileLocal(bytes, fileName);
-      }
-    } catch (e, stack) {
-      debugPrint("Error in downloadExcel: $e");
-      debugPrint("Stacktrace: $stack");
+    // Save workbook as bytes
+    final List<int> bytes = workbook.saveAsStream();
+    workbook.dispose();
+
+    if (kIsWeb) {
+      _downloadFileWeb(bytes);
+    } else {
+      await _saveFileLocal(bytes);
     }
   }
 
-  void _downloadFileWeb(List<int> bytes, String fileName) {
+  // Web-specific download function
+  void _downloadFileWeb(List<int> bytes) {
     try {
-      final blob = html.Blob([
-        Uint8List.fromList(bytes)
-      ], 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+      final blob = html.Blob([bytes], 
+          'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
       final url = html.Url.createObjectUrlFromBlob(blob);
 
       final anchor = html.AnchorElement(href: url)
-        ..setAttribute("download", fileName)
+        ..setAttribute("download", 'booking.xlsx') // Corrected file extension
         ..style.display = "none";
       html.document.body?.append(anchor);
       anchor.click();
       anchor.remove();
+
       html.Url.revokeObjectUrl(url);
     } catch (e) {
       debugPrint("Error while handling web download: $e");
     }
   }
 
-  Future<void> _saveFileLocal(List<int> bytes, String fileName) async {
+  // Local file save function for mobile/desktop
+  Future<void> _saveFileLocal(List<int> bytes) async {
     try {
       final directory = await getApplicationDocumentsDirectory();
-      final String filePath = '${directory.path}/$fileName';
+      final String filePath = '${directory.path}/booking.xlsx'; // Corrected file extension
+
       final File file = File(filePath);
       await file.writeAsBytes(bytes, flush: true);
 
@@ -96,4 +87,3 @@ class ReportController extends GetxController {
     }
   }
 }
-
