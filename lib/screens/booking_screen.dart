@@ -26,6 +26,18 @@ class BookingScreen extends StatelessWidget {
 
   final scroll = ScrollController();
 
+  final fileName = 'Report.xlsx';
+
+  // Define headers for the Excel sheet
+  final headers = ['Name', 'Age', 'Country'];
+
+  // Define data for the Excel sheet
+  final data = [
+    ['John Doe', 30, 'USA'],
+    ['Emma Smith', 25, 'UK'],
+    ['Liam Brown', 35, 'Canada'],
+  ];
+
   @override
   Widget build(BuildContext context) {
     var dateNow = dateFormat.format(DateTime.now());
@@ -78,28 +90,30 @@ class BookingScreen extends StatelessWidget {
                 width: Responsive.isDesktop(context) ? 150.px : 100.px,
                 tap: () async {
                   await conReport.downloadExcel(
-                    fileName: 'Booking Report',
-                    headers: [
-                      'ID',
-                      'Salesman',
-                      'Date',
-                      'ID Card',
-                      'Name',
-                      'Tel',
-                      'Brand',
-                      'Model',
-                      'Color',
-                      'Year',
-                      'Power',
-                      'Condition',
-                      'Price'
-                      'Remain',
-                      'Micro',
-                      'Status Booking',
-                      'Status Booking',
-                      'Working hours'
-                    ],
-                    data: [],
+                    fileName: fileName,
+                    headers: List.from(
+                      [
+                        'ID',
+                        'Salesman',
+                        'Date',
+                        'ID Card',
+                        'Name',
+                        'Tel',
+                        'Brand',
+                        'Model',
+                        'Color',
+                        'Year',
+                        'Power',
+                        'Condition',
+                        'Price',
+                        'Remain',
+                        'Micro',
+                        'Status Booking',
+                        'Status',
+                        'Working hours'
+                      ],
+                    ),
+                    data: List.from([]),
                   );
                 },
               ),
