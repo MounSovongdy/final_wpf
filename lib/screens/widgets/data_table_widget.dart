@@ -63,28 +63,6 @@ class DataTableWidget {
                   ),
                 )
               : Container(),
-          btnDelete
-              ? Row(
-                  children: [
-                    spacer(context),
-                    InkWell(
-                      onTap: delete,
-                      child: Container(
-                        padding: EdgeInsets.symmetric(
-                          horizontal: defWebPad.px / 2,
-                          vertical: defWebPad.px / 6,
-                        ),
-                        color: redColor,
-                        child: AppText.subTitle(
-                          context,
-                          txt: 'Delete',
-                          color: whiteColor,
-                        ),
-                      ),
-                    )
-                  ],
-                )
-              : Container(),
           btnUpdate
               ? Row(
                   children: [
@@ -102,6 +80,28 @@ class DataTableWidget {
                         child: AppText.subTitle(
                           context,
                           txt: 'Update',
+                          color: whiteColor,
+                        ),
+                      ),
+                    )
+                  ],
+                )
+              : Container(),
+          btnDelete
+              ? Row(
+                  children: [
+                    spacer(context),
+                    InkWell(
+                      onTap: delete,
+                      child: Container(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: defWebPad.px / 2,
+                          vertical: defWebPad.px / 6,
+                        ),
+                        color: redColor,
+                        child: AppText.subTitle(
+                          context,
+                          txt: 'Delete',
                           color: whiteColor,
                         ),
                       ),

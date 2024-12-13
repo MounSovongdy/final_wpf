@@ -11,7 +11,6 @@ class ReportController extends GetxController {
     final excel.Workbook workbook = excel.Workbook();
     final excel.Worksheet sheet = workbook.worksheets[0];
 
-    // Define styles
     final excel.Style headerStyle = workbook.styles.add('HeaderStyle');
     headerStyle.bold = true;
     headerStyle.fontName = 'Times New Roman';
@@ -23,7 +22,6 @@ class ReportController extends GetxController {
     dataStyle.hAlign = excel.HAlignType.center;
     dataStyle.borders.all.lineStyle = excel.LineStyle.thin;
 
-    // Write headers (example)
     sheet.getRangeByIndex(1, 1).setText('Header 1');
     sheet.getRangeByIndex(1, 2).setText('Header 2');
     sheet.getRangeByIndex(1, 3).setText('Header 3');
@@ -31,7 +29,6 @@ class ReportController extends GetxController {
     sheet.getRangeByIndex(1, 5).setText('Header 5');
     sheet.getRangeByIndex(1, 6).setText('Header 6');
 
-    // Write data rows (example)
     sheet.getRangeByIndex(2, 1).setText('Data 1');
     sheet.getRangeByIndex(2, 2).setText('Data 2');
     sheet.getRangeByIndex(2, 3).setText('Data 3');
@@ -41,19 +38,17 @@ class ReportController extends GetxController {
 
     debugPrint('Excel generation complete');
 
-    // Save workbook as bytes
     final List<int> bytes = workbook.saveAsStream();
     workbook.dispose();
 
     if (kIsWeb) {
-      _downloadFileWeb(bytes);
+      await _downloadFileWeb(bytes);
     } else {
       await _saveFileLocal(bytes);
     }
   }
 
-  // Web-specific download function
-  void _downloadFileWeb(List<int> bytes) {
+  Future<void> _downloadFileWeb(List<int> bytes) async {
     try {
       final blob = html.Blob([bytes], 
           'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
@@ -72,11 +67,10 @@ class ReportController extends GetxController {
     }
   }
 
-  // Local file save function for mobile/desktop
   Future<void> _saveFileLocal(List<int> bytes) async {
     try {
       final directory = await getApplicationDocumentsDirectory();
-      final String filePath = '${directory.path}/booking.xlsx'; // Corrected file extension
+      final String filePath = '${directory.path}/booking.xlsx';
 
       final File file = File(filePath);
       await file.writeAsBytes(bytes, flush: true);

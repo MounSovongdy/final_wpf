@@ -65,6 +65,37 @@ class BookingController extends GetxController {
     con.remark.value.text = byBooking[0].remark;
   }
 
+  Future<void> removeBooking(int id) async {
+    LoadingWidget.dialogLoading(duration: 1, isBack: true);
+    var res1 = await bookingCol.where('id', isEqualTo: id).get();
+    var res2 = await bookingMicroCol.where('booking_id', isEqualTo: id).get();
+    if (res1.docs.isNotEmpty && res2.docs.isNotEmpty) {
+      for (var data in res1.docs) {
+        await bookingDeleteCol.doc(data.id).set(data.data());
+        await bookingCol.doc(data.id).delete();
+      }
+      for (var data in res2.docs) {
+        await bookingMicroDeleteCol.doc(data.id).set(data.data());
+        await bookingMicroCol.doc(data.id).delete();
+      }
+      Get.back();
+      LoadingWidget.showTextDialog(
+        Get.context!,
+        title: 'Successfully',
+        content: 'Booking is already deleted.',
+        color: greenColor,
+      );
+    } else {
+      Get.back();
+      LoadingWidget.showTextDialog(
+        Get.context!,
+        title: 'Error',
+        content: 'The record Id not correctly. please check again.',
+        color: redColor,
+      );
+    }
+  }
+
   var statusList = ['Approve', 'Reject'].obs;
 
   var status = Rxn<String>();
