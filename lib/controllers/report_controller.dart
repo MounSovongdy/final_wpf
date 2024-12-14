@@ -36,11 +36,7 @@ class ReportController extends GetxController {
     sheet.getRangeByIndex(2, 5).setText('Data 5');
     sheet.getRangeByIndex(2, 6).setText('Data 6');
 
-    debugPrint('Excel generation complete');
-
     final List<int> bytes = workbook.saveAsStream();
-    workbook.dispose();
-
     if (kIsWeb) {
       await _downloadFileWeb(bytes);
     } else {
@@ -50,7 +46,7 @@ class ReportController extends GetxController {
 
   Future<void> _downloadFileWeb(List<int> bytes) async {
     try {
-      final blob = html.Blob([bytes], 
+      final blob = html.Blob([bytes],
           'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
       final url = html.Url.createObjectUrlFromBlob(blob);
 

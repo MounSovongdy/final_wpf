@@ -40,8 +40,8 @@ final brandCol = _firebase.collection('brand');
 final productCol = _firebase.collection('product');
 final resetPasswordCol = _firebase.collection('reset_password');
 final addStockCol = _firebase.collection('add_stock');
-final totalStockCol = _firebase.collection('total_stock');
-final stockDetailCol = _firebase.collection('stock_detail');
+final totalStockCol = _firebase.collection('total_stock_1');
+final stockDetailCol = _firebase.collection('stock_detail_1');
 final bookingCol = _firebase.collection('booking');
 final bookingDeleteCol = _firebase.collection('booking_delete');
 final bookingMicroCol = _firebase.collection('booking_micro');
@@ -479,6 +479,23 @@ Future<void> getByTotalStockID(int id) async {
   var res = await totalStockCol.where('id', isEqualTo: id).get();
   byTotalStock.value =
       res.docs.map((doc) => TotalStockModel.fromMap(doc.data())).toList();
+}
+
+Future<void> getLastStockDetailByModel({
+  required String brand,
+  required String model,
+  required String year,
+  required String condition,
+}) async {
+  var res = await stockDetailCol
+      .where('brand', isEqualTo: brand)
+      .where('model', isEqualTo: model)
+      .where('year', isEqualTo: year)
+      .where('condition', isEqualTo: condition)
+      .get();
+  byStockDetail.value =
+      res.docs.map((doc) => StockDetailModel.fromMap(doc.data())).toList();
+  byStockDetail.sort((a, b) => b.id.compareTo(a.id));
 }
 
 Future<void> getAllStock() async {
