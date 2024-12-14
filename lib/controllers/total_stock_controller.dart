@@ -46,13 +46,20 @@ class TotalStockController extends GetxController {
 
   Future<void> editTotalStock(int id) async {
     await getByTotalStockID(id);
+    await getLastAddStockByModel(
+      brand: byTotalStock[0].brand,
+      model: byTotalStock[0].model,
+      year: byTotalStock[0].year,
+      condition: byTotalStock[0].condition,
+    );
     await getLastStockDetailByModel(
       brand: byTotalStock[0].brand,
       model: byTotalStock[0].model,
       year: byTotalStock[0].year,
       condition: byTotalStock[0].condition,
     );
-    con.isRead.value = true;
+    stockByModel.clear();
+    con.isRead.value = false;
     con.model.value = byTotalStock[0].model;
     con.brand.value.text = byTotalStock[0].brand;
     con.proYear.value.text = byTotalStock[0].year;

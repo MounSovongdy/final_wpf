@@ -57,7 +57,7 @@ class AddStockScreen extends StatelessWidget {
                     for (var data in product) {
                       if (con.model == data.model) {
                         con.brand.value.text = data.brand;
-                        con.getDataByModel();
+                        await con.getDataByModel();
                       }
                     }
                   }
@@ -201,7 +201,7 @@ class AddStockScreen extends StatelessWidget {
                     if (conTS.title.value == 'Add Stock') {
                       con.createAddStock(context);
                     } else {
-                      con.updateProduct(context);
+                      con.updateStock(context);
                     }
                   },
                 ),

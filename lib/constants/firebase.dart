@@ -39,7 +39,7 @@ final colorCol = _firebase.collection('color');
 final brandCol = _firebase.collection('brand');
 final productCol = _firebase.collection('product');
 final resetPasswordCol = _firebase.collection('reset_password');
-final addStockCol = _firebase.collection('add_stock');
+final addStockCol = _firebase.collection('add_stock_1');
 final totalStockCol = _firebase.collection('total_stock_1');
 final stockDetailCol = _firebase.collection('stock_detail_1');
 final bookingCol = _firebase.collection('booking');
@@ -78,6 +78,7 @@ var brand = [].obs;
 var byProduct = [].obs;
 var product = [].obs;
 var addStock = [].obs;
+var byAddStock = [].obs;
 var stockByModel = [].obs;
 var byTotalStock = [].obs;
 var totalStock = [].obs;
@@ -445,6 +446,23 @@ Future<void> getLastAddStock() async {
       res.docs.map((doc) => AddStockModel.fromMap(doc.data())).toList();
 }
 
+Future<void> getLastAddStockByModel({
+  required String brand,
+  required String model,
+  required String year,
+  required String condition,
+}) async {
+  var res = await addStockCol
+      .where('brand', isEqualTo: brand)
+      .where('model', isEqualTo: model)
+      .where('year', isEqualTo: year)
+      .where('condition', isEqualTo: condition)
+      .get();
+  byAddStock.value =
+      res.docs.map((doc) => AddStockModel.fromMap(doc.data())).toList();
+  byAddStock.sort((a, b) => b.id.compareTo(a.id));
+}
+
 Future<void> insertAddStock(AddStockModel add) async {
   try {
     await addStockCol.doc('${add.id}').set(add.toMap());
@@ -514,21 +532,13 @@ Future<void> insertTotalStock(TotalStockModel total) async {
 
 Future<void> updateByTotalStock(
   int id, {
-  required String model,
-  required String brand,
+  required TotalStockModel totalStock,
 }) async {
   try {
     var docId = '';
     var result = await totalStockCol.where('id', isEqualTo: id).get();
-
-    for (var doc in result.docs) {
-      docId = doc.id;
-    }
-
-    await totalStockCol.doc(docId).update({
-      'model': model,
-      'brand': brand,
-    });
+    for (var doc in result.docs) docId = doc.id;
+    await totalStockCol.doc(docId).set(totalStock.toMap());
   } catch (e) {
     debugPrint('Failed to updateByTotalStock: $e');
   }

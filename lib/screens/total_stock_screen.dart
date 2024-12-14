@@ -149,14 +149,17 @@ Widget totalStockDataTable(BuildContext context) {
               btnDelete: false,
               edit: () async {
                 startInactivityTimer();
+                LoadingWidget.dialogLoading(duration: 1, isBack: true);
                 con.title.value = 'Edit Stock';
                 conAS.clearText();
                 conAS.listModel.clear();
                 await getAllProduct();
+                product.sort((a, b) => a.id.compareTo(b.id));
                 for (var pro in product) {
                   conAS.listModel.add(pro.model);
                 }
                 await con.editTotalStock(data.id);
+                Get.back();
                 conMain.index.value = 10;
               },
             ),
