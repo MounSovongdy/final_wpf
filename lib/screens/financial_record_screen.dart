@@ -4,10 +4,13 @@ import 'package:motor/constants/constants.dart';
 import 'package:motor/constants/firebase.dart';
 import 'package:motor/controllers/finance_card_controller.dart';
 import 'package:motor/controllers/finance_record_controller.dart';
+import 'package:motor/controllers/report_controller.dart';
+import 'package:motor/screens/components/app_button.dart';
 import 'package:motor/screens/components/app_dropdown_search.dart';
 import 'package:motor/screens/components/app_text_field.dart';
 import 'package:motor/screens/components/finance_card.dart';
 import 'package:motor/screens/components/row_text_field.dart';
+import 'package:motor/screens/components/under_line.dart';
 import 'package:motor/screens/widgets/app_text.dart';
 import 'package:motor/screens/widgets/loading_widget.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
@@ -17,6 +20,7 @@ class FinancialRecordScreen extends StatelessWidget {
 
   final con = Get.put(FinanceRecordController());
   final conFC = Get.put(FinanceCardController());
+  final conReport = Get.put(ReportController());
 
   @override
   Widget build(BuildContext context) {
@@ -144,10 +148,47 @@ class FinancialRecordScreen extends StatelessWidget {
               value: conFC.itemValue,
             ),
             spacer(context),
-            spacer(context),
             FinanceCard(
               title: conFC.financeTitle,
               value: conFC.financeValue,
+            ),
+            spacer(context),
+            spacer(context),
+            const UnderLine(color: secondGreyColor),
+            spacer(context),
+            Obx(
+              () => byTotalExpense.isNotEmpty
+                  ? Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        AppButtonSubmit(
+                          txt: 'Report',
+                          color: greenColor,
+                          tap: () async {
+                            await conReport.downloadExcel(
+                              fileName: 'FinancialRecord_Report.xlsx',
+                              headers: [
+                                'Advertising',
+                                'Prepaid Rent',
+                                'Payable Salary',
+                                'Prepaid Expense KOL',
+                                'Free Gift',
+                                'Bonus E',
+                                'Bonus T',
+                                'Commission',
+                                'Net Sale',
+                                'Sale Revenue',
+                                'Total Unit Sale',
+                                'Total Profit',
+                                'Average Profit'
+                              ],
+                              data: [],
+                            );
+                          },
+                        ),
+                      ],
+                    )
+                  : Container(),
             ),
           ],
         ),

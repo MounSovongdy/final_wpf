@@ -67,13 +67,41 @@ class BookingScreen extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              AppButtonSubmit(
-                txt: 'Report',
-                color: greyColor,
-                width: Responsive.isDesktop(context) ? 150.px : 100.px,
-                tap: () async {
-                  await conReport.downloadExcel();
-                },
+              Obx(
+                () => con.filteredBooking.isNotEmpty &&
+                        userRole.value == roleSuperAdmin
+                    ? AppButtonSubmit(
+                        txt: 'Report',
+                        color: greenColor,
+                        width: Responsive.isDesktop(context) ? 150.px : 100.px,
+                        tap: () async {
+                          await conReport.downloadExcel(
+                            fileName: 'Booking_Report.xlsx',
+                            headers: [
+                              'ID',
+                              'Salesman',
+                              'Date',
+                              'ID Card',
+                              'Name',
+                              'Tel',
+                              'Brand',
+                              'Model',
+                              'Color',
+                              'Year',
+                              'Power',
+                              'Condition',
+                              'Price',
+                              'Remain',
+                              'Micro',
+                              'Status Booking',
+                              'Status Done',
+                              'Working hours'
+                            ],
+                            data: [],
+                          );
+                        },
+                      )
+                    : Container(),
               ),
               spacer(context),
               AppButtonSubmit(
@@ -372,7 +400,7 @@ class BookingScreen extends StatelessWidget {
                       },
                       child: AppText.title(Get.context!, txt: 'Confirm'),
                     ),
-                  );            
+                  );
                 } else {
                   LoadingWidget.showTextDialog(
                     context,

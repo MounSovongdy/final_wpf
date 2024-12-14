@@ -7,7 +7,11 @@ import 'package:open_file/open_file.dart';
 import 'package:syncfusion_flutter_xlsio/xlsio.dart' as excel;
 
 class ReportController extends GetxController {
-  Future<void> downloadExcel() async {
+  Future<void> downloadExcel({
+    required String fileName,
+    required List<String> headers,
+    required List<List<dynamic>> data,
+  }) async {
     final excel.Workbook workbook = excel.Workbook();
     final excel.Worksheet sheet = workbook.worksheets[0];
 
@@ -22,36 +26,37 @@ class ReportController extends GetxController {
     dataStyle.hAlign = excel.HAlignType.center;
     dataStyle.borders.all.lineStyle = excel.LineStyle.thin;
 
-    sheet.getRangeByIndex(1, 1).setText('Header 1');
-    sheet.getRangeByIndex(1, 2).setText('Header 2');
-    sheet.getRangeByIndex(1, 3).setText('Header 3');
-    sheet.getRangeByIndex(1, 4).setText('Header 4');
-    sheet.getRangeByIndex(1, 5).setText('Header 5');
-    sheet.getRangeByIndex(1, 6).setText('Header 6');
+    for (int i = 0; i < headers.length; i++) {
+      final excel.Range cell = sheet.getRangeByIndex(1, i + 1);
+      cell.setText(headers[i]);
+      cell.cellStyle = headerStyle;
+    }
 
-    sheet.getRangeByIndex(2, 1).setText('Data 1');
-    sheet.getRangeByIndex(2, 2).setText('Data 2');
-    sheet.getRangeByIndex(2, 3).setText('Data 3');
-    sheet.getRangeByIndex(2, 4).setText('Data 4');
-    sheet.getRangeByIndex(2, 5).setText('Data 5');
-    sheet.getRangeByIndex(2, 6).setText('Data 6');
+    for (int i = 0; i < data.length; i++) {
+      final row = data[i];
+      for (int j = 0; j < row.length; j++) {
+        final excel.Range cell = sheet.getRangeByIndex(i + 2, j + 1);
+        cell.setText(row[j].toString());
+        cell.cellStyle = dataStyle;
+      }
+    }
 
     final List<int> bytes = workbook.saveAsStream();
     if (kIsWeb) {
-      await _downloadFileWeb(bytes);
+      await _downloadFileWeb(bytes,fileName);
     } else {
       await _saveFileLocal(bytes);
     }
   }
 
-  Future<void> _downloadFileWeb(List<int> bytes) async {
+  Future<void> _downloadFileWeb(List<int> bytes, String fileName) async {
     try {
       final blob = html.Blob([bytes],
           'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
       final url = html.Url.createObjectUrlFromBlob(blob);
 
       final anchor = html.AnchorElement(href: url)
-        ..setAttribute("download", 'booking.xlsx') // Corrected file extension
+        ..setAttribute("download", fileName)
         ..style.display = "none";
       html.document.body?.append(anchor);
       anchor.click();

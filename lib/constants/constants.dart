@@ -7,7 +7,7 @@ import 'package:pdf/pdf.dart';
 import 'package:universal_html/html.dart' as html;
 
 const noneColor = Colors.transparent;
-const bgColor = Color.fromARGB(255, 13, 22, 139);
+const bgColor = Color.fromRGBO(26, 117, 187,1);
 const greyColor = Color.fromRGBO(233, 233, 233, 1);
 const secondGreyColor = Color.fromRGBO(217, 217, 217, 1);
 const whiteColor = Color.fromRGBO(255, 255, 255, 1);
