@@ -5,6 +5,7 @@ import 'package:motor/constants/firebase.dart';
 import 'package:motor/constants/responsive.dart';
 import 'package:motor/controllers/add_stock_controller.dart';
 import 'package:motor/controllers/main_controller.dart';
+import 'package:motor/controllers/report_controller.dart';
 import 'package:motor/controllers/total_stock_controller.dart';
 import 'package:motor/screens/components/app_button.dart';
 import 'package:motor/screens/components/app_data_table.dart';
@@ -20,6 +21,7 @@ class TotalStockScreen extends StatelessWidget {
   final con = Get.put(TotalStockController());
   final con1 = Get.put(MainController());
   final con2 = Get.put(AddStockController());
+  final conReport = Get.put(ReportController());
   final scroll = ScrollController();
 
   @override
@@ -65,27 +67,61 @@ class TotalStockScreen extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              userRole.value == roleSuperAdmin
-                  ? AppButtonSubmit(
-                      txt: 'Add Stock',
-                      width: Responsive.isDesktop(context) ? 150.px : 100.px,
-                      tap: () async {
-                        startInactivityTimer();
-                        LoadingWidget.dialogLoading(duration: 1, isBack: true);
-                        con.title.value = 'Add Stock';
-                        con2.isRead.value = false;
-                        con2.clearText();
-                        con2.listModel.clear();
-                        await getAllProduct();
-                        product.sort((a, b) => a.id.compareTo(b.id));
-                        for (var pro in product) {
-                          con2.listModel.add(pro.model);
-                        }
-                        Get.back();
-                        con1.index.value = 10;
-                      },
-                    )
-                  : Container(),
+              Obx(
+                () => con.filteredTotalStock.isNotEmpty && userRole.value == roleSuperAdmin
+                    ? Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          AppButtonSubmit(
+                            txt: 'Report',
+                            color: greenColor,
+                            tap: () async {
+                              await conReport.downloadExcel(
+                                fileName: 'TotalStock_Report.xlsx',
+                                headers: [
+                                  'ID',
+                                  'Date In',
+                                  'Model',
+                                  'Brand',
+                                  'Year',
+                                  'Condition',
+                                  'QTY Begin',
+                                  'QTY Today',
+                                  'Total QTY',
+                                  'Price in QTY Begin',
+                                  'Price in QTY Today',
+                                  'Total Price in QTY Today',
+                                ],
+                                data: [],
+                              );
+                            },
+                          ),
+                          spacer(context),
+                          AppButtonSubmit(
+                            txt: 'Add Stock',
+                            width:
+                                Responsive.isDesktop(context) ? 150.px : 100.px,
+                            tap: () async {
+                              startInactivityTimer();
+                              LoadingWidget.dialogLoading(
+                                  duration: 1, isBack: true);
+                              con.title.value = 'Add Stock';
+                              con2.isRead.value = false;
+                              con2.clearText();
+                              con2.listModel.clear();
+                              await getAllProduct();
+                              product.sort((a, b) => a.id.compareTo(b.id));
+                              for (var pro in product) {
+                                con2.listModel.add(pro.model);
+                              }
+                              Get.back();
+                              con1.index.value = 10;
+                            },
+                          ),
+                        ],
+                      )
+                    : Container(),
+              ),
             ],
           ),
         ],

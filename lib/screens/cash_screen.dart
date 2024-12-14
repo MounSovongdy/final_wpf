@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:motor/constants/constants.dart';
+import 'package:motor/constants/firebase.dart';
 import 'package:motor/constants/responsive.dart';
 import 'package:motor/controllers/cash_controller.dart';
 import 'package:motor/controllers/main_controller.dart';
 import 'package:motor/controllers/new_cash_controller.dart';
 import 'package:motor/controllers/print_cash_sale_controller.dart';
+import 'package:motor/controllers/report_controller.dart';
 import 'package:motor/screens/components/app_button.dart';
 import 'package:motor/screens/components/app_data_table.dart';
 import 'package:motor/screens/components/under_line.dart';
@@ -20,6 +22,7 @@ class CashScreen extends StatelessWidget {
   final con = Get.put(CashController());
   final conNC = Get.put(NewCashController());
   final conMain = Get.put(MainController());
+  final conReport = Get.put(ReportController());
   final scroll = ScrollController();
 
   @override
@@ -68,6 +71,41 @@ class CashScreen extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
+              Obx(
+                () => con.filteredCash.isNotEmpty &&
+                        userRole.value == roleSuperAdmin
+                    ? AppButtonSubmit(
+                        txt: 'Report',
+                        color: greenColor,
+                        width: Responsive.isDesktop(context) ? 150.px : 100.px,
+                        tap: () async {
+                          await conReport.downloadExcel(
+                            fileName: 'Cash_Report.xlsx',
+                            headers: [
+                              'ID',
+                              'Sale Date',
+                              'ID Card',
+                              'Name',
+                              'Age',
+                              'Telephone',
+                              'Address',
+                              'Brand',
+                              'Model',
+                              'Color',
+                              'Year',
+                              'Condition',
+                              'Price',
+                              'Discount',
+                              'Saleman',
+                              'Come By',
+                            ],
+                            data: [],
+                          );
+                        },
+                      )
+                    : Container(),
+              ),
+              spacer(context),
               AppButtonSubmit(
                 txt: 'New',
                 width: Responsive.isDesktop(context) ? 150.px : 100.px,

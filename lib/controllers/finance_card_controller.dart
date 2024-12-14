@@ -17,7 +17,7 @@ class FinanceCardController extends GetxController {
   var avgProfit = '0'.obs;
 
   final itemTitle = [
-    {'name': 'Advertise'},
+    {'name': 'Advertising'},
     {'name': 'Prepaid Rent'},
     {'name': 'Payable Salary'},
     {'name': 'Prepaid expense	KOI'},

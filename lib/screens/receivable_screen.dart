@@ -5,7 +5,10 @@ import 'package:motor/constants/firebase.dart';
 import 'package:motor/controllers/main_controller.dart';
 import 'package:motor/controllers/print_payment_table_controller.dart';
 import 'package:motor/controllers/receivable_controller.dart';
+import 'package:motor/controllers/report_controller.dart';
+import 'package:motor/screens/components/app_button.dart';
 import 'package:motor/screens/components/app_data_table_receivable.dart';
+import 'package:motor/screens/components/under_line.dart';
 import 'package:motor/screens/widgets/app_text.dart';
 import 'package:motor/screens/widgets/data_table_widget.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
@@ -15,6 +18,7 @@ class ReceivableScreen extends StatelessWidget {
 
   final con = Get.put(ReceivableController());
   final conMain = Get.put(MainController());
+  final conReport = Get.put(ReportController());
 
   @override
   Widget build(BuildContext context) {
@@ -52,6 +56,49 @@ class ReceivableScreen extends StatelessWidget {
                     child: AppText.title(context, txt: 'No Data'),
                   ),
           ),
+          spacer(context),
+          spacer(context),
+          const UnderLine(color: secondGreyColor),
+          spacer(context),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              Obx(
+                () => con.filteredRece.isNotEmpty && userRole.value == roleSuperAdmin
+                    ? AppButtonSubmit(
+                        txt: 'Report',
+                        color: greenColor,
+                        tap: () async {
+                          await conReport.downloadExcel(
+                            fileName: 'Receivable_Report.xlsx',
+                            headers: [
+                              'ID',
+                              'Saleman',
+                              'Date',
+                              'Name',
+                              'Telephone 1',
+                              'Telephone 2',
+                              'Telephone 3',
+                              'Next Payment',
+                              'Document',
+                              'Brand',
+                              'Model',
+                              'Color',
+                              'Year',
+                              'Condition',
+                              'Total Amount',
+                              'Payment',
+                              'Amount Left',
+                              'Color Payment'
+                            ],
+                            data: [],
+                          );
+                        },
+                      )
+                    : Container(),
+              ),
+            ],
+          ),
         ],
       ),
     );
@@ -74,7 +121,7 @@ Widget receivableDataTable(BuildContext context) {
     columnHeaders: [
       DataTableWidget.column(context, 'ID'),
       DataTableWidget.column(context, 'Saleman'),
-      DataTableWidget.column(context, 'Receivable Date'),
+      DataTableWidget.column(context, 'Date'),
       DataTableWidget.column(context, 'Name'),
       DataTableWidget.column(context, 'Telephone 1'),
       DataTableWidget.column(context, 'Telephone 2'),

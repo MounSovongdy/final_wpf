@@ -477,7 +477,7 @@ class DrawerMenu extends StatelessWidget {
                                 Get.back();
                                 con.index.value = 13;
                               },
-                              title: 'Financial Report',
+                              title: 'Financial Record',
                               svgSrc: 'assets/icons/FinancialReport.svg',
                             ),
                           ),
