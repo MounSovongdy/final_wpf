@@ -67,61 +67,54 @@ class TotalStockScreen extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              Obx(
-                () => con.filteredTotalStock.isNotEmpty && userRole.value == roleSuperAdmin
-                    ? Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          AppButtonSubmit(
-                            txt: 'Report',
-                            color: greenColor,
-                            tap: () async {
-                              await conReport.downloadExcel(
-                                fileName: 'TotalStock_Report.xlsx',
-                                headers: [
-                                  'ID',
-                                  'Date In',
-                                  'Model',
-                                  'Brand',
-                                  'Year',
-                                  'Condition',
-                                  'QTY Begin',
-                                  'QTY Today',
-                                  'Total QTY',
-                                  'Price in QTY Begin',
-                                  'Price in QTY Today',
-                                  'Total Price in QTY Today',
-                                ],
-                                data: [],
-                              );
-                            },
-                          ),
-                          spacer(context),
-                          AppButtonSubmit(
-                            txt: 'Add Stock',
-                            width:
-                                Responsive.isDesktop(context) ? 150.px : 100.px,
-                            tap: () async {
-                              startInactivityTimer();
-                              LoadingWidget.dialogLoading(
-                                  duration: 1, isBack: true);
-                              con.title.value = 'Add Stock';
-                              con2.isRead.value = false;
-                              con2.clearText();
-                              con2.listModel.clear();
-                              await getAllProduct();
-                              product.sort((a, b) => a.id.compareTo(b.id));
-                              for (var pro in product) {
-                                con2.listModel.add(pro.model);
-                              }
-                              Get.back();
-                              con1.index.value = 10;
-                            },
-                          ),
-                        ],
-                      )
-                    : Container(),
-              ),
+              userRole.value == roleSuperAdmin && con.filteredTotalStock.isNotEmpty
+                  ? AppButtonSubmit(
+                      txt: 'Report',
+                      color: greenColor,
+                      tap: () async {
+                        await conReport.downloadExcel(
+                          fileName: 'TotalStock_Report.xlsx',
+                          headers: [
+                            'ID',
+                            'Date In',
+                            'Model',
+                            'Brand',
+                            'Year',
+                            'Condition',
+                            'QTY Begin',
+                            'QTY Today',
+                            'Total QTY',
+                            'Price in QTY Begin',
+                            'Price in QTY Today',
+                            'Total Price in QTY Today',
+                          ],
+                          data: [],
+                        );
+                      },
+                    )
+                  : Container(),
+              spacer(context),
+              userRole.value == roleSuperAdmin
+                  ? AppButtonSubmit(
+                      txt: 'Add Stock',
+                      width: Responsive.isDesktop(context) ? 150.px : 100.px,
+                      tap: () async {
+                        startInactivityTimer();
+                        LoadingWidget.dialogLoading(duration: 1, isBack: true);
+                        con.title.value = 'Add Stock';
+                        con2.isRead.value = false;
+                        con2.clearText();
+                        con2.listModel.clear();
+                        await getAllProduct();
+                        product.sort((a, b) => a.id.compareTo(b.id));
+                        for (var pro in product) {
+                          con2.listModel.add(pro.model);
+                        }
+                        Get.back();
+                        con1.index.value = 10;
+                      },
+                    )
+                  : Container(),
             ],
           ),
         ],
