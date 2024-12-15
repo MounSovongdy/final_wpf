@@ -87,61 +87,72 @@ Widget userDataTable(BuildContext context) {
   final con = Get.put(UserController());
   final conCU = Get.put(CreateUserController());
   final conMain = Get.put(MainController());
-  
-  return AppDataTableSecond(
-    columnHeaders: [
-      DataTableWidget.column(context, 'ID'),
-      DataTableWidget.column(context, 'Full Name'),
-      DataTableWidget.column(context, 'Role level'),
-      DataTableWidget.column(context, 'User Login'),
-      DataTableWidget.column(context, 'Date Create'),
-      DataTableWidget.column(context, 'Action'),
-    ],
-    rowData: List.generate(
-      con.filteredUsers.length,
-      (index) {
-        var data = con.filteredUsers[index];
 
-        return [
-          DataTableWidget.cell(Get.context!, '${data.id}'),
-          DataTableWidget.cell(Get.context!, data.name),
-          DataTableWidget.cell(Get.context!, data.role),
-          DataTableWidget.cell(Get.context!, data.user),
-          DataTableWidget.cell(Get.context!, data.dateCreate),
-          DataTableWidget.cellBtn(
-            Get.context!,
-            edit: () async {
-              startInactivityTimer();
-              conCU.clearText();
-              con.title.value = 'Edit User';
-              await con.editUser(data.id);
-              conMain.index.value = 16;
-            },
-            delete: () {
-              startInactivityTimer();
-              LoadingWidget.showTextDialog(
+  return Column(
+    crossAxisAlignment: CrossAxisAlignment.end,
+    children: [
+      Obx(
+        () => AppText.title(
+          context,
+          txt: 'Total Record: ${con.filteredUsers.length}',
+        ),
+      ),
+      SizedBox(height: 2.px),
+      AppDataTableSecond(
+        columnHeaders: [
+          DataTableWidget.column(context, 'ID'),
+          DataTableWidget.column(context, 'Full Name'),
+          DataTableWidget.column(context, 'Role level'),
+          DataTableWidget.column(context, 'User Login'),
+          DataTableWidget.column(context, 'Date Create'),
+          DataTableWidget.column(context, 'Action'),
+        ],
+        rowData: List.generate(
+          con.filteredUsers.length,
+          (index) {
+            var data = con.filteredUsers[index];
+
+            return [
+              DataTableWidget.cell(Get.context!, '${data.id}'),
+              DataTableWidget.cell(Get.context!, data.name),
+              DataTableWidget.cell(Get.context!, data.role),
+              DataTableWidget.cell(Get.context!, data.user),
+              DataTableWidget.cell(Get.context!, data.dateCreate),
+              DataTableWidget.cellBtn(
                 Get.context!,
-                title: 'Warning',
-                content: 'Are you sure to delete?',
-                color: redColor,
-                txtBack: 'Cancel',
-                btnColor: secondGreyColor,
-                widget: TextButton(
-                  onPressed: () async {
-                    await deleteUser(con.filteredUsers[index].id);
-                    con.filteredUsers.clear();
-                    await getAllUser();
-                    con.filteredUsers.value = user;
-                    Get.back();
-                  },
-                  child: AppText.title(Get.context!, txt: 'Confirm'),
-                ),
-              );
-            },
-          ),
-        ];
-      },
-    ),
+                edit: () async {
+                  startInactivityTimer();
+                  conCU.clearText();
+                  con.title.value = 'Edit User';
+                  await con.editUser(data.id);
+                  conMain.index.value = 16;
+                },
+                delete: () {
+                  startInactivityTimer();
+                  LoadingWidget.showTextDialog(
+                    Get.context!,
+                    title: 'Warning',
+                    content: 'Are you sure to delete?',
+                    color: redColor,
+                    txtBack: 'Cancel',
+                    btnColor: secondGreyColor,
+                    widget: TextButton(
+                      onPressed: () async {
+                        await deleteUser(con.filteredUsers[index].id);
+                        con.filteredUsers.clear();
+                        await getAllUser();
+                        con.filteredUsers.value = user;
+                        Get.back();
+                      },
+                      child: AppText.title(Get.context!, txt: 'Confirm'),
+                    ),
+                  );
+                },
+              ),
+            ];
+          },
+        ),
+      ),
+    ],
   );
 }
-

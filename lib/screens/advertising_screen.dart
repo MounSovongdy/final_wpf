@@ -132,24 +132,36 @@ class AdvertisingScreen extends StatelessWidget {
 
 Widget advertisingDataTable(BuildContext context) {
   final con = Get.put(AdvertisingController());
-  return AppDataTableSecond(
-    columnHeaders: [
-      DataTableWidget.column(context, 'ID'),
-      DataTableWidget.column(context, 'Date'),
-      DataTableWidget.column(context, 'Detail'),
-      DataTableWidget.column(context, 'Amount'),
+  return Column(
+    crossAxisAlignment: CrossAxisAlignment.end,
+    children: [
+      Obx(
+        () => AppText.title(
+          context,
+          txt: 'Total Record: ${con.filteredAdv.length}',
+        ),
+      ),
+      SizedBox(height: 2.px),
+      AppDataTableSecond(
+        columnHeaders: [
+          DataTableWidget.column(context, 'ID'),
+          DataTableWidget.column(context, 'Date'),
+          DataTableWidget.column(context, 'Detail'),
+          DataTableWidget.column(context, 'Amount'),
+        ],
+        rowData: List.generate(
+          con.filteredAdv.length,
+          (index) {
+            var data = con.filteredAdv[index];
+            return [
+              DataTableWidget.cell(Get.context!, '${data.id}'),
+              DataTableWidget.cell(Get.context!, data.date),
+              DataTableWidget.cell(Get.context!, data.detail),
+              DataTableWidget.cell(Get.context!, data.amount),
+            ];
+          },
+        ),
+      ),
     ],
-    rowData: List.generate(
-      con.filteredAdv.length,
-      (index) {
-        var data = con.filteredAdv[index];
-        return [
-          DataTableWidget.cell(Get.context!, '${data.id}'),
-          DataTableWidget.cell(Get.context!, data.date),
-          DataTableWidget.cell(Get.context!, data.detail),
-          DataTableWidget.cell(Get.context!, data.amount),
-        ];
-      },
-    ),
   );
 }

@@ -64,7 +64,8 @@ class ReceivableScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               Obx(
-                () => con.filteredRece.isNotEmpty && userRole.value == roleSuperAdmin
+                () => con.filteredRece.isNotEmpty &&
+                        userRole.value == roleSuperAdmin
                     ? AppButtonSubmit(
                         txt: 'Report',
                         color: greenColor,
@@ -116,160 +117,172 @@ Widget receivableDataTable(BuildContext context) {
     }
   }
 
-  return AppDataTableReceivable(
-    source: con.filteredRece,
-    columnHeaders: [
-      DataTableWidget.column(context, 'ID'),
-      DataTableWidget.column(context, 'Saleman'),
-      DataTableWidget.column(context, 'Date'),
-      DataTableWidget.column(context, 'Name'),
-      DataTableWidget.column(context, 'Telephone 1'),
-      DataTableWidget.column(context, 'Telephone 2'),
-      DataTableWidget.column(context, 'Telephone 3'),
-      DataTableWidget.column(context, 'Next Payment'),
-      DataTableWidget.column(context, 'Document'),
-      DataTableWidget.column(context, 'Brand'),
-      DataTableWidget.column(context, 'Model'),
-      DataTableWidget.column(context, 'Color'),
-      DataTableWidget.column(context, 'Year'),
-      DataTableWidget.column(context, 'Condition'),
-      DataTableWidget.column(context, 'Total Amount'),
-      DataTableWidget.column(context, 'Receive Payment'),
-      DataTableWidget.column(context, 'Amount Left'),
-      DataTableWidget.column(context, 'Color Payment'),
-      DataTableWidget.column(context, 'Action'),
-    ],
-    rowData: List.generate(
-      con.filteredRece.length,
-      (index) {
-        var data = con.filteredRece[index];
-        return [
-          DataTableWidget.cell(
-            Get.context!,
-            '${data['id']}',
-            color: getRowColor(data['colorPayment']),
-          ),
-          DataTableWidget.cell(
-            Get.context!,
-            data['saleman'],
-            color: getRowColor(data['colorPayment']),
-          ),
-          DataTableWidget.cell(
-            Get.context!,
-            data['date'],
-            color: getRowColor(data['colorPayment']),
-          ),
-          DataTableWidget.cell(
-            Get.context!,
-            data['name'],
-            color: getRowColor(data['colorPayment']),
-          ),
-          DataTableWidget.cell(
-            Get.context!,
-            data['tel1'],
-            color: getRowColor(data['colorPayment']),
-          ),
-          DataTableWidget.cell(
-            Get.context!,
-            data['tel2'],
-            color: getRowColor(data['colorPayment']),
-          ),
-          DataTableWidget.cell(
-            Get.context!,
-            data['tel3'],
-            color: getRowColor(data['colorPayment']),
-          ),
-          DataTableWidget.cell(
-            Get.context!,
-            data['nextPayment'],
-            color: getRowColor(data['colorPayment']),
-          ),
-          DataTableWidget.cell(
-            Get.context!,
-            data['document'],
-            color: getRowColor(data['colorPayment']),
-          ),
-          DataTableWidget.cell(
-            Get.context!,
-            data['brand'],
-            color: getRowColor(data['colorPayment']),
-          ),
-          DataTableWidget.cell(
-            Get.context!,
-            data['model'],
-            color: getRowColor(data['colorPayment']),
-          ),
-          DataTableWidget.cell(
-            Get.context!,
-            data['color'],
-            color: getRowColor(data['colorPayment']),
-          ),
-          DataTableWidget.cell(
-            Get.context!,
-            data['year'],
-            color: getRowColor(data['colorPayment']),
-          ),
-          DataTableWidget.cell(
-            Get.context!,
-            data['condition'],
-            color: getRowColor(data['colorPayment']),
-          ),
-          DataTableWidget.cell(
-            Get.context!,
-            data['total'],
-            color: getRowColor(data['colorPayment']),
-          ),
-          DataTableWidget.cell(
-            Get.context!,
-            data['receiveAmount'],
-            color: getRowColor(data['colorPayment']),
-          ),
-          DataTableWidget.cell(
-            Get.context!,
-            data['amountLeft'],
-            color: getRowColor(data['colorPayment']),
-          ),
-          DataTableWidget.cell(
-            Get.context!,
-            data['colorPayment'],
-            color: getRowColor(data['colorPayment']),
-          ),
-          DataTableWidget.cellBtn(
-            Get.context!,
-            btnEdit: false,
-            btnDelete: false,
-            btnPrint: true,
-            //btnAddPayment: conToNum(data['amountLeft']) > 0 ? true : false,
-            btnAddPayment: true,
-            btnViewPayment: true,
-            edit: () => debugPrint('Edit $index'),
-            delete: () => debugPrint('Delete $index'),
-            print: () => printPaymentTable(data['id']),
-            addPayment: () async {
-              byPaymentTable.clear();
-              con.scheduleList.clear();
-              con.clearText();
-              con.totalAmount.value.text = data['total'];
-              con.paidAmount.value.text = data['receiveAmount'];
-              con.leftAmount.value.text = data['amountLeft'];
+  return Column(
+    crossAxisAlignment: CrossAxisAlignment.end,
+    children: [
+      Obx(
+        () => AppText.title(
+          context,
+          txt: 'Total Record: ${con.filteredRece.length}',
+        ),
+      ),
+      SizedBox(height: 2.px),
+      AppDataTableReceivable(
+        source: con.filteredRece,
+        columnHeaders: [
+          DataTableWidget.column(context, 'ID'),
+          DataTableWidget.column(context, 'Saleman'),
+          DataTableWidget.column(context, 'Date'),
+          DataTableWidget.column(context, 'Name'),
+          DataTableWidget.column(context, 'Telephone 1'),
+          DataTableWidget.column(context, 'Telephone 2'),
+          DataTableWidget.column(context, 'Telephone 3'),
+          DataTableWidget.column(context, 'Next Payment'),
+          DataTableWidget.column(context, 'Document'),
+          DataTableWidget.column(context, 'Brand'),
+          DataTableWidget.column(context, 'Model'),
+          DataTableWidget.column(context, 'Color'),
+          DataTableWidget.column(context, 'Year'),
+          DataTableWidget.column(context, 'Condition'),
+          DataTableWidget.column(context, 'Total Amount'),
+          DataTableWidget.column(context, 'Receive Payment'),
+          DataTableWidget.column(context, 'Amount Left'),
+          DataTableWidget.column(context, 'Color Payment'),
+          DataTableWidget.column(context, 'Action'),
+        ],
+        rowData: List.generate(
+          con.filteredRece.length,
+          (index) {
+            var data = con.filteredRece[index];
+            return [
+              DataTableWidget.cell(
+                Get.context!,
+                '${data['id']}',
+                color: getRowColor(data['colorPayment']),
+              ),
+              DataTableWidget.cell(
+                Get.context!,
+                data['saleman'],
+                color: getRowColor(data['colorPayment']),
+              ),
+              DataTableWidget.cell(
+                Get.context!,
+                data['date'],
+                color: getRowColor(data['colorPayment']),
+              ),
+              DataTableWidget.cell(
+                Get.context!,
+                data['name'],
+                color: getRowColor(data['colorPayment']),
+              ),
+              DataTableWidget.cell(
+                Get.context!,
+                data['tel1'],
+                color: getRowColor(data['colorPayment']),
+              ),
+              DataTableWidget.cell(
+                Get.context!,
+                data['tel2'],
+                color: getRowColor(data['colorPayment']),
+              ),
+              DataTableWidget.cell(
+                Get.context!,
+                data['tel3'],
+                color: getRowColor(data['colorPayment']),
+              ),
+              DataTableWidget.cell(
+                Get.context!,
+                data['nextPayment'],
+                color: getRowColor(data['colorPayment']),
+              ),
+              DataTableWidget.cell(
+                Get.context!,
+                data['document'],
+                color: getRowColor(data['colorPayment']),
+              ),
+              DataTableWidget.cell(
+                Get.context!,
+                data['brand'],
+                color: getRowColor(data['colorPayment']),
+              ),
+              DataTableWidget.cell(
+                Get.context!,
+                data['model'],
+                color: getRowColor(data['colorPayment']),
+              ),
+              DataTableWidget.cell(
+                Get.context!,
+                data['color'],
+                color: getRowColor(data['colorPayment']),
+              ),
+              DataTableWidget.cell(
+                Get.context!,
+                data['year'],
+                color: getRowColor(data['colorPayment']),
+              ),
+              DataTableWidget.cell(
+                Get.context!,
+                data['condition'],
+                color: getRowColor(data['colorPayment']),
+              ),
+              DataTableWidget.cell(
+                Get.context!,
+                data['total'],
+                color: getRowColor(data['colorPayment']),
+              ),
+              DataTableWidget.cell(
+                Get.context!,
+                data['receiveAmount'],
+                color: getRowColor(data['colorPayment']),
+              ),
+              DataTableWidget.cell(
+                Get.context!,
+                data['amountLeft'],
+                color: getRowColor(data['colorPayment']),
+              ),
+              DataTableWidget.cell(
+                Get.context!,
+                data['colorPayment'],
+                color: getRowColor(data['colorPayment']),
+              ),
+              DataTableWidget.cellBtn(
+                Get.context!,
+                btnEdit: false,
+                btnDelete: false,
+                btnPrint: true,
+                //btnAddPayment: conToNum(data['amountLeft']) > 0 ? true : false,
+                btnAddPayment: true,
+                btnViewPayment: true,
+                edit: () => debugPrint('Edit $index'),
+                delete: () => debugPrint('Delete $index'),
+                print: () => printPaymentTable(data['id']),
+                addPayment: () async {
+                  byPaymentTable.clear();
+                  con.scheduleList.clear();
+                  con.clearText();
+                  con.totalAmount.value.text = data['total'];
+                  con.paidAmount.value.text = data['receiveAmount'];
+                  con.leftAmount.value.text = data['amountLeft'];
 
-              await getByPaymentTable(data['id']);
-              for (var data in byPaymentTable) {
-                if (data.date != '' && data.paid == '') {
-                  con.scheduleList.add(data.date);
-                }
-              }
-              con.showDialogAddPayment(Get.context!, data['id']);
-            },
-            viewPayment: () async {
-              byPaymentTable.clear();
-              con.clearText();
-              await getByPaymentTable(data['id']);
-              con.showDialogViewPayment(Get.context!);
-            },
-          ),
-        ];
-      },
-    ),
+                  await getByPaymentTable(data['id']);
+                  for (var data in byPaymentTable) {
+                    if (data.date != '' && data.paid == '') {
+                      con.scheduleList.add(data.date);
+                    }
+                  }
+                  con.showDialogAddPayment(Get.context!, data['id']);
+                },
+                viewPayment: () async {
+                  byPaymentTable.clear();
+                  con.clearText();
+                  await getByPaymentTable(data['id']);
+                  con.showDialogViewPayment(Get.context!);
+                },
+              ),
+            ];
+          },
+        ),
+      ),
+    ],
   );
 }

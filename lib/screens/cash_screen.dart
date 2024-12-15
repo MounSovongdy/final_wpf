@@ -134,59 +134,71 @@ class CashScreen extends StatelessWidget {
 
 Widget cashDataTable(BuildContext context) {
   final con = Get.put(CashController());
-  return AppDataTable(
-    columnHeaders: [
-      DataTableWidget.column(context, 'ID'),
-      DataTableWidget.column(context, 'Sale Date'),
-      DataTableWidget.column(context, 'ID Card'),
-      DataTableWidget.column(context, 'Name'),
-      DataTableWidget.column(context, 'Age'),
-      DataTableWidget.column(context, 'Telephone'),
-      DataTableWidget.column(context, 'Address'),
-      DataTableWidget.column(context, 'Brand'),
-      DataTableWidget.column(context, 'Model'),
-      DataTableWidget.column(context, 'Color'),
-      DataTableWidget.column(context, 'Year'),
-      DataTableWidget.column(context, 'Condition'),
-      DataTableWidget.column(context, 'Price'),
-      DataTableWidget.column(context, 'Discount'),
-      DataTableWidget.column(context, 'Saleman'),
-      DataTableWidget.column(context, 'Come by'),
-      DataTableWidget.column(context, 'Action'),
-    ],
-    rowData: List.generate(
-      con.filteredCash.length,
-      (index) {
-        var data = con.filteredCash[index];
+  return Column(
+    crossAxisAlignment: CrossAxisAlignment.end,
+    children: [
+      Obx(
+        () => AppText.title(
+          context,
+          txt: 'Total Record: ${con.filteredCash.length}',
+        ),
+      ),
+      SizedBox(height: 2.px),
+      AppDataTable(
+        columnHeaders: [
+          DataTableWidget.column(context, 'ID'),
+          DataTableWidget.column(context, 'Sale Date'),
+          DataTableWidget.column(context, 'ID Card'),
+          DataTableWidget.column(context, 'Name'),
+          DataTableWidget.column(context, 'Age'),
+          DataTableWidget.column(context, 'Telephone'),
+          DataTableWidget.column(context, 'Address'),
+          DataTableWidget.column(context, 'Brand'),
+          DataTableWidget.column(context, 'Model'),
+          DataTableWidget.column(context, 'Color'),
+          DataTableWidget.column(context, 'Year'),
+          DataTableWidget.column(context, 'Condition'),
+          DataTableWidget.column(context, 'Price'),
+          DataTableWidget.column(context, 'Discount'),
+          DataTableWidget.column(context, 'Saleman'),
+          DataTableWidget.column(context, 'Come by'),
+          DataTableWidget.column(context, 'Action'),
+        ],
+        rowData: List.generate(
+          con.filteredCash.length,
+          (index) {
+            var data = con.filteredCash[index];
 
-        return [
-          DataTableWidget.cell(Get.context!, '${data.id}'),
-          DataTableWidget.cell(Get.context!, data.date),
-          DataTableWidget.cell(Get.context!, data.idCard),
-          DataTableWidget.cell(Get.context!, data.name),
-          DataTableWidget.cell(Get.context!, data.age),
-          DataTableWidget.cell(Get.context!, data.tel),
-          DataTableWidget.cell(Get.context!, data.address),
-          DataTableWidget.cell(Get.context!, data.brand),
-          DataTableWidget.cell(Get.context!, data.model),
-          DataTableWidget.cell(Get.context!, data.color),
-          DataTableWidget.cell(Get.context!, data.year),
-          DataTableWidget.cell(Get.context!, data.condition),
-          DataTableWidget.cell(Get.context!, data.price),
-          DataTableWidget.cell(Get.context!, data.discount),
-          DataTableWidget.cell(Get.context!, data.saleman),
-          DataTableWidget.cell(Get.context!, data.comeBy),
-          DataTableWidget.cellBtn(
-            Get.context!,
-            btnEdit: false,
-            btnDelete: false,
-            btnPrint: true,
-            edit: () => debugPrint('Edit $index'),
-            delete: () => debugPrint('Delete $index'),
-            print: () => printCashInvoice(data.id),
-          ),
-        ];
-      },
-    ),
+            return [
+              DataTableWidget.cell(Get.context!, '${data.id}'),
+              DataTableWidget.cell(Get.context!, data.date),
+              DataTableWidget.cell(Get.context!, data.idCard),
+              DataTableWidget.cell(Get.context!, data.name),
+              DataTableWidget.cell(Get.context!, data.age),
+              DataTableWidget.cell(Get.context!, data.tel),
+              DataTableWidget.cell(Get.context!, data.address),
+              DataTableWidget.cell(Get.context!, data.brand),
+              DataTableWidget.cell(Get.context!, data.model),
+              DataTableWidget.cell(Get.context!, data.color),
+              DataTableWidget.cell(Get.context!, data.year),
+              DataTableWidget.cell(Get.context!, data.condition),
+              DataTableWidget.cell(Get.context!, data.price),
+              DataTableWidget.cell(Get.context!, data.discount),
+              DataTableWidget.cell(Get.context!, data.saleman),
+              DataTableWidget.cell(Get.context!, data.comeBy),
+              DataTableWidget.cellBtn(
+                Get.context!,
+                btnEdit: false,
+                btnDelete: false,
+                btnPrint: true,
+                edit: () => debugPrint('Edit $index'),
+                delete: () => debugPrint('Delete $index'),
+                print: () => printCashInvoice(data.id),
+              ),
+            ];
+          },
+        ),
+      ),
+    ],
   );
 }

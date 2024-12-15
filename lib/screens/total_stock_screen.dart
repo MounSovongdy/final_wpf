@@ -129,79 +129,91 @@ Widget totalStockDataTable(BuildContext context) {
   final conAS = Get.put(AddStockController());
   final conMain = Get.put(MainController());
 
-  return AppDataTable(
-    columnHeaders: [
-      DataTableWidget.column(context, 'ID'),
-      DataTableWidget.column(context, 'Date In'),
-      DataTableWidget.column(context, 'Model'),
-      DataTableWidget.column(context, 'Brand'),
-      DataTableWidget.column(context, 'Year'),
-      DataTableWidget.column(context, 'Condition'),
-      DataTableWidget.column(context, 'QTY Begin'),
-      DataTableWidget.column(context, 'QTY Today'),
-      DataTableWidget.column(context, 'Total QTY'),
-      if (userRole.value == roleSuperAdmin)
-        DataTableWidget.column(context, 'Price in QTY Begin'),
-      if (userRole.value == roleSuperAdmin)
-        DataTableWidget.column(context, 'Price in QTY Today'),
-      if (userRole.value == roleSuperAdmin)
-        DataTableWidget.column(context, 'Total Price in QTY Begin'),
-      if (userRole.value == roleSuperAdmin)
-        DataTableWidget.column(context, 'Total Price in QTY Today'),
-      if (userRole.value == roleSuperAdmin)
-        DataTableWidget.column(context, 'Actions'),
+  return Column(
+    crossAxisAlignment: CrossAxisAlignment.end,
+    children: [
+      Obx(
+        () => AppText.title(
+          context,
+          txt: 'Total Record: ${con.filteredTotalStock.length}',
+        ),
+      ),
+      SizedBox(height: 2.px),
+      AppDataTable(
+        columnHeaders: [
+          DataTableWidget.column(context, 'ID'),
+          DataTableWidget.column(context, 'Date In'),
+          DataTableWidget.column(context, 'Model'),
+          DataTableWidget.column(context, 'Brand'),
+          DataTableWidget.column(context, 'Year'),
+          DataTableWidget.column(context, 'Condition'),
+          DataTableWidget.column(context, 'QTY Begin'),
+          DataTableWidget.column(context, 'QTY Today'),
+          DataTableWidget.column(context, 'Total QTY'),
+          if (userRole.value == roleSuperAdmin)
+            DataTableWidget.column(context, 'Price in QTY Begin'),
+          if (userRole.value == roleSuperAdmin)
+            DataTableWidget.column(context, 'Price in QTY Today'),
+          if (userRole.value == roleSuperAdmin)
+            DataTableWidget.column(context, 'Total Price in QTY Begin'),
+          if (userRole.value == roleSuperAdmin)
+            DataTableWidget.column(context, 'Total Price in QTY Today'),
+          if (userRole.value == roleSuperAdmin)
+            DataTableWidget.column(context, 'Actions'),
+        ],
+        rowData: List.generate(
+          con.filteredTotalStock.length,
+          (index) {
+            var data = con.filteredTotalStock[index];
+            return [
+              DataTableWidget.cell(Get.context!, '${data.id}'),
+              DataTableWidget.cell(Get.context!, data.newDateIn),
+              DataTableWidget.cell(Get.context!, data.model),
+              DataTableWidget.cell(Get.context!, data.brand),
+              DataTableWidget.cell(Get.context!, data.year),
+              DataTableWidget.cell(Get.context!, data.condition),
+              DataTableWidget.cell(Get.context!, data.oldQty),
+              DataTableWidget.cell(Get.context!, data.newQty),
+              DataTableWidget.cell(Get.context!, data.totalQty),
+              if (userRole.value == roleSuperAdmin)
+                DataTableWidget.cell(Get.context!, data.oldPrice),
+              if (userRole.value == roleSuperAdmin)
+                DataTableWidget.cell(Get.context!, data.newPrice),
+              if (userRole.value == roleSuperAdmin)
+                DataTableWidget.cell(Get.context!, data.oldTotalPrice),
+              if (userRole.value == roleSuperAdmin)
+                DataTableWidget.cell(Get.context!, data.newTotalPrice),
+              if (userRole.value == roleSuperAdmin)
+                DataTableWidget.cellBtn(
+                  Get.context!,
+                  btnDelete: false,
+                  edit: () async {
+                    startInactivityTimer();
+                    if (data.totalQty != '0') {
+                      LoadingWidget.dialogLoading(duration: 1, isBack: true);
+                      con.title.value = 'Edit Stock';
+                      conAS.clearText();
+                      conAS.listModel.clear();
+                      await getAllProduct();
+                      product.sort((a, b) => a.id.compareTo(b.id));
+                      for (var pro in product) conAS.listModel.add(pro.model);
+                      await con.editTotalStock(data.id);
+                      Get.back();
+                      conMain.index.value = 10;
+                    } else {
+                      LoadingWidget.showTextDialog(
+                        context,
+                        title: 'Error',
+                        content: 'Cannot edit due to Total Qty is 0.',
+                        color: redColor,
+                      );
+                    }
+                  },
+                ),
+            ];
+          },
+        ),
+      ),
     ],
-    rowData: List.generate(
-      con.filteredTotalStock.length,
-      (index) {
-        var data = con.filteredTotalStock[index];
-        return [
-          DataTableWidget.cell(Get.context!, '${data.id}'),
-          DataTableWidget.cell(Get.context!, data.newDateIn),
-          DataTableWidget.cell(Get.context!, data.model),
-          DataTableWidget.cell(Get.context!, data.brand),
-          DataTableWidget.cell(Get.context!, data.year),
-          DataTableWidget.cell(Get.context!, data.condition),
-          DataTableWidget.cell(Get.context!, data.oldQty),
-          DataTableWidget.cell(Get.context!, data.newQty),
-          DataTableWidget.cell(Get.context!, data.totalQty),
-          if (userRole.value == roleSuperAdmin)
-            DataTableWidget.cell(Get.context!, data.oldPrice),
-          if (userRole.value == roleSuperAdmin)
-            DataTableWidget.cell(Get.context!, data.newPrice),
-          if (userRole.value == roleSuperAdmin)
-            DataTableWidget.cell(Get.context!, data.oldTotalPrice),
-          if (userRole.value == roleSuperAdmin)
-            DataTableWidget.cell(Get.context!, data.newTotalPrice),
-          if (userRole.value == roleSuperAdmin)
-            DataTableWidget.cellBtn(
-              Get.context!,
-              btnDelete: false,
-              edit: () async {
-                startInactivityTimer();
-                if (data.totalQty != '0') {
-                  LoadingWidget.dialogLoading(duration: 1, isBack: true);
-                  con.title.value = 'Edit Stock';
-                  conAS.clearText();
-                  conAS.listModel.clear();
-                  await getAllProduct();
-                  product.sort((a, b) => a.id.compareTo(b.id));
-                  for (var pro in product) conAS.listModel.add(pro.model);
-                  await con.editTotalStock(data.id);
-                  Get.back();
-                  conMain.index.value = 10;
-                } else {
-                  LoadingWidget.showTextDialog(
-                    context,
-                    title: 'Error',
-                    content: 'Cannot edit due to Total Qty is 0.',
-                    color: redColor,
-                  );
-                }
-              },
-            ),
-        ];
-      },
-    ),
   );
 }

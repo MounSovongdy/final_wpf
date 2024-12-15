@@ -108,60 +108,40 @@ class MicroExpenseScreen extends StatelessWidget {
 
 Widget teacherDataTable(BuildContext context) {
   final con = Get.put(MicroExpenseController());
-  return AppDataTableSecond(
-    columnHeaders: [
-      DataTableWidget.column(context, 'ID'),
-      DataTableWidget.column(context, 'Date'),
-      DataTableWidget.column(context, 'Name'),
-      DataTableWidget.column(context, 'Bonus'),
-      DataTableWidget.column(context, 'Sale Unit'),
-      DataTableWidget.column(context, 'Amount'),
+  return Column(
+    crossAxisAlignment: CrossAxisAlignment.end,
+    children: [
+      Obx(
+        () => AppText.title(
+          context,
+          txt: 'Total Record: ${con.filteredMicro.length}',
+        ),
+      ),
+      SizedBox(height: 2.px),
+      AppDataTableSecond(
+        columnHeaders: [
+          DataTableWidget.column(context, 'ID'),
+          DataTableWidget.column(context, 'Date'),
+          DataTableWidget.column(context, 'Name'),
+          DataTableWidget.column(context, 'Bonus'),
+          DataTableWidget.column(context, 'Sale Unit'),
+          DataTableWidget.column(context, 'Amount'),
+        ],
+        rowData: List.generate(
+          con.filteredMicro.length,
+          (index) {
+            var data = con.filteredMicro[index];
+            return [
+              DataTableWidget.cell(Get.context!, '${data.id}'),
+              DataTableWidget.cell(Get.context!, '${data.year}-${data.month}'),
+              DataTableWidget.cell(Get.context!, data.microName),
+              DataTableWidget.cell(Get.context!, data.tBonus),
+              DataTableWidget.cell(Get.context!, data.unitSale),
+              DataTableWidget.cell(Get.context!, data.totalBonus),
+            ];
+          },
+        ),
+      ),
     ],
-    rowData: List.generate(
-      con.filteredMicro.length,
-      (index) {
-        var data = con.filteredMicro[index];
-        return [
-          DataTableWidget.cell(Get.context!, '${data.id}'),
-          DataTableWidget.cell(Get.context!, '${data.year}-${data.month}'),
-          DataTableWidget.cell(Get.context!, data.microName),
-          DataTableWidget.cell(Get.context!, data.tBonus),
-          DataTableWidget.cell(Get.context!, data.unitSale),
-          DataTableWidget.cell(Get.context!, data.totalBonus),
-        ];
-      },
-    ),
   );
-}
-
-class MicroExpenseDataSource extends DataTableSource {
-  final con = Get.put(MicroExpenseController());
-
-  @override
-  DataRow? getRow(int index) {
-    assert(index >= 0);
-    if (index >= con.filteredMicro.length) return null;
-    var data = con.filteredMicro[index];
-
-    return DataRow.byIndex(
-      index: index,
-      cells: [
-        DataTableWidget.cell(Get.context!, '${data.id}'),
-        DataTableWidget.cell(Get.context!, '${data.year}-${data.month}'),
-        DataTableWidget.cell(Get.context!, data.microName),
-        DataTableWidget.cell(Get.context!, data.tBonus),
-        DataTableWidget.cell(Get.context!, data.unitSale),
-        DataTableWidget.cell(Get.context!, data.totalBonus),
-      ],
-    );
-  }
-
-  @override
-  int get rowCount => con.filteredMicro.length;
-
-  @override
-  bool get isRowCountApproximate => false;
-
-  @override
-  int get selectedRowCount => 0;
 }

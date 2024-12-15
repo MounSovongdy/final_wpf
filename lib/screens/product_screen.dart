@@ -99,59 +99,71 @@ Widget productDataTable(BuildContext context) {
   final conCP = Get.put(CreateProductController());
   final conMain = Get.put(MainController());
 
-  return AppDataTableSecond(
-    columnHeaders: [
-      DataTableWidget.column(context, 'ID'),
-      DataTableWidget.column(context, 'Brand'),
-      DataTableWidget.column(context, 'Model'),
-      DataTableWidget.column(context, 'Action'),
-    ],
-    rowData: List.generate(
-      con.filteredProduct.length,
-      (index) {
-        var data = con.filteredProduct[index];
-        return [
-          DataTableWidget.cell(Get.context!, '${data.id}'),
-          DataTableWidget.cell(Get.context!, data.brand),
-          DataTableWidget.cell(Get.context!, data.model),
-          DataTableWidget.cellBtn(
-            Get.context!,
-            edit: () async {
-              startInactivityTimer();
-              conCP.clearText();
-              con.title.value = 'Edit Product';
-              conCP.brandList.clear();
-              await getAllBrand();
-              for (var data in brand) {
-                conCP.brandList.add(data.brand);
-              }
-              await con.editProduct(data.id);
-              conMain.index.value = 12;
-            },
-            delete: () {
-              startInactivityTimer();
-              LoadingWidget.showTextDialog(
+  return Column(
+    crossAxisAlignment: CrossAxisAlignment.end,
+    children: [
+      Obx(
+        () => AppText.title(
+          context,
+          txt: 'Total Record: ${con.filteredProduct.length}',
+        ),
+      ),
+      SizedBox(height: 2.px),
+      AppDataTableSecond(
+        columnHeaders: [
+          DataTableWidget.column(context, 'ID'),
+          DataTableWidget.column(context, 'Brand'),
+          DataTableWidget.column(context, 'Model'),
+          DataTableWidget.column(context, 'Action'),
+        ],
+        rowData: List.generate(
+          con.filteredProduct.length,
+          (index) {
+            var data = con.filteredProduct[index];
+            return [
+              DataTableWidget.cell(Get.context!, '${data.id}'),
+              DataTableWidget.cell(Get.context!, data.brand),
+              DataTableWidget.cell(Get.context!, data.model),
+              DataTableWidget.cellBtn(
                 Get.context!,
-                title: 'Warning',
-                content: 'Are you sure to delete?',
-                color: redColor,
-                txtBack: 'Cancel',
-                btnColor: secondGreyColor,
-                widget: TextButton(
-                  onPressed: () async {
-                    await deleteProduct(con.filteredProduct[index].id);
-                    con.filteredProduct.clear();
-                    await getAllProduct();
-                    con.filteredProduct.value = product;
-                    Get.back();
-                  },
-                  child: AppText.title(Get.context!, txt: 'Confirm'),
-                ),
-              );
-            },
-          ),
-        ];
-      },
-    ),
+                edit: () async {
+                  startInactivityTimer();
+                  conCP.clearText();
+                  con.title.value = 'Edit Product';
+                  conCP.brandList.clear();
+                  await getAllBrand();
+                  for (var data in brand) {
+                    conCP.brandList.add(data.brand);
+                  }
+                  await con.editProduct(data.id);
+                  conMain.index.value = 12;
+                },
+                delete: () {
+                  startInactivityTimer();
+                  LoadingWidget.showTextDialog(
+                    Get.context!,
+                    title: 'Warning',
+                    content: 'Are you sure to delete?',
+                    color: redColor,
+                    txtBack: 'Cancel',
+                    btnColor: secondGreyColor,
+                    widget: TextButton(
+                      onPressed: () async {
+                        await deleteProduct(con.filteredProduct[index].id);
+                        con.filteredProduct.clear();
+                        await getAllProduct();
+                        con.filteredProduct.value = product;
+                        Get.back();
+                      },
+                      child: AppText.title(Get.context!, txt: 'Confirm'),
+                    ),
+                  );
+                },
+              ),
+            ];
+          },
+        ),
+      ),
+    ],
   );
 }

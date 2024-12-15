@@ -132,24 +132,36 @@ class KolScreen extends StatelessWidget {
 
 Widget koiDataTable(BuildContext context) {
   final con = Get.put(KoiController());
-  return AppDataTableSecond(
-    columnHeaders: [
-      DataTableWidget.column(context, 'ID'),
-      DataTableWidget.column(context, 'Date'),
-      DataTableWidget.column(context, 'Name'),
-      DataTableWidget.column(context, 'Amount'),
+  return Column(
+    crossAxisAlignment: CrossAxisAlignment.end,
+    children: [
+      Obx(
+        () => AppText.title(
+          context,
+          txt: 'Total Record: ${con.filteredKoi.length}',
+        ),
+      ),
+      SizedBox(height: 2.px),
+      AppDataTableSecond(
+        columnHeaders: [
+          DataTableWidget.column(context, 'ID'),
+          DataTableWidget.column(context, 'Date'),
+          DataTableWidget.column(context, 'Name'),
+          DataTableWidget.column(context, 'Amount'),
+        ],
+        rowData: List.generate(
+          con.filteredKoi.length,
+          (index) {
+            var data = con.filteredKoi[index];
+            return [
+              DataTableWidget.cell(Get.context!, '${data.id}'),
+              DataTableWidget.cell(Get.context!, data.date),
+              DataTableWidget.cell(Get.context!, data.name),
+              DataTableWidget.cell(Get.context!, data.amount),
+            ];
+          },
+        ),
+      ),
     ],
-    rowData: List.generate(
-      con.filteredKoi.length,
-      (index) {
-        var data = con.filteredKoi[index];
-        return [
-          DataTableWidget.cell(Get.context!, '${data.id}'),
-          DataTableWidget.cell(Get.context!, data.date),
-          DataTableWidget.cell(Get.context!, data.name),
-          DataTableWidget.cell(Get.context!, data.amount),
-        ];
-      },
-    ),
   );
 }

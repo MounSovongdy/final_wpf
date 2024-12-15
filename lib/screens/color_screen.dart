@@ -80,35 +80,47 @@ class ColorScreen extends StatelessWidget {
   }
 
   Widget colorDataTable(BuildContext context) {
-    return AppDataTableSecond(
-      columnHeaders: [
-        DataTableWidget.column(context, 'ID'),
-        DataTableWidget.column(context, 'Color'),
-        DataTableWidget.column(context, 'Action'),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.end,
+      children: [
+        Obx(
+          () => AppText.title(
+            context,
+            txt: 'Total Record: ${con.filteredColor.length}',
+          ),
+        ),
+        SizedBox(height: 2.px),
+        AppDataTableSecond(
+          columnHeaders: [
+            DataTableWidget.column(context, 'ID'),
+            DataTableWidget.column(context, 'Color'),
+            DataTableWidget.column(context, 'Action'),
+          ],
+          rowData: List.generate(
+            con.filteredColor.length,
+            (index) {
+              var data = con.filteredColor[index];
+
+              return [
+                DataTableWidget.cell(Get.context!, '${data.id}'),
+                DataTableWidget.cell(Get.context!, data.color),
+                DataTableWidget.cellBtn(
+                  Get.context!,
+                  btnDelete: false,
+                  edit: () async {
+                    startInactivityTimer();
+                    conNC.clearText();
+                    con.title.value = 'Edit Color';
+                    await con.editColor(data.id);
+
+                    conMain.index.value = 49;
+                  },
+                ),
+              ];
+            },
+          ),
+        ),
       ],
-      rowData: List.generate(
-        con.filteredColor.length,
-        (index) {
-          var data = con.filteredColor[index];
-
-          return [
-            DataTableWidget.cell(Get.context!, '${data.id}'),
-            DataTableWidget.cell(Get.context!, data.color),
-            DataTableWidget.cellBtn(
-              Get.context!,
-              btnDelete: false,
-              edit: () async {
-                startInactivityTimer();
-                conNC.clearText();
-                con.title.value = 'Edit Color';
-                await con.editColor(data.id);
-
-                conMain.index.value = 49;
-              },
-            ),
-          ];
-        },
-      ),
     );
   }
 }

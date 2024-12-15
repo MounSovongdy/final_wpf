@@ -295,126 +295,138 @@ class BookingScreen extends StatelessWidget {
       );
     }
 
-    return AppDataTable(
-      columnHeaders: [
-        DataTableWidget.column(context, 'ID'),
-        DataTableWidget.column(context, 'Saleman'),
-        DataTableWidget.column(context, 'Date'),
-        DataTableWidget.column(context, 'ID Card'),
-        DataTableWidget.column(context, 'Name'),
-        DataTableWidget.column(context, 'Tel'),
-        DataTableWidget.column(context, 'Brand'),
-        DataTableWidget.column(context, 'Model'),
-        DataTableWidget.column(context, 'Color'),
-        DataTableWidget.column(context, 'Year'),
-        DataTableWidget.column(context, 'Power'),
-        DataTableWidget.column(context, 'Condition'),
-        DataTableWidget.column(context, 'Price'),
-        DataTableWidget.column(context, 'Remain'),
-        DataTableWidget.column(context, 'Micro'),
-        DataTableWidget.column(context, 'Status Booking'),
-        DataTableWidget.column(context, 'Status Done'),
-        DataTableWidget.column(context, 'Working Hours'),
-        DataTableWidget.column(context, 'Action'),
-      ],
-      rowData: List.generate(
-        con.filteredBooking.length,
-        (index) {
-          var data = con.filteredBooking[index];
-          return [
-            DataTableWidget.cell(Get.context!, '${data.id}'),
-            DataTableWidget.cell(Get.context!, data.saleman),
-            DataTableWidget.cell(Get.context!, data.bookingDate),
-            DataTableWidget.cell(Get.context!, data.idCard),
-            DataTableWidget.cell(Get.context!, data.name),
-            DataTableWidget.cell(Get.context!, data.tel),
-            DataTableWidget.cell(Get.context!, data.brand),
-            DataTableWidget.cell(Get.context!, data.model),
-            DataTableWidget.cell(Get.context!, data.color),
-            DataTableWidget.cell(Get.context!, data.year),
-            DataTableWidget.cell(Get.context!, data.power),
-            DataTableWidget.cell(Get.context!, data.condition),
-            DataTableWidget.cell(Get.context!, data.price),
-            DataTableWidget.cell(Get.context!, data.remain),
-            DataTableWidget.cell(Get.context!, data.micro),
-            DataTableWidget.cell(Get.context!, data.statusBooking),
-            DataTableWidget.cell(Get.context!, data.statusDone),
-            DataTableWidget.cell(Get.context!, data.workingHours),
-            DataTableWidget.cellBtn(
-              Get.context!,
-              btnUpdate: true,
-              edit: () async {
-                startInactivityTimer();
-                if (data.statusBooking == "New") {
-                  conNewBook.clearText();
-                  con.title.value = 'Edit Booking';
-                  await microName();
-                  await saleManName();
-                  await brandName();
-                  await addressName();
-                  await colorName();
-
-                  await con.editBooking(data.id);
-                  conMain.index.value = 2;
-                } else {
-                  LoadingWidget.showTextDialog(
-                    context,
-                    color: redColor,
-                    title: "Warning",
-                    content:
-                        'Can not update because the booking status not "NEW"',
-                  );
-                }
-              },
-              update: () async {
-                startInactivityTimer();
-                await microName();
-                await getByBookingMicro(data.id);
-
-                con.clearDialog();
-                con.status.value = byBookingMicro[0].statusBooking1;
-                con.newStatus.value = byBookingMicro[0].statusBooking2;
-                con.oldMicro.value = byBookingMicro[0].micro1;
-                con.newMicro.value = byBookingMicro[0].micro2;
-
-                showDialogStatus(
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.end,
+      children: [
+        Obx(
+          () => AppText.title(
+            context,
+            txt: 'Total Record: ${con.filteredBooking.length}',
+          ),
+        ),
+        SizedBox(height: 2.px),
+        AppDataTable(
+          columnHeaders: [
+            DataTableWidget.column(context, 'ID'),
+            DataTableWidget.column(context, 'Saleman'),
+            DataTableWidget.column(context, 'Date'),
+            DataTableWidget.column(context, 'ID Card'),
+            DataTableWidget.column(context, 'Name'),
+            DataTableWidget.column(context, 'Tel'),
+            DataTableWidget.column(context, 'Brand'),
+            DataTableWidget.column(context, 'Model'),
+            DataTableWidget.column(context, 'Color'),
+            DataTableWidget.column(context, 'Year'),
+            DataTableWidget.column(context, 'Power'),
+            DataTableWidget.column(context, 'Condition'),
+            DataTableWidget.column(context, 'Price'),
+            DataTableWidget.column(context, 'Remain'),
+            DataTableWidget.column(context, 'Micro'),
+            DataTableWidget.column(context, 'Status Booking'),
+            DataTableWidget.column(context, 'Status Done'),
+            DataTableWidget.column(context, 'Working Hours'),
+            DataTableWidget.column(context, 'Action'),
+          ],
+          rowData: List.generate(
+            con.filteredBooking.length,
+            (index) {
+              var data = con.filteredBooking[index];
+              return [
+                DataTableWidget.cell(Get.context!, '${data.id}'),
+                DataTableWidget.cell(Get.context!, data.saleman),
+                DataTableWidget.cell(Get.context!, data.bookingDate),
+                DataTableWidget.cell(Get.context!, data.idCard),
+                DataTableWidget.cell(Get.context!, data.name),
+                DataTableWidget.cell(Get.context!, data.tel),
+                DataTableWidget.cell(Get.context!, data.brand),
+                DataTableWidget.cell(Get.context!, data.model),
+                DataTableWidget.cell(Get.context!, data.color),
+                DataTableWidget.cell(Get.context!, data.year),
+                DataTableWidget.cell(Get.context!, data.power),
+                DataTableWidget.cell(Get.context!, data.condition),
+                DataTableWidget.cell(Get.context!, data.price),
+                DataTableWidget.cell(Get.context!, data.remain),
+                DataTableWidget.cell(Get.context!, data.micro),
+                DataTableWidget.cell(Get.context!, data.statusBooking),
+                DataTableWidget.cell(Get.context!, data.statusDone),
+                DataTableWidget.cell(Get.context!, data.workingHours),
+                DataTableWidget.cellBtn(
                   Get.context!,
-                  bookingId: data.id,
-                  bookingDate: data.bookingDate,
-                );
-              },
-              delete: () async {
-                startInactivityTimer();
-                if (data.statusDone == "") {
-                  LoadingWidget.showTextDialog(
-                    Get.context!,
-                    title: 'Warning',
-                    content: 'Are you sure to delete?',
-                    color: redColor,
-                    txtBack: 'Cancel',
-                    btnColor: secondGreyColor,
-                    widget: TextButton(
-                      onPressed: () async {
-                        Get.back();
-                        await con.removeBooking(data.id);
-                      },
-                      child: AppText.title(Get.context!, txt: 'Confirm'),
-                    ),
-                  );
-                } else {
-                  LoadingWidget.showTextDialog(
-                    context,
-                    color: redColor,
-                    title: "Warning",
-                    content:
-                        'Can not delete because the booking is already create Leasing',
-                  );
-                }
-              },
-            ),
-          ];
-        },
-      ),
+                  btnUpdate: true,
+                  edit: () async {
+                    startInactivityTimer();
+                    if (data.statusBooking == "New") {
+                      conNewBook.clearText();
+                      con.title.value = 'Edit Booking';
+                      await microName();
+                      await saleManName();
+                      await brandName();
+                      await addressName();
+                      await colorName();
+
+                      await con.editBooking(data.id);
+                      conMain.index.value = 2;
+                    } else {
+                      LoadingWidget.showTextDialog(
+                        context,
+                        color: redColor,
+                        title: "Warning",
+                        content:
+                            'Can not update because the booking status not "NEW"',
+                      );
+                    }
+                  },
+                  update: () async {
+                    startInactivityTimer();
+                    await microName();
+                    await getByBookingMicro(data.id);
+
+                    con.clearDialog();
+                    con.status.value = byBookingMicro[0].statusBooking1;
+                    con.newStatus.value = byBookingMicro[0].statusBooking2;
+                    con.oldMicro.value = byBookingMicro[0].micro1;
+                    con.newMicro.value = byBookingMicro[0].micro2;
+
+                    showDialogStatus(
+                      Get.context!,
+                      bookingId: data.id,
+                      bookingDate: data.bookingDate,
+                    );
+                  },
+                  delete: () async {
+                    startInactivityTimer();
+                    if (data.statusDone == "") {
+                      LoadingWidget.showTextDialog(
+                        Get.context!,
+                        title: 'Warning',
+                        content: 'Are you sure to delete?',
+                        color: redColor,
+                        txtBack: 'Cancel',
+                        btnColor: secondGreyColor,
+                        widget: TextButton(
+                          onPressed: () async {
+                            Get.back();
+                            await con.removeBooking(data.id);
+                          },
+                          child: AppText.title(Get.context!, txt: 'Confirm'),
+                        ),
+                      );
+                    } else {
+                      LoadingWidget.showTextDialog(
+                        context,
+                        color: redColor,
+                        title: "Warning",
+                        content:
+                            'Can not delete because the booking is already create Leasing',
+                      );
+                    }
+                  },
+                ),
+              ];
+            },
+          ),
+        ),
+      ],
     );
   }
 }

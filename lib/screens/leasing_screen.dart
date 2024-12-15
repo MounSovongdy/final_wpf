@@ -67,8 +67,9 @@ class LeasingScreen extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              Obx( 
-                () => con.filteredLeasing.isNotEmpty && userRole.value == roleSuperAdmin
+              Obx(
+                () => con.filteredLeasing.isNotEmpty &&
+                        userRole.value == roleSuperAdmin
                     ? AppButtonSubmit(
                         txt: 'Report',
                         color: greenColor,
@@ -130,68 +131,80 @@ class LeasingScreen extends StatelessWidget {
 
 Widget leasingDataTable(BuildContext context) {
   final con = Get.put(LeasingController());
-  return AppDataTable(
-    columnHeaders: [
-      DataTableWidget.column(context, 'ID'),
-      DataTableWidget.column(context, 'Sale Date'),
-      DataTableWidget.column(context, 'ID Card'),
-      DataTableWidget.column(context, 'Name'),
-      DataTableWidget.column(context, 'Age'),
-      DataTableWidget.column(context, 'Telephone'),
-      DataTableWidget.column(context, 'Address'),
-      DataTableWidget.column(context, 'Micro'),
-      DataTableWidget.column(context, 'Brand'),
-      DataTableWidget.column(context, 'Model'),
-      DataTableWidget.column(context, 'Color'),
-      DataTableWidget.column(context, 'Year'),
-      DataTableWidget.column(context, 'Condition'),
-      DataTableWidget.column(context, 'Price'),
-      DataTableWidget.column(context, 'Discount'),
-      DataTableWidget.column(context, 'Deposit'),
-      DataTableWidget.column(context, 'Remain'),
-      DataTableWidget.column(context, 'Bank Receivable'),
-      DataTableWidget.column(context, 'Acc Receivable'),
-      DataTableWidget.column(context, 'Saleman'),
-      DataTableWidget.column(context, 'Come By'),
-      DataTableWidget.column(context, 'Action'),
+  return Column(
+    crossAxisAlignment: CrossAxisAlignment.end,
+    children: [
+      Obx(
+        () => AppText.title(
+          context,
+          txt: 'Total Record: ${con.filteredLeasing.length}',
+        ),
+      ),
+      SizedBox(height: 2.px),
+      AppDataTable(
+        columnHeaders: [
+          DataTableWidget.column(context, 'ID'),
+          DataTableWidget.column(context, 'Sale Date'),
+          DataTableWidget.column(context, 'ID Card'),
+          DataTableWidget.column(context, 'Name'),
+          DataTableWidget.column(context, 'Age'),
+          DataTableWidget.column(context, 'Telephone'),
+          DataTableWidget.column(context, 'Address'),
+          DataTableWidget.column(context, 'Micro'),
+          DataTableWidget.column(context, 'Brand'),
+          DataTableWidget.column(context, 'Model'),
+          DataTableWidget.column(context, 'Color'),
+          DataTableWidget.column(context, 'Year'),
+          DataTableWidget.column(context, 'Condition'),
+          DataTableWidget.column(context, 'Price'),
+          DataTableWidget.column(context, 'Discount'),
+          DataTableWidget.column(context, 'Deposit'),
+          DataTableWidget.column(context, 'Remain'),
+          DataTableWidget.column(context, 'Bank Receivable'),
+          DataTableWidget.column(context, 'Acc Receivable'),
+          DataTableWidget.column(context, 'Saleman'),
+          DataTableWidget.column(context, 'Come By'),
+          DataTableWidget.column(context, 'Action'),
+        ],
+        rowData: List.generate(
+          con.filteredLeasing.length,
+          (index) {
+            var data = con.filteredLeasing[index];
+            return [
+              DataTableWidget.cell(Get.context!, '${data.id}'),
+              DataTableWidget.cell(Get.context!, data.leasingDate),
+              DataTableWidget.cell(Get.context!, data.idCard),
+              DataTableWidget.cell(Get.context!, data.name),
+              DataTableWidget.cell(Get.context!, data.age),
+              DataTableWidget.cell(Get.context!, data.tel),
+              DataTableWidget.cell(Get.context!, data.address),
+              DataTableWidget.cell(Get.context!, data.micro),
+              DataTableWidget.cell(Get.context!, data.brand),
+              DataTableWidget.cell(Get.context!, data.model),
+              DataTableWidget.cell(Get.context!, data.color),
+              DataTableWidget.cell(Get.context!, data.year),
+              DataTableWidget.cell(Get.context!, data.condition),
+              DataTableWidget.cell(Get.context!, data.price),
+              DataTableWidget.cell(Get.context!, data.discount),
+              DataTableWidget.cell(Get.context!, data.deposit),
+              DataTableWidget.cell(Get.context!, data.remain),
+              DataTableWidget.cell(Get.context!, data.approveAmount),
+              DataTableWidget.cell(Get.context!, data.totalDebt),
+              DataTableWidget.cell(Get.context!, data.saleman),
+              DataTableWidget.cell(Get.context!, data.comeBy),
+              DataTableWidget.cellBtn(
+                Get.context!,
+                btnEdit: false,
+                btnDelete: false,
+                btnPrint: true,
+                edit: () => debugPrint('Edit $index'),
+                delete: () => debugPrint('Delete $index'),
+                print: () => printLeasingInvoice(data.id),
+              ),
+            ];
+          },
+        ),
+      ),
     ],
-    rowData: List.generate(
-      con.filteredLeasing.length,
-      (index) {
-        var data = con.filteredLeasing[index];
-        return [
-          DataTableWidget.cell(Get.context!, '${data.id}'),
-          DataTableWidget.cell(Get.context!, data.leasingDate),
-          DataTableWidget.cell(Get.context!, data.idCard),
-          DataTableWidget.cell(Get.context!, data.name),
-          DataTableWidget.cell(Get.context!, data.age),
-          DataTableWidget.cell(Get.context!, data.tel),
-          DataTableWidget.cell(Get.context!, data.address),
-          DataTableWidget.cell(Get.context!, data.micro),
-          DataTableWidget.cell(Get.context!, data.brand),
-          DataTableWidget.cell(Get.context!, data.model),
-          DataTableWidget.cell(Get.context!, data.color),
-          DataTableWidget.cell(Get.context!, data.year),
-          DataTableWidget.cell(Get.context!, data.condition),
-          DataTableWidget.cell(Get.context!, data.price),
-          DataTableWidget.cell(Get.context!, data.discount),
-          DataTableWidget.cell(Get.context!, data.deposit),
-          DataTableWidget.cell(Get.context!, data.remain),
-          DataTableWidget.cell(Get.context!, data.approveAmount),
-          DataTableWidget.cell(Get.context!, data.totalDebt),
-          DataTableWidget.cell(Get.context!, data.saleman),
-          DataTableWidget.cell(Get.context!, data.comeBy),
-          DataTableWidget.cellBtn(
-            Get.context!,
-            btnEdit: false,
-            btnDelete: false,
-            btnPrint: true,
-            edit: () => debugPrint('Edit $index'),
-            delete: () => debugPrint('Delete $index'),
-            print: () => printLeasingInvoice(data.id),
-          ),
-        ];
-      },
-    ),
   );
 }

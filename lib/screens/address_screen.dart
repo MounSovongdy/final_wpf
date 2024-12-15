@@ -88,54 +88,66 @@ Widget addressDataTable(BuildContext context) {
   final conA = Get.put(CreateAddressController());
   final conMain = Get.put(MainController());
 
-  return AppDataTableSecond(
-    columnHeaders: [
-      DataTableWidget.column(context, 'ID'),
-      DataTableWidget.column(context, 'Address'),
-      DataTableWidget.column(context, 'Action'),
-    ],
-    rowData: List.generate(
-      con.filteredAddress.length,
-      (index) {
-        var data = con.filteredAddress[index];
-        return [
-          DataTableWidget.cell(Get.context!, '${data.id}'),
-          DataTableWidget.cell(Get.context!, data.address),
-          DataTableWidget.cellBtn(
-            Get.context!,
-            edit: () async {
-              startInactivityTimer();
-              conA.clearText();
-              con.title.value = 'Edit Address';
-              await con.editAddress(data.id);
-
-              conMain.index.value = 28;
-            },
-            delete: () {
-              startInactivityTimer();
-              LoadingWidget.showTextDialog(
+  return Column(
+    crossAxisAlignment: CrossAxisAlignment.end,
+    children: [
+      Obx(
+        () => AppText.title(
+          context,
+          txt: 'Total Record: ${con.filteredAddress.length}',
+        ),
+      ),
+      SizedBox(height: 2.px),
+      AppDataTableSecond(
+        columnHeaders: [
+          DataTableWidget.column(context, 'ID'),
+          DataTableWidget.column(context, 'Address'),
+          DataTableWidget.column(context, 'Action'),
+        ],
+        rowData: List.generate(
+          con.filteredAddress.length,
+          (index) {
+            var data = con.filteredAddress[index];
+            return [
+              DataTableWidget.cell(Get.context!, '${data.id}'),
+              DataTableWidget.cell(Get.context!, data.address),
+              DataTableWidget.cellBtn(
                 Get.context!,
-                title: 'Warning',
-                content: 'Are you sure to delete?',
-                color: redColor,
-                txtBack: 'Cancel',
-                btnColor: secondGreyColor,
-                widget: TextButton(
-                  onPressed: () async {
-                    await deleteAddress(con.filteredAddress[index].id);
-                    con.filteredAddress.clear();
-                    await getAllAddress();
-                    con.filteredAddress.value = address;
+                edit: () async {
+                  startInactivityTimer();
+                  conA.clearText();
+                  con.title.value = 'Edit Address';
+                  await con.editAddress(data.id);
 
-                    Get.back();
-                  },
-                  child: AppText.title(Get.context!, txt: 'Confirm'),
-                ),
-              );
-            },
-          ),
-        ];
-      },
-    ),
+                  conMain.index.value = 28;
+                },
+                delete: () {
+                  startInactivityTimer();
+                  LoadingWidget.showTextDialog(
+                    Get.context!,
+                    title: 'Warning',
+                    content: 'Are you sure to delete?',
+                    color: redColor,
+                    txtBack: 'Cancel',
+                    btnColor: secondGreyColor,
+                    widget: TextButton(
+                      onPressed: () async {
+                        await deleteAddress(con.filteredAddress[index].id);
+                        con.filteredAddress.clear();
+                        await getAllAddress();
+                        con.filteredAddress.value = address;
+
+                        Get.back();
+                      },
+                      child: AppText.title(Get.context!, txt: 'Confirm'),
+                    ),
+                  );
+                },
+              ),
+            ];
+          },
+        ),
+      ),
+    ],
   );
 }

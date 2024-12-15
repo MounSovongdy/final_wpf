@@ -109,26 +109,38 @@ class CommissionScreen extends StatelessWidget {
 
 Widget commissionDataTable(BuildContext context) {
   final con = Get.put(CommissionController());
-  return AppDataTableSecond(
-    columnHeaders: [
-      DataTableWidget.column(context, 'ID'),
-      DataTableWidget.column(context, 'Date'),
-      DataTableWidget.column(context, 'Name'),
-      DataTableWidget.column(context, 'Telephone'),
-      DataTableWidget.column(context, 'Commission'),
+  return Column(
+    crossAxisAlignment: CrossAxisAlignment.end,
+    children: [
+      Obx(
+        () => AppText.title(
+          context,
+          txt: 'Total Record: ${con.filteredCommission.length}',
+        ),
+      ),
+      SizedBox(height: 2.px),
+      AppDataTableSecond(
+        columnHeaders: [
+          DataTableWidget.column(context, 'ID'),
+          DataTableWidget.column(context, 'Date'),
+          DataTableWidget.column(context, 'Name'),
+          DataTableWidget.column(context, 'Telephone'),
+          DataTableWidget.column(context, 'Commission'),
+        ],
+        rowData: List.generate(
+          con.filteredCommission.length,
+          (index) {
+            var data = con.filteredCommission[index];
+            return [
+              DataTableWidget.cell(Get.context!, '${data.id}'),
+              DataTableWidget.cell(Get.context!, data.date),
+              DataTableWidget.cell(Get.context!, data.name),
+              DataTableWidget.cell(Get.context!, data.tel),
+              DataTableWidget.cell(Get.context!, data.totalCommission),
+            ];
+          },
+        ),
+      ),
     ],
-    rowData: List.generate(
-      con.filteredCommission.length,
-      (index) {
-        var data = con.filteredCommission[index];
-        return [
-          DataTableWidget.cell(Get.context!, '${data.id}'),
-          DataTableWidget.cell(Get.context!, data.date),
-          DataTableWidget.cell(Get.context!, data.name),
-          DataTableWidget.cell(Get.context!, data.tel),
-          DataTableWidget.cell(Get.context!, data.totalCommission),
-        ];
-      },
-    ),
   );
 }

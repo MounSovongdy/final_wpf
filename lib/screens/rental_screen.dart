@@ -134,24 +134,36 @@ class RentalScreen extends StatelessWidget {
 
 Widget rentalDataTable(BuildContext context) {
   final con = Get.put(RentalController());
-  return AppDataTableSecond(
-    columnHeaders: [
-      DataTableWidget.column(context, 'ID'),
-      DataTableWidget.column(context, 'Date'),
-      DataTableWidget.column(context, 'Detail'),
-      DataTableWidget.column(context, 'Amount'),
+  return Column(
+    crossAxisAlignment: CrossAxisAlignment.end,
+    children: [
+      Obx(
+        () => AppText.title(
+          context,
+          txt: 'Total Record: ${con.filteredRental.length}',
+        ),
+      ),
+      SizedBox(height: 2.px),
+      AppDataTableSecond(
+        columnHeaders: [
+          DataTableWidget.column(context, 'ID'),
+          DataTableWidget.column(context, 'Date'),
+          DataTableWidget.column(context, 'Detail'),
+          DataTableWidget.column(context, 'Amount'),
+        ],
+        rowData: List.generate(
+          con.filteredRental.length,
+          (index) {
+            var data = con.filteredRental[index];
+            return [
+              DataTableWidget.cell(Get.context!, '${data.id}'),
+              DataTableWidget.cell(Get.context!, '${data.year}-${data.month}'),
+              DataTableWidget.cell(Get.context!, data.detail),
+              DataTableWidget.cell(Get.context!, data.amount),
+            ];
+          },
+        ),
+      ),
     ],
-    rowData: List.generate(
-      con.filteredRental.length,
-      (index) {
-        var data = con.filteredRental[index];
-        return [
-          DataTableWidget.cell(Get.context!, '${data.id}'),
-          DataTableWidget.cell(Get.context!, '${data.year}-${data.month}'),
-          DataTableWidget.cell(Get.context!, data.detail),
-          DataTableWidget.cell(Get.context!, data.amount),
-        ];
-      },
-    ),
   );
 }

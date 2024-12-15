@@ -83,35 +83,47 @@ class BrandScreen extends StatelessWidget {
     final con = Get.put(BrandController());
     final conNB = Get.put(NewBrandController());
 
-    return AppDataTableSecond(
-      columnHeaders: [
-        DataTableWidget.column(context, 'ID'),
-        DataTableWidget.column(context, 'Color'),
-        DataTableWidget.column(context, 'Action'),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.end,
+      children: [
+        Obx(
+          () => AppText.title(
+            context,
+            txt: 'Total Record: ${con.filteredBrand.length}',
+          ),
+        ),
+        SizedBox(height: 2.px),
+        AppDataTableSecond(
+          columnHeaders: [
+            DataTableWidget.column(context, 'ID'),
+            DataTableWidget.column(context, 'Color'),
+            DataTableWidget.column(context, 'Action'),
+          ],
+          rowData: List.generate(
+            con.filteredBrand.length,
+            (index) {
+              var data = con.filteredBrand[index];
+
+              return [
+                DataTableWidget.cell(Get.context!, '${data.id}'),
+                DataTableWidget.cell(Get.context!, data.brand),
+                DataTableWidget.cellBtn(
+                  Get.context!,
+                  btnDelete: false,
+                  edit: () async {
+                    startInactivityTimer();
+                    conNB.clearText();
+                    con.title.value = 'Edit Brand';
+                    await con.editBrand(data.id);
+
+                    conMain.index.value = 47;
+                  },
+                ),
+              ];
+            },
+          ),
+        ),
       ],
-      rowData: List.generate(
-        con.filteredBrand.length,
-        (index) {
-          var data = con.filteredBrand[index];
-
-          return [
-            DataTableWidget.cell(Get.context!, '${data.id}'),
-            DataTableWidget.cell(Get.context!, data.brand),
-            DataTableWidget.cellBtn(
-              Get.context!,
-              btnDelete: false,
-              edit: () async {
-                startInactivityTimer();
-                conNB.clearText();
-                con.title.value = 'Edit Brand';
-                await con.editBrand(data.id);
-
-                conMain.index.value = 47;
-              },
-            ),
-          ];
-        },
-      ),
     );
   }
 }

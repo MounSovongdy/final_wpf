@@ -144,30 +144,42 @@ class StaffScreen extends StatelessWidget {
 
 Widget staffDataTable(BuildContext context) {
   final con = Get.put(StaffController());
-  return AppDataTableSecond(
-    columnHeaders: [
-      DataTableWidget.column(context, 'ID'),
-      DataTableWidget.column(context, 'Date'),
-      DataTableWidget.column(context, 'Name'),
-      DataTableWidget.column(context, 'Salary'),
-      DataTableWidget.column(context, 'Bonus'),
-      DataTableWidget.column(context, 'Sale Unit'),
-      DataTableWidget.column(context, 'Amount'),
+  return Column(
+    crossAxisAlignment: CrossAxisAlignment.end,
+    children: [
+      Obx(
+        () => AppText.title(
+          context,
+          txt: 'Total Record: ${con.filteredStaff.length}',
+        ),
+      ),
+      SizedBox(height: 2.px),
+      AppDataTableSecond(
+        columnHeaders: [
+          DataTableWidget.column(context, 'ID'),
+          DataTableWidget.column(context, 'Date'),
+          DataTableWidget.column(context, 'Name'),
+          DataTableWidget.column(context, 'Salary'),
+          DataTableWidget.column(context, 'Bonus'),
+          DataTableWidget.column(context, 'Sale Unit'),
+          DataTableWidget.column(context, 'Amount'),
+        ],
+        rowData: List.generate(
+          con.filteredStaff.length,
+          (index) {
+            var data = con.filteredStaff[index];
+            return [
+              DataTableWidget.cell(Get.context!, '${data.id}'),
+              DataTableWidget.cell(Get.context!, '${data.year}-${data.month}'),
+              DataTableWidget.cell(Get.context!, data.saleManName),
+              DataTableWidget.cell(Get.context!, data.saleSalary),
+              DataTableWidget.cell(Get.context!, data.saleBonus),
+              DataTableWidget.cell(Get.context!, data.unitSale),
+              DataTableWidget.cell(Get.context!, data.totalBonus),
+            ];
+          },
+        ),
+      ),
     ],
-    rowData: List.generate(
-      con.filteredStaff.length,
-      (index) {
-        var data = con.filteredStaff[index];
-        return [
-          DataTableWidget.cell(Get.context!, '${data.id}'),
-          DataTableWidget.cell(Get.context!, '${data.year}-${data.month}'),
-          DataTableWidget.cell(Get.context!, data.saleManName),
-          DataTableWidget.cell(Get.context!, data.saleSalary),
-          DataTableWidget.cell(Get.context!, data.saleBonus),
-          DataTableWidget.cell(Get.context!, data.unitSale),
-          DataTableWidget.cell(Get.context!, data.totalBonus),
-        ];
-      },
-    ),
   );
 }

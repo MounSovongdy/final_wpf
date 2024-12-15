@@ -88,64 +88,76 @@ Widget salesmanDataTable(BuildContext context) {
   final conCS = Get.put(CreateSalesmanController());
   final conMain = Get.put(MainController());
 
-  return AppDataTableSecond(
-    columnHeaders: [
-      DataTableWidget.column(context, 'ID'),
-      DataTableWidget.column(context, 'Full Name'),
-      DataTableWidget.column(context, 'Gender'),
-      DataTableWidget.column(context, 'Tel'),
-      DataTableWidget.column(context, 'Position'),
-      DataTableWidget.column(context, 'Salary'),
-      DataTableWidget.column(context, 'Bonus'),
-      DataTableWidget.column(context, 'Join Date'),
-      DataTableWidget.column(context, 'Action'),
-    ],
-    rowData: List.generate(
-      con.filteredSale.length,
-      (index) {
-        var data = con.filteredSale[index];
-        return [
-          DataTableWidget.cell(Get.context!, '${data.id}'),
-          DataTableWidget.cell(Get.context!, data.name),
-          DataTableWidget.cell(Get.context!, data.gender),
-          DataTableWidget.cell(Get.context!, data.tel),
-          DataTableWidget.cell(Get.context!, data.position),
-          DataTableWidget.cell(Get.context!, data.salary),
-          DataTableWidget.cell(Get.context!, data.bonus),
-          DataTableWidget.cell(Get.context!, data.date),
-          DataTableWidget.cellBtn(
-            Get.context!,
-            edit: () async {
-              startInactivityTimer();
-              conCS.clearText();
-              con.title.value = 'Edit Salesman';
-              await con.editSales(data.id);
-              conMain.index.value = 18;
-            },
-            delete: () {
-              startInactivityTimer();
-              LoadingWidget.showTextDialog(
+  return Column(
+    crossAxisAlignment: CrossAxisAlignment.end,
+    children: [
+      Obx(
+        () => AppText.title(
+          context,
+          txt: 'Total Record: ${con.filteredSale.length}',
+        ),
+      ),
+      SizedBox(height: 2.px),
+      AppDataTableSecond(
+        columnHeaders: [
+          DataTableWidget.column(context, 'ID'),
+          DataTableWidget.column(context, 'Full Name'),
+          DataTableWidget.column(context, 'Gender'),
+          DataTableWidget.column(context, 'Tel'),
+          DataTableWidget.column(context, 'Position'),
+          DataTableWidget.column(context, 'Salary'),
+          DataTableWidget.column(context, 'Bonus'),
+          DataTableWidget.column(context, 'Join Date'),
+          DataTableWidget.column(context, 'Action'),
+        ],
+        rowData: List.generate(
+          con.filteredSale.length,
+          (index) {
+            var data = con.filteredSale[index];
+            return [
+              DataTableWidget.cell(Get.context!, '${data.id}'),
+              DataTableWidget.cell(Get.context!, data.name),
+              DataTableWidget.cell(Get.context!, data.gender),
+              DataTableWidget.cell(Get.context!, data.tel),
+              DataTableWidget.cell(Get.context!, data.position),
+              DataTableWidget.cell(Get.context!, data.salary),
+              DataTableWidget.cell(Get.context!, data.bonus),
+              DataTableWidget.cell(Get.context!, data.date),
+              DataTableWidget.cellBtn(
                 Get.context!,
-                title: 'Warning',
-                content: 'Are you sure to delete?',
-                color: redColor,
-                txtBack: 'Cancel',
-                btnColor: secondGreyColor,
-                widget: TextButton(
-                  onPressed: () async {
-                    await deleteSaleMan(con.filteredSale[index].id);
-                    con.filteredSale.clear();
-                    await getAllSaleMan();
-                    con.filteredSale.value = saleMan;
-                    Get.back();
-                  },
-                  child: AppText.title(Get.context!, txt: 'Confirm'),
-                ),
-              );
-            },
-          ),
-        ];
-      },
-    ),
+                edit: () async {
+                  startInactivityTimer();
+                  conCS.clearText();
+                  con.title.value = 'Edit Salesman';
+                  await con.editSales(data.id);
+                  conMain.index.value = 18;
+                },
+                delete: () {
+                  startInactivityTimer();
+                  LoadingWidget.showTextDialog(
+                    Get.context!,
+                    title: 'Warning',
+                    content: 'Are you sure to delete?',
+                    color: redColor,
+                    txtBack: 'Cancel',
+                    btnColor: secondGreyColor,
+                    widget: TextButton(
+                      onPressed: () async {
+                        await deleteSaleMan(con.filteredSale[index].id);
+                        con.filteredSale.clear();
+                        await getAllSaleMan();
+                        con.filteredSale.value = saleMan;
+                        Get.back();
+                      },
+                      child: AppText.title(Get.context!, txt: 'Confirm'),
+                    ),
+                  );
+                },
+              ),
+            ];
+          },
+        ),
+      ),
+    ],
   );
 }
