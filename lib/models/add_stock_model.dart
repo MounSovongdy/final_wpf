@@ -12,6 +12,7 @@ class AddStockModel {
   final String oldTotalPrice;
   final String dateIn;
   final String qty;
+  final String leftQty;
   final String price;
   final String totalPrice;
 
@@ -27,6 +28,7 @@ class AddStockModel {
     this.oldTotalPrice = '',
     this.dateIn = '',
     this.qty = '',
+    required this.leftQty,
     this.price = '',
     this.totalPrice = '',
   });
@@ -43,6 +45,7 @@ class AddStockModel {
     String? oldTotalPrice,
     String? dateIn,
     String? qty,
+    String? leftQty,
     String? price,
     String? totalPrice,
   }) {
@@ -58,6 +61,7 @@ class AddStockModel {
       oldTotalPrice: oldTotalPrice ?? this.oldTotalPrice,
       dateIn: dateIn ?? this.dateIn,
       qty: qty ?? this.qty,
+      leftQty: leftQty ?? this.leftQty,
       price: price ?? this.price,
       totalPrice: totalPrice ?? this.totalPrice,
     );
@@ -76,6 +80,7 @@ class AddStockModel {
       'old_total_price': oldTotalPrice,
       'date_in': dateIn,
       'qty': qty,
+      'left_qty': leftQty,
       'price': price,
       'total_price': totalPrice,
     };
@@ -94,6 +99,7 @@ class AddStockModel {
       oldTotalPrice: map['old_total_price'] as String,
       dateIn: map['date_in'] as String,
       qty: map['qty'] as String,
+      leftQty: map['left_qty'] as String,
       price: map['price'] as String,
       totalPrice: map['total_price'] as String,
     );
@@ -112,37 +118,38 @@ class AddStockModel {
   @override
   bool operator ==(covariant AddStockModel other) {
     if (identical(this, other)) return true;
-  
-    return 
-      other.id == id &&
-      other.model == model &&
-      other.brand == brand &&
-      other.year == year &&
-      other.condition == condition &&
-      other.oldDateIn == oldDateIn &&
-      other.oldQty == oldQty &&
-      other.oldPrice == oldPrice &&
-      other.oldTotalPrice == oldTotalPrice &&
-      other.dateIn == dateIn &&
-      other.qty == qty &&
-      other.price == price &&
-      other.totalPrice == totalPrice;
+
+    return other.id == id &&
+        other.model == model &&
+        other.brand == brand &&
+        other.year == year &&
+        other.condition == condition &&
+        other.oldDateIn == oldDateIn &&
+        other.oldQty == oldQty &&
+        other.oldPrice == oldPrice &&
+        other.oldTotalPrice == oldTotalPrice &&
+        other.dateIn == dateIn &&
+        other.qty == qty &&
+        other.leftQty == leftQty &&
+        other.price == price &&
+        other.totalPrice == totalPrice;
   }
 
   @override
   int get hashCode {
     return id.hashCode ^
-      model.hashCode ^
-      brand.hashCode ^
-      year.hashCode ^
-      condition.hashCode ^
-      oldDateIn.hashCode ^
-      oldQty.hashCode ^
-      oldPrice.hashCode ^
-      oldTotalPrice.hashCode ^
-      dateIn.hashCode ^
-      qty.hashCode ^
-      price.hashCode ^
-      totalPrice.hashCode;
+        model.hashCode ^
+        brand.hashCode ^
+        year.hashCode ^
+        condition.hashCode ^
+        oldDateIn.hashCode ^
+        oldQty.hashCode ^
+        oldPrice.hashCode ^
+        oldTotalPrice.hashCode ^
+        dateIn.hashCode ^
+        qty.hashCode ^
+        leftQty.hashCode ^
+        price.hashCode ^
+        totalPrice.hashCode;
   }
 }

@@ -23,7 +23,6 @@ import 'package:motor/models/rental_model.dart';
 import 'package:motor/models/reset_password_model.dart';
 import 'package:motor/models/sale_man_commission_model.dart';
 import 'package:motor/models/sale_man_model.dart';
-import 'package:motor/models/stock_detail_model.dart';
 import 'package:motor/models/total_expense_model.dart';
 import 'package:motor/models/total_stock_model.dart';
 import 'package:motor/models/user_model.dart';
@@ -41,23 +40,22 @@ final productCol = _firebase.collection('product');
 final resetPasswordCol = _firebase.collection('reset_password');
 final addStockCol = _firebase.collection('add_stock_1');
 final totalStockCol = _firebase.collection('total_stock_1');
-final stockDetailCol = _firebase.collection('stock_detail_1');
-final bookingCol = _firebase.collection('booking');
-final bookingDeleteCol = _firebase.collection('booking_delete');
-final bookingMicroCol = _firebase.collection('booking_micro');
-final bookingMicroDeleteCol = _firebase.collection('booking_micro_delete');
-final leasingCol = _firebase.collection('leasing');
-final microComCol = _firebase.collection('micro_commission');
-final saleManComCol = _firebase.collection('sale_man_commission');
-final friendComCol = _firebase.collection('friend_commission');
-final cashCol = _firebase.collection('cash');
-final receivableCol = _firebase.collection('receivable');
-final paymentTableCol = _firebase.collection('payment_table');
-final advertisingCol = _firebase.collection('advertising');
-final rentalCol = _firebase.collection('rental');
-final giftCol = _firebase.collection('gift');
-final koiCol = _firebase.collection('koi');
-final totalExpenseCol = _firebase.collection('total_expense');
+final bookingCol = _firebase.collection('booking_1');
+final bookingDeleteCol = _firebase.collection('booking_delete_1');
+final bookingMicroCol = _firebase.collection('booking_micro_1');
+final bookingMicroDeleteCol = _firebase.collection('booking_micro_delete_1');
+final leasingCol = _firebase.collection('leasing_1');
+final microComCol = _firebase.collection('micro_commission_1');
+final saleManComCol = _firebase.collection('sale_man_commission_1');
+final friendComCol = _firebase.collection('friend_commission_1');
+final cashCol = _firebase.collection('cash_1');
+final receivableCol = _firebase.collection('receivable_1');
+final paymentTableCol = _firebase.collection('payment_table_1');
+final advertisingCol = _firebase.collection('advertising_1');
+final rentalCol = _firebase.collection('rental_1');
+final giftCol = _firebase.collection('gift_1');
+final koiCol = _firebase.collection('koi_1');
+final totalExpenseCol = _firebase.collection('total_expense_1');
 
 var currVersion = '2.0.1'.obs;
 var userLogin = ''.obs;
@@ -82,8 +80,6 @@ var byAddStock = [].obs;
 var stockByModel = [].obs;
 var byTotalStock = [].obs;
 var totalStock = [].obs;
-var stockDetail = [].obs;
-var byStockDetail = [].obs;
 var byBooking = [].obs;
 var booking = [].obs;
 var byBookingMicro = [].obs;
@@ -414,32 +410,6 @@ Future<void> deleteProduct(int id) async {
   }
 }
 
-Future<void> getLasttockDetail() async {
-  var res = await stockDetailCol.orderBy('id', descending: true).limit(1).get();
-  stockDetail.value =
-      res.docs.map((doc) => StockDetailModel.fromMap(doc.data())).toList();
-}
-
-Future<void> insertStockDetail(StockDetailModel detail) async {
-  try {
-    await stockDetailCol.doc('${detail.id}').set(detail.toMap());
-  } catch (e) {
-    debugPrint('Failed to add stock detail: $e');
-  }
-}
-
-Future<void> updateStockDetail(int id, String left) async {
-  try {
-    var docId = '';
-    var result = await stockDetailCol.where('id', isEqualTo: id).get();
-    for (var doc in result.docs) docId = doc.id;
-
-    await stockDetailCol.doc(docId).update({'left_qty': left});
-  } catch (e) {
-    debugPrint('Failed to updateStockDetail: $e');
-  }
-}
-
 Future<void> getLastAddStock() async {
   var res = await addStockCol.orderBy('id', descending: true).limit(1).get();
   addStock.value =
@@ -471,6 +441,18 @@ Future<void> insertAddStock(AddStockModel add) async {
   }
 }
 
+Future<void> updateAddStock(int id, String left) async {
+  try {
+    var docId = '';
+    var result = await addStockCol.where('id', isEqualTo: id).get();
+    for (var doc in result.docs) docId = doc.id;
+
+    await addStockCol.doc(docId).update({'left_qty': left});
+  } catch (e) {
+    debugPrint('Failed to updateStockDetail: $e');
+  }
+}
+
 Future<void> getLastTotalStock() async {
   var res = await totalStockCol.orderBy('id', descending: true).limit(1).get();
   totalStock.value =
@@ -497,23 +479,6 @@ Future<void> getByTotalStockID(int id) async {
   var res = await totalStockCol.where('id', isEqualTo: id).get();
   byTotalStock.value =
       res.docs.map((doc) => TotalStockModel.fromMap(doc.data())).toList();
-}
-
-Future<void> getLastStockDetailByModel({
-  required String brand,
-  required String model,
-  required String year,
-  required String condition,
-}) async {
-  var res = await stockDetailCol
-      .where('brand', isEqualTo: brand)
-      .where('model', isEqualTo: model)
-      .where('year', isEqualTo: year)
-      .where('condition', isEqualTo: condition)
-      .get();
-  byStockDetail.value =
-      res.docs.map((doc) => StockDetailModel.fromMap(doc.data())).toList();
-  byStockDetail.sort((a, b) => b.id.compareTo(a.id));
 }
 
 Future<void> getAllStock() async {
@@ -858,14 +823,13 @@ Future<void> insertLeasing(
     var costPrice = '0';
     var costId = 0;
     var newLeft = '';
-    var res1 = await stockDetailCol
+    var res1 = await addStockCol
         .where('model', isEqualTo: model)
         .where('brand', isEqualTo: brand)
         .where('year', isEqualTo: year)
         .where('condition', isEqualTo: condition)
         .get();
-    list =
-        res1.docs.map((doc) => StockDetailModel.fromMap(doc.data())).toList();
+    list = res1.docs.map((doc) => AddStockModel.fromMap(doc.data())).toList();
     list.sort((a, b) => a.id.compareTo(b.id));
 
     if (list.isNotEmpty) {
@@ -891,7 +855,7 @@ Future<void> insertLeasing(
           sell: sellPrice,
           cost: costPrice,
         );
-        await updateStockDetail(costId, newLeft);
+        await updateAddStock(costId, newLeft);
         await updateStatusbooking(bookingId);
         await insertSaleManCommission(
           year: currYear,
@@ -1339,14 +1303,13 @@ Future<void> insertCash(
     var costPrice = '0';
     var costId = 0;
     var newLeft = '';
-    var res1 = await stockDetailCol
+    var res1 = await addStockCol
         .where('model', isEqualTo: model)
         .where('brand', isEqualTo: brand)
         .where('year', isEqualTo: year)
         .where('condition', isEqualTo: condition)
         .get();
-    list =
-        res1.docs.map((doc) => StockDetailModel.fromMap(doc.data())).toList();
+    list = res1.docs.map((doc) => AddStockModel.fromMap(doc.data())).toList();
     list.sort((a, b) => a.id.compareTo(b.id));
 
     if (list.isNotEmpty) {
@@ -1372,7 +1335,7 @@ Future<void> insertCash(
           sell: sellPrice,
           cost: costPrice,
         );
-        await updateStockDetail(costId, newLeft);
+        await updateAddStock(costId, newLeft);
         Navigator.of(Get.context!).pop();
         LoadingWidget.showTextDialog(
           Get.context!,

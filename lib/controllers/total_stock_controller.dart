@@ -52,12 +52,6 @@ class TotalStockController extends GetxController {
       year: byTotalStock[0].year,
       condition: byTotalStock[0].condition,
     );
-    await getLastStockDetailByModel(
-      brand: byTotalStock[0].brand,
-      model: byTotalStock[0].model,
-      year: byTotalStock[0].year,
-      condition: byTotalStock[0].condition,
-    );
     stockByModel.clear();
     con.isRead.value = false;
     con.model.value = byTotalStock[0].model;

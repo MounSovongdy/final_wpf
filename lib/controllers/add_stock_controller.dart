@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:motor/constants/constants.dart';
 import 'package:motor/constants/firebase.dart';
 import 'package:motor/models/add_stock_model.dart';
-import 'package:motor/models/stock_detail_model.dart';
 import 'package:motor/models/total_stock_model.dart';
 import 'package:motor/screens/widgets/loading_widget.dart';
 
@@ -41,13 +40,10 @@ class AddStockController extends GetxController {
       LoadingWidget.dialogLoading(duration: 5, isBack: true);
       await getLastAddStock();
       await getLastTotalStock();
-      await getLasttockDetail();
       var newAddId = 1;
       var newTotalId = 1;
-      var newStockDetailId = 1;
       if (addStock.isNotEmpty) newAddId = addStock[0].id + 1;
       if (totalStock.isNotEmpty) newTotalId = totalStock[0].id + 1;
-      if (stockDetail.isNotEmpty) newStockDetailId = stockDetail[0].id + 1;
 
       AddStockModel newAddStock = AddStockModel(
         id: newAddId,
@@ -61,22 +57,11 @@ class AddStockController extends GetxController {
         oldTotalPrice: totalPriceQBegin.value.text,
         dateIn: date.value.text,
         qty: '$newQty',
+        leftQty: '$newQty',
         price: price.value.text,
         totalPrice: totalPrice.value.text,
       );
       await insertAddStock(newAddStock);
-
-      StockDetailModel newStockDetail = StockDetailModel(
-        id: newStockDetailId,
-        model: model.value ?? '',
-        brand: brand.value.text,
-        year: proYear.value.text,
-        condition: condition.value ?? '',
-        price: price.value.text,
-        totalQty: '$newQty',
-        leftQty: '$newQty',
-      );
-      await insertStockDetail(newStockDetail);
 
       if (stockByModel.isEmpty) {
         TotalStockModel newTotalStock = TotalStockModel(
