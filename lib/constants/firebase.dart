@@ -57,7 +57,7 @@ final giftCol = _firebase.collection('gift_1');
 final koiCol = _firebase.collection('koi_1');
 final totalExpenseCol = _firebase.collection('total_expense_1');
 
-var currVersion = '2.0.1'.obs;
+var currVersion = '3.0.0'.obs;
 var userLogin = ''.obs;
 var userName = ''.obs;
 var userRole = ''.obs;
@@ -416,7 +416,7 @@ Future<void> getLastAddStock() async {
       res.docs.map((doc) => AddStockModel.fromMap(doc.data())).toList();
 }
 
-Future<void> getLastAddStockByModel({
+Future<void> getByAddStockByModel({
   required String brand,
   required String model,
   required String year,
@@ -832,22 +832,22 @@ Future<void> insertLeasing(
     list = res1.docs.map((doc) => AddStockModel.fromMap(doc.data())).toList();
     list.sort((a, b) => a.id.compareTo(b.id));
 
-    if (list.isNotEmpty) {
-      var newList = [];
-      for (var data in list) if (data.leftQty != '0') newList.add(data);
-
-      costPrice = newList[0].price;
-      costId = newList[0].id;
-      newLeft = '${int.parse(newList[0].leftQty) - 1}';
-    }
-
     if (stockByModel.isNotEmpty) {
       var oldQty = int.parse(stockByModel[0].totalQty);
       var currQty = int.parse('1');
       var newQty = oldQty - currQty;
 
       if (oldQty > 0) {
+        if (list.isNotEmpty) {
+          var newList = [];
+          for (var data in list) if (data.leftQty != '0') newList.add(data);
+
+          costPrice = newList[0].price;
+          costId = newList[0].id;
+          newLeft = '${int.parse(newList[0].leftQty) - 1}';
+        }
         await totalStockCol.doc(docId).update({'total_qty': '$newQty'});
+        await updateAddStock(costId, newLeft);
         await leasingCol.doc('${leasing.id}').set(leasing.toMap());
         await insertFinancial(
           year: currYear,
@@ -855,7 +855,6 @@ Future<void> insertLeasing(
           sell: sellPrice,
           cost: costPrice,
         );
-        await updateAddStock(costId, newLeft);
         await updateStatusbooking(bookingId);
         await insertSaleManCommission(
           year: currYear,
@@ -1312,22 +1311,22 @@ Future<void> insertCash(
     list = res1.docs.map((doc) => AddStockModel.fromMap(doc.data())).toList();
     list.sort((a, b) => a.id.compareTo(b.id));
 
-    if (list.isNotEmpty) {
-      var newList = [];
-      for (var data in list) if (data.leftQty != '0') newList.add(data);
-
-      costPrice = newList[0].price;
-      costId = newList[0].id;
-      newLeft = '${int.parse(newList[0].leftQty) - 1}';
-    }
-
     if (stockByModel.isNotEmpty) {
       var oldQty = int.parse(stockByModel[0].totalQty);
       var currQty = int.parse('1');
       var newQty = oldQty - currQty;
 
       if (oldQty > 0) {
+        if (list.isNotEmpty) {
+          var newList = [];
+          for (var data in list) if (data.leftQty != '0') newList.add(data);
+
+          costPrice = newList[0].price;
+          costId = newList[0].id;
+          newLeft = '${int.parse(newList[0].leftQty) - 1}';
+        }
         await totalStockCol.doc(docId).update({'total_qty': '$newQty'});
+        await updateAddStock(costId, newLeft);
         await cashCol.doc('${cash.id}').set(cash.toMap());
         await insertFinancial(
           year: currYear,
@@ -1335,7 +1334,6 @@ Future<void> insertCash(
           sell: sellPrice,
           cost: costPrice,
         );
-        await updateAddStock(costId, newLeft);
         Navigator.of(Get.context!).pop();
         LoadingWidget.showTextDialog(
           Get.context!,

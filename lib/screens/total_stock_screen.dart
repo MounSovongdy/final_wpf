@@ -67,7 +67,8 @@ class TotalStockScreen extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              userRole.value == roleSuperAdmin && con.filteredTotalStock.isNotEmpty
+              userRole.value == roleSuperAdmin &&
+                      con.filteredTotalStock.isNotEmpty
                   ? AppButtonSubmit(
                       txt: 'Report',
                       color: greenColor,
@@ -178,18 +179,25 @@ Widget totalStockDataTable(BuildContext context) {
               btnDelete: false,
               edit: () async {
                 startInactivityTimer();
-                LoadingWidget.dialogLoading(duration: 1, isBack: true);
-                con.title.value = 'Edit Stock';
-                conAS.clearText();
-                conAS.listModel.clear();
-                await getAllProduct();
-                product.sort((a, b) => a.id.compareTo(b.id));
-                for (var pro in product) {
-                  conAS.listModel.add(pro.model);
+                if (data.totalQty != '0') {
+                  LoadingWidget.dialogLoading(duration: 1, isBack: true);
+                  con.title.value = 'Edit Stock';
+                  conAS.clearText();
+                  conAS.listModel.clear();
+                  await getAllProduct();
+                  product.sort((a, b) => a.id.compareTo(b.id));
+                  for (var pro in product) conAS.listModel.add(pro.model);
+                  await con.editTotalStock(data.id);
+                  Get.back();
+                  conMain.index.value = 10;
+                } else {
+                  LoadingWidget.showTextDialog(
+                    context,
+                    title: 'Error',
+                    content: 'Cannot edit due to Total Qty is 0.',
+                    color: redColor,
+                  );
                 }
-                await con.editTotalStock(data.id);
-                Get.back();
-                conMain.index.value = 10;
               },
             ),
         ];

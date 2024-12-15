@@ -28,7 +28,7 @@ class AddStockModel {
     this.oldTotalPrice = '',
     this.dateIn = '',
     this.qty = '',
-    required this.leftQty,
+    this.leftQty = '',
     this.price = '',
     this.totalPrice = '',
   });
