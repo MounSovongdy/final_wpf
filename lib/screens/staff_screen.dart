@@ -47,6 +47,7 @@ class StaffScreen extends StatelessWidget {
                 list: con.monthList,
                 onChanged: (v) async {
                   if (v != null) {
+                    LoadingWidget.dialogLoading(duration: 1, isBack: true);
                     con.selectedMonth.value = v;
                     con.filteredStaff.clear();
                     await getByDateSaleManCommission(
@@ -67,6 +68,7 @@ class StaffScreen extends StatelessWidget {
 
                     con.filteredStaff.value = saleManCom;
                     con.search.value.addListener(con.filterStaffData);
+                    Get.back();
                   }
                 },
               ),

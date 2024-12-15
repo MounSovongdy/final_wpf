@@ -1765,10 +1765,13 @@ Future<void> insertTotalExpenseRental({
         var tempAvgProfit = '$avgProfit'.contains('.')
             ? num.parse('$avgProfit').toStringAsFixed(2)
             : num.parse('$avgProfit').toString();
+        var tempAmount = '$amount'.contains('.')
+            ? num.parse('$amount').toStringAsFixed(2)
+            : num.parse('$amount').toString();
 
         LoadingWidget.dialogLoading(duration: 3, isBack: true);
         await totalExpenseCol.doc('$year-$month').update({
-          'rental': '$amount',
+          'rental': tempAmount,
           'total_expense': tempNewTotal,
           'total_profit': tempTotalProfit,
           'avg_profit': tempAvgProfit,
@@ -1776,11 +1779,15 @@ Future<void> insertTotalExpenseRental({
         Get.back();
       } else {
         LoadingWidget.dialogLoading(duration: 3, isBack: true);
+        var tempAmount = '$amount'.contains('.')
+            ? num.parse('$amount').toStringAsFixed(2)
+            : num.parse('$amount').toString();
+
         await totalExpenseCol.doc('$year-$month').set({
           'id': num.parse('$year$month'),
           'year': year,
           'month': month,
-          'rental': '$amount',
+          'rental': tempAmount,
           'salaryE': '0',
           'bonusE': '0',
           'bonusT': '0',
@@ -1788,7 +1795,7 @@ Future<void> insertTotalExpenseRental({
           'koi': '0',
           'gift': '0',
           'commission': '0',
-          'total_expense': '$amount',
+          'total_expense': tempAmount,
           'net_sale': '0',
           'sale_revenue': '0',
           'total_sale': '0',
@@ -1874,10 +1881,13 @@ Future<void> insertTotalExpenseFriend({
         var tempAvgProfit = '$avgProfit'.contains('.')
             ? num.parse('$avgProfit').toStringAsFixed(2)
             : num.parse('$avgProfit').toString();
+        var tempAmount = '$amount'.contains('.')
+            ? num.parse('$amount').toStringAsFixed(2)
+            : num.parse('$amount').toString();
 
         LoadingWidget.dialogLoading(duration: 3, isBack: true);
         await totalExpenseCol.doc('$year-$month').update({
-          'commission': '$amount',
+          'commission': tempAmount,
           'total_expense': tempNewTotal,
           'total_profit': tempTotalProfit,
           'avg_profit': tempAvgProfit,
@@ -1885,6 +1895,9 @@ Future<void> insertTotalExpenseFriend({
         Get.back();
       } else {
         LoadingWidget.dialogLoading(duration: 3, isBack: true);
+        var tempAmount = '$amount'.contains('.')
+            ? num.parse('$amount').toStringAsFixed(2)
+            : num.parse('$amount').toString();
         await totalExpenseCol.doc('$year-$month').set({
           'id': num.parse('$year$month'),
           'year': year,
@@ -1896,8 +1909,8 @@ Future<void> insertTotalExpenseFriend({
           'advertise': '0',
           'koi': '0',
           'gift': '0',
-          'commission': '$amount',
-          'total_expense': '$amount',
+          'commission': tempAmount,
+          'total_expense': tempAmount,
           'net_sale': '0',
           'sale_revenue': '0',
           'total_sale': '0',
@@ -1983,10 +1996,13 @@ Future<void> insertTotalExpenseGift({
         var tempAvgProfit = '$avgProfit'.contains('.')
             ? num.parse('$avgProfit').toStringAsFixed(2)
             : num.parse('$avgProfit').toString();
+        var tempAmount = '$amount'.contains('.')
+            ? num.parse('$amount').toStringAsFixed(2)
+            : num.parse('$amount').toString();
 
         LoadingWidget.dialogLoading(duration: 3, isBack: true);
         await totalExpenseCol.doc('$year-$month').update({
-          'gift': '$amount',
+          'gift': tempAmount,
           'total_expense': tempNewTotal,
           'total_profit': tempTotalProfit,
           'avg_profit': tempAvgProfit,
@@ -1994,6 +2010,9 @@ Future<void> insertTotalExpenseGift({
         Get.back();
       } else {
         LoadingWidget.dialogLoading(duration: 3, isBack: true);
+        var tempAmount = '$amount'.contains('.')
+            ? num.parse('$amount').toStringAsFixed(2)
+            : num.parse('$amount').toString();
         await totalExpenseCol.doc('$year-$month').set({
           'id': num.parse('$year$month'),
           'year': year,
@@ -2004,9 +2023,9 @@ Future<void> insertTotalExpenseGift({
           'bonusT': '0',
           'advertise': '0',
           'koi': '0',
-          'gift': '$amount',
+          'gift': tempAmount,
           'commission': '0',
-          'total_expense': '$amount',
+          'total_expense': tempAmount,
           'net_sale': '0',
           'sale_revenue': '0',
           'total_sale': '0',
@@ -2092,10 +2111,13 @@ Future<void> insertTotalExpenseKoi({
         var tempAvgProfit = '$avgProfit'.contains('.')
             ? num.parse('$avgProfit').toStringAsFixed(2)
             : num.parse('$avgProfit').toString();
+        var tempAmount = '$amount'.contains('.')
+            ? num.parse('$amount').toStringAsFixed(2)
+            : num.parse('$amount').toString();
 
         LoadingWidget.dialogLoading(duration: 3, isBack: true);
         await totalExpenseCol.doc('$year-$month').update({
-          'koi': '$amount',
+          'koi': tempAmount,
           'total_expense': tempNewTotal,
           'total_profit': tempTotalProfit,
           'avg_profit': tempAvgProfit,
@@ -2103,6 +2125,9 @@ Future<void> insertTotalExpenseKoi({
         Get.back();
       } else {
         LoadingWidget.dialogLoading(duration: 3, isBack: true);
+        var tempAmount = '$amount'.contains('.')
+            ? num.parse('$amount').toStringAsFixed(2)
+            : num.parse('$amount').toString();
         await totalExpenseCol.doc('$year-$month').set({
           'id': num.parse('$year$month'),
           'year': year,
@@ -2112,10 +2137,10 @@ Future<void> insertTotalExpenseKoi({
           'bonusE': '0',
           'bonusT': '0',
           'advertise': '0',
-          'koi': '$amount',
+          'koi': tempAmount,
           'gift': '0',
           'commission': '0',
-          'total_expense': '$amount',
+          'total_expense': tempAmount,
           'net_sale': '0',
           'sale_revenue': '0',
           'total_sale': '0',
@@ -2201,10 +2226,13 @@ Future<void> insertTotalExpenseAdv({
         var tempAvgProfit = '$avgProfit'.contains('.')
             ? num.parse('$avgProfit').toStringAsFixed(2)
             : num.parse('$avgProfit').toString();
+        var tempAmount = '$amount'.contains('.')
+            ? num.parse('$amount').toStringAsFixed(2)
+            : num.parse('$amount').toString();
 
         LoadingWidget.dialogLoading(duration: 3, isBack: true);
         await totalExpenseCol.doc('$year-$month').update({
-          'advertise': '$amount',
+          'advertise': tempAmount,
           'total_expense': tempNewTotal,
           'total_profit': tempTotalProfit,
           'avg_profit': tempAvgProfit,
@@ -2212,6 +2240,9 @@ Future<void> insertTotalExpenseAdv({
         Get.back();
       } else {
         LoadingWidget.dialogLoading(duration: 3, isBack: true);
+        var tempAmount = '$amount'.contains('.')
+            ? num.parse('$amount').toStringAsFixed(2)
+            : num.parse('$amount').toString();
         await totalExpenseCol.doc('$year-$month').set({
           'id': num.parse('$year$month'),
           'year': year,
@@ -2220,11 +2251,11 @@ Future<void> insertTotalExpenseAdv({
           'salaryE': '0',
           'bonusE': '0',
           'bonusT': '0',
-          'advertise': '$amount',
+          'advertise': tempAmount,
           'koi': '0',
           'gift': '0',
           'commission': '0',
-          'total_expense': '$amount',
+          'total_expense': tempAmount,
           'net_sale': '0',
           'sale_revenue': '0',
           'total_sale': '0',
@@ -2310,10 +2341,13 @@ Future<void> insertTotalExpenseBonusT({
         var tempAvgProfit = '$avgProfit'.contains('.')
             ? num.parse('$avgProfit').toStringAsFixed(2)
             : num.parse('$avgProfit').toString();
+        var tempAmount = '$amount'.contains('.')
+            ? num.parse('$amount').toStringAsFixed(2)
+            : num.parse('$amount').toString();
 
         LoadingWidget.dialogLoading(duration: 3, isBack: true);
         await totalExpenseCol.doc('$year-$month').update({
-          'bonusT': '$amount',
+          'bonusT': tempAmount,
           'total_expense': tempNewTotal,
           'total_profit': tempTotalProfit,
           'avg_profit': tempAvgProfit,
@@ -2321,6 +2355,9 @@ Future<void> insertTotalExpenseBonusT({
         Get.back();
       } else {
         LoadingWidget.dialogLoading(duration: 3, isBack: true);
+        var tempAmount = '$amount'.contains('.')
+            ? num.parse('$amount').toStringAsFixed(2)
+            : num.parse('$amount').toString();
         await totalExpenseCol.doc('$year-$month').set({
           'id': num.parse('$year$month'),
           'year': year,
@@ -2328,12 +2365,12 @@ Future<void> insertTotalExpenseBonusT({
           'rental': '0',
           'salaryE': '0',
           'bonusE': '0',
-          'bonusT': '$amount',
+          'bonusT': tempAmount,
           'advertise': '0',
           'koi': '0',
           'gift': '0',
           'commission': '0',
-          'total_expense': '$amount',
+          'total_expense': tempAmount,
           'net_sale': '0',
           'sale_revenue': '0',
           'total_sale': '0',
@@ -2422,11 +2459,17 @@ Future<void> insertTotalExpenseStaff({
         var tempAvgProfit = '$avgProfit'.contains('.')
             ? num.parse('$avgProfit').toStringAsFixed(2)
             : num.parse('$avgProfit').toString();
+        var tempSalary = '$salary'.contains('.')
+            ? num.parse('$salary').toStringAsFixed(2)
+            : num.parse('$salary').toString();
+        var tempBonus = '$bonus'.contains('.')
+            ? num.parse('$bonus').toStringAsFixed(2)
+            : num.parse('$bonus').toString();
 
         LoadingWidget.dialogLoading(duration: 3, isBack: true);
         await totalExpenseCol.doc('$year-$month').update({
-          'salaryE': '$salary',
-          'bonusE': '$bonus',
+          'salaryE': tempSalary,
+          'bonusE': tempBonus,
           'total_expense': tempNewTotal,
           'total_profit': tempTotalProfit,
           'avg_profit': tempAvgProfit,
@@ -2437,6 +2480,12 @@ Future<void> insertTotalExpenseStaff({
         var tempNewTotal = '$tot'.contains('.')
             ? num.parse('$tot').toStringAsFixed(2)
             : num.parse('$tot').toString();
+        var tempSalary = '$salary'.contains('.')
+            ? num.parse('$salary').toStringAsFixed(2)
+            : num.parse('$salary').toString();
+        var tempBonus = '$bonus'.contains('.')
+            ? num.parse('$bonus').toStringAsFixed(2)
+            : num.parse('$bonus').toString();
 
         LoadingWidget.dialogLoading(duration: 3, isBack: true);
         await totalExpenseCol.doc('$year-$month').set({
@@ -2444,8 +2493,8 @@ Future<void> insertTotalExpenseStaff({
           'year': year,
           'month': month,
           'rental': '0',
-          'salaryE': '$salary',
-          'bonusE': '$bonus',
+          'salaryE': tempSalary,
+          'bonusE': tempBonus,
           'bonusT': '0',
           'advertise': '0',
           'koi': '0',

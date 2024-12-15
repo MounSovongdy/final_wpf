@@ -14,6 +14,7 @@ import 'package:motor/screens/components/row_text_field.dart';
 import 'package:motor/screens/components/under_line.dart';
 import 'package:motor/screens/widgets/app_text.dart';
 import 'package:motor/screens/widgets/data_table_widget.dart';
+import 'package:motor/screens/widgets/loading_widget.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 class GiftScreen extends StatelessWidget {
@@ -45,6 +46,7 @@ class GiftScreen extends StatelessWidget {
                 list: con.monthList,
                 onChanged: (v) async {
                   if (v != null) {
+                    LoadingWidget.dialogLoading(duration: 1, isBack: true);
                     con.selectedMonth.value = v;
                     con.filteredGift.clear();
                     await getByDateGift(
@@ -59,6 +61,7 @@ class GiftScreen extends StatelessWidget {
                       con.amount.value.text = byTotalExpense[0].gift;
                     con.filteredGift.value = gift;
                     con.search.value.addListener(con.filterGiftData);
+                    Get.back();
                   }
                 },
               ),

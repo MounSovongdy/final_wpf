@@ -14,6 +14,7 @@ import 'package:motor/screens/components/row_text_field.dart';
 import 'package:motor/screens/components/under_line.dart';
 import 'package:motor/screens/widgets/app_text.dart';
 import 'package:motor/screens/widgets/data_table_widget.dart';
+import 'package:motor/screens/widgets/loading_widget.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 class RentalScreen extends StatelessWidget {
@@ -46,6 +47,7 @@ class RentalScreen extends StatelessWidget {
                 list: con.monthList,
                 onChanged: (v) async {
                   if (v != null) {
+                    LoadingWidget.dialogLoading(duration: 1, isBack: true);
                     con.selectedMonth.value = v;
                     con.filteredRental.clear();
                     await getByDateRental(
@@ -60,6 +62,7 @@ class RentalScreen extends StatelessWidget {
                       con.amount.value.text = byTotalExpense[0].rental;
                     con.filteredRental.value = rental;
                     con.search.value.addListener(con.filterRentalData);
+                    Get.back();
                   }
                 },
               ),

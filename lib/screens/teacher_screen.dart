@@ -10,6 +10,7 @@ import 'package:motor/screens/components/app_text_field.dart';
 import 'package:motor/screens/components/row_text_field.dart';
 import 'package:motor/screens/widgets/app_text.dart';
 import 'package:motor/screens/widgets/data_table_widget.dart';
+import 'package:motor/screens/widgets/loading_widget.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 class MicroExpenseScreen extends StatelessWidget {
@@ -40,6 +41,7 @@ class MicroExpenseScreen extends StatelessWidget {
                 list: con.monthList,
                 onChanged: (v) async {
                   if (v != null) {
+                    LoadingWidget.dialogLoading(duration: 1, isBack: true);
                     con.selectedMonth.value = v;
                     con.filteredMicro.clear();
                     await getByDateMicroCommission(
@@ -55,6 +57,7 @@ class MicroExpenseScreen extends StatelessWidget {
 
                     con.filteredMicro.value = microCom;
                     con.search.value.addListener(con.filterMicroData);
+                    Get.back();
                   }
                 },
               ),
