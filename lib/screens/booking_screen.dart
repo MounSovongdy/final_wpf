@@ -75,6 +75,10 @@ class BookingScreen extends StatelessWidget {
                         color: greenColor,
                         width: Responsive.isDesktop(context) ? 150.px : 100.px,
                         tap: () async {
+                          LoadingWidget.dialogLoading(
+                              duration: 1, isBack: true);
+                          con.filteredBooking
+                              .sort((a, b) => a.id.compareTo(b.id));
                           await conReport.downloadExcel(
                             fileName: 'Booking_Report.xlsx',
                             headers: [
@@ -83,7 +87,10 @@ class BookingScreen extends StatelessWidget {
                               'Date',
                               'ID Card',
                               'Name',
-                              'Tel',
+                              'Gender',
+                              'Age',
+                              'Telephone',
+                              'Address',
                               'Brand',
                               'Model',
                               'Color',
@@ -91,14 +98,50 @@ class BookingScreen extends StatelessWidget {
                               'Power',
                               'Condition',
                               'Price',
+                              'Discount',
+                              'Deposit',
                               'Remain',
                               'Micro',
                               'Status Booking',
                               'Status Done',
-                              'Working hours'
+                              'Working hours',
+                              'Come By',
+                              'Come By Name',
+                              'Come By Telephone',
                             ],
-                            data: [],
+                            data: List.generate(
+                              con.filteredBooking.length,
+                              (index) => [
+                                '${con.filteredBooking[index].id}',
+                                '${con.filteredBooking[index].saleman}',
+                                '${con.filteredBooking[index].bookingDate}',
+                                '${con.filteredBooking[index].idCard}',
+                                '${con.filteredBooking[index].name}',
+                                '${con.filteredBooking[index].gender}',
+                                '${con.filteredBooking[index].age}',
+                                '${con.filteredBooking[index].tel}',
+                                '${con.filteredBooking[index].address}',
+                                '${con.filteredBooking[index].brand}',
+                                '${con.filteredBooking[index].model}',
+                                '${con.filteredBooking[index].color}',
+                                '${con.filteredBooking[index].year}',
+                                '${con.filteredBooking[index].power}',
+                                '${con.filteredBooking[index].condition}',
+                                '${con.filteredBooking[index].price}',
+                                '${con.filteredBooking[index].discount}',
+                                '${con.filteredBooking[index].deposit}',
+                                '${con.filteredBooking[index].remain}',
+                                '${con.filteredBooking[index].micro}',
+                                '${con.filteredBooking[index].statusBooking}',
+                                '${con.filteredBooking[index].statusDone}',
+                                '${con.filteredBooking[index].workingHours}',
+                                '${con.filteredBooking[index].comeBy}',
+                                '${con.filteredBooking[index].comeByName}',
+                                '${con.filteredBooking[index].comeByTel}',
+                              ],
+                            ),
                           );
+                          Get.back();
                         },
                       )
                     : Container(),

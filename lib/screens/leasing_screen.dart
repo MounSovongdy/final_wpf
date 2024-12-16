@@ -75,6 +75,10 @@ class LeasingScreen extends StatelessWidget {
                         color: greenColor,
                         width: Responsive.isDesktop(context) ? 150.px : 100.px,
                         tap: () async {
+                          LoadingWidget.dialogLoading(
+                              duration: 1, isBack: true);
+                          con.filteredLeasing
+                              .sort((a, b) => a.id.compareTo(b.id));
                           await conReport.downloadExcel(
                             fileName: 'Leasing_Report.xlsx',
                             headers: [
@@ -82,6 +86,7 @@ class LeasingScreen extends StatelessWidget {
                               'Sale Date',
                               'ID Card',
                               'Name',
+                              'Gender',
                               'Age',
                               'Telephone',
                               'Address',
@@ -90,7 +95,12 @@ class LeasingScreen extends StatelessWidget {
                               'Model',
                               'Color',
                               'Year',
+                              'Power',
                               'Condition',
+                              'Engine No',
+                              'Frame No',
+                              'Type',
+                              'Plate Number',
                               'Price',
                               'Discount',
                               'Deposit',
@@ -99,9 +109,47 @@ class LeasingScreen extends StatelessWidget {
                               'Acc Receivable',
                               'Saleman',
                               'Come By',
+                              'Come By Name',
+                              'Come By Telephone',
+                              'Commission',
                             ],
-                            data: [],
+                            data: List.generate(
+                              con.filteredLeasing.length,
+                              (index) => [
+                                '${con.filteredLeasing[index].id}',
+                                con.filteredLeasing[index].leasingDate,
+                                con.filteredLeasing[index].idCard,
+                                con.filteredLeasing[index].name,
+                                con.filteredLeasing[index].gender,
+                                con.filteredLeasing[index].age,
+                                con.filteredLeasing[index].tel,
+                                con.filteredLeasing[index].address,
+                                con.filteredLeasing[index].micro,
+                                con.filteredLeasing[index].brand,
+                                con.filteredLeasing[index].model,
+                                con.filteredLeasing[index].color,
+                                con.filteredLeasing[index].year,
+                                con.filteredLeasing[index].power,
+                                con.filteredLeasing[index].condition,
+                                con.filteredLeasing[index].engineNo,
+                                con.filteredLeasing[index].frameNo,
+                                con.filteredLeasing[index].type,
+                                con.filteredLeasing[index].plateNo,
+                                con.filteredLeasing[index].price,
+                                con.filteredLeasing[index].discount,
+                                con.filteredLeasing[index].deposit,
+                                con.filteredLeasing[index].remain,
+                                con.filteredLeasing[index].approveAmount,
+                                con.filteredLeasing[index].totalDebt,
+                                con.filteredLeasing[index].saleman,
+                                con.filteredLeasing[index].comeBy,
+                                con.filteredLeasing[index].comeByName,
+                                con.filteredLeasing[index].comeByTel,
+                                con.filteredLeasing[index].commission,
+                              ],
+                            ),
                           );
+                          Get.back();
                         },
                       )
                     : Container(),

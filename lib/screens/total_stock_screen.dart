@@ -73,6 +73,9 @@ class TotalStockScreen extends StatelessWidget {
                       txt: 'Report',
                       color: greenColor,
                       tap: () async {
+                        LoadingWidget.dialogLoading(duration: 1, isBack: true);
+                        con.filteredTotalStock
+                            .sort((a, b) => a.id.compareTo(b.id));
                         await conReport.downloadExcel(
                           fileName: 'TotalStock_Report.xlsx',
                           headers: [
@@ -87,10 +90,30 @@ class TotalStockScreen extends StatelessWidget {
                             'Total QTY',
                             'Price in QTY Begin',
                             'Price in QTY Today',
+                            'Total Price in QTY Begin',
                             'Total Price in QTY Today',
                           ],
-                          data: [],
+                          data: List.generate(con.filteredTotalStock.length,
+                              (index) {
+                            var data = con.filteredTotalStock[index];
+                            return [
+                              '${data.id}',
+                              data.newDateIn,
+                              data.model,
+                              data.brand,
+                              data.year,
+                              data.condition,
+                              data.oldQty,
+                              data.newQty,
+                              data.totalQty,
+                              data.oldPrice,
+                              data.newPrice,
+                              data.oldTotalPrice,
+                              data.newTotalPrice,
+                            ];
+                          }),
                         );
+                        Get.back();
                       },
                     )
                   : Container(),

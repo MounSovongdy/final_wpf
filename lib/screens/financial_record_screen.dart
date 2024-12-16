@@ -165,9 +165,13 @@ class FinancialRecordScreen extends StatelessWidget {
                           txt: 'Report',
                           color: greenColor,
                           tap: () async {
+                            LoadingWidget.dialogLoading(
+                                duration: 1, isBack: true);
                             await conReport.downloadExcel(
                               fileName: 'FinancialRecord_Report.xlsx',
                               headers: [
+                                'Date',
+                                'Total Expense',
                                 'Advertising',
                                 'Prepaid Rent',
                                 'Payable Salary',
@@ -180,10 +184,30 @@ class FinancialRecordScreen extends StatelessWidget {
                                 'Sale Revenue',
                                 'Total Unit Sale',
                                 'Total Profit',
-                                'Average Profit'
+                                'Average Profit',
                               ],
-                              data: [],
+                              data: List.generate(
+                                byTotalExpense.length,
+                                (index) => [
+                                  con.selectedMonth.value,
+                                  byTotalExpense[0].totalExpense,
+                                  byTotalExpense[0].advertise,
+                                  byTotalExpense[0].salaryE,
+                                  byTotalExpense[0].rental,
+                                  byTotalExpense[0].koi,
+                                  byTotalExpense[0].gift,
+                                  byTotalExpense[0].bonusE,
+                                  byTotalExpense[0].bonusT,
+                                  byTotalExpense[0].commission,
+                                  byTotalExpense[0].netSale,
+                                  byTotalExpense[0].saleRevenue,
+                                  byTotalExpense[0].totalSale,
+                                  byTotalExpense[0].totalProfit,
+                                  byTotalExpense[0].avgProfit,
+                                ],
+                              ),
                             );
+                            Get.back();
                           },
                         ),
                       ],

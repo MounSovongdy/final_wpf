@@ -11,6 +11,7 @@ import 'package:motor/screens/components/app_data_table_receivable.dart';
 import 'package:motor/screens/components/under_line.dart';
 import 'package:motor/screens/widgets/app_text.dart';
 import 'package:motor/screens/widgets/data_table_widget.dart';
+import 'package:motor/screens/widgets/loading_widget.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 class ReceivableScreen extends StatelessWidget {
@@ -70,6 +71,10 @@ class ReceivableScreen extends StatelessWidget {
                         txt: 'Report',
                         color: greenColor,
                         tap: () async {
+                          LoadingWidget.dialogLoading(
+                              duration: 1, isBack: true);
+                          con.filteredRece
+                              .sort((a, b) => a['id'].compareTo(b['id']));
                           await conReport.downloadExcel(
                             fileName: 'Receivable_Report.xlsx',
                             headers: [
@@ -90,10 +95,37 @@ class ReceivableScreen extends StatelessWidget {
                               'Total Amount',
                               'Payment',
                               'Amount Left',
-                              'Color Payment'
+                              'Color Payment',
                             ],
-                            data: [],
+                            data: List.generate(
+                              con.filteredRece.length,
+                              (index) {
+                                var data = con.filteredRece[index];
+
+                                return [
+                                  '${data['id']}',
+                                  data['saleman'],
+                                  data['date'],
+                                  data['name'],
+                                  data['tel1'],
+                                  data['tel2'],
+                                  data['tel3'],
+                                  data['nextPayment'],
+                                  data['document'],
+                                  data['brand'],
+                                  data['model'],
+                                  data['color'],
+                                  data['year'],
+                                  data['condition'],
+                                  data['total'],
+                                  data['receiveAmount'],
+                                  data['amountLeft'],
+                                  data['colorPayment'],
+                                ];
+                              },
+                            ),
                           );
+                          Get.back();
                         },
                       )
                     : Container(),
@@ -250,7 +282,6 @@ Widget receivableDataTable(BuildContext context) {
                 btnEdit: false,
                 btnDelete: false,
                 btnPrint: true,
-                //btnAddPayment: conToNum(data['amountLeft']) > 0 ? true : false,
                 btnAddPayment: true,
                 btnViewPayment: true,
                 edit: () => debugPrint('Edit $index'),

@@ -79,6 +79,9 @@ class CashScreen extends StatelessWidget {
                         color: greenColor,
                         width: Responsive.isDesktop(context) ? 150.px : 100.px,
                         tap: () async {
+                          LoadingWidget.dialogLoading(
+                              duration: 1, isBack: true);
+                          con.filteredCash.sort((a, b) => a.id.compareTo(b.id));
                           await conReport.downloadExcel(
                             fileName: 'Cash_Report.xlsx',
                             headers: [
@@ -86,6 +89,7 @@ class CashScreen extends StatelessWidget {
                               'Sale Date',
                               'ID Card',
                               'Name',
+                              'Gender',
                               'Age',
                               'Telephone',
                               'Address',
@@ -93,14 +97,52 @@ class CashScreen extends StatelessWidget {
                               'Model',
                               'Color',
                               'Year',
+                              'Power',
                               'Condition',
+                              'Engine No',
+                              'Frame No',
+                              'Type',
+                              'Plate Number',
                               'Price',
                               'Discount',
                               'Saleman',
                               'Come By',
+                              'Come By Name',
+                              'Come By Telephone',
+                              'Commission',
                             ],
-                            data: [],
+                            data: List.generate(
+                              con.filteredCash.length,
+                              (index) => [
+                                '${con.filteredCash[index].id}',
+                                con.filteredCash[index].date,
+                                con.filteredCash[index].idCard,
+                                con.filteredCash[index].name,
+                                con.filteredCash[index].gender,
+                                con.filteredCash[index].age,
+                                con.filteredCash[index].tel,
+                                con.filteredCash[index].address,
+                                con.filteredCash[index].brand,
+                                con.filteredCash[index].model,
+                                con.filteredCash[index].year,
+                                con.filteredCash[index].color,
+                                con.filteredCash[index].power,
+                                con.filteredCash[index].condition,
+                                con.filteredCash[index].engineNo,
+                                con.filteredCash[index].frameNo,
+                                con.filteredCash[index].type,
+                                con.filteredCash[index].plateNo,
+                                con.filteredCash[index].price,
+                                con.filteredCash[index].discount,
+                                con.filteredCash[index].saleman,
+                                con.filteredCash[index].comeBy,
+                                con.filteredCash[index].comeByName,
+                                con.filteredCash[index].comeByTel,
+                                con.filteredCash[index].commission,
+                              ],
+                            ),
                           );
+                          Get.back();
                         },
                       )
                     : Container(),

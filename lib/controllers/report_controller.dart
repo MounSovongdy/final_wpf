@@ -22,7 +22,7 @@ class ReportController extends GetxController {
     headerStyle.borders.all.lineStyle = excel.LineStyle.thin;
 
     final excel.Style dataStyle = workbook.styles.add('DataStyle');
-    dataStyle.fontName = 'Times New Roman';
+    dataStyle.fontName = 'Calibri';
     dataStyle.hAlign = excel.HAlignType.center;
     dataStyle.borders.all.lineStyle = excel.LineStyle.thin;
 
