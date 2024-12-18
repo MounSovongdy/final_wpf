@@ -39,6 +39,7 @@ final brandCol = _firebase.collection('brand');
 final productCol = _firebase.collection('product');
 final resetPasswordCol = _firebase.collection('reset_password');
 final addStockCol = _firebase.collection('add_stock');
+final stockDetailCol = _firebase.collection('stock_detail');
 final totalStockCol = _firebase.collection('total_stock');
 final bookingCol = _firebase.collection('booking');
 final bookingDeleteCol = _firebase.collection('booking_delete');
