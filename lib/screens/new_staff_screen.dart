@@ -41,11 +41,11 @@ class NewStaffScreen extends StatelessWidget {
             RowTextField(
               spacer: spacer(context),
               widget1: AppDateTextField(
-                txt: 'Date',
+                txt: 'Date | កាលបរិច្ឆេទ',
                 con: con.date.value,
               ),
               widget2: AppDropdownSearch(
-                txt: 'Staff Name',
+                txt: 'Staff Name | ឈ្មោះបុគ្គលិក',
                 value: con.saleName,
                 list: con.nameList,
                 onChanged: (v) {
@@ -62,7 +62,7 @@ class NewStaffScreen extends StatelessWidget {
                 },
               ),
               widget3: AppTextField(
-                txt: 'Salary',
+                txt: 'Salary | ប្រាក់ខែ',
                 con: con.salary.value,
                 readOnly: true,
               ),
@@ -70,12 +70,12 @@ class NewStaffScreen extends StatelessWidget {
             RowTextField(
               spacer: spacer(context),
               widget1: AppTextField(
-                txt: 'Bonus',
+                txt: 'Bonus | ប្រាក់រង្វង់',
                 con: con.bonus.value,
                 readOnly: true,
               ),
               widget2: AppTextField(
-                txt: 'Unit Sale',
+                txt: 'Unit Sale | ចំនួនលក់',
                 con: con.unitSale.value,
                 isNumber: true,
                 digit: 3,
@@ -90,7 +90,7 @@ class NewStaffScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 AppButtonSubmit(
-                  txt: 'Back',
+                  txt: 'Back | ត្រលប់ក្រោយ',
                   width: Responsive.isDesktop(context) ? 150.px : 100.px,
                   color: secondGreyColor,
                   tap: () async {
@@ -121,7 +121,7 @@ class NewStaffScreen extends StatelessWidget {
                 spacer(context),
                 spacer(context),
                 AppButtonSubmit(
-                  txt: 'Save',
+                  txt: 'Save | រក្សាទុក',
                   width: Responsive.isDesktop(context) ? 150.px : 100.px,
                   tap: () {
                     startInactivityTimer();

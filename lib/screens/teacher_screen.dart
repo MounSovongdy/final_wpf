@@ -31,12 +31,12 @@ class MicroExpenseScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            AppText.header(context, txt: 'Teacher Bonus List'),
+            AppText.header(context, txt: 'Teacher Bonus List | បញ្ជីប្រាក់រៀងរាល់គ្រូ'),
             spacer(context),
             RowTextField(
               spacer: spacer(context),
               widget1: AppDropdownSearch(
-                txt: 'Select Month',
+                txt: 'Select Month | ជ្រើសរើសខែ',
                 value: con.selectedMonth,
                 list: con.monthList,
                 onChanged: (v) async {
@@ -62,12 +62,12 @@ class MicroExpenseScreen extends StatelessWidget {
                 },
               ),
               widget2: AppTextField(
-                txt: 'Total Amount',
+                txt: 'Total Amount | ចំនួនសរុប',
                 con: con.amount.value,
                 readOnly: true,
               ),
               widget3: AppButtonCalculator(
-                txt: 'Calulation',
+                txt: 'Calulation | គិតលុយ',
                 tap: () => con.calculateTotal(context),
               ),
             ),
@@ -81,7 +81,7 @@ class MicroExpenseScreen extends StatelessWidget {
               child: TextField(
                 controller: con.search.value,
                 decoration: const InputDecoration(
-                  labelText: 'Search',
+                  labelText: 'Search | ស្វែងរក',
                   hintText: 'Search by any data',
                   prefixIcon: Icon(Icons.search),
                   border: OutlineInputBorder(),
@@ -96,7 +96,7 @@ class MicroExpenseScreen extends StatelessWidget {
                       width: MediaQuery.of(context).size.width,
                       margin: EdgeInsets.only(top: defWebPad.px),
                       alignment: Alignment.center,
-                      child: AppText.title(context, txt: 'No Data'),
+                      child: AppText.title(context, txt: 'No Data | គ្មានទិន្នន័យ'),
                     ),
             ),
           ],

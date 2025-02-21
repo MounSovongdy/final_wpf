@@ -37,12 +37,12 @@ class AdvertisingScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            AppText.header(context, txt: 'Advertising List'),
+            AppText.header(context, txt: 'Advertising List | បញ្ជីការផ្សព្វផ្សាយ'),
             spacer(context),
             RowTextField(
               spacer: spacer(context),
               widget1: AppDropdownSearch(
-                txt: 'Select Month',
+                txt: 'Select Month | ជ្រើសរើសខែ',
                 value: con.selectedMonth,
                 list: con.monthList,
                 onChanged: (v) async {
@@ -67,12 +67,12 @@ class AdvertisingScreen extends StatelessWidget {
                 },
               ),
               widget2: AppTextField(
-                txt: 'Total Amount',
+                txt: 'Total Amount | ចំនួនសរុប',
                 con: con.amount.value,
                 readOnly: true,
               ),
               widget3: AppButtonCalculator(
-                txt: 'Calulation',
+                txt: 'Calulation | គិតលុយ',
                 tap: () => con.calculateTotal(context),
               ),
             ),
@@ -86,7 +86,7 @@ class AdvertisingScreen extends StatelessWidget {
               child: TextField(
                 controller: con.search.value,
                 decoration: const InputDecoration(
-                  labelText: 'Search',
+                  labelText: 'Search | ស្វែងរក',
                   hintText: 'Search by any data',
                   prefixIcon: Icon(Icons.search),
                   border: OutlineInputBorder(),
@@ -101,7 +101,7 @@ class AdvertisingScreen extends StatelessWidget {
                       width: MediaQuery.of(context).size.width,
                       margin: EdgeInsets.only(top: defWebPad.px),
                       alignment: Alignment.center,
-                      child: AppText.title(context, txt: 'No Data'),
+                      child: AppText.title(context, txt: 'No Data | គ្មានទិន្នន័យ'),
                     ),
             ),
             spacer(context),
@@ -112,7 +112,7 @@ class AdvertisingScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 AppButtonSubmit(
-                  txt: 'New',
+                  txt: 'New | បង្កើតថ្មី',
                   width: Responsive.isDesktop(context) ? 150.px : 100.px,
                   tap: () {
                     startInactivityTimer();

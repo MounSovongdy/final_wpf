@@ -38,12 +38,12 @@ class TotalStockScreen extends StatelessWidget {
         shrinkWrap: true,
         physics: const BouncingScrollPhysics(),
         children: [
-          AppText.header(context, txt: 'Total Stock'),
+          AppText.header(context, txt: 'Total Stock | ស្តុកសរុប'),
           spacer(context),
           TextField(
             controller: con.search.value,
             decoration: const InputDecoration(
-              labelText: 'Search',
+              labelText: 'Search | ស្វែងរក',
               hintText: 'Search by any data',
               prefixIcon: Icon(Icons.search),
               border: OutlineInputBorder(),
@@ -57,7 +57,7 @@ class TotalStockScreen extends StatelessWidget {
                     width: MediaQuery.of(context).size.width,
                     margin: EdgeInsets.only(top: defWebPad.px),
                     alignment: Alignment.center,
-                    child: AppText.title(context, txt: 'No Data'),
+                    child: AppText.title(context, txt: 'No Data | គ្មានទិន្នន័យ'),
                   ),
           ),
           spacer(context),
@@ -70,7 +70,7 @@ class TotalStockScreen extends StatelessWidget {
               userRole.value == roleSuperAdmin &&
                       con.filteredTotalStock.isNotEmpty
                   ? AppButtonSubmit(
-                      txt: 'Report',
+                      txt: 'Report | របាយការណ៍',
                       color: greenColor,
                       tap: () async {
                         LoadingWidget.dialogLoading(duration: 1, isBack: true);
@@ -120,7 +120,7 @@ class TotalStockScreen extends StatelessWidget {
               spacer(context),
               userRole.value == roleSuperAdmin
                   ? AppButtonSubmit(
-                      txt: 'Add Stock',
+                      txt: 'Add Stock | បន្ថែមស្តុក',
                       width: Responsive.isDesktop(context) ? 150.px : 100.px,
                       tap: () async {
                         startInactivityTimer();
@@ -214,7 +214,7 @@ Widget totalStockDataTable(BuildContext context) {
                     startInactivityTimer();
                     if (data.totalQty != '0') {
                       LoadingWidget.dialogLoading(duration: 1, isBack: true);
-                      con.title.value = 'Edit Stock';
+                      con.title.value = 'Edit Stock | កែប្រែស្តុក';
                       conAS.clearText();
                       conAS.listModel.clear();
                       await getAllProduct();
@@ -226,7 +226,7 @@ Widget totalStockDataTable(BuildContext context) {
                     } else {
                       LoadingWidget.showTextDialog(
                         context,
-                        title: 'Error',
+                        title: 'Error | កំហុស',
                         content: 'Cannot edit due to Total Qty is 0.',
                         color: redColor,
                       );

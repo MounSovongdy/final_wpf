@@ -36,12 +36,12 @@ class ResetPasswordScreen extends StatelessWidget {
             RowTextField(
               spacer: spacer(context),
               widget1: AppDateTextField(
-                txt: 'Date',
+                txt: 'Date | កាលបរិច្ឆេទ',
                 con: con.date.value,
                 readOnly: true,
               ),
               widget2: AppDropdownSearch(
-                txt: 'Full Name',
+                txt: 'Full Name | ឈ្មោះពេញ',
                 value: con.fullName,
                 list: con.fullNameList,
                 onChanged: (v) {
@@ -53,7 +53,7 @@ class ResetPasswordScreen extends StatelessWidget {
                 },
               ),
               widget3: AppTextField(
-                txt: 'Username',
+                txt: 'Username | ឈ្មោះគណនី',
                 con: con.loginName.value,
                 readOnly: true,
               ),
@@ -73,7 +73,7 @@ class ResetPasswordScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 AppButtonSubmit(
-                  txt: 'Reset',
+                  txt: 'Reset | កំណត់ឡើងវិញ',
                   width: Responsive.isDesktop(context) ? 150.px : 100.px,
                   tap: () {
                     startInactivityTimer();

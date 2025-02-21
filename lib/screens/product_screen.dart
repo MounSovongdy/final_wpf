@@ -36,12 +36,12 @@ class ProductScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            AppText.header(context, txt: 'Product List'),
+            AppText.header(context, txt: 'Product List | បញ្ជីផលិតផល'),
             spacer(context),
             TextField(
               controller: con.search.value,
               decoration: const InputDecoration(
-                labelText: 'Search',
+                labelText: 'Search | ស្វែងរក',
                 hintText: 'Search by any data',
                 prefixIcon: Icon(Icons.search),
                 border: OutlineInputBorder(),
@@ -55,7 +55,7 @@ class ProductScreen extends StatelessWidget {
                       width: MediaQuery.of(context).size.width,
                       margin: EdgeInsets.only(top: defWebPad.px),
                       alignment: Alignment.center,
-                      child: AppText.title(context, txt: 'No Data'),
+                      child: AppText.title(context, txt: 'No Data | គ្មានទិន្នន័យ'),
                     ),
             ),
             spacer(context),
@@ -67,10 +67,10 @@ class ProductScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 AppButtonSubmit(
-                  txt: 'New',
+                  txt: 'New | បង្កើតថ្មី',
                   width: Responsive.isDesktop(context) ? 150.px : 100.px,
                   tap: () async {
-                    con.title.value = 'Create Product';
+                    con.title.value = 'Create Product | បង្កើតផលិតផល';
                     LoadingWidget.dialogLoading(duration: 1, isBack: true);
                     conCP.clearText();
                     conCP.brandList.clear();
@@ -129,7 +129,7 @@ Widget productDataTable(BuildContext context) {
                 edit: () async {
                   startInactivityTimer();
                   conCP.clearText();
-                  con.title.value = 'Edit Product';
+                  con.title.value = 'Edit Product | កែប្រែផលិតផល';
                   conCP.brandList.clear();
                   await getAllBrand();
                   for (var data in brand) {
@@ -142,10 +142,10 @@ Widget productDataTable(BuildContext context) {
                   startInactivityTimer();
                   LoadingWidget.showTextDialog(
                     Get.context!,
-                    title: 'Warning',
+                    title: 'Warning | ការព្រមាន',
                     content: 'Are you sure to delete?',
                     color: redColor,
-                    txtBack: 'Cancel',
+                    txtBack: 'Cancel | បោះបង់',
                     btnColor: secondGreyColor,
                     widget: TextButton(
                       onPressed: () async {
@@ -155,7 +155,7 @@ Widget productDataTable(BuildContext context) {
                         con.filteredProduct.value = product;
                         Get.back();
                       },
-                      child: AppText.title(Get.context!, txt: 'Confirm'),
+                      child: AppText.title(Get.context!, txt: 'Confirm | បញ្ជាក់'),
                     ),
                   );
                 },

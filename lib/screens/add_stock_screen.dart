@@ -43,11 +43,11 @@ class AddStockScreen extends StatelessWidget {
           children: [
             AppText.header(context, txt: conTS.title.value),
             spacer(context),
-            TitleUnderline(spacer: spacer(context), txt: 'Stock Information'),
+            TitleUnderline(spacer: spacer(context), txt: 'Stock Information | ព័ត៌មានស្តុក'),
             RowTextField(
               spacer: spacer(context),
               widget1: AppDropdownSearch(
-                txt: 'Model',
+                txt: 'Model | ម៉ូដែល',
                 value: con.model,
                 list: con.listModel,
                 onChanged: (v) async {
@@ -64,12 +64,12 @@ class AddStockScreen extends StatelessWidget {
                 },
               ),
               widget2: AppTextField(
-                txt: 'Brand',
+                txt: 'Brand | ម៉ាក',
                 con: con.brand.value,
                 readOnly: true,
               ),
               widget3: AppTextField(
-                txt: 'Year',
+                txt: 'Year | ឆ្នាំ',
                 con: con.proYear.value,
                 readOnly: con.isRead.value,
                 isNumber: true,
@@ -81,7 +81,7 @@ class AddStockScreen extends StatelessWidget {
               spacer: spacer(context),
               widget1: Obx(
                 () => AppDropdownSearch(
-                  txt: 'Condition',
+                  txt: 'Condition | លក្ខខណ្ឌ',
                   value: con.condition,
                   enable: !con.isRead.value,
                   list: isModel.value ? condition : [],
@@ -94,12 +94,12 @@ class AddStockScreen extends StatelessWidget {
                 ),
               ),
               widget2: AppTextField(
-                txt: 'Date In',
+                txt: 'Date In | កាលបរិច្ឆេទចូល',
                 con: con.dateIn.value,
                 readOnly: true,
               ),
               widget3: AppTextField(
-                txt: 'Q Begin',
+                txt: 'Q Begin | ចំនួនដើម',
                 con: con.qBegin.value,
                 readOnly: true,
               ),
@@ -107,29 +107,29 @@ class AddStockScreen extends StatelessWidget {
             RowTextField(
               spacer: spacer(context),
               widget1: AppTextField(
-                txt: 'Price',
+                txt: 'Price | តម្លៃ',
                 con: con.priceQBegin.value,
                 readOnly: true,
               ),
               widget2: AppTextField(
-                txt: 'Total Price',
+                txt: 'Total Price | តម្លៃសរុប',
                 con: con.totalPriceQBegin.value,
                 readOnly: true,
               ),
             ),
             TitleUnderline(
               spacer: spacer(context),
-              txt: 'Add',
+              txt: 'Add | បន្ថែម',
             ),
             RowTextField(
               spacer: spacer(context),
               widget1: AppDateTextField(
-                txt: 'Date In',
+                txt: 'Date In | កាលបរិច្ឆេទចូល',
                 con: con.date.value,
                 readOnly: con.isRead.value,
               ),
               widget2: AppTextField(
-                txt: 'Qty',
+                txt: 'Qty | ចំនួន',
                 con: con.qty.value,
                 isNumber: true,
                 readOnly: con.isRead.value,
@@ -144,7 +144,7 @@ class AddStockScreen extends StatelessWidget {
                 },
               ),
               widget3: AppTextField(
-                txt: 'Price',
+                txt: 'Price | តម្លៃ',
                 con: con.price.value,
                 readOnly: con.isRead.value,
                 isNumber: true,
@@ -163,7 +163,7 @@ class AddStockScreen extends StatelessWidget {
             RowTextField(
               spacer: spacer(context),
               widget1: AppTextField(
-                txt: 'Total Price',
+                txt: 'Total Price | តម្លៃសរុប',
                 con: con.totalPrice.value,
                 readOnly: true,
               ),
@@ -177,7 +177,7 @@ class AddStockScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 AppButtonSubmit(
-                  txt: 'Back',
+                  txt: 'Back | ត្រលប់ក្រោយ',
                   width: Responsive.isDesktop(context) ? 150.px : 100.px,
                   color: secondGreyColor,
                   tap: () async {
@@ -194,7 +194,7 @@ class AddStockScreen extends StatelessWidget {
                 spacer(context),
                 spacer(context),
                 AppButtonSubmit(
-                  txt: 'Save',
+                  txt: 'Save | រក្សាទុក',
                   width: Responsive.isDesktop(context) ? 150.px : 100.px,
                   tap: () {
                     startInactivityTimer();

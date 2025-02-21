@@ -35,12 +35,12 @@ class ReceivableScreen extends StatelessWidget {
         shrinkWrap: true,
         physics: const BouncingScrollPhysics(),
         children: [
-          AppText.header(context, txt: 'Receivable List'),
+          AppText.header(context, txt: 'Receivable List | បញ្ជីប្រាក់ជំពាក់'),
           spacer(context),
           TextField(
             controller: con.search.value,
             decoration: const InputDecoration(
-              labelText: 'Search',
+              labelText: 'Search | ស្វែងរក',
               hintText: 'Search by any data',
               prefixIcon: Icon(Icons.search),
               border: OutlineInputBorder(),
@@ -54,7 +54,7 @@ class ReceivableScreen extends StatelessWidget {
                     width: MediaQuery.of(context).size.width,
                     margin: EdgeInsets.only(top: defWebPad.px),
                     alignment: Alignment.center,
-                    child: AppText.title(context, txt: 'No Data'),
+                    child: AppText.title(context, txt: 'No Data | គ្មានទិន្នន័យ'),
                   ),
           ),
           spacer(context),
@@ -68,7 +68,7 @@ class ReceivableScreen extends StatelessWidget {
                 () => con.filteredRece.isNotEmpty &&
                         userRole.value == roleSuperAdmin
                     ? AppButtonSubmit(
-                        txt: 'Report',
+                        txt: 'Report | របាយការណ៍',
                         color: greenColor,
                         tap: () async {
                           LoadingWidget.dialogLoading(

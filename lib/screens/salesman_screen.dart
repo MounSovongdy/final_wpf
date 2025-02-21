@@ -35,12 +35,12 @@ class SalesmanScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            AppText.header(context, txt: 'Salesman List'),
+            AppText.header(context, txt: 'Salesman List | បញ្ជីអ្នកលក់'),
             spacer(context),
             TextField(
               controller: con.search.value,
               decoration: const InputDecoration(
-                labelText: 'Search',
+                labelText: 'Search | ស្វែងរក',
                 hintText: 'Search by any data',
                 prefixIcon: Icon(Icons.search),
                 border: OutlineInputBorder(),
@@ -54,7 +54,7 @@ class SalesmanScreen extends StatelessWidget {
                       width: MediaQuery.of(context).size.width,
                       margin: EdgeInsets.only(top: defWebPad.px),
                       alignment: Alignment.center,
-                      child: AppText.title(context, txt: 'No Data'),
+                      child: AppText.title(context, txt: 'No Data | គ្មានទិន្នន័យ'),
                     ),
             ),
             spacer(context),
@@ -65,12 +65,12 @@ class SalesmanScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 AppButtonSubmit(
-                  txt: 'New',
+                  txt: 'New | បង្កើតថ្មី',
                   width: Responsive.isDesktop(context) ? 150.px : 100.px,
                   tap: () {
                     startInactivityTimer();
                     conCS.clearText();
-                    con.title.value = 'Create Salesman';
+                    con.title.value = 'Create Salesman | បង្កើតអ្នកលក់';
                     con1.index.value = 18;
                   },
                 ),
@@ -128,7 +128,7 @@ Widget salesmanDataTable(BuildContext context) {
                 edit: () async {
                   startInactivityTimer();
                   conCS.clearText();
-                  con.title.value = 'Edit Salesman';
+                  con.title.value = 'Edit Salesman | កែប្រែអ្នកលក់';
                   await con.editSales(data.id);
                   conMain.index.value = 18;
                 },
@@ -136,10 +136,10 @@ Widget salesmanDataTable(BuildContext context) {
                   startInactivityTimer();
                   LoadingWidget.showTextDialog(
                     Get.context!,
-                    title: 'Warning',
+                    title: 'Warning | ការព្រមាន',
                     content: 'Are you sure to delete?',
                     color: redColor,
-                    txtBack: 'Cancel',
+                    txtBack: 'Cancel | បោះបង់',
                     btnColor: secondGreyColor,
                     widget: TextButton(
                       onPressed: () async {
@@ -149,7 +149,7 @@ Widget salesmanDataTable(BuildContext context) {
                         con.filteredSale.value = saleMan;
                         Get.back();
                       },
-                      child: AppText.title(Get.context!, txt: 'Confirm'),
+                      child: AppText.title(Get.context!, txt: 'Confirm | បញ្ជាក់'),
                     ),
                   );
                 },
