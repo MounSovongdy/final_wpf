@@ -70,7 +70,7 @@ class SalesmanScreen extends StatelessWidget {
                   tap: () {
                     startInactivityTimer();
                     conCS.clearText();
-                    con.title.value = 'Create Salesman | បង្កើតអ្នកលក់';
+                    con.title.value = 'Create Salesman';
                     con1.index.value = 18;
                   },
                 ),
@@ -128,7 +128,7 @@ Widget salesmanDataTable(BuildContext context) {
                 edit: () async {
                   startInactivityTimer();
                   conCS.clearText();
-                  con.title.value = 'Edit Salesman | កែប្រែអ្នកលក់';
+                  con.title.value = 'Edit Salesman';
                   await con.editSales(data.id);
                   conMain.index.value = 18;
                 },

@@ -70,7 +70,7 @@ class ProductScreen extends StatelessWidget {
                   txt: 'New | បង្កើតថ្មី',
                   width: Responsive.isDesktop(context) ? 150.px : 100.px,
                   tap: () async {
-                    con.title.value = 'Create Product | បង្កើតផលិតផល';
+                    con.title.value = 'Create Product';
                     LoadingWidget.dialogLoading(duration: 1, isBack: true);
                     conCP.clearText();
                     conCP.brandList.clear();
@@ -129,7 +129,7 @@ Widget productDataTable(BuildContext context) {
                 edit: () async {
                   startInactivityTimer();
                   conCP.clearText();
-                  con.title.value = 'Edit Product | កែប្រែផលិតផល';
+                  con.title.value = 'Edit Product';
                   conCP.brandList.clear();
                   await getAllBrand();
                   for (var data in brand) {

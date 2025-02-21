@@ -67,7 +67,7 @@ class ColorScreen extends StatelessWidget {
                   tap: () {
                     startInactivityTimer();
                     conNC.clearText();
-                    con.title.value = 'Create Color | បង្កើតពណ៌ថ្មី';
+                    con.title.value = 'Create Color';
                     conMain.index.value = 49;
                   },
                 ),

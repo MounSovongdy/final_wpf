@@ -214,7 +214,7 @@ Widget totalStockDataTable(BuildContext context) {
                     startInactivityTimer();
                     if (data.totalQty != '0') {
                       LoadingWidget.dialogLoading(duration: 1, isBack: true);
-                      con.title.value = 'Edit Stock | កែប្រែស្តុក';
+                      con.title.value = 'Edit Stock';
                       conAS.clearText();
                       conAS.listModel.clear();
                       await getAllProduct();

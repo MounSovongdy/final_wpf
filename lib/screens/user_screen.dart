@@ -70,7 +70,7 @@ class UserScreen extends StatelessWidget {
                   tap: () {
                     startInactivityTimer();
                     conCU.clearText();
-                    con.title.value = 'Create User | បង្កើតអ្នកប្រើប្រាស់';
+                    con.title.value = 'Create User';
                     con1.index.value = 16;
                   },
                 ),
@@ -123,7 +123,7 @@ Widget userDataTable(BuildContext context) {
                 edit: () async {
                   startInactivityTimer();
                   conCU.clearText();
-                  con.title.value = 'Edit User | កែប្រែអ្នកប្រើប្រាស់';
+                  con.title.value = 'Edit User';
                   await con.editUser(data.id);
                   conMain.index.value = 16;
                 },

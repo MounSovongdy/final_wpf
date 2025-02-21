@@ -69,7 +69,7 @@ class AddressScreen extends StatelessWidget {
                   tap: () {
                     startInactivityTimer();
                     conCA.clearText();
-                    con.title.value = 'Create Address | បង្កើតអាស័យដ្ខាន';
+                    con.title.value = 'Create Address';
 
                     conMain.index.value = 28;
                   },
@@ -116,7 +116,7 @@ Widget addressDataTable(BuildContext context) {
                 edit: () async {
                   startInactivityTimer();
                   conA.clearText();
-                  con.title.value = 'Edit Address | កែប្រែអាស័យដ្ខាន';
+                  con.title.value = 'Edit Address';
                   await con.editAddress(data.id);
 
                   conMain.index.value = 28;

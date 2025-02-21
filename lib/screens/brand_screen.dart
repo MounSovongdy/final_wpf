@@ -32,12 +32,12 @@ class BrandScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            AppText.header(context, txt: 'Brand List'),
+            AppText.header(context, txt: 'Brand List | បញ្ជីម៉ាក'),
             spacer(context),
             TextField(
               controller: con.search.value,
               decoration: const InputDecoration(
-                labelText: 'Search',
+                labelText: 'Search | ស្វែងរក',
                 hintText: 'Search by any data',
                 prefixIcon: Icon(Icons.search),
                 border: OutlineInputBorder(),
@@ -51,7 +51,7 @@ class BrandScreen extends StatelessWidget {
                       width: MediaQuery.of(context).size.width,
                       margin: EdgeInsets.only(top: defWebPad.px),
                       alignment: Alignment.center,
-                      child: AppText.title(context, txt: 'No Data'),
+                      child: AppText.title(context, txt: 'No Data | គ្មានទិន្នន័យ'),
                     ),
             ),
             spacer(context),
@@ -62,7 +62,7 @@ class BrandScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 AppButtonSubmit(
-                  txt: 'New',
+                  txt: 'New | បង្កើត',
                   width: Responsive.isDesktop(context) ? 150.px : 100.px,
                   tap: () {
                     startInactivityTimer();

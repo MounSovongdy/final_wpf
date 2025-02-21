@@ -153,7 +153,7 @@ class BookingScreen extends StatelessWidget {
                 tap: () async {
                   LoadingWidget.dialogLoading(duration: 1, isBack: true);
                   conNewBook.clearText();
-                  con.title.value = 'New Booking | ការកុម្មង់ថ្មី';
+                  con.title.value = 'New Booking';
                   conNewBook.date.value.text = '$dateNow $timeNow';
                   conNewBook.discount.value.text = '0';
                   await microName();

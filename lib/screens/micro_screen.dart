@@ -70,7 +70,7 @@ class MicroScreen extends StatelessWidget {
                 tap: () {
                   startInactivityTimer();
                   conCM.clearText();
-                  con.title.value = 'Create Micro | បង្កើតថ្មី';
+                  con.title.value = 'Create Micro';
                   con1.index.value = 20;
                 },
               ),
@@ -129,7 +129,7 @@ Widget microDataTable(BuildContext context) {
                 edit: () async {
                   startInactivityTimer();
                   conCM.clearText();
-                  con.title.value = 'Edit Micro | កែប្រែថ្មី';
+                  con.title.value = 'Edit Micro';
                   await con.editMicro(data.id);
                   conMain.index.value = 20;
                 },
