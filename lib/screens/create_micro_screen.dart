@@ -40,54 +40,54 @@ class CreateMicroScreen extends StatelessWidget {
             spacer(context),
             TitleUnderline(
               spacer: spacer(context),
-              txt: 'Institution Information',
+              txt: 'Institution Information | ព័ត៌មានស្ថាប័ន',
             ),
             RowTextField(
               spacer: spacer(context),
               widget1: AppTextField(
-                txt: 'Name',
+                txt: 'Name | ឈ្មោះ',
                 con: con.nameInstitution.value,
               ),
               widget2: AppTextField(
-                txt: 'Tel',
+                txt: 'Tel | លេខទូរស័ព្ទ',
                 con: con.tel.value,
                 isNumber: true,
                 digit: 10,
               ),
               widget3: AppTextField(
-                txt: 'Email',
+                txt: 'Email | អ៊ីម៉ែល',
                 con: con.email.value,
               ),
             ),
             TitleUnderline(
               spacer: spacer(context),
-              txt: 'Contact Person Information',
+              txt: 'Contact Person Information | ព័ត៌មានអ្នកទំនាក់ទំនង',
             ),
             RowTextField(
               spacer: spacer(context),
               widget1: AppTextField(
-                txt: 'Name',
+                txt: 'Name | ឈ្មោះ',
                 con: con.nameContact.value,
               ),
               widget2: AppTextField(
-                txt: 'Tel',
+                txt: 'Tel | លេខទូរស័ព្ទ',
                 con: con.telContact.value,
                 isNumber: true,
                 digit: 10,
               ),
               widget3: AppTextField(
-                txt: 'Email',
+                txt: 'Email | អ៊ីម៉ែល',
                 con: con.emailContact.value,
               ),
             ),
             RowTextField(
               spacer: spacer(context),
               widget1: AppTextField(
-                txt: 'Position',
+                txt: 'Position | តួនាទី',
                 con: con.positionContact.value,
               ),
               widget2: AppTextField(
-                txt: 'Bonus',
+                txt: 'Bonus | ប្រាក់រង្វាន់',
                 con: con.tBonus.value,
                 isNumber: true,
                 digit: 5,
@@ -102,7 +102,7 @@ class CreateMicroScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 AppButtonSubmit(
-                  txt: 'Back',
+                  txt: 'Back | ត្រលប់ក្រោយ',
                   width: Responsive.isDesktop(context) ? 150.px : 100.px,
                   color: secondGreyColor,
                   tap: () async {
@@ -119,7 +119,7 @@ class CreateMicroScreen extends StatelessWidget {
                 spacer(context),
                 spacer(context),
                 AppButtonSubmit(
-                  txt: 'Save',
+                  txt: 'Save | រក្សាទុក',
                   width: Responsive.isDesktop(context) ? 150.px : 100.px,
                   tap: () {
                     startInactivityTimer();

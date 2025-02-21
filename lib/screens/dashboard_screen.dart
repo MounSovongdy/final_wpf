@@ -31,14 +31,14 @@ class DashboardScreen extends StatelessWidget {
                     RowCardDashboard3Row(
                       spacer: spacer(context),
                       widget1: DashboardCard(
-                        cardTitle: 'Booking',
+                        cardTitle: 'Booking | ការកក់',
                         widgetBody: Column(
                           children: [
                             Padding(
                               padding: EdgeInsets.all(defWebPad.px),
                               child: Row(
                                 children: [
-                                  AppText.subTitle(context, txt: 'New'),
+                                  AppText.subTitle(context, txt: 'New | ថ្មី'),
                                   const Spacer(),
                                   AppText.subTitleBold(
                                     context,
@@ -55,7 +55,7 @@ class DashboardScreen extends StatelessWidget {
                               padding: EdgeInsets.all(defWebPad.px),
                               child: Row(
                                 children: [
-                                  AppText.subTitle(context, txt: 'Approved'),
+                                  AppText.subTitle(context, txt: 'Approved | យល់ព្រម'),
                                   const Spacer(),
                                   AppText.subTitleBold(
                                     context,
@@ -72,7 +72,7 @@ class DashboardScreen extends StatelessWidget {
                               padding: EdgeInsets.all(defWebPad.px),
                               child: Row(
                                 children: [
-                                  AppText.subTitle(context, txt: 'Rejected'),
+                                  AppText.subTitle(context, txt: 'Rejected | បដិសេធ'),
                                   const Spacer(),
                                   AppText.subTitleBold(
                                     context,
@@ -85,14 +85,14 @@ class DashboardScreen extends StatelessWidget {
                         ),
                       ),
                       widget2: DashboardCard(
-                        cardTitle: 'Stock',
+                        cardTitle: 'Stock | ស្តុក',
                         widgetBody: Column(
                           children: [
                             Padding(
                               padding: EdgeInsets.all(defWebPad.px),
                               child: Row(
                                 children: [
-                                  AppText.subTitle(context, txt: 'Total Stock'),
+                                  AppText.subTitle(context, txt: 'Total Stock | ស្តុកសរុប'),
                                   const Spacer(),
                                   AppText.subTitleBold(
                                     context,
@@ -109,7 +109,7 @@ class DashboardScreen extends StatelessWidget {
                               padding: EdgeInsets.all(defWebPad.px),
                               child: Row(
                                 children: [
-                                  AppText.subTitle(context, txt: 'Used'),
+                                  AppText.subTitle(context, txt: 'Used | បានប្រើ'),
                                   const Spacer(),
                                   AppText.subTitleBold(
                                     context,
@@ -126,7 +126,7 @@ class DashboardScreen extends StatelessWidget {
                               padding: EdgeInsets.all(defWebPad.px),
                               child: Row(
                                 children: [
-                                  AppText.subTitle(context, txt: 'New'),
+                                  AppText.subTitle(context, txt: 'New | ថ្មី'),
                                   const Spacer(),
                                   AppText.subTitleBold(
                                     context,
@@ -139,14 +139,14 @@ class DashboardScreen extends StatelessWidget {
                         ),
                       ),
                       widget3: DashboardCard(
-                        cardTitle: 'Management',
+                        cardTitle: 'Management | គ្រប់គ្រង',
                         widgetBody: Column(
                           children: [
                             Padding(
                               padding: EdgeInsets.all(defWebPad.px),
                               child: Row(
                                 children: [
-                                  AppText.subTitle(context, txt: 'User'),
+                                  AppText.subTitle(context, txt: 'User | អ្នកប្រើប្រាស់'),
                                   const Spacer(),
                                   AppText.subTitleBold(
                                     context,
@@ -163,7 +163,7 @@ class DashboardScreen extends StatelessWidget {
                               padding: EdgeInsets.all(defWebPad.px),
                               child: Row(
                                 children: [
-                                  AppText.subTitle(context, txt: 'Salesman'),
+                                  AppText.subTitle(context, txt: 'Salesman | អ្នកលក់'),
                                   const Spacer(),
                                   AppText.subTitleBold(
                                     context,
@@ -180,7 +180,7 @@ class DashboardScreen extends StatelessWidget {
                               padding: EdgeInsets.all(defWebPad.px),
                               child: Row(
                                 children: [
-                                  AppText.subTitle(context, txt: 'Micro'),
+                                  AppText.subTitle(context, txt: 'Microfinance | ស្ថានបណ័'),
                                   const Spacer(),
                                   AppText.subTitleBold(
                                     context,
@@ -199,7 +199,7 @@ class DashboardScreen extends StatelessWidget {
                       widget1: conDash.leasingSale.value > 0 ||
                               conDash.cashSale.value > 0
                           ? DashboardCard(
-                              cardTitle: 'Sales',
+                              cardTitle: 'Sales | ការលក់',
                               widgetBody: Padding(
                                 padding: EdgeInsets.all(defMobPad.px * 4),
                                 child: PieChart(
@@ -241,7 +241,7 @@ class DashboardScreen extends StatelessWidget {
                       widget2: conDash.activeCon.value > 0 ||
                               conDash.closeCon.value > 0
                           ? DashboardCard(
-                              cardTitle: 'Receivable',
+                              cardTitle: 'Receivable | ការទូទាត់',
                               widgetBody: Padding(
                                 padding: EdgeInsets.all(defMobPad.px * 4),
                                 child: PieChart(

@@ -41,17 +41,17 @@ class NewBookingScreen extends StatelessWidget {
             spacer(context),
             TitleUnderline(
               spacer: spacer(context),
-              txt: 'Booking Information',
+              txt: 'Booking Information | ព័ត៌មានការកក់',
             ),
             RowTextField(
               spacer: spacer(context),
               widget1: AppTextField(
-                txt: 'Date',
+                txt: 'Date | កាលបរិច្ឆេទ',
                 con: con.date.value,
                 readOnly: true,
               ),
               widget2: AppDropdownSearch(
-                txt: 'Micro',
+                txt: 'Micro | ស្ថាប័ន',
                 value: con.micro,
                 list: con.microList,
                 onChanged: (v) {
@@ -59,7 +59,7 @@ class NewBookingScreen extends StatelessWidget {
                 },
               ),
               widget3: AppDropdownSearch(
-                txt: 'Salesman',
+                txt: 'Salesman | អ្នកលក់',
                 value: con.salesman,
                 list: con.saleManList,
                 onChanged: (v) {
@@ -69,22 +69,22 @@ class NewBookingScreen extends StatelessWidget {
             ),
             TitleUnderline(
               spacer: spacer(context),
-              txt: 'Customer Information',
+              txt: 'Customer Information | ព័ត៌មានអតិថិជន',
             ),
             RowTextField(
               spacer: spacer(context),
               widget1: AppTextField(
-                txt: 'ID Card',
+                txt: 'ID Card | អត្តសញ្ញាណប័ណ្ណ',
                 con: con.idCard.value,
                 isNumber: true,
                 digit: 9,
               ),
               widget2: AppTextField(
-                txt: 'Name',
+                txt: 'Name | ឈ្មោះ',
                 con: con.name.value,
               ),
               widget3: AppDropdownSearch(
-                txt: 'Gender',
+                txt: 'Gender | ភេទ',
                 value: con.gender,
                 list: con.genderList,
                 onChanged: (v) {
@@ -95,19 +95,19 @@ class NewBookingScreen extends StatelessWidget {
             RowTextField(
               spacer: spacer(context),
               widget1: AppTextField(
-                txt: 'Age',
+                txt: 'Age | អាយុ',
                 con: con.age.value,
                 isNumber: true,
                 digit: 2,
               ),
               widget2: AppTextField(
-                txt: 'Tel',
+                txt: 'Tel | លេខទូរស័ព្ទ',
                 con: con.phoneCus.value,
                 isNumber: true,
                 digit: 10,
               ),
               widget3: AppDropdownSearch(
-                txt: 'Address',
+                txt: 'Address | អាសយដ្ឋាន',
                 value: con.address,
                 list: con.addressList,
                 onChanged: (v) {
@@ -117,12 +117,12 @@ class NewBookingScreen extends StatelessWidget {
             ),
             TitleUnderline(
               spacer: spacer(context),
-              txt: 'Product Information',
+              txt: 'Product Information | ព័ត៌មានផលិតផល',
             ),
             RowTextField(
               spacer: spacer(context),
               widget1: AppDropdownSearch(
-                txt: 'Brand',
+                txt: 'Brand | ម៉ាក',
                 list: con.brandList,
                 value: con.brand,
                 onChanged: (v) async {
@@ -138,7 +138,7 @@ class NewBookingScreen extends StatelessWidget {
                 },
               ),
               widget2: AppDropdownSearch(
-                txt: 'Model',
+                txt: 'Model | ផលិតផល',
                 value: con.model,
                 list: con.modelList,
                 onChanged: (v) {
@@ -146,7 +146,7 @@ class NewBookingScreen extends StatelessWidget {
                 },
               ),
               widget3: AppTextField(
-                txt: 'Year',
+                txt: 'Year | ឆ្នាំ',
                 con: con.year.value,
                 isNumber: true,
                 digit: 4,
@@ -155,7 +155,7 @@ class NewBookingScreen extends StatelessWidget {
             RowTextField(
               spacer: spacer(context),
               widget1: AppDropdownSearch(
-                txt: 'Color',
+                txt: 'Color | ពណ៌',
                 value: con.color,
                 list: con.colorList,
                 onChanged: (v) {
@@ -163,13 +163,13 @@ class NewBookingScreen extends StatelessWidget {
                 },
               ),
               widget2: AppTextField(
-                txt: 'Power',
+                txt: 'Power | កម្លាំង',
                 con: con.power.value,
                 isNumber: true,
                 digit: 3,
               ),
               widget3: AppDropdownSearch(
-                txt: 'Condition',
+                txt: 'Condition | ស្ថានភាព',
                 value: con.condition,
                 list: con.conditionList,
                 onChanged: (v) {
@@ -179,26 +179,26 @@ class NewBookingScreen extends StatelessWidget {
             ),
             TitleUnderline(
               spacer: spacer(context),
-              txt: 'Financial Information',
+              txt: 'Financial Information | ព័ត៌មានហិរញ្ញវត្ថុ',
             ),
             RowTextField(
               spacer: spacer(context),
               widget1: AppTextField(
-                txt: 'Sell Price',
+                txt: 'Sell Price | តំលៃលក់',
                 con: con.sell.value,
                 isNumber: true,
                 digit: 10,
                 onChanged: (v) => con.calculateRemain(),
               ),
               widget2: AppTextField(
-                txt: 'Discount',
+                txt: 'Discount | បញ្ចុះតំលៃ',
                 con: con.discount.value,
                 isNumber: true,
                 digit: 10,
                 onChanged: (v) => con.calculateRemain(),
               ),
               widget3: AppTextField(
-                txt: 'Deposit',
+                txt: 'Deposit | ប្រាក់កក់',
                 con: con.deposit.value,
                 isNumber: true,
                 digit: 10,
@@ -208,19 +208,19 @@ class NewBookingScreen extends StatelessWidget {
             RowTextField(
               spacer: spacer(context),
               widget1: AppTextField(
-                txt: 'Remain',
+                txt: 'Remain | ប្រាក់នៅសល់',
                 con: con.remain.value,
                 readOnly: true,
               ),
             ),
             TitleUnderline(
               spacer: spacer(context),
-              txt: 'Introduced Information',
+              txt: 'Introduced Information | ព័ត៌មានអ្នកណែនាំ',
             ),
             RowTextField(
               spacer: spacer(context),
               widget1: AppDropdownSearch(
-                txt: 'Come By',
+                txt: 'Come By | មកដោយ',
                 value: con.comeBy,
                 list: con.comeByList,
                 onChanged: (v) {
@@ -238,14 +238,14 @@ class NewBookingScreen extends StatelessWidget {
               ),
               widget2: Obx(
                 () => AppTextField(
-                  txt: 'Name',
+                  txt: 'Name | ឈ្មោះ',
                   con: con.nameIntro.value,
                   readOnly: !con.isFriend.value,
                 ),
               ),
               widget3: Obx(
                 () => AppTextField(
-                  txt: 'Tel',
+                  txt: 'Tel | លេខទូរស័ព្ទ',
                   con: con.phoneIntro.value,
                   readOnly: !con.isFriend.value,
                   isNumber: true,
@@ -259,7 +259,7 @@ class NewBookingScreen extends StatelessWidget {
                 ? Container(
                     margin: EdgeInsets.only(left: 5.px, right: defWebPad.px),
                     child: AppTextField(
-                      txt: 'Remark',
+                      txt: 'Remark | សំគាល់',
                       con: con.remark.value,
                       flex: 10,
                     ),
@@ -277,7 +277,7 @@ class NewBookingScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 AppButtonSubmit(
-                  txt: 'Back',
+                  txt: 'Back | ត្រលប់ក្រោយ',
                   width: Responsive.isDesktop(context) ? 150.px : 100.px,
                   color: secondGreyColor,
                   tap: () async {
@@ -294,7 +294,7 @@ class NewBookingScreen extends StatelessWidget {
                 spacer(context),
                 spacer(context),
                 AppButtonSubmit(
-                  txt: 'Save',
+                  txt: 'Save | រក្សាទុក',
                   width: Responsive.isDesktop(context) ? 150.px : 100.px,
                   tap: () {
                     startInactivityTimer();

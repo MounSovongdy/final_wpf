@@ -45,16 +45,16 @@ class CreateSalesmanScreen extends StatelessWidget {
             spacer(context),
             TitleUnderline(
               spacer: spacer(context),
-              txt: 'General Information',
+              txt: 'General Information | ព័ត៌មានទូទៅ',
             ),
             RowTextField(
               spacer: spacer(context),
               widget1: AppTextField(
-                txt: 'Full Name',
+                txt: 'Full Name | ឈ្មោះពេញ',
                 con: con.fullName.value,
               ),
               widget2: AppDropdownSearch(
-                txt: 'Gender',
+                txt: 'Gender | ភេទ',
                 value: con.gender,
                 list: gender,
                 onChanged: (v) {
@@ -62,7 +62,7 @@ class CreateSalesmanScreen extends StatelessWidget {
                 },
               ),
               widget3: AppTextField(
-                txt: 'Tel',
+                txt: 'Tel | លេខទូរស័ព្ទ',
                 con: con.tel.value,
                 isNumber: true,
                 digit: 10,
@@ -71,7 +71,7 @@ class CreateSalesmanScreen extends StatelessWidget {
             RowTextField(
               spacer: spacer(context),
               widget1: AppDropdownSearch(
-                txt: 'Position',
+                txt: 'Position | មុខងារ',
                 value: con.position,
                 list: position,
                 onChanged: (v) {
@@ -79,13 +79,13 @@ class CreateSalesmanScreen extends StatelessWidget {
                 },
               ),
               widget2: AppTextField(
-                txt: 'Salary',
+                txt: 'Salary | ប្រាក់ខែ',
                 con: con.salary.value,
                 isNumber: true,
                 digit: 5,
               ),
               widget3: AppTextField(
-                txt: 'Bonus',
+                txt: 'Bonus | ប្រាក់រង្វង់',
                 con: con.bonus.value,
                 isNumber: true,
                 digit: 5,
@@ -94,7 +94,7 @@ class CreateSalesmanScreen extends StatelessWidget {
             RowTextField(
               spacer: spacer(context),
               widget1: AppDateTextField(
-                txt: 'Join Date',
+                txt: 'Join Date | កាលបរិច្ឆេទចូល',
                 con: con.joinDate.value,
               ),
             ),
@@ -107,7 +107,7 @@ class CreateSalesmanScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 AppButtonSubmit(
-                  txt: 'Back',
+                  txt: 'Back | ត្រលប់ក្រោយ',
                   width: Responsive.isDesktop(context) ? 150.px : 100.px,
                   color: secondGreyColor,
                   tap: () async {
@@ -124,7 +124,7 @@ class CreateSalesmanScreen extends StatelessWidget {
                 spacer(context),
                 spacer(context),
                 AppButtonSubmit(
-                  txt: 'Save',
+                  txt: 'Save | រក្សាទុក',
                   width: Responsive.isDesktop(context) ? 150.px : 100.px,
                   tap: () {
                     startInactivityTimer();

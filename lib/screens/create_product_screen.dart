@@ -41,12 +41,12 @@ class CreateProductScreen extends StatelessWidget {
             spacer(context),
             TitleUnderline(
               spacer: spacer(context),
-              txt: 'Product Information',
+              txt: 'Product Information | ព័ត៌មានផលិតផល',
             ),
             RowTextField(
               spacer: spacer(context),
               widget1: AppDropdownSearch(
-                txt: 'Brand',
+                txt: 'Brand | ម៉ាក',
                 value: con.brand,
                 list: con.brandList,
                 onChanged: (v) {
@@ -54,7 +54,7 @@ class CreateProductScreen extends StatelessWidget {
                 },
               ),
               widget2: AppTextField(
-                txt: 'Model',
+                txt: 'Model | ផលិតផល',
                 con: con.model.value,
               ),
             ),
@@ -67,7 +67,7 @@ class CreateProductScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 AppButtonSubmit(
-                  txt: 'Cancel',
+                  txt: 'Cancel | បោះបង់',
                   width: Responsive.isDesktop(context) ? 150.px : 100.px,
                   color: secondGreyColor,
                   tap: () async {
@@ -85,7 +85,7 @@ class CreateProductScreen extends StatelessWidget {
                 spacer(context),
                 spacer(context),
                 AppButtonSubmit(
-                  txt: 'Save',
+                  txt: 'Save | រក្សាទុក',
                   width: Responsive.isDesktop(context) ? 150.px : 100.px,
                   tap: () {
                     startInactivityTimer();

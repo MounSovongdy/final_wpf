@@ -66,17 +66,17 @@ class LoginScreen extends StatelessWidget {
                     ),
                     spacer(context),
                     AppText.largeHeader(context, txt: "Motor Shop Management System"),
-                    AppText.subTitle(context, txt: "Login to continue"),
+                    AppText.subTitle(context, txt: "Login to continue | ចូលដើម្បីបន្តបន្ទាប់"),
                     spacer(context),
                     spacer(context),
                     spacer(context),
                     AppTextFieldLogin(
-                        flex: flex, txt: 'User Login', con: con.email.value),
+                        flex: flex, txt: 'User Login​ | អ្នកប្រើប្រាស់', con: con.email.value),
                     spacer(context),
                     Obx(
                       () => AppTextFieldLogin(
                         flex: flex,
-                        txt: 'Password',
+                        txt: 'Password​ | ពាក្យសម្ងាត់',
                         con: con.pass.value,
                         obscureText: con.visible.value,
                         showSuffixIcon: true,
@@ -93,7 +93,7 @@ class LoginScreen extends StatelessWidget {
                     Align(
                       alignment: Alignment.centerRight,
                       child: AppButtonLogin(
-                        txt: 'Login',
+                        txt: 'Login | ចូល',
                         tap: () => con.login(context),
                       ),
                     ),

@@ -36,12 +36,12 @@ class MicroScreen extends StatelessWidget {
         shrinkWrap: true,
         physics: const BouncingScrollPhysics(),
         children: [
-          AppText.header(context, txt: 'Micro List'),
+          AppText.header(context, txt: 'Micro List | បញ្ជីស្ថាប័ន'),
           spacer(context),
           TextField(
             controller: con.search.value,
             decoration: const InputDecoration(
-              labelText: 'Search',
+              labelText: 'Search | ស្វែងរក',
               hintText: 'Search by any data',
               prefixIcon: Icon(Icons.search),
               border: OutlineInputBorder(),
@@ -54,7 +54,7 @@ class MicroScreen extends StatelessWidget {
                 : Container(
                     width: 100.px,
                     alignment: Alignment.center,
-                    child: AppText.title(context, txt: "No Date"),
+                    child: AppText.title(context, txt: "No Date | គ្មានទិន្នន័យ"),
                   ),
           ),
           spacer(context),
@@ -65,12 +65,12 @@ class MicroScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               AppButtonSubmit(
-                txt: 'New',
+                txt: 'New | បង្កើតថ្មី',
                 width: Responsive.isDesktop(context) ? 150.px : 100.px,
                 tap: () {
                   startInactivityTimer();
                   conCM.clearText();
-                  con.title.value = 'Create Micro';
+                  con.title.value = 'Create Micro | បង្កើតថ្មី';
                   con1.index.value = 20;
                 },
               ),
@@ -129,7 +129,7 @@ Widget microDataTable(BuildContext context) {
                 edit: () async {
                   startInactivityTimer();
                   conCM.clearText();
-                  con.title.value = 'Edit Micro';
+                  con.title.value = 'Edit Micro | កែប្រែថ្មី';
                   await con.editMicro(data.id);
                   conMain.index.value = 20;
                 },
@@ -137,7 +137,7 @@ Widget microDataTable(BuildContext context) {
                   startInactivityTimer();
                   LoadingWidget.showTextDialog(
                     Get.context!,
-                    title: 'Warning',
+                    title: 'Warning | ការព្រមាន',
                     content: 'Are you sure to delete?',
                     color: redColor,
                     txtBack: 'Cancel',
@@ -150,7 +150,7 @@ Widget microDataTable(BuildContext context) {
                         con.filteredMicro.value = micro;
                         Get.back();
                       },
-                      child: AppText.title(Get.context!, txt: 'Confirm'),
+                      child: AppText.title(Get.context!, txt: 'Confirm | បញ្ជាក់'),
                     ),
                   );
                 },

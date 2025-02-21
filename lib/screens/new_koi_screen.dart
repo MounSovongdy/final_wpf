@@ -41,15 +41,15 @@ class NewKoiScreen extends StatelessWidget {
             RowTextField(
               spacer: spacer(context),
               widget1: AppDateTextField(
-                txt: 'Date',
+                txt: 'Date | កាលបរិច្ឆេទ',
                 con: con.date.value,
               ),
               widget2: AppTextField(
-                txt: 'Name',
+                txt: 'Name | ឈ្មោះ',
                 con: con.name.value,
               ),
               widget3: AppTextField(
-                txt: 'Amount',
+                txt: 'Amount | ចំនួន',
                 con: con.amount.value,
                 isNumber: true,
                 digit: 6,
@@ -95,7 +95,7 @@ class NewKoiScreen extends StatelessWidget {
                 spacer(context),
                 spacer(context),
                 AppButtonSubmit(
-                  txt: 'Save',
+                  txt: 'Save | រក្សាទុក',
                   width: Responsive.isDesktop(context) ? 150.px : 100.px,
                   tap: () {
                     startInactivityTimer();

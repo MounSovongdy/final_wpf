@@ -40,12 +40,12 @@ class NewColorScreen extends StatelessWidget {
             spacer(context),
             TitleUnderline(
               spacer: spacer(context),
-              txt: 'Color Information',
+              txt: 'Color Information | ព័ត៌មានពណ៌',
             ),
             RowTextField(
               spacer: spacer(context),
               widget1: AppTextField(
-                txt: 'Color',
+                txt: 'Color | ពណ៌',
                 con: con.name.value,
               ),
             ),
@@ -58,7 +58,7 @@ class NewColorScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 AppButtonSubmit(
-                  txt: 'Back',
+                  txt: 'Back | ត្រលប់ក្រោយ',
                   width: Responsive.isDesktop(context) ? 150.px : 100.px,
                   color: secondGreyColor,
                   tap: () async {
@@ -74,7 +74,7 @@ class NewColorScreen extends StatelessWidget {
                 spacer(context),
                 spacer(context),
                 AppButtonSubmit(
-                  txt: 'Save',
+                  txt: 'Save | រក្សាទុក',
                   width: Responsive.isDesktop(context) ? 150.px : 100.px,
                   tap: () async {
                     startInactivityTimer();

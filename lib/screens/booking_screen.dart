@@ -38,12 +38,12 @@ class BookingScreen extends StatelessWidget {
         shrinkWrap: true,
         physics: const BouncingScrollPhysics(),
         children: [
-          AppText.header(context, txt: 'Booking Sale List'),
+          AppText.header(context, txt: 'Booking Sale List | បញ្ជីការកុម្មង់'),
           spacer(context),
           TextField(
             controller: con.search.value,
             decoration: const InputDecoration(
-              labelText: 'Search',
+              labelText: 'Search | ស្វែងរក',
               hintText: 'Search by any data',
               prefixIcon: Icon(Icons.search),
               border: OutlineInputBorder(),
@@ -57,7 +57,7 @@ class BookingScreen extends StatelessWidget {
                     width: MediaQuery.of(context).size.width,
                     margin: EdgeInsets.only(top: defWebPad.px),
                     alignment: Alignment.center,
-                    child: AppText.title(context, txt: 'No Data'),
+                    child: AppText.title(context, txt: 'No Data | គ្មានទិន្នន័យ'),
                   ),
           ),
           spacer(context),
@@ -71,7 +71,7 @@ class BookingScreen extends StatelessWidget {
                 () => con.filteredBooking.isNotEmpty &&
                         userRole.value == roleSuperAdmin
                     ? AppButtonSubmit(
-                        txt: 'Report',
+                        txt: 'Report | របាយការណ៍',
                         color: greenColor,
                         width: Responsive.isDesktop(context) ? 150.px : 100.px,
                         tap: () async {
@@ -148,12 +148,12 @@ class BookingScreen extends StatelessWidget {
               ),
               spacer(context),
               AppButtonSubmit(
-                txt: 'New',
+                txt: 'New | បង្កើតថ្មី',
                 width: Responsive.isDesktop(context) ? 150.px : 100.px,
                 tap: () async {
                   LoadingWidget.dialogLoading(duration: 1, isBack: true);
                   conNewBook.clearText();
-                  con.title.value = 'New Booking';
+                  con.title.value = 'New Booking | ការកុម្មង់ថ្មី';
                   conNewBook.date.value.text = '$dateNow $timeNow';
                   conNewBook.discount.value.text = '0';
                   await microName();
@@ -239,7 +239,7 @@ class BookingScreen extends StatelessWidget {
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(5),
             ),
-            title: AppText.header(context, txt: 'Booking Status'),
+            title: AppText.header(context, txt: 'Booking Status | ស្ថានភាពការកុម្មង់'),
             content: SizedBox(
               height: 280.px,
               child: Column(
@@ -257,7 +257,7 @@ class BookingScreen extends StatelessWidget {
                   ),
                   spacer(context),
                   AppDropdownSearch(
-                    txt: 'Status',
+                    txt: 'Status | ស្ថានភាព',
                     value: con.status,
                     list: con.statusList,
                     enable: res.statusBooking1 == "New" ? true : false,
@@ -281,7 +281,7 @@ class BookingScreen extends StatelessWidget {
                   ),
                   spacer(context),
                   AppDropdownSearch(
-                    txt: 'New Status',
+                    txt: 'New Status | ស្ថានភាពថ្មី',
                     value: con.newStatus,
                     list: con.statusList,
                     enable: res.statusBooking1 == "Reject" &&
@@ -299,7 +299,7 @@ class BookingScreen extends StatelessWidget {
             ),
             actions: [
               AppButtonSubmit(
-                txt: 'Back',
+                txt: 'Back | ត្រឡប់ក្រោយ',
                 width: 100.px,
                 color: secondGreyColor,
                 tap: () => Navigator.of(context).pop(),
@@ -441,7 +441,7 @@ class BookingScreen extends StatelessWidget {
                     if (data.statusDone == "") {
                       LoadingWidget.showTextDialog(
                         Get.context!,
-                        title: 'Warning',
+                        title: 'Warning | ការព្រមាន',
                         content: 'Are you sure to delete?',
                         color: redColor,
                         txtBack: 'Cancel',
@@ -458,7 +458,7 @@ class BookingScreen extends StatelessWidget {
                       LoadingWidget.showTextDialog(
                         context,
                         color: redColor,
-                        title: "Warning",
+                        title: "Warning | ការព្រមាន",
                         content:
                             'Can not delete because the booking is already create Leasing',
                       );

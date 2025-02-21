@@ -38,16 +38,16 @@ class NewLeasingScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            AppText.header(context, txt: 'New Leasing Sale'),
+            AppText.header(context, txt: 'New Leasing Sale | លក់កិច្ចសន្យាថ្មី'),
             spacer(context),
             TitleUnderline(
               spacer: spacer(context),
-              txt: 'Customer Information',
+              txt: 'Customer Information | ព័ត៌មានអតិថិជន',
             ),
             RowTextField(
               spacer: spacer(context),
               widget1: AppDropdownSearch(
-                txt: 'Booking ID',
+                txt: 'Booking ID | លេខកក់',
                 value: con.bookingId,
                 list: con.bookingIdList,
                 onChanged: (v) {
@@ -59,7 +59,7 @@ class NewLeasingScreen extends StatelessWidget {
                 },
               ),
               widget2: AppDropdownSearch(
-                txt: 'ID Card',
+                txt: 'ID Card | អត្តសញ្ញាណប័ណ្ណ',
                 value: con.idCard,
                 list: con.idCardList,
                 onChanged: (v) {
@@ -71,7 +71,7 @@ class NewLeasingScreen extends StatelessWidget {
                 },
               ),
               widget3: AppTextField(
-                txt: 'Name',
+                txt: 'Name | ឈ្មោះ',
                 con: con.name.value,
                 readOnly: true,
               ),
@@ -79,17 +79,17 @@ class NewLeasingScreen extends StatelessWidget {
             RowTextField(
               spacer: spacer(context),
               widget1: AppTextField(
-                txt: 'Gender',
+                txt: 'Gender | ភេទ',
                 con: con.gender.value,
                 readOnly: true,
               ),
               widget2: AppTextField(
-                txt: 'Age',
+                txt: 'Age | អាយុ',
                 con: con.age.value,
                 readOnly: true,
               ),
               widget3: AppTextField(
-                txt: 'Tel',
+                txt: 'Tel | លេខទូរស័ព្ទ',
                 con: con.phoneCus.value,
                 readOnly: true,
               ),
@@ -97,29 +97,29 @@ class NewLeasingScreen extends StatelessWidget {
             RowTextField(
               spacer: spacer(context),
               widget1: AppTextField(
-                txt: 'Address',
+                txt: 'Address | អាសយដ្ឋាន',
                 con: con.address.value,
                 readOnly: true,
               ),
             ),
             TitleUnderline(
               spacer: spacer(context),
-              txt: 'Booking Information',
+              txt: 'Booking Information | ព័ត៌មានកក់',
             ),
             RowTextField(
               spacer: spacer(context),
               widget1: AppTextField(
-                txt: 'Date',
+                txt: 'Date | កាលបរិច្ឆេទ',
                 con: con.dateBooking.value,
                 readOnly: true,
               ),
               widget2: AppTextField(
-                txt: 'Micro',
+                txt: 'Micro | សា្ថបន័',
                 con: con.micro.value,
                 readOnly: true,
               ),
               widget3: AppTextField(
-                txt: 'Salesman',
+                txt: 'Salesman | អ្នកលក់',
                 con: con.salesman.value,
                 readOnly: true,
               ),
@@ -127,19 +127,19 @@ class NewLeasingScreen extends StatelessWidget {
             RowTextField(
               spacer: spacer(context),
               widget1: AppTextField(
-                txt: 'Duration',
+                txt: 'Duration | រយៈពេល',
                 con: con.workingHours.value,
                 readOnly: true,
               ),
             ),
             TitleUnderline(
               spacer: spacer(context),
-              txt: 'Product Information',
+              txt: 'Product Information | ព័ត៌មានផលិតផល',
             ),
             RowTextField(
               spacer: spacer(context),
               widget1: AppDropdownSearch(
-                txt: 'Brand',
+                txt: 'Brand | ម៉ាក',
                 value: con.brand,
                 list: con.brandList,
                 onChanged: (v) async {
@@ -156,7 +156,7 @@ class NewLeasingScreen extends StatelessWidget {
                 },
               ),
               widget2: AppDropdownSearch(
-                txt: 'Model',
+                txt: 'Model | ផលិតផល',
                 value: con.model,
                 list: con.modelList,
                 onChanged: (v) {
@@ -166,7 +166,7 @@ class NewLeasingScreen extends StatelessWidget {
                 },
               ),
               widget3: AppTextField(
-                txt: 'Year',
+                txt: 'Year | ឆ្នាំ',
                 con: con.year.value,
                 isNumber: true,
                 digit: 4,
@@ -175,7 +175,7 @@ class NewLeasingScreen extends StatelessWidget {
             RowTextField(
               spacer: spacer(context),
               widget1: AppDropdownSearch(
-                txt: 'Color',
+                txt: 'Color | ពណ៌',
                 value: con.color,
                 list: con.colorList,
                 onChanged: (v) {
@@ -183,13 +183,13 @@ class NewLeasingScreen extends StatelessWidget {
                 },
               ),
               widget2: AppTextField(
-                txt: 'Power',
+                txt: 'Power | សម្រាប់',
                 con: con.power.value,
                 isNumber: true,
                 digit: 3,
               ),
               widget3: AppDropdownSearch(
-                txt: 'Condition',
+                txt: 'Condition | ស្ថានភាព',
                 value: con.condition,
                 list: con.conditionList,
                 onChanged: (v) {
@@ -200,15 +200,15 @@ class NewLeasingScreen extends StatelessWidget {
             RowTextField(
               spacer: spacer(context),
               widget1: AppTextField(
-                txt: 'Engine No',
+                txt: 'Engine No | លេខម៉ាស៊ីន',
                 con: con.engine.value,
               ),
               widget2: AppTextField(
-                txt: 'Frame No',
+                txt: 'Frame No | លេខតួរ',
                 con: con.frame.value,
               ),
               widget3: AppDropdownSearch(
-                txt: 'Type',
+                txt: 'Type | ប្រភេទ',
                 value: con.type,
                 list: con.typeList,
                 onChanged: (v) {
@@ -227,7 +227,7 @@ class NewLeasingScreen extends StatelessWidget {
               spacer: spacer(context),
               widget1: Obx(
                 () => AppTextField(
-                  txt: 'Plate No',
+                  txt: 'Plate No | លេខប្រអប់',
                   con: con.plateNo.value,
                   readOnly: con.isTax.value,
                 ),
@@ -235,12 +235,12 @@ class NewLeasingScreen extends StatelessWidget {
             ),
             TitleUnderline(
               spacer: spacer(context),
-              txt: 'Financial Information',
+              txt: 'Financial Information | ព័ត៌មានហិរញ្ញវត្ថុ',
             ),
             RowTextField(
               spacer: spacer(context),
               widget1: AppTextField(
-                txt: 'Sell Price',
+                txt: 'Sell Price | តំលៃលក់',
                 con: con.sell.value,
                 isNumber: true,
                 digit: 10,
@@ -250,7 +250,7 @@ class NewLeasingScreen extends StatelessWidget {
                 },
               ),
               widget2: AppTextField(
-                txt: 'Discount',
+                txt: 'Discount | បញ្ចុះតំលៃ',
                 con: con.discount.value,
                 isNumber: true,
                 digit: 10,
@@ -260,7 +260,7 @@ class NewLeasingScreen extends StatelessWidget {
                 },
               ),
               widget3: AppTextField(
-                txt: 'Deposit',
+                txt: 'Deposit | ប្រាក់កក់',
                 con: con.deposit.value,
                 isNumber: true,
                 digit: 10,
@@ -273,7 +273,7 @@ class NewLeasingScreen extends StatelessWidget {
             RowTextField(
               spacer: spacer(context),
               widget1: AppTextField(
-                txt: 'Remain',
+                txt: 'Remain | ប្រាក់នៅសល់',
                 con: con.remain.value,
                 readOnly: true,
                 onChanged: (v) {
@@ -282,7 +282,7 @@ class NewLeasingScreen extends StatelessWidget {
                 },
               ),
               widget2: AppTextField(
-                txt: 'Approved',
+                txt: 'Approved | ប្រាក់បង់ប្រាក់',
                 con: con.approve.value,
                 isNumber: true,
                 digit: 10,
@@ -292,7 +292,7 @@ class NewLeasingScreen extends StatelessWidget {
                 },
               ),
               widget3: AppTextField(
-                txt: 'Total Debt',
+                txt: 'Total Debt | ប្រាក់ខែ',
                 con: con.totalOwn.value,
                 readOnly: true,
                 onChanged: (v) => con.calculateTotal(),
@@ -302,7 +302,7 @@ class NewLeasingScreen extends StatelessWidget {
               () => con.isReceivable.value
                   ? TitleUnderline(
                       spacer: spacer(context),
-                      txt: 'Receivable Information',
+                      txt: 'Receivable Information | ព័ត៌មានអតិថិជន',
                     )
                   : Container(),
             ),
@@ -311,17 +311,17 @@ class NewLeasingScreen extends StatelessWidget {
                   ? RowTextField(
                       spacer: spacer(context),
                       widget1: AppTextField(
-                        txt: 'Telephone 2',
+                        txt: 'Telephone 2 | លេខទូរស័ព្ទ ២',
                         con: con.phoneCus2.value,
                         isNumber: true,
                         digit: 10,
                       ),
                       widget2: AppTextField(
-                        txt: 'Name 2',
+                        txt: 'Name 2 | ឈ្មោះ ២',
                         con: con.nameCus2.value,
                       ),
                       widget3: AppTextField(
-                        txt: 'Document',
+                        txt: 'Document | ឯកសារ',
                         con: con.document.value,
                       ),
                     )
@@ -332,17 +332,17 @@ class NewLeasingScreen extends StatelessWidget {
                   ? RowTextField(
                       spacer: spacer(context),
                       widget1: AppTextField(
-                        txt: 'Telephone 3',
+                        txt: 'Telephone 3 | លេខទូរស័ព្ទ ៣',
                         con: con.phoneCus3.value,
                         isNumber: true,
                         digit: 10,
                       ),
                       widget2: AppTextField(
-                        txt: 'Name 3',
+                        txt: 'Name 3 | ឈ្មោះ ៣',
                         con: con.nameCus3.value,
                       ),
                       widget3: AppTextField(
-                        txt: 'Penalty',
+                        txt: 'Penalty | ប្រាក់ពិន័យ',
                         con: con.penalty.value,
                         isNumber: true,
                         digit: 10,
@@ -355,17 +355,17 @@ class NewLeasingScreen extends StatelessWidget {
                   ? RowTextField(
                       spacer: spacer(context),
                       widget1: AppDateTextField(
-                        txt: 'First Payment',
+                        txt: 'First Payment | បង់ប្រាក់ដំបូង',
                         con: con.firstPayDate.value,
                       ),
                       widget2: AppTextField(
-                        txt: 'Term',
+                        txt: 'Term | រយៈពេល',
                         con: con.term.value,
                         isNumber: true,
                         digit: 2,
                       ),
                       widget3: AppTextField(
-                        txt: 'Interest %',
+                        txt: 'Interest % | ការប្រាក់ %',
                         con: con.interest.value,
                         isNumber: true,
                         digit: 5,
@@ -379,7 +379,7 @@ class NewLeasingScreen extends StatelessWidget {
                   ? RowTextField(
                       spacer: spacer(context),
                       widget1: AppDropdownSearch(
-                        txt: 'Plate Payment',
+                        txt: 'Plate Payment | ប្រាក់ប្រអប់',
                         value: con.platePay,
                         list: con.platePayList,
                         onChanged: (v) {
@@ -392,7 +392,7 @@ class NewLeasingScreen extends StatelessWidget {
                       ),
                       widget2: Obx(
                         () => AppTextField(
-                          txt: 'Plate Amount',
+                          txt: 'Plate Amount | ប្រាក់ប្រអប់',
                           con: con.plateAmount.value,
                           readOnly:
                               con.platePay.value == "Not Yet" ? false : true,
@@ -402,7 +402,7 @@ class NewLeasingScreen extends StatelessWidget {
                         ),
                       ),
                       widget3: AppTextField(
-                        txt: 'Total',
+                        txt: 'Total | សរុប',
                         con: con.total.value,
                         readOnly: true,
                       ),
@@ -411,12 +411,12 @@ class NewLeasingScreen extends StatelessWidget {
             ),
             TitleUnderline(
               spacer: spacer(context),
-              txt: 'Introduced Information',
+              txt: 'Introduced Information | ព័ត៌មានអ្នកណែនាំ',
             ),
             RowTextField(
               spacer: spacer(context),
               widget1: AppDropdownSearch(
-                txt: 'Come By',
+                txt: 'Come By | មកដោយ',
                 value: con.comeBy,
                 list: con.comeByList,
                 onChanged: (v) {
@@ -431,14 +431,14 @@ class NewLeasingScreen extends StatelessWidget {
               ),
               widget2: Obx(
                 () => AppTextField(
-                  txt: 'Name',
+                  txt: 'Name | ឈ្មោះ',
                   con: con.nameIntro.value,
                   readOnly: con.comeBy.value == 'Friend' ? false : true,
                 ),
               ),
               widget3: Obx(
                 () => AppTextField(
-                  txt: 'Tel',
+                  txt: 'Tel | លេខទូរស័ព្ទ',
                   con: con.phoneIntro.value,
                   readOnly: con.comeBy.value == 'Friend' ? false : true,
                   isNumber: true,
@@ -450,7 +450,7 @@ class NewLeasingScreen extends StatelessWidget {
               spacer: spacer(context),
               widget1: Obx(
                 () => AppTextField(
-                  txt: 'Commission',
+                  txt: 'Commission | កម្រៃជើងសារ',
                   con: con.commission.value,
                   readOnly: con.comeBy.value == 'Friend' ? false : true,
                   isNumber: true,
@@ -466,7 +466,7 @@ class NewLeasingScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 AppButtonSubmit(
-                  txt: 'Cancel',
+                  txt: 'Cancel | បោះបង់',
                   width: Responsive.isDesktop(context) ? 150.px : 100.px,
                   color: secondGreyColor,
                   tap: () async {
@@ -483,7 +483,7 @@ class NewLeasingScreen extends StatelessWidget {
                 spacer(context),
                 spacer(context),
                 AppButtonSubmit(
-                  txt: 'Save',
+                  txt: 'Save | រក្សាទុក',
                   width: Responsive.isDesktop(context) ? 150.px : 100.px,
                   tap: () async {
                     startInactivityTimer();

@@ -32,9 +32,9 @@ class NewExpenseScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            AppText.header(context, txt: "New Expense"),
+            AppText.header(context, txt: "New Expense | ចំណាយថ្មី"),
             spacer(context),
-            TitleUnderline(spacer: spacer(context), txt: 'Expense Information'),
+            TitleUnderline(spacer: spacer(context), txt: 'Expense Information | ព័ត៌មានចំណាយ'),
             RowTextField(
               spacer: spacer(context),
               widget1: AppTextField(txt: 'Date', con: con.date.value),
@@ -54,7 +54,7 @@ class NewExpenseScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 AppButtonSubmit(
-                  txt: 'Cancel',
+                  txt: 'Cancel | បោះបង់',
                   width: Responsive.isDesktop(context) ? 150.px : 100.px,
                   color: secondGreyColor,
                   tap: () {
@@ -65,7 +65,7 @@ class NewExpenseScreen extends StatelessWidget {
                 spacer(context),
                 spacer(context),
                 AppButtonSubmit(
-                  txt: 'Save',
+                  txt: 'Save | រក្សាទុក',
                   width: Responsive.isDesktop(context) ? 150.px : 100.px,
                   tap: () {},
                 ),

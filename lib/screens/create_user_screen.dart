@@ -41,12 +41,12 @@ class CreateUserScreen extends StatelessWidget {
           children: [
             AppText.header(context, txt: conU.title.value),
             spacer(context),
-            TitleUnderline(spacer: spacer(context), txt: 'User Information'),
+            TitleUnderline(spacer: spacer(context), txt: 'User Information | ព័ត៌មានអ្នកប្រើប្រាស់'),
             RowTextField(
               spacer: spacer(context),
-              widget1: AppTextField(txt: 'Full Name', con: con.name.value),
+              widget1: AppTextField(txt: 'Full Name | ឈ្មោះពេញ', con: con.name.value),
               widget2: AppDropdownSearch(
-                txt: 'Role Level',
+                txt: 'Role Level | កម្រិតតួនាទី',
                 value: con.role,
                 list: role,
                 onChanged: (v) {
@@ -54,7 +54,7 @@ class CreateUserScreen extends StatelessWidget {
                 },
               ),
               widget3: AppTextField(
-                txt: 'User Login',
+                txt: 'User Login | ឈ្មោះចូលប្រើប្រាស់',
                 con: con.userLogin.value,
               ),
             ),
@@ -67,7 +67,7 @@ class CreateUserScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 AppButtonSubmit(
-                  txt: 'Back',
+                  txt: 'Back | ត្រលប់ក្រោយ',
                   width: Responsive.isDesktop(context) ? 150.px : 100.px,
                   color: secondGreyColor,
                   tap: () async {
@@ -84,7 +84,7 @@ class CreateUserScreen extends StatelessWidget {
                 spacer(context),
                 spacer(context),
                 AppButtonSubmit(
-                  txt: 'Save',
+                  txt: 'Save | រក្សាទុក',
                   width: Responsive.isDesktop(context) ? 150.px : 100.px,
                   tap: () {
                     startInactivityTimer();

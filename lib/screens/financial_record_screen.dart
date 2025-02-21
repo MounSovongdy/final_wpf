@@ -36,17 +36,17 @@ class FinancialRecordScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            AppText.header(context, txt: 'Financial Record'),
+            AppText.header(context, txt: 'Financial Record | ហិរញ្ញវត្ថុ'),
             spacer(context),
             RowTextField2(
               spacer: spacer(context),
               widget1: AppTextField(
-                txt: 'Total Expense',
+                txt: 'Total Expense | ចំណាយសរុប',
                 con: con.totalExpense.value,
                 readOnly: true,
               ),
               widget2: AppDropdownSearch(
-                txt: 'Select Month',
+                txt: 'Select Month | ជ្រើសរើសខែ',
                 value: con.selectedMonth,
                 list: con.monthList,
                 onChanged: (v) async {
@@ -162,7 +162,7 @@ class FinancialRecordScreen extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         AppButtonSubmit(
-                          txt: 'Report',
+                          txt: 'Report | របាយការណ៍',
                           color: greenColor,
                           tap: () async {
                             LoadingWidget.dialogLoading(

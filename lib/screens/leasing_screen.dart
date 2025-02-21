@@ -38,12 +38,12 @@ class LeasingScreen extends StatelessWidget {
         shrinkWrap: true,
         physics: const BouncingScrollPhysics(),
         children: [
-          AppText.header(context, txt: 'Leasing Sale List'),
+          AppText.header(context, txt: 'Leasing Sale List | បញ្ជីលក់បង់រំលោះ'),
           spacer(context),
           TextField(
             controller: con.search.value,
             decoration: const InputDecoration(
-              labelText: 'Search',
+              labelText: 'Search | ស្វែងរក',
               hintText: 'Search by any data',
               prefixIcon: Icon(Icons.search),
               border: OutlineInputBorder(),
@@ -57,7 +57,7 @@ class LeasingScreen extends StatelessWidget {
                     width: MediaQuery.of(context).size.width,
                     margin: EdgeInsets.only(top: defWebPad.px),
                     alignment: Alignment.center,
-                    child: AppText.title(context, txt: 'No Data'),
+                    child: AppText.title(context, txt: 'No Data | គ្មានទិន្នន័យ'),
                   ),
           ),
           spacer(context),
@@ -71,7 +71,7 @@ class LeasingScreen extends StatelessWidget {
                 () => con.filteredLeasing.isNotEmpty &&
                         userRole.value == roleSuperAdmin
                     ? AppButtonSubmit(
-                        txt: 'Report',
+                        txt: 'Report | របាយការណ៍',
                         color: greenColor,
                         width: Responsive.isDesktop(context) ? 150.px : 100.px,
                         tap: () async {
@@ -156,7 +156,7 @@ class LeasingScreen extends StatelessWidget {
               ),
               spacer(context),
               AppButtonSubmit(
-                txt: 'New',
+                txt: 'New | បង្កើតថ្មី',
                 width: Responsive.isDesktop(context) ? 150.px : 100.px,
                 tap: () async {
                   startInactivityTimer();

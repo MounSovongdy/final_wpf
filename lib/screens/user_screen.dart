@@ -35,12 +35,12 @@ class UserScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            AppText.header(context, txt: 'User List'),
+            AppText.header(context, txt: 'User List | បញ្ជីអ្នកប្រើប្រាស់'),
             spacer(context),
             TextField(
               controller: con.search.value,
               decoration: const InputDecoration(
-                labelText: 'Search',
+                labelText: 'Search​ | ស្វែងរក',
                 hintText: 'Search by any data',
                 prefixIcon: Icon(Icons.search),
                 border: OutlineInputBorder(),
@@ -54,7 +54,7 @@ class UserScreen extends StatelessWidget {
                       width: MediaQuery.of(context).size.width,
                       margin: EdgeInsets.only(top: defWebPad.px),
                       alignment: Alignment.center,
-                      child: AppText.title(context, txt: 'No Data'),
+                      child: AppText.title(context, txt: 'No Data | គ្មានទិន្នន័យ'),
                     ),
             ),
             spacer(context),
@@ -65,12 +65,12 @@ class UserScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 AppButtonSubmit(
-                  txt: 'New',
+                  txt: 'New | បង្កើតថ្មី',
                   width: Responsive.isDesktop(context) ? 150.px : 100.px,
                   tap: () {
                     startInactivityTimer();
                     conCU.clearText();
-                    con.title.value = 'Create User';
+                    con.title.value = 'Create User | បង្កើតអ្នកប្រើប្រាស់';
                     con1.index.value = 16;
                   },
                 ),
@@ -123,7 +123,7 @@ Widget userDataTable(BuildContext context) {
                 edit: () async {
                   startInactivityTimer();
                   conCU.clearText();
-                  con.title.value = 'Edit User';
+                  con.title.value = 'Edit User | កែប្រែអ្នកប្រើប្រាស់';
                   await con.editUser(data.id);
                   conMain.index.value = 16;
                 },
@@ -134,7 +134,7 @@ Widget userDataTable(BuildContext context) {
                     title: 'Warning',
                     content: 'Are you sure to delete?',
                     color: redColor,
-                    txtBack: 'Cancel',
+                    txtBack: 'Cancel | បោះបង់',
                     btnColor: secondGreyColor,
                     widget: TextButton(
                       onPressed: () async {

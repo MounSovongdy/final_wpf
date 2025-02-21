@@ -40,12 +40,12 @@ class CreateAddressScreen extends StatelessWidget {
             spacer(context),
             TitleUnderline(
               spacer: spacer(context),
-              txt: 'Address Information',
+              txt: 'Address Information | ព័ត៌មានអាសយដ្ឋាន',
             ),
             RowTextField(
               spacer: spacer(context),
               widget1: AppTextField(
-                txt: 'Address',
+                txt: 'Address | អាសយដ្ឋាន',
                 con: con.add.value,
               ),
             ),
@@ -58,7 +58,7 @@ class CreateAddressScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 AppButtonSubmit(
-                  txt: 'Back',
+                  txt: 'Back | ត្រលប់ក្រោយ',
                   width: Responsive.isDesktop(context) ? 150.px : 100.px,
                   color: secondGreyColor,
                   tap: () async {
@@ -74,7 +74,7 @@ class CreateAddressScreen extends StatelessWidget {
                 spacer(context),
                 spacer(context),
                 AppButtonSubmit(
-                  txt: 'Save',
+                  txt: 'Save | រក្សាទុក',
                   width: Responsive.isDesktop(context) ? 150.px : 100.px,
                   tap: () async {
                     startInactivityTimer();

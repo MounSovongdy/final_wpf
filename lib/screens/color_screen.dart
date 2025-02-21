@@ -32,12 +32,12 @@ class ColorScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            AppText.header(context, txt: 'Color List'),
+            AppText.header(context, txt: 'Color List | បញ្ជីពណ៌'),
             spacer(context),
             TextField(
               controller: con.search.value,
               decoration: const InputDecoration(
-                labelText: 'Search',
+                labelText: 'Search | ស្វែងរក',
                 hintText: 'Search by any data',
                 prefixIcon: Icon(Icons.search),
                 border: OutlineInputBorder(),
@@ -51,7 +51,7 @@ class ColorScreen extends StatelessWidget {
                       width: MediaQuery.of(context).size.width,
                       margin: EdgeInsets.only(top: defWebPad.px),
                       alignment: Alignment.center,
-                      child: AppText.title(context, txt: 'No Data'),
+                      child: AppText.title(context, txt: 'No Data | គ្មានទិន្នន័យ'),
                     ),
             ),
             spacer(context),
@@ -62,12 +62,12 @@ class ColorScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 AppButtonSubmit(
-                  txt: 'New',
+                  txt: 'New | បង្កើតថ្មី',
                   width: Responsive.isDesktop(context) ? 150.px : 100.px,
                   tap: () {
                     startInactivityTimer();
                     conNC.clearText();
-                    con.title.value = 'Create Color';
+                    con.title.value = 'Create Color | បង្កើតពណ៌ថ្មី';
                     conMain.index.value = 49;
                   },
                 ),
